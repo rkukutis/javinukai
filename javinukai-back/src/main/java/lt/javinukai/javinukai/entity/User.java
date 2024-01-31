@@ -32,6 +32,10 @@ public class User {
     private Boolean isFreelance;
     @Setter
     private String institution;
+    @Setter
+    private Integer maxSinglePhotos;
+    @Setter
+    private Integer maxCollections;
 
     @CreatedDate
     private ZonedDateTime createdAt;
