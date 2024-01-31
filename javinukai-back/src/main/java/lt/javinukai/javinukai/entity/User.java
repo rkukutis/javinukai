@@ -1,9 +1,7 @@
 package lt.javinukai.javinukai.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import java.time.ZonedDateTime;
@@ -13,6 +11,9 @@ import java.util.UUID;
 @Table(name = "users")
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+// this will implement security UserDetails interface
 public class User {
 
     @Id
@@ -32,6 +33,10 @@ public class User {
     private Boolean isFreelance;
     @Setter
     private String institution;
+    @Setter
+    private Integer maxSinglePhotos;
+    @Setter
+    private Integer maxCollections;
 
     @CreatedDate
     private ZonedDateTime createdAt;
