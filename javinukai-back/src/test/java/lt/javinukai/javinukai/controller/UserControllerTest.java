@@ -72,7 +72,7 @@ class UserControllerTest {
     }
 
     @Test
-    void givenDeleteRequest_whenUserDoesNotExits_return500() throws Exception {
+    void givenDeleteRequest_whenUserDoesNotExits_return404() throws Exception {
         MvcResult result = mockMvc.perform(
                 MockMvcRequestBuilders.delete("/users/" + UUID.randomUUID())
         ).andReturn();

@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<String> handleUserNotFound(UserNotFoundException exception, WebRequest request) {
         log.debug(exception.getMessage());
-        return ResponseEntity.badRequest().body(exception.getMessage());
+        return ResponseEntity.notFound().build();
     }
 
 }
