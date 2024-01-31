@@ -20,7 +20,7 @@ public class StartupData {
                     .surname("Doe")
                     .birthYear(1984)
                     .email("jdoe@mail.com")
-                    .maxSinglePhotos(20)
+                    .maxSinglePhotos(10)
                     .maxCollections(10)
                     .phoneNumber("+37047812482")
                     .institution("Delfi")
