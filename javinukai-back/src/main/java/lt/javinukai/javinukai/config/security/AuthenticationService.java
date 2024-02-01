@@ -43,10 +43,11 @@ public class AuthenticationService {
                 .institution(registrationDTO.getInstitution())
                 .isFreelance(registrationDTO.getInstitution() == null)
                 .build();
-        userRepository.save(user);
+        User createdUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .user(createdUser)
                 .build();
     }
 
@@ -59,6 +60,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .user(user)
                 .build();
     }
 }

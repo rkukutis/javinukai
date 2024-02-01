@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lt.javinukai.javinukai.config.security.UserRole;
@@ -26,6 +27,7 @@ public class User implements UserDetails {
     private UUID uuid;
 
     private String name;
+    @JsonIgnore
     private String password;
     private String surname;
     private String email;
