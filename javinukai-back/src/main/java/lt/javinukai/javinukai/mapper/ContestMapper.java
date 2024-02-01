@@ -1,5 +1,6 @@
-package lt.javinukai.javinukai.dto;
+package lt.javinukai.javinukai.mapper;
 
+import lt.javinukai.javinukai.dto.ContestDTO;
 import lt.javinukai.javinukai.entity.Contest;
 
 public class ContestMapper {

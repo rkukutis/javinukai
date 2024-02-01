@@ -2,19 +2,19 @@ package lt.javinukai.javinukai.service;
 
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.ContestDTO;
-import lt.javinukai.javinukai.dto.ContestMapper;
+import lt.javinukai.javinukai.exception.ContestNotFoundException;
+import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @Slf4j
-public class ContestService implements IContestService {
+public class ContestService {
 
     private final ContestRepository contestRepository;
 
@@ -23,38 +23,42 @@ public class ContestService implements IContestService {
         this.contestRepository = contestRepository;
     }
 
-    @Override
-    public ContestDTO createContest(ContestDTO contestDTO) {
+    public Contest createContest(ContestDTO contestDTO) {
         final Contest contest = ContestMapper.contestDTOToContest(contestDTO);
         final Contest createdContest = contestRepository.save(contest);
-        return ContestMapper.contestToContestDTO(createdContest);
+        log.debug("{}: Created and added new contest to database", this.getClass().getName());
+        return createdContest;
     }
 
-    @Override
-    public List<ContestDTO> retrieveAllContests() {
-        final List<Contest> contestEntityList= contestRepository.findAll();
-        return contestEntityList.stream()
-                .map(ContestMapper::contestToContestDTO)
-                .toList();
+    public List<Contest> retrieveAllContests() {
+        final List<Contest> listContests = contestRepository.findAll();
+        log.debug("{}: Retrieving all contest list from database", this.getClass().getName());
+        return listContests;
     }
 
-    @Override
-    public Optional<ContestDTO> retrieveContest(UUID id) {
-        final Optional<Contest> contestFound = contestRepository.findById(id);
-        return contestFound.map(ContestMapper::contestToContestDTO);
+    public Contest retrieveContest(UUID id) {
+        final Contest contestToShow = contestRepository.findById(id).orElseThrow(() -> new RuntimeException("contest by id -> " + id + " was not found"));
+        log.debug("Retrieving contest from database, name - {}", this.getClass().getName());
+        return contestToShow;
     }
 
-    @Override
-    public ContestDTO updateContest(ContestDTO contestDTO) {
-        final Contest contestToUpdate = ContestMapper.contestDTOToContest(contestDTO);
-        contestRepository.save(contestToUpdate);
-        return contestDTO;
+    public Contest updateContest(UUID id, ContestDTO contestDTO) {
+        final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(() -> new RuntimeException("contest by id -> " + id + " was not found"));
+        contestToUpdate.setName(contestDTO.getName());
+        contestToUpdate.setDescription(contestDTO.getDescription());
+        contestToUpdate.setStartDate(contestDTO.getStartDate());
+        contestToUpdate.setEndDate(contestDTO.getEndDate());
+        log.debug("{}: Updating contest", this.getClass().getName() );
+        return contestRepository.save(contestToUpdate);
     }
 
-    @Override
-    public void deleteContest(ContestDTO contestDTO) {
-        final Contest contestToDelete = ContestMapper.contestDTOToContest(contestDTO);
-        contestRepository.deleteById(contestToDelete.getId());
+    public void deleteContest(UUID id) {
+        if (contestRepository.existsById(id)) {
+            contestRepository.deleteById(id);
+            log.debug("sample");
+        } else {
+            throw new ContestNotFoundException("contest was not found");
+        }
     }
 
 }

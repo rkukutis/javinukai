@@ -4,7 +4,6 @@ package lt.javinukai.javinukai.dto;
 import lombok.*;
 
 import java.time.ZonedDateTime;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor

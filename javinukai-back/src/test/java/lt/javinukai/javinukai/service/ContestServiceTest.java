@@ -1,7 +1,5 @@
 package lt.javinukai.javinukai.service;
 
-import lt.javinukai.javinukai.dto.ContestDTO;
-import lt.javinukai.javinukai.dto.ContestMapper;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import org.junit.jupiter.api.Test;
@@ -11,11 +9,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.ZonedDateTime;
-import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ContestServiceTest {

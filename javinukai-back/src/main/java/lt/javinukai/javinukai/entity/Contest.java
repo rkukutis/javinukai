@@ -2,6 +2,8 @@ package lt.javinukai.javinukai.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -35,4 +37,22 @@ public class Contest {
     @Setter
     @Column(name = "end_date")
     private ZonedDateTime endDate;
+
+    @CreatedDate
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "modified_at")
+    private ZonedDateTime modifiedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = ZonedDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.modifiedAt = ZonedDateTime.now();
+    }
 }
