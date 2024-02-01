@@ -20,12 +20,15 @@ public class ApplicationFilters {
     @Bean
     public SecurityFilterChain filters(HttpSecurity http) throws Exception {
 
+        // localhost:8080/swagger-ui/index.html - Swagger
+
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("api/v1/auth/register").permitAll()
                         .requestMatchers("api/v1/auth/login").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers // for dev - needed for h2 console page
