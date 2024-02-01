@@ -50,12 +50,12 @@ public class UserService {
         return userRepository.save(user);
     }
     public List<User> deleteUser(UUID userId) {
-        try {
-        userRepository.deleteById(userId);
-        log.debug("Deleted user {}", userId);
-        } catch (IllegalArgumentException exception) {
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+            log.debug("Deleted user {}", userId);
+            return userRepository.findAll();
+        } else {
             throw new UserNotFoundException(userId);
         }
-        return userRepository.findAll();
     }
 }
