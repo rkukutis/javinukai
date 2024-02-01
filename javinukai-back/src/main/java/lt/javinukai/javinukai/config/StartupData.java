@@ -1,8 +1,9 @@
 package lt.javinukai.javinukai.config;
 
 import lombok.RequiredArgsConstructor;
-import lt.javinukai.javinukai.entity.User;
-import lt.javinukai.javinukai.repository.UserRepository;
+import lt.javinukai.javinukai.config.security.AuthenticationService;
+import lt.javinukai.javinukai.dto.AuthenticationResponse;
+import lt.javinukai.javinukai.dto.RegistrationDTO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,23 +11,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class StartupData {
-    private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
     @Bean
     CommandLineRunner initialize() {
         return args -> {
-            User testUser = User.builder()
-                    .name("John")
-                    .surname("Doe")
-                    .birthYear(1984)
-                    .email("jdoe@mail.com")
-                    .maxSinglePhotos(10)
-                    .maxCollections(10)
-                    .phoneNumber("+37047812482")
-                    .institution("Delfi")
-                    .isFreelance(false)
-                    .build();
-            userRepository.save(testUser);
+
+            RegistrationDTO registration = new RegistrationDTO(
+                    "John",
+                    "Doe",
+                    1984,
+                    "+37047812482",
+                    "jdoe@mail.com",
+                    "password"
+            );
+
+           AuthenticationResponse res =  authenticationService.register(registration);
+            System.out.println("CREATED JWT: " + res.getToken());
         };
     }
 }

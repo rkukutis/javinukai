@@ -34,6 +34,10 @@ public class RegistrationDTO {
     @Length(max = 100, message = "EMAIL_LENGTH_EXCEEDED")
     private String email;
 
+    @NonNull
+    @NotBlank
+    private String password;
+
     // this can be null
     @Length(max = 150, message = "INSTITUTION_NAME_LENGTH_EXCEEDED")
     private String institution;
