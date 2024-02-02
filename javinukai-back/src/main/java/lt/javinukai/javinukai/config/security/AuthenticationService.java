@@ -1,11 +1,13 @@
 package lt.javinukai.javinukai.config.security;
 
 import lombok.RequiredArgsConstructor;
-import lt.javinukai.javinukai.dto.AuthenticationResponse;
-import lt.javinukai.javinukai.dto.LoginDTO;
-import lt.javinukai.javinukai.dto.RegistrationDTO;
+import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
+import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
+import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.exception.UserAlreadyExistsException;
 import lt.javinukai.javinukai.repository.UserRepository;
+import lt.javinukai.javinukai.service.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
@@ -27,35 +30,42 @@ public class AuthenticationService {
     @Value("${app.constants.user-defaults.max-photos.collection}")
     private int defaultMaxCollections;
 
-    public AuthenticationResponse register(RegistrationDTO registrationDTO) {
+    public AuthenticationResponse register(UserRegistrationRequest userRegistrationRequest) {
+
+        if (userRepository.findByEmail(userRegistrationRequest.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException("USER_ALREADY_EXISTS_ERROR");
+        }
+
         var user = User.builder()
-                .name(registrationDTO.getName())
-                .surname(registrationDTO.getSurname())
-                .email(registrationDTO.getEmail())
-                .phoneNumber(registrationDTO.getPhoneNumber())
-                .birthYear(registrationDTO.getBirthYear())
-                .password(passwordEncoder.encode(registrationDTO.getPassword()))
+                .name(userRegistrationRequest.getName())
+                .surname(userRegistrationRequest.getSurname())
+                .email(userRegistrationRequest.getEmail())
+                .phoneNumber(userRegistrationRequest.getPhoneNumber())
+                .birthYear(userRegistrationRequest.getBirthYear())
+                .password(passwordEncoder.encode(userRegistrationRequest.getPassword()))
                 .role(UserRole.USER)
                 .maxSinglePhotos(defaultMaxSinglePhotos)
                 .maxCollections(defaultMaxCollections)
                 .isNonLocked(true)
                 .isEnabled(true)
-                .institution(registrationDTO.getInstitution())
-                .isFreelance(registrationDTO.getInstitution() == null)
+                .institution(userRegistrationRequest.getInstitution())
+                .isFreelance(userRegistrationRequest.getInstitution() == null)
                 .build();
         User createdUser = userRepository.save(user);
+        emailService.sendEmailConfirmation(createdUser);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .user(createdUser)
                 .build();
+
     }
 
-    public AuthenticationResponse login(LoginDTO loginDTO) {
+    public AuthenticationResponse login(LoginRequest loginRequest) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(),
-                        loginDTO.getPassword()));
-        var user = userRepository.findByEmail(loginDTO.getEmail())
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+                        loginRequest.getPassword()));
+        var user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(()-> new UsernameNotFoundException("Wrong Credentials"));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -63,4 +73,5 @@ public class AuthenticationService {
                 .user(user)
                 .build();
     }
+
 }

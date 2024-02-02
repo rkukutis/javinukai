@@ -1,13 +1,15 @@
-package lt.javinukai.javinukai.dto;
+package lt.javinukai.javinukai.dto.request.user;
 
 import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-
-@Data
-public class UserUpdateDTO{
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserRegistrationRequest {
 
     @NonNull
     @NotBlank
@@ -32,14 +34,11 @@ public class UserUpdateDTO{
     @Length(max = 100, message = "EMAIL_LENGTH_EXCEEDED")
     private String email;
 
+    @NonNull
+    @NotBlank
+    private String password;
+
     // this can be null
     @Length(max = 150, message = "INSTITUTION_NAME_LENGTH_EXCEEDED")
     private String institution;
-
-    @NotNull
-    @Min(0)
-    private Integer maxSinglePhotos;
-    @NotNull
-    @Min(0)
-    private Integer maxCollections;
 }

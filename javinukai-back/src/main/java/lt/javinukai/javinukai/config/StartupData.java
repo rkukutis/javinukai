@@ -2,8 +2,8 @@ package lt.javinukai.javinukai.config;
 
 import lombok.RequiredArgsConstructor;
 import lt.javinukai.javinukai.config.security.AuthenticationService;
-import lt.javinukai.javinukai.dto.AuthenticationResponse;
-import lt.javinukai.javinukai.dto.RegistrationDTO;
+import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
+import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class StartupData {
     CommandLineRunner initialize() {
         return args -> {
 
-            RegistrationDTO registration = new RegistrationDTO(
+            UserRegistrationRequest registration = new UserRegistrationRequest(
                     "John",
                     "Doe",
                     1984,
