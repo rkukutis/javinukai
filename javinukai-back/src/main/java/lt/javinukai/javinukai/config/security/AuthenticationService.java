@@ -6,6 +6,7 @@ import lt.javinukai.javinukai.dto.LoginDTO;
 import lt.javinukai.javinukai.dto.RegistrationDTO;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.repository.UserRepository;
+import lt.javinukai.javinukai.service.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
@@ -44,11 +46,13 @@ public class AuthenticationService {
                 .isFreelance(registrationDTO.getInstitution() == null)
                 .build();
         User createdUser = userRepository.save(user);
+        emailService.sendEmailConfirmation(createdUser);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .user(createdUser)
                 .build();
+
     }
 
     public AuthenticationResponse login(LoginDTO loginDTO) {
@@ -63,4 +67,5 @@ public class AuthenticationService {
                 .user(user)
                 .build();
     }
+
 }
