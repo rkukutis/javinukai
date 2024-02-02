@@ -18,6 +18,14 @@ logging:
         security: TRACE
         jpa: DEBUG
 app:
+  scheme: http
+  host: localhost:8080
+  email:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    auth:
+      user: 3a1005aa68b999
+      password: 497c640c28dda1
   constants:
     user-defaults:
       max-photos:

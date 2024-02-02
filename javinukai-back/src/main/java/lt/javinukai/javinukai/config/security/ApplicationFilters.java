@@ -29,6 +29,7 @@ public class ApplicationFilters {
                         .requestMatchers("api/v1/auth/login").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("api/v1/**/confirm/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers // for dev - needed for h2 console page
