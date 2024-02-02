@@ -10,6 +10,7 @@ import lt.javinukai.javinukai.dto.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.LoginDTO;
 import lt.javinukai.javinukai.dto.RegistrationDTO;
 import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.service.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
 import java.time.Duration;
 
 @RestController
@@ -25,13 +27,14 @@ import java.time.Duration;
 @Validated
 public class AuthorizationController {
     private final AuthenticationService authenticationService;
+    private final EmailService emailService;
 
     @Value("${app.constants.security.jwt-cookie-valid-hours}")
     private int jwtValidTimeHours;
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid RegistrationDTO registration,
-                                         HttpServletResponse response, HttpServletRequest request) {
+                                         HttpServletResponse response, HttpServletRequest request) throws URISyntaxException {
         AuthenticationResponse auth = authenticationService.register(registration);
         String cookieString = getResponseCookie("jwt", auth.getToken(), jwtValidTimeHours).toString();
         response.addHeader(HttpHeaders.SET_COOKIE, cookieString);
@@ -50,6 +53,7 @@ public class AuthorizationController {
     public ResponseEntity<String> testCookie(@CookieValue("jwt") String jwt) {
         return ResponseEntity.ok().body("Received JWT from cookie: " + jwt);
     }
+
 
     private ResponseCookie getResponseCookie(String name, String value, int hoursValid) {
         return ResponseCookie.from(name, value)
