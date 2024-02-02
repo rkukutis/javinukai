@@ -2,7 +2,7 @@ package lt.javinukai.javinukai.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lt.javinukai.javinukai.dto.RegistrationDTO;
+import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,12 +26,12 @@ class UserControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-    private RegistrationDTO testRegistration;
+    private UserRegistrationRequest testRegistration;
 
 
     @BeforeEach
     public void setupRegistration() {
-        this.testRegistration = new RegistrationDTO(
+        this.testRegistration = new UserRegistrationRequest(
                 "Fester",
                 "McTester",
                 1990,
@@ -80,10 +80,10 @@ class UserControllerTest {
         assertEquals(404, result.getResponse().getStatus());
     }
 
-    private RequestBuilder getBuilderForPost(RegistrationDTO registrationDTO) throws JsonProcessingException {
+    private RequestBuilder getBuilderForPost(UserRegistrationRequest userRegistrationRequest) throws JsonProcessingException {
         return MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(registrationDTO));
+                .content(objectMapper.writeValueAsString(userRegistrationRequest));
     }
 
 }

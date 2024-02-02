@@ -1,28 +1,28 @@
 package lt.javinukai.javinukai.mapper;
 
-import lt.javinukai.javinukai.dto.RegistrationDTO;
-import lt.javinukai.javinukai.dto.UserUpdateDTO;
+import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
+import lt.javinukai.javinukai.dto.request.user.UserUpdateRequest;
 import lt.javinukai.javinukai.entity.User;
 
 public class UserMapper {
 
     private UserMapper(){}
 
-    public static User mapToUser(RegistrationDTO registrationDTO) {
+    public static User mapToUser(UserRegistrationRequest userRegistrationRequest) {
         return User.builder()
-                .name(registrationDTO.getName())
-                .surname(registrationDTO.getSurname())
-                .email(registrationDTO.getEmail())
-                .institution(registrationDTO.getInstitution())
-                .isFreelance(registrationDTO.getInstitution() == null)
-                .birthYear(registrationDTO.getBirthYear())
+                .name(userRegistrationRequest.getName())
+                .surname(userRegistrationRequest.getSurname())
+                .email(userRegistrationRequest.getEmail())
+                .institution(userRegistrationRequest.getInstitution())
+                .isFreelance(userRegistrationRequest.getInstitution() == null)
+                .birthYear(userRegistrationRequest.getBirthYear())
                 .maxSinglePhotos(50)
                 .maxCollections(50)
-                .phoneNumber(registrationDTO.getPhoneNumber())
+                .phoneNumber(userRegistrationRequest.getPhoneNumber())
                 .build();
     }
 
-    public static User mapToUser(UserUpdateDTO updateDTO) {
+    public static User mapToUser(UserUpdateRequest updateDTO) {
         return User.builder()
                 .name(updateDTO.getName())
                 .surname(updateDTO.getSurname())

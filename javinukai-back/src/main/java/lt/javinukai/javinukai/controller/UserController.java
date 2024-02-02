@@ -3,8 +3,8 @@ package lt.javinukai.javinukai.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.dto.RegistrationDTO;
-import lt.javinukai.javinukai.dto.UserUpdateDTO;
+import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
+import lt.javinukai.javinukai.dto.request.user.UserUpdateRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.mapper.UserMapper;
 import lt.javinukai.javinukai.service.UserService;
@@ -31,14 +31,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody @Valid RegistrationDTO registration) {
+    public ResponseEntity<User> createUser(@RequestBody @Valid UserRegistrationRequest registration) {
         log.debug("{}: Registering user {} {}",
                 this.getClass().getName(), registration.getName(), registration.getSurname());
         return ResponseEntity.ok().body(userService.createUser(UserMapper.mapToUser(registration)));
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody @Valid UserUpdateDTO updateDTO) {
+    public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody @Valid UserUpdateRequest updateDTO) {
         return ResponseEntity.ok().body(userService.updateUser(UserMapper.mapToUser(updateDTO), userId));
     }
 
