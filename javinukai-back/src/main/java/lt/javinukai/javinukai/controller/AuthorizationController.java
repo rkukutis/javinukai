@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.javinukai.javinukai.config.security.AuthenticationService;
+import lt.javinukai.javinukai.dto.request.auth.ForgotPasswordRequest;
+import lt.javinukai.javinukai.dto.request.auth.PasswordResetRequest;
 import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
@@ -63,4 +65,24 @@ public class AuthorizationController {
                 .path("/")
                 .build();
     }
+
+
+    @PostMapping("/confirm-email")
+    public ResponseEntity<String> confirmEmail(@RequestParam String token) {
+        authenticationService.confirmEmail(token);
+        return ResponseEntity.ok().body("Email confirmed. You may log in");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody @Valid PasswordResetRequest passwordResetRequest) {
+       authenticationService.resetPassword(passwordResetRequest.getResetToken(), passwordResetRequest.getNewPassword());
+       return ResponseEntity.ok().body("Password has been reset");
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody @Valid ForgotPasswordRequest forgotPasswordRequest) {
+        authenticationService.forgotPassword(forgotPasswordRequest.getEmail());
+        return ResponseEntity.ok().body("Password has been reset");
+    }
+
 }
