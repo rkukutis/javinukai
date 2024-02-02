@@ -23,7 +23,7 @@ public class UserService {
     }
     public User getUser(UUID userId) {
         User user =  userRepository.findById(userId)
-                .orElseThrow(()-> new RuntimeException("User " + userId + " not found!"));
+                .orElseThrow(()-> new UserNotFoundException(userId));
         log.debug("Fetched user {} from database", user.getUuid());
         return user;
     }
@@ -36,7 +36,7 @@ public class UserService {
     }
     public User updateUser(User updatedUser, UUID userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User " + userId + " not found!"));
+                .orElseThrow(() -> new UserNotFoundException(userId));
         log.debug("{}: Updating user {}", this.getClass().getName(), user.getUuid());
         user.setName(updatedUser.getName());
         user.setSurname(updatedUser.getSurname());

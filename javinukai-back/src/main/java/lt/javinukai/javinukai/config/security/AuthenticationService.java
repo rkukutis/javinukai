@@ -5,6 +5,7 @@ import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.exception.UserAlreadyExistsException;
 import lt.javinukai.javinukai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,11 @@ public class AuthenticationService {
     private int defaultMaxCollections;
 
     public AuthenticationResponse register(UserRegistrationRequest userRegistrationRequest) {
+
+        if (userRepository.findByEmail(userRegistrationRequest.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException("USER_ALREADY_EXISTS_ERROR");
+        }
+
         var user = User.builder()
                 .name(userRegistrationRequest.getName())
                 .surname(userRegistrationRequest.getSurname())
