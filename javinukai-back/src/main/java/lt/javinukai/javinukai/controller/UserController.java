@@ -15,12 +15,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("api/v1/users")
 @Slf4j
 @Validated
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    // MUST BE SECURED - ADMIN/MOD use only
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUser(@PathVariable UUID userId) {

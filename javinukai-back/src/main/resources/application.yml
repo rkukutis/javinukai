@@ -1,4 +1,3 @@
-
 spring:
   jackson:
     mapper:
@@ -16,4 +15,15 @@ logging:
   level:
     org:
       springframework:
+        security: TRACE
         jpa: DEBUG
+app:
+  constants:
+    user-defaults:
+      max-photos:
+        single: 20
+        collection: 20
+    security:
+      jwt-secret-key: 56bb52a9882a6z7bfd065c980908a4e656fd52a9882a6b7bfa065c982907a4e6
+      jwt-valid-hours: 72
+      jwt-cookie-valid-hours: 72
