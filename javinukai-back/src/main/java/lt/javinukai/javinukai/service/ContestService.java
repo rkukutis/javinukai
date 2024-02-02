@@ -1,8 +1,8 @@
 package lt.javinukai.javinukai.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.ContestDTO;
-import lt.javinukai.javinukai.exception.ContestNotFoundException;
 import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.repository.ContestRepository;
@@ -26,38 +26,42 @@ public class ContestService {
     public Contest createContest(ContestDTO contestDTO) {
         final Contest contest = ContestMapper.contestDTOToContest(contestDTO);
         final Contest createdContest = contestRepository.save(contest);
-        log.debug("{}: Created and added new contest to database", this.getClass().getName());
+        log.info("{}: Created and added new contest to database", this.getClass().getName());
         return createdContest;
     }
 
     public List<Contest> retrieveAllContests() {
         final List<Contest> listContests = contestRepository.findAll();
-        log.debug("{}: Retrieving all contest list from database", this.getClass().getName());
+        log.info("{}: Retrieving all contest list from database", this.getClass().getName());
         return listContests;
     }
 
     public Contest retrieveContest(UUID id) {
-        final Contest contestToShow = contestRepository.findById(id).orElseThrow(() -> new RuntimeException("contest by id -> " + id + " was not found"));
-        log.debug("Retrieving contest from database, name - {}", this.getClass().getName());
+        final Contest contestToShow = contestRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Contest was not found with ID: " + id));
+        log.info("Retrieving contest from database, name - {}", this.getClass().getName());
         return contestToShow;
     }
 
     public Contest updateContest(UUID id, ContestDTO contestDTO) {
-        final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(() -> new RuntimeException("contest by id -> " + id + " was not found"));
+        final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Contest was not found with ID: " + id));
         contestToUpdate.setName(contestDTO.getName());
         contestToUpdate.setDescription(contestDTO.getDescription());
+        contestToUpdate.setCategory(contestDTO.getCategory());
+        contestToUpdate.setTotalSubmissions(contestDTO.getTotalSubmissions());
         contestToUpdate.setStartDate(contestDTO.getStartDate());
         contestToUpdate.setEndDate(contestDTO.getEndDate());
-        log.debug("{}: Updating contest", this.getClass().getName() );
+        log.info("{}: Updating contest", this.getClass().getName());
         return contestRepository.save(contestToUpdate);
     }
 
     public void deleteContest(UUID id) {
         if (contestRepository.existsById(id)) {
             contestRepository.deleteById(id);
-            log.debug("sample");
+            log.info("{}: Deleted contest from the database with ID: {}", this.getClass().getName(), id);
         } else {
-            throw new ContestNotFoundException("contest was not found");
+            throw new EntityNotFoundException("Contest was not found with ID: " + id);
         }
     }
 

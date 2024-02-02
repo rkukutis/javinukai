@@ -1,5 +1,7 @@
 package lt.javinukai.javinukai.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.ContestDTO;
 import lt.javinukai.javinukai.entity.Contest;
@@ -25,34 +27,36 @@ public class ContestController {
     }
 
     @PostMapping(path = "/contests")
-    public ResponseEntity<Contest> createContest(@RequestBody ContestDTO contestDTO) {
+    public ResponseEntity<Contest> createContest(@RequestBody @Valid ContestDTO contestDTO) {
         final Contest createdContest = contestService.createContest(contestDTO);
+        log.info("Request for contest creation completed, given ID: {}", createdContest.getId());
         return new ResponseEntity<>(createdContest, HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/contests")
     public ResponseEntity<List<Contest>> retrieveAllContests() {
         final List<Contest> contestList = contestService.retrieveAllContests();
+        log.info("Request for retrieving all contests, {} record(s) found", contestList.size());
         return new ResponseEntity<>(contestList, HttpStatus.OK);
     }
 
     @GetMapping(path = "/contests/{id}")
-    public ResponseEntity<Contest> retrieveContest(@PathVariable UUID id) {
-        log.debug("GET request for all contests");
+    public ResponseEntity<Contest> retrieveContest(@PathVariable @NotNull UUID id) {
+        log.info("Request for retrieving contest with ID: {}", id);
         final Contest foundContest = contestService.retrieveContest(id);
         return new ResponseEntity<>(foundContest, HttpStatus.OK);
     }
 
     @PutMapping(path = "/contests/{id}")
-    public ResponseEntity<Contest> updateContest(@PathVariable UUID id, @RequestBody ContestDTO contestDTO) {
-        log.debug("PUT request for id - {}", id);
+    public ResponseEntity<Contest> updateContest(@PathVariable @NotNull UUID id, @RequestBody @Valid ContestDTO contestDTO) {
+        log.info("Request for updating contest with ID: {}", id);
         final Contest updatedContest = contestService.updateContest(id, contestDTO);
         return new ResponseEntity<>(updatedContest, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/contests/{id}")
-    public ResponseEntity<ContestDTO> deleteContest(@PathVariable UUID id) {
-        log.debug("DELETE request for id - {}", id);
+    public ResponseEntity<?> deleteContest(@PathVariable @NotNull UUID id) {
+        log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

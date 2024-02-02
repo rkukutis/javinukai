@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Getter
-@ToString
 public class Contest {
 
     @Id
@@ -29,6 +29,15 @@ public class Contest {
     @Setter
     @Column(name = "description")
     private String description;
+
+    // laikinai bus List<String>, po to keisis į List<Category>
+    @Setter
+    @Column(name = "categories")
+    private List<String> category;
+
+    @Setter
+    @Column(name = "total_submissions")
+    private long totalSubmissions;
 
     @Setter
     @Column(name = "start_date")
