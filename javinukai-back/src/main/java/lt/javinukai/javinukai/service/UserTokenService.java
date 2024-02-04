@@ -41,7 +41,7 @@ public class UserTokenService {
         if (tokenOptional.isEmpty()) return false;
         UserToken token = tokenOptional.get();
         if (!userRepository.existsById(token.getUser().getUuid())) return false;
-        return token.getExpiresAt().isBefore(ZonedDateTime.now());
+        return ZonedDateTime.now().isBefore(token.getExpiresAt());
     }
     public User getTokenUser(String tokenValue, TokenType type) {
         UserToken token = userTokenRepository.findByTokenValueAndType(tokenValue, type)

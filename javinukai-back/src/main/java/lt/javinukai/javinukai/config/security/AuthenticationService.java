@@ -58,6 +58,7 @@ public class AuthenticationService {
                 .isFreelance(userRegistrationRequest.getInstitution() == null)
                 .build();
         User createdUser = userRepository.save(user);
+        //TODO: this needs to be async
         sendEmailWithToken(user, TokenType.EMAIL_CONFIRM);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

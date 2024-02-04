@@ -36,8 +36,11 @@ public class AuthorizationController {
     public ResponseEntity<User> register(@RequestBody @Valid UserRegistrationRequest registration,
                                          HttpServletResponse response, HttpServletRequest request) {
         AuthenticationResponse auth = authenticationService.register(registration);
+        /*
+        account is disabled before confirming email so there is no point sending a jwt
         String cookieString = getResponseCookie("jwt", auth.getToken(), jwtValidTimeHours).toString();
         response.addHeader(HttpHeaders.SET_COOKIE, cookieString);
+        */
         return ResponseEntity.ok().body(auth.getUser());
     }
 
@@ -59,9 +62,9 @@ public class AuthorizationController {
     private ResponseCookie getResponseCookie(String name, String value, int hoursValid) {
         return ResponseCookie.from(name, value)
                 .maxAge(Duration.ofHours(hoursValid))
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("strict")
+                .httpOnly(false)
+                .secure(false)
+                .sameSite("lax")
                 .path("/")
                 .build();
     }
