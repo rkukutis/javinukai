@@ -47,8 +47,5 @@ public class UserController {
         return ResponseEntity.ok().body(userService.deleteUser(userId));
     }
 
-    @PostMapping("/{userId}/confirm/{token}")
-    public ResponseEntity<String> confirmUser(@PathVariable UUID userId, @PathVariable String token) {
-        return ResponseEntity.ok().body(userId  + "/" + token);
-    }
+
 }

@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.javinukai.javinukai.config.security.AuthenticationService;
+import lt.javinukai.javinukai.dto.request.auth.ForgotPasswordRequest;
+import lt.javinukai.javinukai.dto.request.auth.PasswordResetRequest;
 import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
@@ -34,8 +36,11 @@ public class AuthorizationController {
     public ResponseEntity<User> register(@RequestBody @Valid UserRegistrationRequest registration,
                                          HttpServletResponse response, HttpServletRequest request) {
         AuthenticationResponse auth = authenticationService.register(registration);
+        /*
+        account is disabled before confirming email so there is no point sending a jwt
         String cookieString = getResponseCookie("jwt", auth.getToken(), jwtValidTimeHours).toString();
         response.addHeader(HttpHeaders.SET_COOKIE, cookieString);
+        */
         return ResponseEntity.ok().body(auth.getUser());
     }
 
@@ -57,10 +62,30 @@ public class AuthorizationController {
     private ResponseCookie getResponseCookie(String name, String value, int hoursValid) {
         return ResponseCookie.from(name, value)
                 .maxAge(Duration.ofHours(hoursValid))
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("strict")
+                .httpOnly(false)
+                .secure(false)
+                .sameSite("lax")
                 .path("/")
                 .build();
     }
+
+
+    @PostMapping("/confirm-email")
+    public ResponseEntity<String> confirmEmail(@RequestParam String token) {
+        authenticationService.confirmEmail(token);
+        return ResponseEntity.ok().body("Email confirmed. You may log in");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody @Valid PasswordResetRequest passwordResetRequest) {
+       authenticationService.resetPassword(passwordResetRequest.getResetToken(), passwordResetRequest.getNewPassword());
+       return ResponseEntity.ok().body("Password has been reset");
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody @Valid ForgotPasswordRequest forgotPasswordRequest) {
+        authenticationService.forgotPassword(forgotPasswordRequest.getEmail());
+        return ResponseEntity.ok().body("Password has been reset");
+    }
+
 }

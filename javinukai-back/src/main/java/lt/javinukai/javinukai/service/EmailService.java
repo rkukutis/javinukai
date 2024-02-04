@@ -4,7 +4,6 @@ package lt.javinukai.javinukai.service;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lt.javinukai.javinukai.entity.User;
-import lt.javinukai.javinukai.utility.RandomTokenGenerator;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -33,13 +32,13 @@ private final JavaMailSender mailSender;
     }
 
     @SneakyThrows // temp
-    public void sendEmailConfirmation(User user) {
-        String token = RandomTokenGenerator.generateToken(64);
+    public void sendEmailConfirmation(User user, String token) {
 
         URI uri = new URIBuilder()
                 .setScheme(httpScheme)
                 .setHost(host)
-                .setPathSegments("users", user.getUuid().toString(), "confirm", token)
+                .setPathSegments("api", "v1", "auth", "confirm-email")
+                .addParameter("token", token)
                 .build();
 
         String message = "Welcome to the site, " + user.getName() +
@@ -50,13 +49,13 @@ private final JavaMailSender mailSender;
     }
 
     @SneakyThrows // temp
-    public void sendPasswordResetToken(User user) {
-        String token = RandomTokenGenerator.generateToken(64);
+    public void sendPasswordResetToken(User user, String token) {
 
         URI uri = new URIBuilder()
                 .setScheme(httpScheme)
                 .setHost(host)
-                .setPathSegments("auth", user.getUuid().toString(), "password-reset", token)
+                .setPathSegments("api", "v1", "auth", "reset-password")
+                .addParameter("token", token)
                 .build();
 
         String message = user.getName() +

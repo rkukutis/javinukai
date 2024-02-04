@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({UserNotFoundException.class})
     public ProblemDetail handleUserNotFound(UserNotFoundException exception, WebRequest request) {
-        log.debug(exception.getMessage());
+        log.error(exception.getMessage());
         ProblemDetail res = ProblemDetail.forStatus(400);
         res.setTitle("USER_NOT_FOUND_ERROR");
         res.setDetail(exception.getMessage());
@@ -23,11 +23,19 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({UserAlreadyExistsException.class})
-    public ProblemDetail handleUserNotFound(UserAlreadyExistsException exception, WebRequest request) {
-        log.debug(exception.getMessage());
+    public ProblemDetail handleUserAlreadyExists(UserAlreadyExistsException exception, WebRequest request) {
+        log.error(exception.getMessage());
         ProblemDetail res = ProblemDetail.forStatus(400);
         res.setTitle(exception.getMessage());
         res.setDetail("An user with provided email already exists!");
+        return res;
+    }
+    @ExceptionHandler({InvalidTokenException.class})
+    public ProblemDetail handleInvalidToken(InvalidTokenException exception, WebRequest request) {
+        log.error(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("INVALID_TOKEN_ERROR");
+        res.setDetail(exception.getMessage());
         return res;
     }
 }

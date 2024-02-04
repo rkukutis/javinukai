@@ -10,4 +10,8 @@ public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException(UUID userId) {
         super(String.format("User %s not found!", userId.toString()));
     }
+
+    public UserNotFoundException(String message) {
+        super(String.format(message));
+    }
 }
