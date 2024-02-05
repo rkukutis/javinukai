@@ -10,8 +10,7 @@ export default async function (registrationInfo) {
     },
     body: JSON.stringify(registrationInfo),
   });
-  console.log(res);
+  if (!res.ok) throw new Error("Registration failed. Please try again later");
   const data = await res.json();
-  console.log(data);
   return data;
 }

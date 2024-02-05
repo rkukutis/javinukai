@@ -10,8 +10,12 @@ async function forgotPassword(email) {
     },
     body: JSON.stringify({ email }),
   });
-  const data = await res.text();
-  return data;
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.title);
+  } else {
+    return await res.json();
+  }
 }
 
 export default forgotPassword;

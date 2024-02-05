@@ -12,8 +12,12 @@ async function resetPassword(resetToken, newPassword) {
     },
     body: JSON.stringify({ resetToken: resetToken, newPassword: newPassword }),
   });
-  const data = await res.text();
-  return data;
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.title);
+  } else {
+    return await res.json();
+  }
 }
 
 export default resetPassword;
