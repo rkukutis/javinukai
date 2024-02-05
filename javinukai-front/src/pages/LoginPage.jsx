@@ -5,6 +5,7 @@ function LoginPage() {
   const { register, handleSubmit } = useForm();
 
   async function onSubmit(data) {
+    console.log(data);
     const res = await loginUser(data);
     console.log(res);
   }

@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
+import NavBar from "./NavBar";
 
 function Layout() {
   return (
     <div>
       <header className="text h-[8vh] bg-slate-700 text-slate-100">
-        HEADER
+        <NavBar />
       </header>
       <main className="text min-h-[82vh]">
         <Outlet />
