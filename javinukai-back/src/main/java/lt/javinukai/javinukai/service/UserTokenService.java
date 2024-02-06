@@ -1,39 +1,48 @@
 package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.entity.UserToken;
 import lt.javinukai.javinukai.enums.TokenType;
 import lt.javinukai.javinukai.exception.InvalidTokenException;
 import lt.javinukai.javinukai.repository.UserRepository;
 import lt.javinukai.javinukai.repository.UserTokenRepository;
+import lt.javinukai.javinukai.utility.RandomTokenGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserTokenService {
     private final UserRepository userRepository;
     private final UserTokenRepository userTokenRepository;
 
-    @Value("${app.constants.security.email-confirm-token.valid-minutes}")
+    @Value("${app.constants.security.token.email-confirm-token.valid-minutes}")
     private int emailConfirmTime;
 
-    @Value("${app.constants.security.password-reset-token.valid-minutes}")
+    @Value("${app.constants.security.token.password-reset-token.valid-minutes}")
     private int passwordResetTime;
 
+    @Value("${app.constants.security.token.length}")
+    private int tokenLength;
 
-    public void createTokenForUser(User user, String value, TokenType type) {
-        // TODO: hash tokens before storing in DB
+    public String createTokenForUser(User user, TokenType type) {
+        String tokenValue = RandomTokenGenerator.generateToken(tokenLength);
         int validMinutes = type == TokenType.EMAIL_CONFIRM ? emailConfirmTime : passwordResetTime;
-        UserToken token = new UserToken(value, type, user, validMinutes);
+        UserToken token = new UserToken(tokenValue, type, user, validMinutes);
         UserToken createdToken = userTokenRepository.save(token);
+        log.info("Creating new {} token for {}", type, user);
         user.addToken(createdToken);
         userRepository.save(user);
+        return tokenValue;
     }
 
     public boolean tokenIsValid(String tokenValue, TokenType type) {
@@ -46,7 +55,13 @@ public class UserTokenService {
     public User getTokenUser(String tokenValue, TokenType type) {
         UserToken token = userTokenRepository.findByTokenValueAndType(tokenValue, type)
                 .orElseThrow(() -> new InvalidTokenException("Invalid token"));
-        return userRepository.findById(token.getUser().getUuid())
+        User user =  userRepository.findById(token.getUser().getUuid())
                 .orElseThrow(() -> new InvalidTokenException("No user associated with supplied token"));
+        log.info("Returning {} for {} token", user, type);
+        return user;
+    }
+
+    public List<UserToken> findAllUserTokens(UUID userID, TokenType type) {
+        return userTokenRepository.findByUserUuidAndTypeOrderByCreatedAtDesc(userID, type);
     }
 }

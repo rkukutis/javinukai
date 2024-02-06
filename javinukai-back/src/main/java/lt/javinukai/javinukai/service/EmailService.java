@@ -3,6 +3,7 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.entity.User;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import java.net.URI;
 
 @Service
 @Async
+@Slf4j
 @RequiredArgsConstructor
 public class EmailService {
 private final JavaMailSender mailSender;
@@ -30,6 +32,7 @@ private final JavaMailSender mailSender;
         email.setTo(receiverEmail);
         email.setSubject(subject);
         email.setText(message);
+        log.info("Sending email: {}", email);
         mailSender.send(email);
     }
 

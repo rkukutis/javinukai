@@ -1,7 +1,10 @@
 package lt.javinukai.javinukai.utility;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.SecureRandom;
 
+@Slf4j
 public class RandomTokenGenerator {
 
     private RandomTokenGenerator() {
@@ -16,6 +19,7 @@ public class RandomTokenGenerator {
             int index = random.nextInt(sizeChars);
             builder.append(chars.charAt(index));
         }
+        log.debug("Generating {} symbol random token", length);
         return builder.toString();
     }
 }

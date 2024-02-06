@@ -5,6 +5,7 @@ import lt.javinukai.javinukai.enums.TokenType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,4 +13,6 @@ import java.util.UUID;
 public interface UserTokenRepository extends JpaRepository<UserToken, UUID> {
 
     Optional<UserToken> findByTokenValueAndType(String tokenValue, TokenType type);
+
+    List<UserToken> findByUserUuidAndTypeOrderByCreatedAtDesc(UUID userId, TokenType type);
 }
