@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import forgotPassword from "../services/forgotPassword";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import validateEmail from "../utils/validateEmail";
+import StyledInput from "../Components/StyledInput";
 
 function ForgotPassPage() {
   const { register, handleSubmit } = useForm();
@@ -9,8 +11,7 @@ function ForgotPassPage() {
   const { mutate } = useMutation({
     mutationFn: (data) => forgotPassword(data.email),
     onSuccess: () => toast.success("Password reset email sent successfully"),
-    onError: () => toast.success("Password reset email sent successfully"),
-    // both send the same message to avoid probing attacks
+    onError: (err) => toast.error(err.message),
   });
 
   function onSubmit(formData) {
@@ -32,13 +33,13 @@ function ForgotPassPage() {
               className="px-2 py-1 rounded-sm"
               id="recovery-email"
               placeholder="Email"
-              {...register("email")}
+              {...register("email", {
+                required: "Email is required",
+                validate: (val) =>
+                  validateEmail(val) || "Email must be of a valid format",
+              })}
             />
-            <input
-              type="submit"
-              value="Submit"
-              className="w-full bg-blue-500 rounded-sm py-1 text-slate-50"
-            />
+            <StyledInput id="submit-email" type="submit" value="Submit" />
           </section>
         </form>
       </div>

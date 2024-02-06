@@ -1,5 +1,5 @@
-async function resetPassword(resetToken, newPassword) {
-  console.log(resetToken + "/" + newPassword);
+async function resetPassword(data) {
+  console.log(data);
 
   const res = await fetch(`http://localhost:8080/api/v1/auth/reset-password`, {
     method: "POST",
@@ -10,13 +10,21 @@ async function resetPassword(resetToken, newPassword) {
       "Content-Type": "application/json",
       "User-Agent": "react-front",
     },
-    body: JSON.stringify({ resetToken: resetToken, newPassword: newPassword }),
+    body: JSON.stringify({
+      resetToken: data.token,
+      newPassword: data.newPassword,
+    }),
   });
   if (!res.ok) {
     const err = await res.json();
-    throw new Error(err.title);
-  } else {
-    return await res.json();
+    switch (err.title) {
+      case "INVALID_TOKEN_ERROR":
+        throw new Error("Password reset link is invalid or expired");
+      default:
+        throw new Error(
+          "An error has occured while trying to reset your password"
+        );
+    }
   }
 }
 

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import registerUser from "../services/registerUser";
-import FormFieldError from "../FormFieldError";
+import FormFieldError from "../Components/FormFieldError";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
-import StyledInput from "../StyledInput";
+import StyledInput from "../Components/StyledInput";
+import validateEmail from "../utils/validateEmail";
 
 function RegisterPage() {
   const [affiliation, setAffiliation] = useState("freelance");
@@ -16,7 +17,7 @@ function RegisterPage() {
     formState: { errors },
   } = useForm();
 
-  const { data, mutate } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (data) => registerUser(data),
     onSuccess: () =>
       toast.success("Registered successfully. Please confirm your email"),
@@ -24,7 +25,7 @@ function RegisterPage() {
   });
 
   function onSubmit(formData) {
-    const res = mutate(formData);
+    mutate(formData);
   }
 
   function onAffiliationChange(newAffiliation) {
@@ -115,15 +116,11 @@ function RegisterPage() {
           <section className="form-field">
             <label>Email</label>
             <input
-              type="email"
-              id="email"
               className="form-field__input"
               {...register("email", {
                 required: { value: true, message: "Email is required" },
                 validate: (val) =>
-                  val.match(
-                    "/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})$/"
-                  ) == null || "Email must be of a valid format",
+                  validateEmail(val) || "Email must be of a valid format",
                 maxLength: {
                   value: 200,
                   message: "Email must not exceed 200 characters",
@@ -186,11 +183,11 @@ function RegisterPage() {
               </option>
             </select>
             {affiliation === "institution" && (
-              <div>
+              <div className="form-field">
                 <label>Atstovaujamos priemonės pavadinimas</label>
                 <input
                   id="institution"
-                  className="input-form-field"
+                  className="form-field__input"
                   {...register("institution", {
                     required: false,
                     maxLength: {
@@ -202,7 +199,11 @@ function RegisterPage() {
               </div>
             )}
           </section>
-          <StyledInput value="Register" type="submit" />
+          <StyledInput
+            id="registration-submit"
+            value="Register"
+            type="submit"
+          />
         </form>
       </div>
     </div>

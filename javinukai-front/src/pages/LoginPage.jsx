@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import loginUser from "../services/loginUser";
 import { Link } from "react-router-dom";
-import FormFieldError from "../FormFieldError";
+import FormFieldError from "../Components/FormFieldError";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import useUserStore from "../stores/userStore";
-import StyledInput from "../StyledInput";
+import StyledInput from "../Components/StyledInput";
+import validateEmail from "../utils/validateEmail";
 
 function LoginPage() {
   const {
@@ -38,9 +39,12 @@ function LoginPage() {
           <section className="form-field">
             <label>Email</label>
             <input
-              type="email"
               className="form-field__input"
-              {...register("email", { required: "Email is required" })}
+              {...register("email", {
+                required: "Email is required",
+                validate: (val) =>
+                  validateEmail(val) || "Email must be of a valid format",
+              })}
             />
             {errors.email && (
               <FormFieldError>{errors.email.message}</FormFieldError>
@@ -61,7 +65,7 @@ function LoginPage() {
               <Link to="/register">Register</Link>
             </div>
           </section>
-          <StyledInput value="Log In" type="submit" />
+          <StyledInput id="login-submit" value="Log In" type="submit" />
         </form>
       </div>
     </div>

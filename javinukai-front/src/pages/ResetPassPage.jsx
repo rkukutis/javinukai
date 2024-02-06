@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import resetPassword from "../services/resetPassword";
-import StyledInput from "../StyledInput";
-import FormFieldError from "../FormFieldError";
+import StyledInput from "../Components/StyledInput";
+import FormFieldError from "../Components/FormFieldError";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -16,9 +16,9 @@ function ResetPassPage() {
   const [searchParams] = useSearchParams();
 
   const { mutate } = useMutation({
-    mutationFn: (token, newPassword) => resetPassword(token, newPassword),
+    mutationFn: (data) => resetPassword(data),
     onSuccess: () => toast.success("Password has been changed"),
-    onError: (err) => toast.success(err.message),
+    onError: (err) => toast.error(err.message),
   });
 
   function onSubmit(formData) {
@@ -29,7 +29,7 @@ function ResetPassPage() {
       );
       return;
     }
-    mutate(token, formData.password);
+    mutate({ token, newPassword: formData.password });
   }
 
   return (
@@ -41,6 +41,7 @@ function ResetPassPage() {
         <section className="form-field">
           <label>New password</label>
           <input
+            type="password"
             id="new-password"
             className="form-field__input"
             {...register("password", {
@@ -58,6 +59,7 @@ function ResetPassPage() {
         <section className="form-field">
           <label>Confirm new password</label>
           <input
+            type="password"
             id="confirm-new-password"
             className="form-field__input"
             {...register("passwordConfirm", {
@@ -77,7 +79,7 @@ function ResetPassPage() {
             <FormFieldError>{errors.passwordConfirm.message}</FormFieldError>
           )}
         </section>
-        <StyledInput type="submit" value="Submit" />
+        <StyledInput id="reset-pass-submit" type="submit" value="Submit" />
       </form>
     </div>
   );

@@ -10,11 +10,8 @@ async function forgotPassword(email) {
     },
     body: JSON.stringify({ email }),
   });
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.title);
-  } else {
-    return await res.json();
+  if (res.status === 429) {
+    throw new Error("Please check your email for the password reset link");
   }
 }
 

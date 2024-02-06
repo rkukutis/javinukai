@@ -3,14 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import confirmEmail from "../services/confirmEmail";
 
 function ConfirmEmailPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   console.log(searchParams.get("token"));
 
   useEffect(
     function () {
       if (!searchParams.get("token")) return;
-      const res = confirmEmail(searchParams.get("token"));
-      console.log(res);
+      confirmEmail(searchParams.get("token"));
     },
     [searchParams]
   );
