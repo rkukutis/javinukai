@@ -48,7 +48,7 @@ public class ContestService {
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
         contestToUpdate.setName(contestDTO.getName());
         contestToUpdate.setDescription(contestDTO.getDescription());
-        contestToUpdate.setCategory(contestDTO.getCategory());
+        contestToUpdate.setCategories(contestDTO.getCategories());
         contestToUpdate.setTotalSubmissions(contestDTO.getTotalSubmissions());
         contestToUpdate.setStartDate(contestDTO.getStartDate());
         contestToUpdate.setEndDate(contestDTO.getEndDate());

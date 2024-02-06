@@ -6,13 +6,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "category")
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -35,18 +35,15 @@ public class Category {
     @Column(name = "total_submissions")
     private long totalSubmissions;
 
-    // placeholder, will be changed to many-to-many and linked to competition id
     @Setter
-
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {})
-    @Column(name = "competition")
-
-
-
-
-
-    private List<Category> categoryID;
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "contest_category",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "contest_id")
+    )
+    private List<Contest> contests;
 
     @Setter
     @Column(name = "uploaded_photo")
@@ -59,6 +56,13 @@ public class Category {
     @LastModifiedDate
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
+
+    public void addContest(Contest contest) {
+        if (contests == null) {
+            contests = new ArrayList<>();
+        }
+        contests.add(contest);
+    }
 
     @PrePersist
     protected void onCreate() {

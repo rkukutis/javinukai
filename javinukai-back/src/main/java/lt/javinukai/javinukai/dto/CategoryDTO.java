@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lt.javinukai.javinukai.entity.Contest;
 
 import java.util.List;
 
@@ -12,10 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-
 public class CategoryDTO {
     private String name;
     private long totalSubmissions;
-    private String competitionID;
+    private List<Contest> contests;
     private List<String> uploadedPhoto;
 }

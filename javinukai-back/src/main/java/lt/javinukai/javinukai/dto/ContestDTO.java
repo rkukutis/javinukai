@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lt.javinukai.javinukai.entity.Category;
+import lt.javinukai.javinukai.entity.Contest;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 public class ContestDTO {
     private String name;
     private String description;
-    private List<String> category;
+    private List<Category> categories;
     private long totalSubmissions;
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;

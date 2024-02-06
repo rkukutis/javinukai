@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.controller;
 
 import lt.javinukai.javinukai.dto.ContestDTO;
+import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.service.ContestService;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,10 +30,17 @@ class ContestControllerTest {
 
     @Test
     void testCreateContestController() {
+
+        Category category01 = Category.builder()
+                .name("gamta")
+                .description("ir taip aišku ")
+                .totalSubmissions(100)
+                .build();
+
         ContestDTO contestDTO = ContestDTO.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -44,7 +49,7 @@ class ContestControllerTest {
         Contest createdContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -78,10 +83,16 @@ class ContestControllerTest {
     void testRetrieveSpecifiedContestController() {
         UUID id = UUID.randomUUID();
 
+        Category category01 = Category.builder()
+                .name("gamta")
+                .description("ir taip aišku ")
+                .totalSubmissions(100)
+                .build();
+
         Contest expectedContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -101,10 +112,16 @@ class ContestControllerTest {
     void testUpdateContestController() {
         UUID id = UUID.randomUUID();
 
+        Category category01 = Category.builder()
+                .name("gamta")
+                .description("ir taip aišku ")
+                .totalSubmissions(100)
+                .build();
+
         ContestDTO contestDTO = ContestDTO.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -113,7 +130,7 @@ class ContestControllerTest {
         Contest updatedContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())

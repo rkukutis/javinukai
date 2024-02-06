@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.service;
 
 import lt.javinukai.javinukai.dto.ContestDTO;
+import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import org.junit.jupiter.api.*;
@@ -23,10 +24,17 @@ class ContestServiceTest {
 
     @Test
     void testCreateContestService() {
+
+        Category category01 = Category.builder()
+                .name("gamta")
+                .description("ir taip aišku ")
+                .totalSubmissions(100)
+                .build();
+
         ContestDTO contestDTO = ContestDTO.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -35,7 +43,7 @@ class ContestServiceTest {
         Contest createdContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -68,10 +76,16 @@ class ContestServiceTest {
     void testRetrieveSpecifiedContestService() {
         UUID id = UUID.randomUUID();
 
+        Category category01 = Category.builder()
+                .name("gamta")
+                .description("ir taip aišku ")
+                .totalSubmissions(100)
+                .build();
+
         Contest expectedContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabegusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -90,10 +104,16 @@ class ContestServiceTest {
     void testUpdateContestService() {
         UUID id = UUID.randomUUID();
 
+        Category category01 = Category.builder()
+                .name("gamta")
+                .description("ir taip aišku ")
+                .totalSubmissions(100)
+                .build();
+
         ContestDTO contestDTO = ContestDTO.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -102,7 +122,7 @@ class ContestServiceTest {
         Contest existingContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
@@ -111,7 +131,7 @@ class ContestServiceTest {
         Contest updatedContest = Contest.builder()
                 .name("(ne)viltis")
                 .description("paskutinė, nepabėgusi")
-                .category(Arrays.asList("SPORTAS", "MEDICINA", "ISTORIJA","RELIGIJA","GAMTA","KATASTROFA"))
+                .categories(Collections.singletonList(category01))
                 .totalSubmissions(696)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
