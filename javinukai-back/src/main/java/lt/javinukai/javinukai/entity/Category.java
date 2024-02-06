@@ -37,8 +37,16 @@ public class Category {
 
     // placeholder, will be changed to many-to-many and linked to competition id
     @Setter
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {})
     @Column(name = "competition")
-    private String competitionID;
+
+
+
+
+
+    private List<Category> categoryID;
 
     @Setter
     @Column(name = "uploaded_photo")
