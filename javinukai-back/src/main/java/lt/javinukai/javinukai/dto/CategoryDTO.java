@@ -6,18 +6,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
-public class ContestDTO {
+
+public class CategoryDTO {
     private String name;
-    private String description;
-    private List<String> category;
     private long totalSubmissions;
-    private ZonedDateTime startDate;
-    private ZonedDateTime endDate;
+    private String competitionID;
+    private List<String> uploadedPhoto;
 }

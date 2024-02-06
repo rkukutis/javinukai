@@ -3,6 +3,7 @@ package lt.javinukai.javinukai.config.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -33,6 +34,17 @@ public class ApplicationFilters {
                         .requestMatchers("api/v1/auth/**").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        //
+                        .requestMatchers(HttpMethod.POST, "/api/v1/contests/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/contests/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/contests/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/contests/**").permitAll()
+                        //
+                        .requestMatchers(HttpMethod.POST, "/api/v1/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/categories/**").permitAll()
+                        //
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers // for dev - needed for h2 console page
