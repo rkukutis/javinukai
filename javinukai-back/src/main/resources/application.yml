@@ -23,11 +23,11 @@ app:
   scheme: http
   host: localhost:8080
   email:
-    host: sandbox.smtp.mailtrap.io
-    port: 2525
+    host: smtp.gmail.com
+    port: 587
     auth:
-      user: 3a1005aa68b999
-      password: 497c640c28dda1
+      user: notrealuser23
+      password: hjfu lnsx jbyd ehtx
   constants:
     user-defaults:
       max-photos:
