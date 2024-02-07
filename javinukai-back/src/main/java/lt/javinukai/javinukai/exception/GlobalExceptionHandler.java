@@ -45,4 +45,13 @@ public class GlobalExceptionHandler {
         res.setDetail(exception.getMessage());
         return res;
     }
+
+    @ExceptionHandler({NoImagesException.class})
+    public ProblemDetail handleNoImages(NoImagesException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("NO_IMAGES_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
 }
