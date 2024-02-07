@@ -5,7 +5,7 @@ First step - clone repository, then ...
 
 Frontend:
 1. Go to frontend root directory (javinukai-front) and run command "npm i"
-2. Run command "node run dev" to start dev server
+2. Run command "npm run dev" to start dev server
 
 
 Backend:
