@@ -13,10 +13,12 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 logging:
   level:
+    lt:
+      javinukai: INFO
     org:
       springframework:
-        security: TRACE
-        jpa: DEBUG
+        security: INFO
+        jpa: INFO
 app:
   scheme: http
   host: localhost:8080
@@ -32,10 +34,12 @@ app:
         single: 20
         collection: 20
     security:
-      email-confirm-token:
-        valid-minutes: 10
-      password-reset-token:
-        valid-minutes: 10
+      token:
+        length: 128
+        email-confirm-token:
+          valid-minutes: 10
+        password-reset-token:
+          valid-minutes: 10
       jwt-secret-key: 56bb52a9882a6z7bfd065c980908a4e656fd52a9882a6b7bfa065c982907a4e6
       jwt-valid-hours: 72
       jwt-cookie-valid-hours: 72

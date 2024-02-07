@@ -3,6 +3,7 @@ package lt.javinukai.javinukai.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lt.javinukai.javinukai.enums.TokenType;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -37,6 +38,7 @@ public class UserToken {
     @CreatedDate
     private ZonedDateTime createdAt;
 
+    @Setter
     private ZonedDateTime expiresAt;
 
     @ManyToOne(cascade = CascadeType.MERGE)

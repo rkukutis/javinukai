@@ -1,10 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
+import Layout from "./Components/Layout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ForgotPassPage from "./pages/ForgotPassPage";
+import ResetPassPage from "./pages/ResetPassPage";
+import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +40,9 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forgot-password" element={<ForgotPassPage />} />
+              <Route path="/reset-password" element={<ResetPassPage />} />
+              <Route path="/confirm-email" element={<ConfirmEmailPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

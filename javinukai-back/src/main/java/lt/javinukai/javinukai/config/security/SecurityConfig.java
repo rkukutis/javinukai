@@ -13,6 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -43,4 +47,16 @@ public class SecurityConfig {
         return username -> userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new HttpStatusReturningLogoutSuccessHandler();
+    }
+
+    @Bean
+    public HeaderWriterLogoutHandler headerWriterLogoutHandler() {
+        return new HeaderWriterLogoutHandler(
+                new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.COOKIES));
+    }
+
 }

@@ -4,9 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRegistrationRequest {
@@ -30,10 +28,9 @@ public class UserRegistrationRequest {
     private String phoneNumber;
     @NonNull
     @NotBlank
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "EMAIL_FORMAT_INCORRECT")
     @Length(max = 100, message = "EMAIL_LENGTH_EXCEEDED")
     private String email;
-
     @NonNull
     @NotBlank
     private String password;

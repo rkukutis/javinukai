@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -21,16 +23,24 @@ import java.util.List;
 public class ApplicationFilters {
     private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final LogoutSuccessHandler logoutSuccessHandler;
+    private final HeaderWriterLogoutHandler headerWriterLogoutHandler;
     @Bean
     public SecurityFilterChain filters(HttpSecurity http) throws Exception {
-
         // localhost:8080/swagger-ui/index.html - Swagger
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                /*
+                may be needed for when we have https
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/auth/logout")
+                        .addLogoutHandler(headerWriterLogoutHandler)
+                        .logoutSuccessHandler(logoutSuccessHandler)
+                )
+                 */
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
@@ -55,4 +65,7 @@ public class ApplicationFilters {
         source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
+
+
+
 }

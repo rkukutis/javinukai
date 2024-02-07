@@ -10,8 +10,13 @@ export default async function (registrationInfo) {
     },
     body: JSON.stringify(registrationInfo),
   });
-  console.log(res);
-  const data = await res.json();
-  console.log(data);
-  return data;
+  if (!res.ok) {
+    const err = await res.json();
+    switch (err.title) {
+      case "USER_ALREADY_EXISTS_ERROR":
+        throw new Error("An user with this email already exists");
+      default:
+        throw new Error("Registration failed. Please try again later");
+    }
+  }
 }

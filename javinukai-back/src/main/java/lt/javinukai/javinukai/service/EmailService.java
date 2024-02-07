@@ -3,16 +3,20 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.entity.User;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 
 @Service
+@Async
+@Slf4j
 @RequiredArgsConstructor
 public class EmailService {
 private final JavaMailSender mailSender;
@@ -28,6 +32,7 @@ private final JavaMailSender mailSender;
         email.setTo(receiverEmail);
         email.setSubject(subject);
         email.setText(message);
+        log.info("Sending email: {}", email);
         mailSender.send(email);
     }
 
@@ -36,8 +41,8 @@ private final JavaMailSender mailSender;
 
         URI uri = new URIBuilder()
                 .setScheme(httpScheme)
-                .setHost(host)
-                .setPathSegments("api", "v1", "auth", "confirm-email")
+                .setHost("localhost:5173")
+                .setPathSegments("confirm-email")
                 .addParameter("token", token)
                 .build();
 
@@ -53,8 +58,8 @@ private final JavaMailSender mailSender;
 
         URI uri = new URIBuilder()
                 .setScheme(httpScheme)
-                .setHost(host)
-                .setPathSegments("api", "v1", "auth", "reset-password")
+                .setHost("localhost:5173")
+                .setPathSegments("reset-password")
                 .addParameter("token", token)
                 .build();
 

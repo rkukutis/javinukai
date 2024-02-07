@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 public class ForgotPasswordRequest {
 
     @NotBlank
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "EMAIL_FORMAT_INCORRECT")
     @Length(max = 100, message = "EMAIL_LENGTH_EXCEEDED")
     private String email;
 }

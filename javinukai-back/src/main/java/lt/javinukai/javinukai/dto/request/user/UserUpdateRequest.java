@@ -28,13 +28,14 @@ public class UserUpdateRequest {
     private String phoneNumber;
     @NonNull
     @NotBlank
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "EMAIL_FORMAT_INCORRECT")
     @Length(max = 100, message = "EMAIL_LENGTH_EXCEEDED")
     private String email;
 
-    // this can be null
     @Length(max = 150, message = "INSTITUTION_NAME_LENGTH_EXCEEDED")
     private String institution;
+
+    // password update must require entering the old password
 
     @NotNull
     @Min(0)

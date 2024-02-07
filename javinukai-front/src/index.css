@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .form-field {
+    @apply flex flex-col text-slate-800;
+  }
+
+  .form-field__input {
+    @apply rounded-sm px-2 py-1 border-2 border-slate-100;
+  }
+}
