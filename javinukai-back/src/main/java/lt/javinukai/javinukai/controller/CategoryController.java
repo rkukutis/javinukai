@@ -28,8 +28,13 @@ public class CategoryController {
     @PostMapping(path = "/categories")
     public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
         final Category createdCategory = categoryService.createCategory(categoryDTO);
-        log.info("Request for category creation completed, given ID: {}", createdCategory.getId());
-        return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
+        if (createdCategory != null) {
+            log.info("Request for category creation completed, given ID: {}", createdCategory.getId());
+            return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
+        } else {
+            log.info("Request for category creation completed, already in repo");
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @GetMapping(path = "/categories")

@@ -6,6 +6,7 @@ import lt.javinukai.javinukai.dto.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
+import org.hibernate.sql.ast.tree.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,29 @@ public class CategoryService {
     }
 
     public Category createCategory(CategoryDTO categoryDTO) {
-        final Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
-        final Category createCategory = categoryRepository.save(category);
-        log.info("{}: Created and added new category to database", this.getClass().getName());
-        return createCategory;
+
+        final List<Category> categories = categoryRepository.findAll();
+        boolean isInRepo = false;
+        for (Category c : categories) {
+            if (c.getCategoryName().equals(categoryDTO.getCategoryName()) &&
+                    c.getDescription().equals(categoryDTO.getDescription()) &&
+                    (c.getTotalSubmissions() == categoryDTO.getTotalSubmissions())
+            ) {
+                isInRepo = true;
+                break;
+            }
+        }
+
+        if (!isInRepo) {
+            final Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
+            final Category createCategory = categoryRepository.save(category);
+            log.info("{}: Created and added new category to database", this.getClass().getName());
+            return createCategory;
+        } else {
+            return null;
+        }
+
+
     }
 
     public List<Category> retrieveAllCategories() {

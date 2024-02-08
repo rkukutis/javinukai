@@ -31,7 +31,6 @@ public class ContestDTO {
 //    private List<Category> categories;
 
     @NonNull
-    @NotBlank
     @Min(value = 1, message = "AT_LEAST_ONE")
     @Max(value = 9999999 ,message = "TOO_MANY_SUBMISSIONS")
     private long totalSubmissions;

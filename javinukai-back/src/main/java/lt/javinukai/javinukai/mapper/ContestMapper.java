@@ -9,7 +9,6 @@ public class ContestMapper {
         return Contest.builder()
                 .contestName(contestDTO.getContestName())
                 .description(contestDTO.getDescription())
-                .categories(contestDTO.getCategories())
                 .totalSubmissions(contestDTO.getTotalSubmissions())
                 .startDate(contestDTO.getStartDate())
                 .endDate(contestDTO.getEndDate())
