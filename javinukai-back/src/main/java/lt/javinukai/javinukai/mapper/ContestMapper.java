@@ -7,7 +7,7 @@ public class ContestMapper {
 
     public static Contest contestDTOToContest(ContestDTO contestDTO) {
         return Contest.builder()
-                .name(contestDTO.getName())
+                .contestName(contestDTO.getContestName())
                 .description(contestDTO.getDescription())
                 .categories(contestDTO.getCategories())
                 .totalSubmissions(contestDTO.getTotalSubmissions())

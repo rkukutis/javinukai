@@ -46,7 +46,7 @@ public class ContestService {
     public Contest updateContest(UUID id, ContestDTO contestDTO) {
         final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
-        contestToUpdate.setName(contestDTO.getName());
+        contestToUpdate.setContestName(contestDTO.getContestName());
         contestToUpdate.setDescription(contestDTO.getDescription());
         contestToUpdate.setCategories(contestDTO.getCategories());
         contestToUpdate.setTotalSubmissions(contestDTO.getTotalSubmissions());

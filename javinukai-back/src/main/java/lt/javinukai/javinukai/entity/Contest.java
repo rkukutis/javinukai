@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,7 +26,7 @@ public class Contest {
 
     @Setter
     @Column(name = "name")
-    private String name;
+    private String contestName;
 
     @Setter
     @Column(name = "description")

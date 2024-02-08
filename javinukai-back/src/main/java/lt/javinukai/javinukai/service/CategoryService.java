@@ -46,7 +46,7 @@ public class CategoryService {
     public Category updateCategory(UUID id, CategoryDTO categoryDTO) {
         final Category categoryToUpdate = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category was not found with ID: " + id));
-        categoryToUpdate.setName(categoryDTO.getName());
+        categoryToUpdate.setCategoryName(categoryDTO.getCategoryName());
         categoryToUpdate.setTotalSubmissions(categoryDTO.getTotalSubmissions());
         log.info("{}: Updating category", this.getClass().getName());
         return categoryRepository.save(categoryToUpdate);

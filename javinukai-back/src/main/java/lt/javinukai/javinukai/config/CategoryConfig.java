@@ -34,7 +34,7 @@ public class CategoryConfig {
 
     private void createCategory() {
         Category category01 = Category.builder()
-                .name("gamta")
+                .categoryName("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
@@ -43,30 +43,36 @@ public class CategoryConfig {
 
     private void addCategoryToExistingContest(Contest incompleteContest) {
         Category category01 = Category.builder()
-                .name("asmenys")
+                .categoryName("asmenys")
                 .description("patirties nešėjai")
                 .totalSubmissions(100)
                 .build();
         incompleteContest.addCategory(category01);
+        Category category02 = Category.builder()
+                .categoryName("asmenys")
+                .description("patirties nešėjai")
+                .totalSubmissions(555)
+                .build();
+        incompleteContest.addCategory(category02);
         contestRepository.save(incompleteContest);
     }
 
     private Contest createIncompleteContestAndCategories() {
 
         Category category01 = Category.builder()
-                .name("knyga")
-                .description("spaudintas žodis")
+                .categoryName("knyga")
+                .description("spausdintas žodis")
                 .totalSubmissions(100)
                 .build();
 
         Category category02 = Category.builder()
-                .name("mokyklos klasė")
+                .categoryName("mokyklos klasė")
                 .description("dažnam pažįstama")
                 .totalSubmissions(50)
                 .build();
 
         Contest contest01 = Contest.builder()
-                .name("išmintis")
+                .contestName("išmintis")
                 .description("nes žinai")
                 .totalSubmissions(888)
                 .startDate(ZonedDateTime.now())
@@ -83,25 +89,25 @@ public class CategoryConfig {
     private void createContestAndCategories() {
 
         Category category01 = Category.builder()
-                .name("medicina")
+                .categoryName("medicina")
                 .description("spaudintas žodis")
                 .totalSubmissions(100)
                 .build();
 
         Category category02 = Category.builder()
-                .name("sportas")
+                .categoryName("sportas")
                 .description("citius, altius, fortius")
                 .totalSubmissions(20)
                 .build();
 
         Category category03 = Category.builder()
-                .name("istorija")
+                .categoryName("istorija")
                 .description("daugiau, nei kaulai ir griuvėsiai")
                 .totalSubmissions(500)
                 .build();
 
         Contest contest01 = Contest.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .totalSubmissions(777)
                 .startDate(ZonedDateTime.now())

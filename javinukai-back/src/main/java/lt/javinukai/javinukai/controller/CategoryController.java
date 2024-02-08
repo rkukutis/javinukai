@@ -26,8 +26,8 @@ public class CategoryController {
     }
 
     @PostMapping(path = "/categories")
-    public ResponseEntity<Category> createCategory(CategoryDTO categoryDTO) {
-        final Category createdCategory = CategoryMapper.categoryDTOToCategory(categoryDTO);
+    public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
+        final Category createdCategory = categoryService.createCategory(categoryDTO);
         log.info("Request for category creation completed, given ID: {}", createdCategory.getId());
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
@@ -46,14 +46,14 @@ public class CategoryController {
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
-    @PutMapping(path = "/category/{id}")
+    @PutMapping(path = "/categories/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable @NotNull UUID id, @RequestBody @Valid CategoryDTO categoryDTO) {
         log.info("Request for updating category with ID: {}", id);
         final Category categoryToUpdate = categoryService.updateCategory(id, categoryDTO);
         return new ResponseEntity<>(categoryToUpdate, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/category/{id}")
+    @DeleteMapping(path = "/categories/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable @NotNull UUID id) {
         log.info("Request for deleting category with ID: {}", id);
         categoryService.deleteCategory(id);

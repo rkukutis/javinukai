@@ -23,16 +23,16 @@ class ContestServiceTest {
     private ContestService underTest;
 
     @Test
-    void testCreateContestService() {
+    void createContestInService() {
 
         Category category01 = Category.builder()
-                .name("gamta")
+                .categoryName("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         ContestDTO contestDTO = ContestDTO.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -41,7 +41,7 @@ class ContestServiceTest {
                 .build();
 
         Contest createdContest = Contest.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -50,7 +50,7 @@ class ContestServiceTest {
                 .build();
 
         when(contestRepository.save(any(Contest.class))).thenReturn(createdContest);
-        Contest result = underTest.createContest(contestDTO);
+        final Contest result = underTest.createContest(contestDTO);
 
         assertNotNull(result);
         assertNotNull(createdContest);
@@ -77,13 +77,13 @@ class ContestServiceTest {
         UUID id = UUID.randomUUID();
 
         Category category01 = Category.builder()
-                .name("gamta")
+                .categoryName("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         Contest expectedContest = Contest.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabegusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -105,13 +105,13 @@ class ContestServiceTest {
         UUID id = UUID.randomUUID();
 
         Category category01 = Category.builder()
-                .name("gamta")
+                .categoryName("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         ContestDTO contestDTO = ContestDTO.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -120,7 +120,7 @@ class ContestServiceTest {
                 .build();
 
         Contest existingContest = Contest.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -129,7 +129,7 @@ class ContestServiceTest {
                 .build();
 
         Contest updatedContest = Contest.builder()
-                .name("(ne)viltis")
+                .contestName("(ne)viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(696)

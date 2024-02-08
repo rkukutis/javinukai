@@ -29,16 +29,16 @@ class ContestControllerTest {
     private ContestController contestController;
 
     @Test
-    void testCreateContestController() {
+    void createContestInController() {
 
         Category category01 = Category.builder()
-                .name("gamta")
+                .categoryName("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         ContestDTO contestDTO = ContestDTO.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -47,7 +47,7 @@ class ContestControllerTest {
                 .build();
 
         Contest createdContest = Contest.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -84,13 +84,13 @@ class ContestControllerTest {
         UUID id = UUID.randomUUID();
 
         Category category01 = Category.builder()
-                .name("gamta")
+                .categoryName("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         Contest expectedContest = Contest.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -113,13 +113,13 @@ class ContestControllerTest {
         UUID id = UUID.randomUUID();
 
         Category category01 = Category.builder()
-                .name("gamta")
+                .categoryName("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         ContestDTO contestDTO = ContestDTO.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -128,7 +128,7 @@ class ContestControllerTest {
                 .build();
 
         Contest updatedContest = Contest.builder()
-                .name("viltis")
+                .contestName("viltis")
                 .description("paskutinė, nepabėgusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)

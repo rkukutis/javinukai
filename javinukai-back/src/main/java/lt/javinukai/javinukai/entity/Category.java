@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,7 +26,7 @@ public class Category {
 
     @Setter
     @Column(name = "name")
-    private String name;
+    private String categoryName;
 
     @Setter
     @Column(name = "description")
@@ -43,6 +44,7 @@ public class Category {
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "contest_id")
     )
+    @JsonIgnore
     private List<Contest> contests;
 
     @Setter
