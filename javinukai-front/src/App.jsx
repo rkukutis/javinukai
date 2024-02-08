@@ -9,6 +9,7 @@ import ForgotPassPage from "./pages/ForgotPassPage";
 import ResetPassPage from "./pages/ResetPassPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -48,6 +49,7 @@ function App() {
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
+      
     </>
   );
 }
