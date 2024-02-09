@@ -32,7 +32,7 @@ public class ImageController {
                                                      @RequestParam("description") @NotBlank String description,
                                                      @RequestParam("categoryId") @NotNull UUID categoryID,
                                                      @AuthenticationPrincipal UserDetails userDetails
-    ) {
+    ) throws IOException {
         if (images.length < 1 ) {
             throw new NoImagesException("No jpg images were provided with request");
         }

@@ -5,6 +5,8 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
+
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -51,6 +53,24 @@ public class GlobalExceptionHandler {
         log.warn(exception.getMessage());
         ProblemDetail res = ProblemDetail.forStatus(400);
         res.setTitle("NO_IMAGES_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler({IOException.class})
+    public ProblemDetail handleIOException(IOException exception) {
+        log.error(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(500);
+        res.setTitle("SERVER_IO_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler({ImageProcessingException.class})
+    public ProblemDetail handleIOException(ImageProcessingException exception) {
+        log.error(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("IMAGE_ERROR");
         res.setDetail(exception.getMessage());
         return res;
     }
