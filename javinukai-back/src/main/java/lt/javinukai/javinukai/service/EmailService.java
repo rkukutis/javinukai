@@ -42,7 +42,7 @@ private final JavaMailSender mailSender;
 
         URI uri = new URIBuilder()
                 .setScheme(httpScheme)
-                .setHost("localhost:5173")
+                .setHost("javinukai.rhoopoe.com")
                 .setPathSegments("confirm-email")
                 .addParameter("token", token)
                 .build();
@@ -59,7 +59,7 @@ private final JavaMailSender mailSender;
 
         URI uri = new URIBuilder()
                 .setScheme(httpScheme)
-                .setHost("localhost:5173")
+                .setHost("javinukai.rhoopoe.com")
                 .setPathSegments("reset-password")
                 .addParameter("token", token)
                 .build();

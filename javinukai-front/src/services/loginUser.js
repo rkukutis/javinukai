@@ -1,5 +1,6 @@
 export default async function (loginInfo) {
-  const res = await fetch("http://localhost:8080/api/v1/auth/login", {
+  console.log(import.meta.env);
+  const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/v1/auth/login`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
