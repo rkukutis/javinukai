@@ -73,9 +73,9 @@ public class AuthorizationController {
     private ResponseCookie getResponseCookie(String name, String value, int hoursValid) {
         return ResponseCookie.from(name, value)
                 .maxAge(Duration.ofHours(hoursValid))
-                .httpOnly(false)
-                .secure(false)
-                .sameSite("lax")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("strict")
                 .path("/")
                 .build();
     }
