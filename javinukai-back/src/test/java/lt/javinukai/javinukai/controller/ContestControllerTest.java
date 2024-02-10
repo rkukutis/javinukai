@@ -1,6 +1,6 @@
 package lt.javinukai.javinukai.controller;
 
-import lt.javinukai.javinukai.dto.ContestDTO;
+import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.service.ContestService;

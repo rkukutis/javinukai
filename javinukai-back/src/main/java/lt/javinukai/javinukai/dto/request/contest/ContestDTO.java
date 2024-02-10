@@ -1,4 +1,4 @@
-package lt.javinukai.javinukai.dto;
+package lt.javinukai.javinukai.dto.request.contest;
 
 
 import jakarta.validation.constraints.Max;
@@ -28,7 +28,7 @@ public class ContestDTO {
     @Length(max = 1000, message = "CONTEST_DESCRIPTION_LENGTH_EXCEEDED")
     private String description;
 
-//    private List<Category> categories;
+    private List<Category> categories;
 
     @NonNull
     @Min(value = 1, message = "AT_LEAST_ONE")

@@ -2,13 +2,15 @@ package lt.javinukai.javinukai.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.dto.CategoryDTO;
+import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
-import org.hibernate.sql.ast.tree.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,31 +29,25 @@ public class CategoryService {
     public Category createCategory(CategoryDTO categoryDTO) {
 
         final List<Category> categories = categoryRepository.findAll();
-        boolean isInRepo = false;
         for (Category c : categories) {
             if (c.getCategoryName().equals(categoryDTO.getCategoryName()) &&
                     c.getDescription().equals(categoryDTO.getDescription()) &&
                     (c.getTotalSubmissions() == categoryDTO.getTotalSubmissions())
             ) {
-                isInRepo = true;
-                break;
+                return null;
             }
         }
 
-        if (!isInRepo) {
-            final Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
-            final Category createCategory = categoryRepository.save(category);
-            log.info("{}: Created and added new category to database", this.getClass().getName());
-            return createCategory;
-        } else {
-            return null;
-        }
-
-
+        final Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
+        final Category createCategory = categoryRepository.save(category);
+        log.info("{}: Created and added new category to database", this.getClass().getName());
+        return createCategory;
     }
 
-    public List<Category> retrieveAllCategories() {
-        final List<Category> listCategories = categoryRepository.findAll();
+    public List<Category> retrieveAllCategories(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        final Page<Category> pageListCategories = categoryRepository.findAll(pageable);
+        final List<Category> listCategories = pageListCategories.getContent();
         log.info("{}: Retrieving all category list from database", this.getClass().getName());
         return listCategories;
     }

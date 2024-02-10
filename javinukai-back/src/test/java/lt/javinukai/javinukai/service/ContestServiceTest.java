@@ -1,6 +1,6 @@
 package lt.javinukai.javinukai.service;
 
-import lt.javinukai.javinukai.dto.ContestDTO;
+import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.repository.ContestRepository;
@@ -23,7 +23,7 @@ class ContestServiceTest {
     private ContestService underTest;
 
     @Test
-    void createContestInService() {
+    void contestServiceCreateContest() {
 
         Category category01 = Category.builder()
                 .categoryName("gamta")
@@ -58,6 +58,28 @@ class ContestServiceTest {
 
         verify(contestRepository, times(1)).save(any(Contest.class));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Test
     void testRetrieveAllContestsService() {

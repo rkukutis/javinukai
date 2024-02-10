@@ -1,6 +1,6 @@
 package lt.javinukai.javinukai.mapper;
 
-import lt.javinukai.javinukai.dto.CategoryDTO;
+import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
 
 public class CategoryMapper {
@@ -10,7 +10,16 @@ public class CategoryMapper {
                 .categoryName(categoryDTO.getCategoryName())
                 .description(categoryDTO.getDescription())
                 .totalSubmissions(categoryDTO.getTotalSubmissions())
-                .uploadedPhoto(categoryDTO.getUploadedPhoto())
+                .uploadedPhotos(categoryDTO.getUploadedPhotos())
+                .build();
+    }
+
+    public static CategoryDTO categoryToCategoryDTO(Category category) {
+        return CategoryDTO.builder()
+                .id(category.getId())
+                .categoryName(category.getCategoryName())
+                .description(category.getDescription())
+                .totalSubmissions(category.getTotalSubmissions())
                 .build();
     }
 }

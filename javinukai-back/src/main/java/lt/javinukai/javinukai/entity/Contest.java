@@ -34,7 +34,7 @@ public class Contest {
 
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "contest_category",
             joinColumns = @JoinColumn(name = "contest_id"),
@@ -68,6 +68,14 @@ public class Contest {
         }
         categories.add(category);
     }
+
+    public void removeCategory(Category category) {
+        if (categories == null) {
+            return;
+        }
+        categories.remove(category);
+    }
+
 
     @PrePersist
     protected void onCreate() {

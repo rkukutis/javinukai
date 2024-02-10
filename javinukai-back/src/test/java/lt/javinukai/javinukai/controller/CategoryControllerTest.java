@@ -1,7 +1,7 @@
 package lt.javinukai.javinukai.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lt.javinukai.javinukai.dto.CategoryDTO;
+import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.service.CategoryService;
 import org.junit.jupiter.api.Test;

@@ -49,7 +49,7 @@ public class Category {
 
     @Setter
     @Column(name = "uploaded_photo")
-    private List<String> uploadedPhoto;
+    private List<String> uploadedPhotos;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -64,6 +64,13 @@ public class Category {
             contests = new ArrayList<>();
         }
         contests.add(contest);
+    }
+
+    public void removeContest(Contest contest) {
+        if (contests == null) {
+            return;
+        }
+        contests.remove(contest);
     }
 
     @PrePersist

@@ -38,11 +38,13 @@ public class ApplicationFilters {
                         .requestMatchers(HttpMethod.POST, "/api/v1/contests/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/contests/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/contests/**").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/contests/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/contests/**").permitAll()
                         //
                         .requestMatchers(HttpMethod.POST, "/api/v1/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/categories/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/categories/**").permitAll()
                         //
                         .anyRequest().authenticated()
