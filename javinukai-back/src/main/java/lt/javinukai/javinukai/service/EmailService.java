@@ -33,7 +33,7 @@ private final JavaMailSender mailSender;
         email.setSubject(subject);
         email.setText(message);
         log.info("Sending email: {}", email);
-        mailSender.send(email);
+//        mailSender.send(email);
     }
 
     @SneakyThrows // temp
