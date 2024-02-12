@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-@Data
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,20 +24,33 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
+    @Setter
     private String name;
+    @Setter
     @JsonIgnore
     private String password;
+    @Setter
     private String surname;
+    @Setter
     private String email;
+    @Setter
     private Integer birthYear;
+    @Setter
     private String phoneNumber;
+    @Setter
     private Boolean isFreelance;
+    @Setter
     private String institution;
+    @Setter
     private Integer maxSinglePhotos;
+    @Setter
     private Integer maxCollections;
+    @Setter
     private Boolean isEnabled;
+    @Setter
     private Boolean isNonLocked;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
@@ -51,6 +64,7 @@ public class User implements UserDetails {
     private ZonedDateTime modifiedAt;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
@@ -61,31 +75,37 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return email;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return isNonLocked;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return isEnabled;
     }
@@ -98,4 +118,31 @@ public class User implements UserDetails {
         this.modifiedAt = ZonedDateTime.now();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(uuid, user.uuid) && Objects.equals(name, user.name)
+                && Objects.equals(password, user.password)
+                && Objects.equals(surname, user.surname)
+                && Objects.equals(email, user.email)
+                && Objects.equals(birthYear, user.birthYear)
+                && Objects.equals(phoneNumber, user.phoneNumber)
+                && Objects.equals(isFreelance, user.isFreelance)
+                && Objects.equals(institution, user.institution)
+                && Objects.equals(maxSinglePhotos, user.maxSinglePhotos)
+                && Objects.equals(maxCollections, user.maxCollections)
+                && Objects.equals(isEnabled, user.isEnabled)
+                && Objects.equals(isNonLocked, user.isNonLocked)
+                && role == user.role && Objects.equals(tokens, user.tokens)
+                && Objects.equals(createdAt, user.createdAt)
+                && Objects.equals(modifiedAt, user.modifiedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, name, password, surname, email, birthYear, phoneNumber, isFreelance,
+                institution, maxSinglePhotos, maxCollections, isEnabled,
+                isNonLocked, role, tokens, createdAt, modifiedAt);
+    }
 }
