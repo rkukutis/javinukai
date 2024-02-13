@@ -17,10 +17,14 @@ function LoginPage() {
     formState: { errors },
   } = useForm();
 
+ 
+
   const [submitted, setSubmitted] = useState(false);
   const { mutate } = useMutation({
     mutationFn: (data) => loginUser(data),
+    
     onSuccess: () => toast.success("Logged in successfully"),
+   
     onError: (err) => toast.error(err.message),
   });
 

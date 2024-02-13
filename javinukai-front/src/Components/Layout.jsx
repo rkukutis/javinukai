@@ -6,7 +6,7 @@ import Button from "./Button";
 function Layout() {
   return (
       <div>
-      <header className="text h-[12vh] bg-slate-700 text-slate-100 flex justify-between items-center">
+      <header className="text h-[12vh] bg-teal-600 text-slate-100 flex justify-between items-center">
       HEADER
         
         <div className="flex justify-end">
@@ -19,7 +19,7 @@ function Layout() {
         <NavBar />
         <Outlet />
       </main>
-      <footer className="h-[10vh] bg-slate-700 text-slate-100 ">FOOTER</footer>
+      <footer className="h-[10vh] bg-teal-600 text-slate-100 ">FOOTER</footer>
     </div>
   );
 }
