@@ -1,10 +1,11 @@
 package lt.javinukai.javinukai.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import lt.javinukai.javinukai.config.security.ApplicationFilters;
+import lt.javinukai.javinukai.config.security.UserRole;
+import lt.javinukai.javinukai.dto.request.auth.ForgotPasswordRequest;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
+import lt.javinukai.javinukai.dto.request.auth.PasswordResetRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.entity.UserToken;
@@ -17,24 +18,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,6 +37,8 @@ class AuthorizationControllerTest {
     public MockMvc mockMvc;
     @Autowired
     WebApplicationContext context;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
     @Autowired
     UserTokenRepository tokenRepository;
     @Autowired
@@ -144,9 +137,10 @@ class AuthorizationControllerTest {
                         .content(objectMapper.writeValueAsString(register))
         ).andReturn();
 
-        LoginRequest login = new LoginRequest();
-        login.setEmail("jwayne@mail.com");
-        login.setPassword("hunter2");
+        LoginRequest login = LoginRequest.builder()
+                .email("jwayne@mail.com")
+                .password("hunter2")
+                .build();
 
         MockHttpServletResponse response = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/auth/login")
@@ -198,10 +192,29 @@ class AuthorizationControllerTest {
 
     @Test
     @Order(5)
-    void whenValidLogin() throws Exception {
-        LoginRequest login = new LoginRequest();
-        login.setEmail("jdoe@mail.com");
-        login.setPassword("password");
+    void whenValidLogin_thenLogin() throws Exception {
+
+        User enabledUser = User.builder()
+                .name("Snake")
+                .surname("Plissken")
+                .email("splissken@mail.com")
+                .password(passwordEncoder.encode("newyork"))
+                .phoneNumber("814762145")
+                .role(UserRole.USER)
+                .birthYear(1966)
+                .isFreelance(true)
+                .maxCollections(10)
+                .maxSinglePhotos(10)
+                .isNonLocked(true)
+                .isEnabled(true)
+                .build();
+
+        userRepository.save(enabledUser);
+
+        LoginRequest login = LoginRequest.builder()
+                .email("splissken@mail.com")
+                .password("newyork")
+                .build();
 
         MockHttpServletResponse res1 = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/auth/login")
@@ -212,7 +225,7 @@ class AuthorizationControllerTest {
         assertEquals(200, res1.getStatus());
 
         UserRegistrationRequest returnedUser = objectMapper.readValue(res1.getContentAsString(), UserRegistrationRequest.class);
-        assertEquals("jdoe@mail.com", returnedUser.getEmail());
+        assertEquals("splissken@mail.com", returnedUser.getEmail());
         assertNotNull(res1.getCookie("jwt"));
     }
 
@@ -220,9 +233,10 @@ class AuthorizationControllerTest {
     @Order(6)
     @SneakyThrows
     void whenInvalidLogin_ThenReturn403() {
-        LoginRequest login = new LoginRequest();
-        login.setEmail("baduser@mail.com");
-        login.setPassword("bad_password");
+        LoginRequest login = LoginRequest.builder()
+                .email("baduser@mail.com")
+                .password("bad_password")
+                .build();
 
         MockHttpServletResponse res1 = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/auth/login")
@@ -232,6 +246,80 @@ class AuthorizationControllerTest {
 
         assertEquals(403, res1.getStatus());
         assertNull(res1.getCookie("jwt"));
+    }
+
+    @Test
+    @Order(7)
+    @SneakyThrows
+    void whenForgotPassword_thenResetPassword() {
+        User enabledUser = User.builder()
+                .name("Jeffrey")
+                .surname("Lebowski")
+                .email("thedude@mail.com")
+                .password(passwordEncoder.encode("bowlingbuds"))
+                .phoneNumber("814662545")
+                .role(UserRole.USER)
+                .birthYear(1959)
+                .isFreelance(false)
+                .institution("Los Angeles Times")
+                .maxCollections(10)
+                .maxSinglePhotos(10)
+                .isNonLocked(true)
+                .isEnabled(true)
+                .build();
+
+        User testUser = userRepository.save(enabledUser);
+
+        ForgotPasswordRequest forgotPasswordRequest = new ForgotPasswordRequest();
+        forgotPasswordRequest.setEmail("thedude@mail.com");
+
+        MockHttpServletResponse response = mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/v1/auth/forgot-password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(forgotPasswordRequest))
+        ).andReturn().getResponse();
+
+        assertEquals(200, response.getStatus());
+        List<UserToken> tokens = tokenRepository
+                .findByUserUuidAndTypeOrderByCreatedAtDesc(testUser.getUuid(), TokenType.PASSWORD_RESET);
+        assertEquals(1, tokens.size());
+        UserToken resetToken = tokens.get(0);
+        assertEquals(testUser.getUuid(), resetToken.getUser().getUuid());
+
+        PasswordResetRequest passwordResetRequest = PasswordResetRequest.builder()
+                .resetToken(resetToken.getTokenValue())
+                .newPassword("moneymoneymoney")
+                .build();
+
+        MockHttpServletResponse resetResponse = mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/v1/auth/reset-password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(passwordResetRequest))
+        ).andReturn().getResponse();
+        assertEquals(200, resetResponse.getStatus());
+
+        LoginRequest newLogin = LoginRequest.builder()
+                .email("thedude@mail.com")
+                .password("moneymoneymoney")
+                .build();
+        LoginRequest oldLogin = LoginRequest.builder()
+                .email("thedude@mail.com")
+                .password("bowlingbuds")
+                .build();
+
+        MockHttpServletResponse loginResponse = mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newLogin))
+        ).andReturn().getResponse();
+        MockHttpServletResponse oldLoginResponse = mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(oldLogin))
+        ).andReturn().getResponse();
+
+        assertEquals(200, loginResponse.getStatus());
+        assertEquals(403, oldLoginResponse.getStatus());
     }
 
 }

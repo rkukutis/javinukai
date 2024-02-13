@@ -1,13 +1,15 @@
 package lt.javinukai.javinukai.dto.request.auth;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
-@NoArgsConstructor
+@Builder
+@Getter
 public class PasswordResetRequest {
-
+    @NotBlank
     private String resetToken;
+    @NotBlank
     private String newPassword;
 }
