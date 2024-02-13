@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json .
 RUN npm i
 COPY . .
-CMD [ "npm", "run", "build" ]
+RUN npm run build
 
 #Stage 2
 FROM nginx:1.24.0
