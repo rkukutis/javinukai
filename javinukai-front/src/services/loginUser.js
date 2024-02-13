@@ -1,5 +1,4 @@
 export default async function (loginInfo) {
-  console.log(import.meta.env);
   const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/v1/auth/login`, {
     method: "POST",
     mode: "cors",

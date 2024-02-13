@@ -11,4 +11,5 @@ export default async function () {
       },
     }
   );
+  if (!res.ok) throw new Error("Error occured while logging out");
 }

@@ -9,6 +9,8 @@ import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.mapper.UserMapper;
 import lt.javinukai.javinukai.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,12 +19,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/users")
 @Slf4j
+@PreAuthorize("hasAnyRole(['ADMIN', 'MODERATOR'])")
 @Validated
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    // MUST BE SECURED - ADMIN/MOD use only
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUser(@PathVariable UUID userId) {

@@ -1,6 +1,4 @@
 async function resetPassword(data) {
-  console.log(data);
-
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND}/api/v1/auth/reset-password`,
     {

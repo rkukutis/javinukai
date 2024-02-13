@@ -3,10 +3,10 @@ import { persist } from "zustand/middleware";
 
 const useUserStore = create(
   persist(
-    (set, get) => ({
-      user: undefined,
+    (set) => ({
+      user: null,
       setUser: (user) => set(() => ({ user: user })),
-      removeUser: () => set({ user: {} }),
+      removeUser: () => set({ user: null }),
     }),
     { name: "userStorage" }
   )
