@@ -2,8 +2,11 @@ package lt.javinukai.javinukai.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Objects;
 
 @RestControllerAdvice
 @Slf4j
@@ -43,6 +46,15 @@ public class GlobalExceptionHandler {
         ProblemDetail res = ProblemDetail.forStatus(429);
         res.setTitle("TOO_MANY_REQUESTS_ERROR");
         res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ProblemDetail handleTooManyRequests(MethodArgumentNotValidException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("REQUEST_VALIDATION_ERROR");
+        res.setDetail(Objects.requireNonNull(exception.getDetailMessageArguments())[1].toString());
         return res;
     }
 }

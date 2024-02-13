@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +43,7 @@ public class UserToken {
     private ZonedDateTime expiresAt;
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonIgnore
     @JoinColumn(name = "user_uuid")
     private User user;
 
