@@ -1,0 +1,19 @@
+
+Tech Stack
+Šiame projekte numatytos technologijos. Jeigu žinote gerų alternatyvų, prašau jas paminėti komentaruose. Sąrašas tikrai nėra galutinis.
+Frontend:
+JavaScript + React
+Vite
+TailwindCSS - stilius (cheatsheet: https://nerdcave.com/tailwind-cheat-sheet)
+React Router
+i18next - lokalizacija
+ReactQuery + Axios - nuotolinės būsenos (remote state) valdymas / fetch'ai
+Hot toast - notifikacijos/pop-up
+Zustand? - globalios būsenos (pvz.: prisijunges vartotojas) valdymas
+Backend:
+ Java + Spring Boot
+ Spring JPA
+Spring Security
+JJWT
+H2 DB - dev
+PostgreSQL - prod
