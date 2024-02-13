@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +27,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Transactional
     public Category createCategory(CategoryDTO categoryDTO) {
 
         final List<Category> categories = categoryRepository.findAll();
@@ -44,12 +46,10 @@ public class CategoryService {
         return createCategory;
     }
 
-    public List<Category> retrieveAllCategories(int pageNumber, int pageSize) {
+    public Page<Category> retrieveAllCategories(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        final Page<Category> pageListCategories = categoryRepository.findAll(pageable);
-        final List<Category> listCategories = pageListCategories.getContent();
         log.info("{}: Retrieving all category list from database", this.getClass().getName());
-        return listCategories;
+        return categoryRepository.findAll(pageable);
     }
 
     public Category retrieveCategory(UUID id) {
@@ -59,15 +59,18 @@ public class CategoryService {
         return categoryToShow;
     }
 
+    @Transactional
     public Category updateCategory(UUID id, CategoryDTO categoryDTO) {
         final Category categoryToUpdate = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category was not found with ID: " + id));
         categoryToUpdate.setCategoryName(categoryDTO.getCategoryName());
+        categoryToUpdate.setDescription(categoryDTO.getDescription());
         categoryToUpdate.setTotalSubmissions(categoryDTO.getTotalSubmissions());
         log.info("{}: Updating category", this.getClass().getName());
         return categoryRepository.save(categoryToUpdate);
     }
 
+    @Transactional
     public void deleteCategory(UUID id) {
         if (categoryRepository.existsById(id)) {
             categoryRepository.deleteById(id);
@@ -76,5 +79,4 @@ public class CategoryService {
             throw new EntityNotFoundException("Category was not found with ID: " + id);
         }
     }
-
 }

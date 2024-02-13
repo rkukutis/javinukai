@@ -1,64 +1,146 @@
 package lt.javinukai.javinukai.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lt.javinukai.javinukai.config.security.JwtService;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
+import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.service.CategoryService;
+import lt.javinukai.javinukai.service.ContestService;
+import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.ArgumentMatchers;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ExtendWith(SpringExtension.class)
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
+@WebMvcTest(controllers = CategoryController.class)
+@AutoConfigureMockMvc(addFilters = false)
+@ExtendWith(MockitoExtension.class)
 class CategoryControllerTest {
 
-    @Mock
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 
     @MockBean
     private CategoryService categoryService;
+    @MockBean
+    private ContestService contestService;
+    @MockBean
+    private JwtService jwtService;
+
+    private CategoryDTO categoryDTO;
+    private Category category;
+
+    @BeforeEach
+    public void init() {
+        categoryDTO = CategoryDTO.builder()
+                .categoryName("test category name")
+                .description("testCategory description")
+                .totalSubmissions(66)
+                .build();
+        category = CategoryMapper.categoryDTOToCategory(categoryDTO);
+    }
 
     @Test
-    public void testCreateCategory() throws Exception {
+    public void createCategoryReturnsCreated() throws Exception {
 
-        CategoryDTO categoryDTO = CategoryDTO.builder()
-                .categoryName("testCategoryName")
-                .description("testCategoryDescription")
-                .totalSubmissions(99)
-                .build();
+        given(categoryService.createCategory(ArgumentMatchers.any()))
+                .willReturn(category);
 
-        Category category = Category.builder()
-                .categoryName("testCategoryName")
-                .description("testCategoryDescription")
-                .totalSubmissions(99)
-                .build();
+        ResultActions response = mockMvc.perform(post("/api/v1/categories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(categoryDTO)));
 
-        Mockito.when(categoryService.createCategory(any(CategoryDTO.class))).thenReturn(category);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/categories")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(categoryDTO)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value(categoryDTO.getCategoryName()))
-                .andExpect(jsonPath("$.description").value(categoryDTO.getDescription()));
-
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
+//                .andDo(MockMvcResultHandlers.print());
     }
+
+    @Test
+    public void retrieveAllCategoriesReturnsListOfCategories() throws Exception {
+
+        final Page<Category> categories = new PageImpl<>(Collections.singletonList(category));
+        final ResponseEntity<Page<Category>> responseEntity = new ResponseEntity<>(categories, HttpStatus.OK);
+
+        when(categoryService.retrieveAllCategories(1, 10))
+                .thenReturn(responseEntity.getBody());
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories")
+                .param("pageNumber", String.valueOf(1))
+                .param("pageSize", String.valueOf(10))
+                .contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(categories.getContent().size()))
+                .andExpect(jsonPath("$[0].categoryName").value(categories.getContent().get(0).getCategoryName()));
+    }
+
+    @Test
+    public void retrieveCategoryReturnsCategory() throws Exception{
+
+        final UUID id = UUID.randomUUID();
+        when(categoryService.retrieveCategory(id)).thenReturn(category);
+
+        ResultActions response = mockMvc.perform(get("/api/v1/categories" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(categoryDTO)));
+
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
+    }
+
+    @Test
+    public void updateCategoryReturnsCreated() throws Exception {
+
+        given(categoryService.createCategory(ArgumentMatchers.any()))
+                .willReturn(category);
+
+        ResultActions response = mockMvc.perform(post("/api/v1/categories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(categoryDTO)));
+
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

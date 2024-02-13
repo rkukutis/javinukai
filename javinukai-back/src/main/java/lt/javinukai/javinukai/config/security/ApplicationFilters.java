@@ -35,17 +35,8 @@ public class ApplicationFilters {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         //
-                        .requestMatchers(HttpMethod.POST, "/api/v1/contests/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/contests/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/contests/**").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/api/v1/contests/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/contests/**").permitAll()
-                        //
-                        .requestMatchers(HttpMethod.POST, "/api/v1/categories/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/categories/**").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/api/v1/categories/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/categories/**").permitAll()
+                        .requestMatchers("/api/v1/contests/**").permitAll()
+                        .requestMatchers("/api/v1/categories/**").permitAll()
                         //
                         .anyRequest().authenticated()
                 )

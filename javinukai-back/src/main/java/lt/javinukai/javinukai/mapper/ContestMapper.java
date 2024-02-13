@@ -9,11 +9,38 @@ public class ContestMapper {
         return Contest.builder()
                 .contestName(contestDTO.getContestName())
                 .description(contestDTO.getDescription())
+//                .categories(contestDTO.getCategories())
                 .totalSubmissions(contestDTO.getTotalSubmissions())
                 .startDate(contestDTO.getStartDate())
                 .endDate(contestDTO.getEndDate())
                 .build();
     }
+
+    public static ContestDTO contestToContestDTO(Contest contest) {
+        return ContestDTO.builder()
+                .id(contest.getId())
+                .contestName(contest.getContestName())
+//                .categories(contest.getCategories())
+                .description(contest.getDescription())
+                .totalSubmissions(contest.getTotalSubmissions())
+                .startDate(contest.getStartDate())
+                .endDate(contest.getEndDate())
+                .build();
+    }
+
+    public static ContestDTO contestToContestDTOTest(Contest contest) {
+        return ContestDTO.builder()
+                .id(contest.getId())
+                .contestName(contest.getContestName())
+                .categories(contest.getCategories())
+                .description(contest.getDescription())
+                .totalSubmissions(contest.getTotalSubmissions())
+                .startDate(contest.getStartDate())
+                .endDate(contest.getEndDate())
+                .build();
+    }
+
+
 
 
 

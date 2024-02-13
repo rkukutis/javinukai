@@ -53,7 +53,6 @@ class CategoryServiceTest {
         when(categoryRepository.findAll()).thenReturn(Collections.emptyList());
         when(categoryRepository.save(Mockito.any(Category.class))).thenReturn(category);
 
-//        final Category createdCategory = categoryRepository.save(category);
         final Category createdCategory = categoryService
                 .createCategory(CategoryMapper.categoryToCategoryDTO(category));
 
@@ -72,7 +71,7 @@ class CategoryServiceTest {
         Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
         when(categoryRepository.findAll()).thenReturn(Collections.singletonList(category));
 
-        Category createdCategory = categoryService.createCategory(categoryDTO);
+        final Category createdCategory = categoryService.createCategory(categoryDTO);
 
         Assertions.assertThat(createdCategory).isNull();
     }
@@ -83,7 +82,7 @@ class CategoryServiceTest {
         final Page<Category> pageOfCategories = Mockito.mock(Page.class);
         when(categoryRepository.findAll(Mockito.any(Pageable.class))).thenReturn(pageOfCategories);
 
-        final List<Category> categoriesToDisplay = categoryService.retrieveAllCategories(1, 2);
+        final Page<Category> categoriesToDisplay = categoryService.retrieveAllCategories(1, 2);
 
         Assertions.assertThat(categoriesToDisplay).isNotNull();
     }

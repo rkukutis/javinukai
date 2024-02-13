@@ -11,12 +11,15 @@ import org.hibernate.validator.constraints.Length;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 public class ContestDTO {
+
+    private UUID id;
 
     @NonNull
     @NotBlank
@@ -28,6 +31,7 @@ public class ContestDTO {
     @Length(max = 1000, message = "CONTEST_DESCRIPTION_LENGTH_EXCEEDED")
     private String description;
 
+    @Setter
     private List<Category> categories;
 
     @NonNull
