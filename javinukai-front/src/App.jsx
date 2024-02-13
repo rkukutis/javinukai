@@ -39,13 +39,15 @@ function App() {
         />
         <BrowserRouter>
           <Routes>
+
             <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />}/>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-              <Route path="/homepage" element={<HomePage />} />
+              
             </Route>
           </Routes>
         </BrowserRouter>

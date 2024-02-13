@@ -42,7 +42,7 @@ function Layout() {
       <main className="min-h-[82vh] pb-10">
         <Outlet />
       </main>
-      <footer className="h-[10vh] bg-slate-700 text-slate-100 ">FOOTER</footer>
+      <footer className="h-[10vh] bg-teal-600 text-slate-100 ">FOOTER</footer>
     </div>
   );
 }
