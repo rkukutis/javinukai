@@ -4,24 +4,33 @@ import registerUser from "../services/registerUser";
 import FormFieldError from "../Components/FormFieldError";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import StyledInput from "../Components/StyledInput";
 import validateEmail from "../utils/validateEmail";
 
 function RegisterPage() {
   const [affiliation, setAffiliation] = useState("freelance");
+  const navigate = useNavigate();
   const {
+    reset,
     register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onBlur" });
 
   const { mutate } = useMutation({
     mutationFn: (data) => registerUser(data),
-    onSuccess: () =>
-      toast.success("Registered successfully. Please confirm your email"),
-    onError: (err) => toast.error(err.message),
+    onSuccess: () => {
+      toast.success("Registered successfully. Please confirm your email");
+      reset();
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+      reset();
+    },
   });
 
   function onSubmit(formData) {
@@ -48,6 +57,10 @@ function RegisterPage() {
               className="form-field__input"
               {...register("name", {
                 required: { value: true, message: "Name is required" },
+                pattern: {
+                  value: /^\S*$/,
+                  message: "Name must contain only alphabetic characters",
+                },
                 maxLength: {
                   value: 20,
                   message: "Name must not exceed 20 characters",
@@ -65,6 +78,10 @@ function RegisterPage() {
               className="form-field__input"
               {...register("surname", {
                 required: { value: true, message: "Surname is required" },
+                pattern: {
+                  value: /^\S*$/,
+                  message: "Surname must contain only alphabetic characters",
+                },
                 maxLength: {
                   value: 20,
                   message: "Surname must not exceed 20 characters",
@@ -82,6 +99,10 @@ function RegisterPage() {
               className="form-field__input"
               {...register("birthYear", {
                 required: { value: true, message: "Birth year is required" },
+                pattern: {
+                  value: /^\d{4}$/,
+                  message: "Date must be valid. A valid example: '1984'",
+                },
                 max: {
                   value: new Date().getFullYear(),
                   message: `Birth year can not be later than ${new Date().getFullYear()}`,
@@ -103,6 +124,10 @@ function RegisterPage() {
               className="form-field__input"
               {...register("phoneNumber", {
                 required: { value: true, message: "Phone number is required" },
+                pattern: {
+                  value: /^\+?\d{9,11}$/,
+                  message: "Phone number must be valid",
+                },
                 maxLength: {
                   value: 16,
                   message: "Phone number must not exceed 15 numbers",
@@ -156,7 +181,7 @@ function RegisterPage() {
               id="password-confirm"
               className="form-field__input"
               {...register("passwordConfirm", {
-                required: true,
+                required: "Password confirmation is required",
                 validate: (value) => {
                   if (watch("password") != value) {
                     return "Passwords must match";
@@ -165,9 +190,7 @@ function RegisterPage() {
               })}
             />
             {errors.passwordConfirm && (
-              <FormFieldError>
-                {errors.passwordConfirm.message || errors.password.message}
-              </FormFieldError>
+              <FormFieldError>{errors.passwordConfirm.message}</FormFieldError>
             )}
           </section>
           <section className="form-field space-y-2">
@@ -177,7 +200,7 @@ function RegisterPage() {
               value={affiliation}
               onChange={(e) => onAffiliationChange(e.target.value)}
             >
-              <option value="freelance">Laivai samdomas</option>
+              <option value="freelance">Laisvai samdomas</option>
               <option value="institution">
                 Atstovaujama žiniasklaidos priemonė
               </option>
@@ -189,13 +212,16 @@ function RegisterPage() {
                   id="institution"
                   className="form-field__input"
                   {...register("institution", {
-                    required: false,
+                    required: "Institution name is required",
                     maxLength: {
                       value: 50,
                       message: "Institution name must not exceed 50 characters",
                     },
                   })}
                 />
+                {errors.institution && (
+                  <FormFieldError>{errors.institution.message}</FormFieldError>
+                )}
               </div>
             )}
           </section>
