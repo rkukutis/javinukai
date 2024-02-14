@@ -5,6 +5,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import java.io.IOException;
 
 import java.util.Objects;
 
@@ -45,6 +46,15 @@ public class GlobalExceptionHandler {
         log.warn(exception.getMessage());
         ProblemDetail res = ProblemDetail.forStatus(429);
         res.setTitle("TOO_MANY_REQUESTS_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler({IOException.class})
+    public ProblemDetail handleIOException(IOException exception) {
+        log.error(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(500);
+        res.setTitle("SERVER_IO_ERROR");
         res.setDetail(exception.getMessage());
         return res;
     }

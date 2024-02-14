@@ -9,7 +9,7 @@ import ForgotPassPage from "./pages/ForgotPassPage";
 import ResetPassPage from "./pages/ResetPassPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 import HomePage from "./pages/HomePage";
-
+import ImageUpload from "./Components/ImageUpload";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,7 +39,6 @@ function App() {
         />
         <BrowserRouter>
           <Routes>
-
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />}/>
               <Route path="/login" element={<LoginPage />} />
@@ -47,13 +46,12 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-              
+              <Route path="/image-upload" element={<ImageUpload />} />
             </Route>
           </Routes>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-      
     </>
   );
 }
