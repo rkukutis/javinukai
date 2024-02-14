@@ -1,35 +1,93 @@
 package lt.javinukai.javinukai.config;
 
+import lombok.RequiredArgsConstructor;
+import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.enums.ImageSize;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lt.javinukai.javinukai.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.ZonedDateTime;
+import java.util.List;
+
 
 @Configuration
-public class CategoryConfig {
-
+@RequiredArgsConstructor
+public class StartupSetup {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final ContestRepository contestRepository;
     private final CategoryRepository categoryRepository;
 
-    @Autowired
-    public CategoryConfig(ContestRepository contestRepository, CategoryRepository categoryRepository) {
-        this.contestRepository = contestRepository;
-        this.categoryRepository = categoryRepository;
+    @Bean
+    public CommandLineRunner setup() {
+        return (args) -> {
+            categoryAndContestSetup();
+            directorySetup();
+            userSetup();
+        };
     }
 
-    @Bean
-    public CommandLineRunner contestCreator() {
-        return runner -> {
-            createContestAndCategories();
-            createCategory();
-            addCategoryToExistingContest(createIncompleteContestAndCategories());
-        };
+
+    private void categoryAndContestSetup() {
+        createContestAndCategories();
+        createCategory();
+        addCategoryToExistingContest(createIncompleteContestAndCategories());
+    }
+
+    private void directorySetup() throws IOException {
+        Path root = Path.of("src/main/resources/images");
+        if (!Files.exists(root)) Files.createDirectory(root);
+        for (ImageSize size : ImageSize.values()) {
+            Path storagePathParent = Path.of(root.toString(), size.localStoragePath);
+            if (!Files.exists(storagePathParent)) Files.createDirectory(storagePathParent);
+        }
+    }
+
+    private void userSetup() {
+        User admin = User.builder()
+                .name("John")
+                .surname("Doe")
+                .email("jdoe@mail.com")
+                .institution("LRT")
+                .isFreelance(false)
+                .maxSinglePhotos(10)
+                .maxCollections(10)
+                .role(UserRole.ADMIN)
+                .isEnabled(true)
+                .isNonLocked(true)
+                .phoneNumber("+37047812482")
+                .birthYear(1984)
+                .password(passwordEncoder.encode("password"))
+                .build();
+
+        User user = User.builder()
+                .name("John")
+                .surname("Doe")
+                .email("user@mail.com")
+                .institution("LRT")
+                .isFreelance(false)
+                .maxSinglePhotos(10)
+                .maxCollections(10)
+                .role(UserRole.USER)
+                .isEnabled(true)
+                .isNonLocked(true)
+                .phoneNumber("+37047812482")
+                .birthYear(1984)
+                .password(passwordEncoder.encode("password"))
+                .build();
+
+        userRepository.saveAll(List.of(admin, user));
     }
 
     private void createCategory() {
@@ -120,5 +178,4 @@ public class CategoryConfig {
 
         contestRepository.save(contest01);
     }
-
 }
