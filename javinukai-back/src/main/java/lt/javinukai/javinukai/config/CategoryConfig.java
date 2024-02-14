@@ -35,7 +35,7 @@ public class CategoryConfig {
     private void createCategory() {
         Category category01 = Category.builder()
                 .categoryName("gamta")
-                .description("ir taip aišku ")
+                .description("ne mūsų kurta aplinka")
                 .totalSubmissions(100)
                 .build();
         categoryRepository.save(category01);
@@ -44,13 +44,13 @@ public class CategoryConfig {
     private void addCategoryToExistingContest(Contest incompleteContest) {
         Category category01 = Category.builder()
                 .categoryName("asmenys")
-                .description("patirties nešėjai")
+                .description("gyvenimiška patirtis")
                 .totalSubmissions(100)
                 .build();
         incompleteContest.addCategory(category01);
         Category category02 = Category.builder()
                 .categoryName("asmenys")
-                .description("patirties nešėjai")
+                .description("gyvenimiška patirtis")
                 .totalSubmissions(555)
                 .build();
         incompleteContest.addCategory(category02);
@@ -90,7 +90,7 @@ public class CategoryConfig {
 
         Category category01 = Category.builder()
                 .categoryName("medicina")
-                .description("spaudintas žodis")
+                .description("slaugos mokslas")
                 .totalSubmissions(100)
                 .build();
 

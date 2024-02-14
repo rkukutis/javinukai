@@ -17,6 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Getter
+@ToString
 public class ContestDTO {
 
     private UUID id;

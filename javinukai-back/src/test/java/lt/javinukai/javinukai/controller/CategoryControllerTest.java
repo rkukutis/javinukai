@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.JwtService;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
@@ -40,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = CategoryController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 class CategoryControllerTest {
 
     @Autowired
@@ -79,17 +81,18 @@ class CategoryControllerTest {
 
         response.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
-//                .andDo(MockMvcResultHandlers.print());
     }
+
+
 
     @Test
     public void retrieveAllCategoriesReturnsListOfCategories() throws Exception {
 
-        final Page<Category> categories = new PageImpl<>(Collections.singletonList(category));
-        final ResponseEntity<Page<Category>> responseEntity = new ResponseEntity<>(categories, HttpStatus.OK);
+        final Page<Category> page = new PageImpl<>(Collections.singletonList(category));
+        final ResponseEntity<Page<Category>> responseEntity = new ResponseEntity<>(page, HttpStatus.OK);
 
-        when(categoryService.retrieveAllCategories(1, 10))
-                .thenReturn(responseEntity.getBody());
+        when(categoryService.retrieveAllCategories(0, 10))
+                .thenReturn(page);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories")
                 .param("pageNumber", String.valueOf(1))
@@ -98,8 +101,8 @@ class CategoryControllerTest {
 
         resultActions.andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()").value(categories.getContent().size()))
-                .andExpect(jsonPath("$[0].categoryName").value(categories.getContent().get(0).getCategoryName()));
+                .andExpect(jsonPath("$.content.length()").value(page.getContent().size()))
+                .andExpect(jsonPath("$.content[0].categoryName").value(page.getContent().get(0).getCategoryName()));
     }
 
     @Test
@@ -108,11 +111,11 @@ class CategoryControllerTest {
         final UUID id = UUID.randomUUID();
         when(categoryService.retrieveCategory(id)).thenReturn(category);
 
-        ResultActions response = mockMvc.perform(get("/api/v1/categories" + id)
+        ResultActions response = mockMvc.perform(get("/api/v1/categories/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(categoryDTO)));
 
-        response.andExpect(status().isCreated())
+        response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
     }
 

@@ -95,7 +95,6 @@ class ContestServiceTest {
             when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(page);
 
             Page<Contest> retriecedPage = contestService.retrieveAllContests(1, 10);
-            verify(contestRepository).findAll();
 
             assertNotNull(retriecedPage);
             assertEquals(expectedContestList.size(), retriecedPage.getContent().size());
@@ -109,7 +108,6 @@ class ContestServiceTest {
         when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(emptyPage);
 
         final Page<Contest> retrievedPage = contestService.retrieveAllContests(0, 10);
-        verify(contestRepository).findAll();
 
         assertNotNull(retrievedPage);
         assertTrue(retrievedPage.isEmpty());

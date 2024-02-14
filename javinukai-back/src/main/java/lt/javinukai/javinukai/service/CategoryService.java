@@ -3,12 +3,14 @@ package lt.javinukai.javinukai.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
+import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,22 +30,27 @@ public class CategoryService {
     }
 
     @Transactional
-    public Category createCategory(CategoryDTO categoryDTO) {
+    public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
 
-        final List<Category> categories = categoryRepository.findAll();
-        for (Category c : categories) {
-            if (c.getCategoryName().equals(categoryDTO.getCategoryName()) &&
-                    c.getDescription().equals(categoryDTO.getDescription()) &&
-                    (c.getTotalSubmissions() == categoryDTO.getTotalSubmissions())
-            ) {
-                return null;
-            }
+        Category categoryInRepo = categoryRepository.findByCategoryNameAndDescriptionAndTotalSubmissions(
+                categoryDTO.getCategoryName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
+
+        HttpStatus httpStatus;
+        String message;
+
+        if (categoryInRepo != null) {
+            log.info("{}: Category already exists in the database", this.getClass().getName());
+            httpStatus = HttpStatus.OK;
+            message = "Request for category creation completed, already in repo";
+            return new CategoryCreationResponse(categoryInRepo, httpStatus, message);
         }
 
-        final Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
+        Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
         final Category createCategory = categoryRepository.save(category);
         log.info("{}: Created and added new category to database", this.getClass().getName());
-        return createCategory;
+        httpStatus = HttpStatus.CREATED;
+        message = String.format("Request for category creation completed, given ID: %s", category.getId());
+        return new CategoryCreationResponse(createCategory, httpStatus,message);
     }
 
     public Page<Category> retrieveAllCategories(int pageNumber, int pageSize) {

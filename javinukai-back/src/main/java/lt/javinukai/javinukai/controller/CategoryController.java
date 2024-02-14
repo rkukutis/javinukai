@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
+import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,14 @@ public class CategoryController {
 
     @PostMapping(path = "/categories")
     public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
-        final Category createdCategory = categoryService.createCategory(categoryDTO);
-        if (createdCategory != null) {
-            log.info("Request for category creation completed, given ID: {}", createdCategory.getId());
-            return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
-        }
-        log.info("Request for category creation completed, already in repo");
-        return new ResponseEntity<>(HttpStatus.OK);
 
+        final CategoryCreationResponse categoryCreationResponse = categoryService.createCategory(categoryDTO);
+        final Category category = categoryCreationResponse.getCategory();
+        final HttpStatus httpStatus = categoryCreationResponse.getHttpStatus();
+        final String message = categoryCreationResponse.getMessage();
+
+        log.info(message);
+        return new ResponseEntity<>(category, httpStatus);
     }
 
     @GetMapping(path = "/categories")
