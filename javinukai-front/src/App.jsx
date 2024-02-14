@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ForgotPassPage from "./pages/ForgotPassPage";
 import ResetPassPage from "./pages/ResetPassPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
+import ImageUpload from "./Components/ImageUpload";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +44,7 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
+              <Route path="/image-upload" element={<ImageUpload />} />
             </Route>
           </Routes>
         </BrowserRouter>
