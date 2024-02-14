@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "contests")
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Table(name = "category")
 @Getter
-public class Contest {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,33 +26,30 @@ public class Contest {
 
     @Setter
     @Column(name = "name")
-    private String contestName;
+    private String categoryName;
 
     @Setter
     @Column(name = "description")
     private String description;
 
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(
-            name = "contest_category",
-            joinColumns = @JoinColumn(name = "contest_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<Category> categories;
-
-    @Setter
     @Column(name = "total_submissions")
     private long totalSubmissions;
 
     @Setter
-    @Column(name = "start_date")
-    private ZonedDateTime startDate;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "contest_category",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "contest_id")
+    )
+    @JsonIgnore
+    private List<Contest> contests;
 
     @Setter
-    @Column(name = "end_date")
-    private ZonedDateTime endDate;
+    @Column(name = "uploaded_photo")
+    private List<String> uploadedPhotos;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -62,20 +59,19 @@ public class Contest {
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
 
-    public void addCategory(Category category) {
-        if (categories == null) {
-            categories = new ArrayList<>();
+    public void addContest(Contest contest) {
+        if (contests == null) {
+            contests = new ArrayList<>();
         }
-        categories.add(category);
+        contests.add(contest);
     }
 
-    public void removeCategory(Category category) {
-        if (categories == null) {
+    public void removeContest(Contest contest) {
+        if (contests == null) {
             return;
         }
-        categories.remove(category);
+        contests.remove(contest);
     }
-
 
     @PrePersist
     protected void onCreate() {
