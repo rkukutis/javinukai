@@ -14,7 +14,7 @@ public class IOSetup {
     CommandLineRunner createDirectories() {
         return args -> {
             Path root = Path.of("src/main/resources/images");
-            if (!Files.exists(root)) Files.createDirectory(root);
+            Files.createDirectory(root);
             for (ImageSize size : ImageSize.values()) {
                 Path storagePathParent = Path.of(root.toString(), size.localStoragePath);
                 if (!Files.exists(storagePathParent)) Files.createDirectory(storagePathParent);
