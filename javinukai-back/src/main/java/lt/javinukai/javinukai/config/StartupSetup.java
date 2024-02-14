@@ -30,10 +30,10 @@ public class StartupSetup {
     private final CategoryRepository categoryRepository;
 
     @Bean
-    public CommandLineRunner setup() {
+    public CommandLineRunner setup() throws IOException {
         return (args) -> {
             categoryAndContestSetup();
-//            directorySetup();
+            directorySetup();
             userSetup();
         };
     }
@@ -47,10 +47,12 @@ public class StartupSetup {
 
     private void directorySetup() throws IOException {
         Path root = Path.of("src/main/resources/images");
-        if (!Files.exists(root)) Files.createDirectory(root);
-        for (ImageSize size : ImageSize.values()) {
-            Path storagePathParent = Path.of(root.toString(), size.localStoragePath);
-            if (!Files.exists(storagePathParent)) Files.createDirectory(storagePathParent);
+        if (!Files.exists(root)) {
+            Files.createDirectories(root);
+            for (ImageSize size : ImageSize.values()) {
+                Path storagePathParent = Path.of(root.toString(), size.localStoragePath);
+                if (!Files.exists(storagePathParent)) Files.createDirectory(storagePathParent);
+            }
         }
     }
 
