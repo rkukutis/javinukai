@@ -33,7 +33,7 @@ public class StartupSetup {
     public CommandLineRunner setup() {
         return (args) -> {
             categoryAndContestSetup();
-            directorySetup();
+//            directorySetup();
             userSetup();
         };
     }
