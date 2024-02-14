@@ -3,10 +3,14 @@ package lt.javinukai.javinukai.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.dto.ContestDTO;
+import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
+import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
+import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.service.CategoryService;
 import lt.javinukai.javinukai.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +22,6 @@ import java.util.UUID;
 @RequestMapping(path = "/api/v1")
 @Slf4j
 public class ContestController {
-
     private final ContestService contestService;
 
     @Autowired
@@ -34,10 +37,12 @@ public class ContestController {
     }
 
     @GetMapping(path = "/contests")
-    public ResponseEntity<List<Contest>> retrieveAllContests() {
-        final List<Contest> contestList = contestService.retrieveAllContests();
-        log.info("Request for retrieving all contests, {} record(s) found", contestList.size());
-        return new ResponseEntity<>(contestList, HttpStatus.OK);
+    public ResponseEntity<Page<Contest>> retrieveAllContests(@RequestParam(defaultValue = "1") int pageNumber,
+                                                             @RequestParam(defaultValue = "5") int pageSize) {
+        log.info("Request for retrieving all contests");
+        final Page<Contest> page = contestService.retrieveAllContests(--pageNumber, pageSize);
+        log.info("Request for retrieving all contests, {} record(s) found", page.getTotalElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping(path = "/contests/{id}")
@@ -48,17 +53,25 @@ public class ContestController {
     }
 
     @PutMapping(path = "/contests/{id}")
-    public ResponseEntity<Contest> updateContest(@PathVariable @NotNull UUID id, @RequestBody @Valid ContestDTO contestDTO) {
+    public ResponseEntity<Contest> updateContest(@PathVariable @NotNull UUID id,
+                                                 @RequestBody @Valid ContestDTO contestDTO) {
         log.info("Request for updating contest with ID: {}", id);
         final Contest updatedContest = contestService.updateContest(id, contestDTO);
         return new ResponseEntity<>(updatedContest, HttpStatus.OK);
     }
 
+    @PatchMapping(path = "/contests/{id}")
+    public ResponseEntity<Contest> patchCategories(@PathVariable @NotNull UUID id,
+                                                  @RequestBody @Valid List<Category> categories) {
+        log.info("Request for patching contest with ID: {}", id);
+        final Contest updatedContest = contestService.updateCategoriesOfContest(id, categories);
+        return new ResponseEntity<>(updatedContest, HttpStatus.OK);
+    }
+
     @DeleteMapping(path = "/contests/{id}")
     public ResponseEntity<?> deleteContest(@PathVariable @NotNull UUID id) {
-        log.info("Request for deleting contest with ID: {}", id);
+            log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
