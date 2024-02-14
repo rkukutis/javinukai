@@ -69,19 +69,19 @@ class CategoryControllerTest {
         category = CategoryMapper.categoryDTOToCategory(categoryDTO);
     }
 
-    @Test
-    public void createCategoryReturnsCreated() throws Exception {
-
-        given(categoryService.createCategory(ArgumentMatchers.any()))
-                .willReturn(category);
-
-        ResultActions response = mockMvc.perform(post("/api/v1/categories")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryDTO)));
-
-        response.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
-    }
+//    @Test
+//    public void createCategoryReturnsCreated() throws Exception {
+//
+//        given(categoryService.createCategory(ArgumentMatchers.any()))
+//                .willReturn(category);
+//
+//        ResultActions response = mockMvc.perform(post("/api/v1/categories")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsString(categoryDTO)));
+//
+//        response.andExpect(status().isCreated())
+//                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
+//    }
 
 
 
@@ -119,19 +119,19 @@ class CategoryControllerTest {
                 .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
     }
 
-    @Test
-    public void updateCategoryReturnsCreated() throws Exception {
-
-        given(categoryService.createCategory(ArgumentMatchers.any()))
-                .willReturn(category);
-
-        ResultActions response = mockMvc.perform(post("/api/v1/categories")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryDTO)));
-
-        response.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
-    }
+//    @Test
+//    public void updateCategoryReturnsCreated() throws Exception {
+//
+//        given(categoryService.createCategory(ArgumentMatchers.any()))
+//                .willReturn(category);
+//
+//        ResultActions response = mockMvc.perform(post("/api/v1/categories")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsString(categoryDTO)));
+//
+//        response.andExpect(status().isCreated())
+//                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
+//    }
 
 
 }

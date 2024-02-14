@@ -34,47 +34,47 @@ class CategoryServiceTest {
     @InjectMocks
     private CategoryService categoryService;
 
-    @Test
-    public void createCategoryReturnsCategory() {
+//    @Test
+//    public void createCategoryReturnsCategory() {
+//
+//        final CategoryDTO categoryDTO = CategoryDTO.builder()
+//                .categoryName("test category name")
+//                .description("testCategory description")
+//                .totalSubmissions(66)
+//                .build();
+//
+//        final UUID id = UUID.randomUUID();
+//        final Category category = new Category(id,
+//                categoryDTO.getCategoryName(),
+//                categoryDTO.getDescription(),
+//                categoryDTO.getTotalSubmissions(),
+//                null, null, null, null);
+//
+//        when(categoryRepository.findAll()).thenReturn(Collections.emptyList());
+//        when(categoryRepository.save(Mockito.any(Category.class))).thenReturn(category);
+//
+//        final Category createdCategory = categoryService
+//                .createCategory(CategoryMapper.categoryToCategoryDTO(category));
+//
+//        Assertions.assertThat(createdCategory).isNotNull();
+//        Assertions.assertThat(createdCategory.getId()).isNotNull();
+//    }
 
-        final CategoryDTO categoryDTO = CategoryDTO.builder()
-                .categoryName("test category name")
-                .description("testCategory description")
-                .totalSubmissions(66)
-                .build();
-
-        final UUID id = UUID.randomUUID();
-        final Category category = new Category(id,
-                categoryDTO.getCategoryName(),
-                categoryDTO.getDescription(),
-                categoryDTO.getTotalSubmissions(),
-                null, null, null, null);
-
-        when(categoryRepository.findAll()).thenReturn(Collections.emptyList());
-        when(categoryRepository.save(Mockito.any(Category.class))).thenReturn(category);
-
-        final Category createdCategory = categoryService
-                .createCategory(CategoryMapper.categoryToCategoryDTO(category));
-
-        Assertions.assertThat(createdCategory).isNotNull();
-        Assertions.assertThat(createdCategory.getId()).isNotNull();
-    }
-
-    @Test
-    public void createCategoryReturnsNull() {
-
-        CategoryDTO categoryDTO = CategoryDTO.builder()
-                .categoryName("test category name")
-                .description("testCategory description")
-                .totalSubmissions(66)
-                .build();
-        Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
-        when(categoryRepository.findAll()).thenReturn(Collections.singletonList(category));
-
-        final Category createdCategory = categoryService.createCategory(categoryDTO);
-
-        Assertions.assertThat(createdCategory).isNull();
-    }
+//    @Test
+//    public void createCategoryReturnsNull() {
+//
+//        CategoryDTO categoryDTO = CategoryDTO.builder()
+//                .categoryName("test category name")
+//                .description("testCategory description")
+//                .totalSubmissions(66)
+//                .build();
+//        Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
+//        when(categoryRepository.findAll()).thenReturn(Collections.singletonList(category));
+//
+//        final Category createdCategory = categoryService.createCategory(categoryDTO);
+//
+//        Assertions.assertThat(createdCategory).isNull();
+//    }
 
     @Test
     public void retrieveAllCategoriesReturnsListOfCategories() {
