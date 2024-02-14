@@ -45,6 +45,9 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.MERGE)
     private Set<UserToken> tokens;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.MERGE)
+    private List<ContestantImage> images;
+
     @CreatedDate
     private ZonedDateTime createdAt;
     @LastModifiedDate
