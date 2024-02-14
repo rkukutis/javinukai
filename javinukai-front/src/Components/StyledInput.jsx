@@ -1,8 +1,12 @@
-function StyledInput({ value, type, id }) {
+function StyledInput({ value, type, id, extraStyle, disabled }) {
   return (
     <input
       id={id}
-      className="bg-blue-500 py-1 curso text-slate-50 rounded-sm hover:cursor-pointer"
+      disabled={disabled}
+      className={
+        "bg-blue-500 py-1 curso text-slate-50 rounded-sm hover:cursor-pointer " +
+        extraStyle
+      }
       value={value}
       type={type}
     />
