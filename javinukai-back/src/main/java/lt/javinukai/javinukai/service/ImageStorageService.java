@@ -34,6 +34,17 @@ public class ImageStorageService {
     public ContestantImageCollection createImage(MultipartFile[] images, String description,String title,
                                              UUID categoryID, UserDetails userDetails)
             throws IOException {
+
+        // temp fix
+        Path root = Path.of("src/main/resources/images");
+        if (!Files.exists(root)) {
+            Files.createDirectory(root);
+            for (ImageSize size : ImageSize.values()) {
+                Path storagePathParent = Path.of(root.toString(), size.localStoragePath);
+                if (!Files.exists(storagePathParent)) Files.createDirectory(storagePathParent);
+            }
+        }
+
         User author = (User) userDetails;
         // we have to check image validity before working with them because we cant roll back file IO
         checkImageSizes(images);
