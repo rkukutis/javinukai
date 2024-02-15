@@ -13,7 +13,7 @@ function HomePage() {
   
   return (
     
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center p-10 ">
       <div className="flex items-center mx-4 mb-4 justify-center" style={{ flexDirection: window.innerWidth > 768 ? 'row' : 'column' }}>
         
         <img
@@ -21,7 +21,7 @@ function HomePage() {
           alt="cat1"
           className="max-w-full h-auto object-cover"
         
-          style={{ width: "50%", height: "50%", maxHeight: "80vh" }}
+          style={{ width: "40%", height: "40%", maxHeight: "80vh" }}
         />
         <div className="flex flex-col items-center justify-center p-5">
           <p className="ml-4">contest 20</p>
@@ -60,7 +60,7 @@ function HomePage() {
           src={cat2}
           alt="cat2"
           className="max-w-full max-h-full object-cover"
-          style={{ width: "50%", height: "50%", maxHeight: "80vh" }}
+          style={{ width: "40%", height: "40%", maxHeight: "80vh" }}
         />
         <div className="fle items-center justify-center p-5">
           <p className="ml-4">contest 2091</p>
@@ -100,7 +100,7 @@ function HomePage() {
           src={cat3}
           alt="cat3"
           className="max-w-full max-h-full object-cover"
-          style={{ width: "50%", height: "50%", maxHeight: "80vh" }}
+          style={{ width: "40%", height: "40%", maxHeight: "80vh" }}
         />
         <div className="fle items-center justify-center p-5">
           <p className="ml-4">contest 2018</p>
