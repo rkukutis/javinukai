@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -15,8 +14,8 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "images")
-public class ContestantImage {
+@Table(name = "photos")
+public class Photo {
 
     @Id
     private UUID uuid;
@@ -33,7 +32,7 @@ public class ContestantImage {
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "collection_uuid")
-    private ContestantImageCollection collection;
+    private PhotoCollection collection;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)

@@ -16,7 +16,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContestantImageCollection {
+public class PhotoCollection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,7 +31,7 @@ public class ContestantImageCollection {
     private User author;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection", cascade = CascadeType.MERGE)
-    private List<ContestantImage> images;
+    private List<Photo> images;
 
     private ZonedDateTime createdAt;
     private ZonedDateTime modifiedAt;
