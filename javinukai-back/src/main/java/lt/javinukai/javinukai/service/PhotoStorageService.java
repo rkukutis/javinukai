@@ -2,15 +2,17 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.entity.ContestantImage;
-import lt.javinukai.javinukai.entity.ContestantImageCollection;
+import lt.javinukai.javinukai.entity.Photo;
+import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
 import lt.javinukai.javinukai.exception.ImageProcessingException;
 import lt.javinukai.javinukai.exception.NoImagesException;
-import lt.javinukai.javinukai.repository.ContestantImageCollectionRepository;
+import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
 import org.apache.http.client.utils.URIBuilder;
+import org.hibernate.annotations.Cache;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,19 +29,19 @@ import java.util.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ImageStorageService {
+public class PhotoStorageService {
     private final ContestService contestService;
-    private final ContestantImageCollectionRepository contestantImageCollectionRepository;
+    private final PhotoCollectionRepository contestantImageCollectionRepository;
 
-    public ContestantImageCollection createImage(MultipartFile[] images, String description,String title,
-                                             UUID categoryID, UserDetails userDetails)
+    public PhotoCollection createImage(MultipartFile[] images, String description, String title,
+                                       UUID categoryID, UserDetails userDetails)
             throws IOException {
         User author = (User) userDetails;
         // we have to check image validity before working with them because we cant roll back file IO
         checkImageSizes(images);
         log.info("Received {} photos(s) from user {} for category {}",
                 images.length, author.getEmail(), categoryID);
-        ContestantImageCollection collection = contestantImageCollectionRepository.save(ContestantImageCollection.builder()
+        PhotoCollection collection = contestantImageCollectionRepository.save(PhotoCollection.builder()
                 .name(title)
                 .description(description)
                 .category(categoryID)
@@ -65,7 +67,7 @@ public class ImageStorageService {
                         .setParameter("size", size.value).toString();
                 pathsAndUrls.put(size, List.of(localPath, url));
             }
-            var contestantImage = ContestantImage.builder()
+            var contestantImage = Photo.builder()
                     .uuid(uuid)
                     .localPathFull(imageName)
                     .author(author)

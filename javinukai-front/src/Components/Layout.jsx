@@ -37,7 +37,7 @@ function Layout() {
             </Link>
           )}
         </div>
-        <NavBar />
+        {user && <NavBar />}
       </header>
       <main className="min-h-[82vh] pb-10">
         <Outlet />
