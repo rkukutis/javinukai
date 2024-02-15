@@ -1,49 +1,53 @@
 package lt.javinukai.javinukai.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "photos")
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "photos")
 public class Photo {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "photo_id")
-    private UUID photoId;
+    private UUID uuid;
 
-    @Setter
-    @Column(name = "file_name")
-    private String fileName;
+    private String localPathFull;
+    private String localPathMiddle;
+    private String localPathSmall;
+    private String localPathThumbnail;
+    private String urlFull;
+    private String urlMiddle;
+    private String urlSmall;
+    private String urlThumbnail;
 
-    @Setter
-    @Column(name = "main")
-    private String photoMain;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "collection_uuid")
+    private PhotoCollection collection;
 
-    @Setter
-    @Column(name = "small")
-    private String photoSmall;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "author_uuid")
+    private User author;
 
-    @Setter
-    @Column(name = "mobile_main")
-    private String photoMobile;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime modifiedAt;
 
-    @Setter
-    @Column(name = "mobile_small")
-    private String photoMobileSmall;
-
-    @Setter
-    @Column(name = "photo_description")
-    private String photoDescription;
-
-    @Setter
-    @Column(name = "collection_id")
-    private UUID collectionId;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = ZonedDateTime.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.modifiedAt = ZonedDateTime.now();
+    }
 }
