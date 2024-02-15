@@ -21,7 +21,7 @@ const Modal = ({ isOpen, closeModal, children, id, openModal }) => {
           <div className="fixed inset-0 bg-gray-900 opacity-50" onClick={handleBackdropClick}></div>
           <div className="bg-white p-8 rounded-lg z-50" id={id}>
             {children}
-            
+            <button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-400" onClick={closeModal}>Close</button>
           </div>
         </div>
       )}
