@@ -24,7 +24,7 @@ function Layout() {
 
   return (
     <div>
-      <header className="text h-[12vh] bg-slate-700 text-slate-100">
+      <header className="text min-h-[12vh] bg-slate-700 text-slate-100">
         <div className="flex justify-between items-center px-6 py-2">
           <a href="/">WEBSITE NAME</a>
           {user ? (
