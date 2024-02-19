@@ -57,4 +57,13 @@ public class GlobalExceptionHandler {
         res.setDetail(Objects.requireNonNull(exception.getDetailMessageArguments())[1].toString());
         return res;
     }
+
+    @ExceptionHandler({PasswordResetException.class})
+    public ProblemDetail handlePasswordResetException(PasswordResetException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("PASSWORD_RESET_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
 }

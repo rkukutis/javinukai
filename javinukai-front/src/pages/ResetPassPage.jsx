@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import resetPassword from "../services/resetPassword";
 import StyledInput from "../Components/StyledInput";
 import FormFieldError from "../Components/FormFieldError";
@@ -10,15 +10,24 @@ function ResetPassPage() {
   const {
     watch,
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const { mutate } = useMutation({
     mutationFn: (data) => resetPassword(data),
-    onSuccess: () => toast.success("Password has been changed"),
-    onError: (err) => toast.error(err.message),
+    onSuccess: () => {
+      toast.success("Password has been changed");
+      reset();
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+      reset();
+    },
   });
 
   function onSubmit(formData) {
