@@ -11,6 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
@@ -57,6 +58,11 @@ public class SecurityConfig {
     public HeaderWriterLogoutHandler headerWriterLogoutHandler() {
         return new HeaderWriterLogoutHandler(
                 new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.COOKIES));
+    }
+
+    @Bean
+    public Argon2PasswordEncoder tokenEncoder() {
+        return new Argon2PasswordEncoder(0, 32, 1, 1 << 12, 3);
     }
 
 }
