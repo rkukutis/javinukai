@@ -12,9 +12,7 @@ import lt.javinukai.javinukai.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -40,16 +38,25 @@ public class CompetitionRecordController {
         this.userService = userService;
     }
 
+    @GetMapping(path = "/enter")
+    public ResponseEntity<List<CompetitionRecord>> retrieveAllRecords() {
+        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveAllCompetitionRecords();
+        log.info("Request for retrieving all competition records");
+        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
+    }
+
+
+
+
+
     @PostMapping(path = "/enter")
     public ResponseEntity<CompetitionRecord> enterCompetition() {
 
         final List<Contest> contestList = contestService.retrieveAllContests(0, 10).getContent();
         final UUID contestID = contestList.get(0).getId();
-        log.info("contest name -> " + contestList.get(0).getContestName());
 
         final List<User> userList = userService.getUsers();
         final UUID userID = userList.get(0).getUuid();
-        log.info("user name -> " + userList.get(0).getName());
 
         long totalSubmissions = contestList.get(0).getTotalSubmissions();
 

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +41,29 @@ public class CompetitionRecord {
     private String userName;
 
 
+    @Setter
+    @Column(name = "max_photos")
+    private long maxPhotos;
 
+//    @Setter
+//    @Column(name = "max_collections")
+//    private long maxCollections;
+
+    @Setter
+    @Column
+    private List<String> photos;
+
+    public void addPhotos(List<String> photosToAdd, long limit) {
+        if (photos == null) {
+            photos = new ArrayList<>();
+        }
+
+        for (int i = 0; i < photosToAdd.size(); i++) {
+            if (i < limit) {
+                photos.add(photosToAdd.get(i));
+            }
+        }
+    }
 
     @CreatedDate
     @Column(name = "created_at")

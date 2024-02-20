@@ -39,12 +39,6 @@ public class CompetitionRecordService {
 
     public CompetitionRecord testServiceMethod(UUID contestID, UUID userID, long totalSubmissions) {
 
-        final List<Category> categoryList = categoryRepository.findAll();
-        final List<Contest> contestList = contestRepository.findAll();
-        final List<CompetitionRecord> competitionRecordList = competitionRecordRepository.findAll();
-
-
-
         final Contest contest = contestRepository.findById(contestID).orElseThrow(
                 () -> new EntityNotFoundException("Contest was not found with ID: " + contestID));
 
@@ -62,5 +56,17 @@ public class CompetitionRecordService {
         competitionRecordRepository.save(competitionRecord);
         return  competitionRecord;
     }
+
+
+    public List<CompetitionRecord> retrieveAllCompetitionRecords() {
+        final List<CompetitionRecord> competitionRecordList = competitionRecordRepository.findAll();
+        log.info("{}: Retrieving all competition record list from database", this.getClass().getName());
+        return competitionRecordList;
+    }
+
+
+
+
+
 
 }
