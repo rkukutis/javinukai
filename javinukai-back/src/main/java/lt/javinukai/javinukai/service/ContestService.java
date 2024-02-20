@@ -41,8 +41,15 @@ public class ContestService {
 
         final List<Category> categoryList = new ArrayList<>();
         for (Category category : contestDTO.getCategories()) {
-            final Category categoryIn = categoryRepository.findById(category.getId()).orElseThrow(
-                    () -> new EntityNotFoundException("category was not found with ID: " + category.getId()));
+            final Category categoryIn = categoryRepository
+                    .findByCategoryNameAndDescriptionAndTotalSubmissions(
+                            category.getCategoryName(),
+                            category.getDescription(),
+                            category.getTotalSubmissions());
+
+                if (categoryIn == null) {
+                    throw new EntityNotFoundException("category was not found with ID: " + category.getId());
+                };
             categoryList.add(categoryIn);
         }
 

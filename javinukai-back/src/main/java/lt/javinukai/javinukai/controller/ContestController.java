@@ -8,6 +8,7 @@ import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.service.CategoryService;
+import lt.javinukai.javinukai.service.CompetitionRecordService;
 import lt.javinukai.javinukai.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
