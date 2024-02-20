@@ -5,6 +5,7 @@ import useUserStore from "../stores/userStore";
 import { useMutation } from "@tanstack/react-query";
 import logoutUser from "../services/logoutUser";
 import Button from "./Button";
+import DropDownMenu from "./DropDownMenu";
 
 function Layout() {
   const { user, removeUser } = useUserStore((state) => state);
@@ -26,10 +27,10 @@ function Layout() {
     <div>
       <header className="text h-[12vh] bg-slate-700 text-slate-100">
         <div className="flex justify-between items-center px-6 py-2">
-          <p>WEBSITE NAME</p>
+          <a href="/">WEBSITE NAME</a>
           {user ? (
             <div>
-              <Button onClick={() => mutate()}>Log out</Button>
+              <DropDownMenu mutationFunction={mutate}></DropDownMenu>
             </div>
           ) : (
             <Link to="/login">
@@ -37,7 +38,7 @@ function Layout() {
             </Link>
           )}
         </div>
-        <NavBar />
+        {user && <NavBar />}
       </header>
       <main className="min-h-[82vh] pb-10">
         <Outlet />

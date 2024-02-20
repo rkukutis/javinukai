@@ -55,11 +55,11 @@ public class User implements UserDetails {
     private UserRole role;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserToken> tokens;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.MERGE)
-    private List<ContestantImage> images;
+    private List<Photo> images;
 
     @CreatedDate
     private ZonedDateTime createdAt;
