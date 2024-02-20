@@ -21,6 +21,8 @@ async function resetPassword(data) {
     switch (err.title) {
       case "INVALID_TOKEN_ERROR":
         throw new Error("Password reset link is invalid or expired");
+      case "PASSWORD_RESET_ERROR":
+        throw new Error("New password can not be old password");
       default:
         throw new Error(
           "An error has occured while trying to reset your password"
