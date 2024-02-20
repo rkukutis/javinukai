@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import forgotPassword from "../services/forgotPassword";
+import forgotPassword from "../services/auth/forgotPassword";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import validateEmail from "../utils/validateEmail";

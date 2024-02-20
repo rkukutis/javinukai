@@ -3,11 +3,11 @@ import toast from "react-hot-toast";
 import NavBar from "./NavBar";
 import useUserStore from "../stores/userStore";
 import { useMutation } from "@tanstack/react-query";
-import logoutUser from "../services/logoutUser";
+import logoutUser from "../services/auth/logoutUser";
 import Button from "./Button";
 import DropDownMenu from "./DropDownMenu";
 
-function Layout() {
+export default function Layout() {
   const { user, removeUser } = useUserStore((state) => state);
   const navigate = useNavigate();
   const { mutate } = useMutation({
@@ -25,7 +25,7 @@ function Layout() {
 
   return (
     <div>
-      <header className="text h-[12vh] bg-slate-700 text-slate-100">
+      <header className="text min-h-[12vh] bg-slate-700 text-slate-100">
         <div className="flex justify-between items-center px-6 py-2">
           <a href="/">WEBSITE NAME</a>
           {user ? (
@@ -47,5 +47,3 @@ function Layout() {
     </div>
   );
 }
-
-export default Layout;

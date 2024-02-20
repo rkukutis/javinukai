@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import confirmEmail from "../services/confirmEmail";
+import confirmEmail from "../services/auth/confirmEmail";
 
 function ConfirmEmailPage() {
   const [searchParams] = useSearchParams();

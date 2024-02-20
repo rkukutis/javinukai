@@ -10,6 +10,7 @@ import ResetPassPage from "./pages/ResetPassPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 import HomePage from "./pages/HomePage";
 import ImageUpload from "./Components/ImageUpload";
+import UserManagementPage from "./pages/UserManagementPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,7 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
+export default function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -40,13 +41,14 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />}/>
+              <Route index element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
               <Route path="/image-upload" element={<ImageUpload />} />
+              <Route path="/manage-users" element={<UserManagementPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
@@ -55,5 +57,3 @@ function App() {
     </>
   );
 }
-
-export default App;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import registerUser from "../services/registerUser";
+import registerUser from "../services/auth/registerUser";
 import FormFieldError from "../Components/FormFieldError";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";

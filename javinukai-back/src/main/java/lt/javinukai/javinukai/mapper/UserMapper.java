@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.mapper;
 
+import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.dto.request.user.UserUpdateRequest;
 import lt.javinukai.javinukai.entity.User;
@@ -13,9 +14,13 @@ public class UserMapper {
                 .name(userRegistrationRequest.getName())
                 .surname(userRegistrationRequest.getSurname())
                 .email(userRegistrationRequest.getEmail())
+                .password(userRegistrationRequest.getPassword())
                 .institution(userRegistrationRequest.getInstitution())
                 .isFreelance(userRegistrationRequest.getInstitution() == null)
                 .birthYear(userRegistrationRequest.getBirthYear())
+                .isEnabled(true)
+                .isNonLocked(true)
+                .role(UserRole.USER)
                 .maxSinglePhotos(50)
                 .maxCollections(50)
                 .phoneNumber(userRegistrationRequest.getPhoneNumber())

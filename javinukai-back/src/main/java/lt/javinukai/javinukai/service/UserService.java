@@ -3,8 +3,13 @@ package lt.javinukai.javinukai.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.exception.UserAlreadyExistsException;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
 import lt.javinukai.javinukai.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +20,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Value("${app.constants.user-defaults.max-photos.single}")
+    private int defaultMaxSinglePhotos;
+
+    @Value("${app.constants.user-defaults.max-photos.collection}")
+    private int defaultMaxCollections;
+
 
     public User createUser(User newUser) {
+        if (userRepository.findByEmail(newUser.getEmail()).isPresent()) {
+            log.warn("Can not create new user with email {} as one already exists", newUser.getEmail());
+            throw new UserAlreadyExistsException("User with email " + newUser.getEmail() + " already exists!");
+        }
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        newUser.setMaxSinglePhotos(defaultMaxSinglePhotos);
+        newUser.setMaxCollections(defaultMaxCollections);
         User createdUser = userRepository.save(newUser);
-        log.debug("{}: Created new user {}",this.getClass().getName(), createdUser.getUuid());
+        log.info("Created new user: {}", createdUser);
         return createdUser;
     }
     public User getUser(UUID userId) {
@@ -28,11 +48,14 @@ public class UserService {
         return user;
     }
 
-    public List<User> getUsers() {
-        // this needs pagination
-        List<User> users =  userRepository.findAll();
-        log.debug("{}: Fetched all users from database", this.getClass().getName());
-        return users;
+    public Page<User> getUsers(PageRequest pageRequest, String surname) {
+        if (surname == null) {
+            log.info("Fetching all users from database");
+            return userRepository.findAll(pageRequest);
+        } else {
+            log.info("Fetching all users with surname {} from database", surname);
+            return userRepository.findBySurnameContainingIgnoreCase(surname, pageRequest);
+        }
     }
     public User updateUser(User updatedUser, UUID userId) {
         User user = userRepository.findById(userId)

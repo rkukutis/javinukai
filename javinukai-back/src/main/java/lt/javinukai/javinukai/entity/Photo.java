@@ -34,7 +34,6 @@ public class Photo {
     @JoinColumn(name = "collection_uuid")
     private PhotoCollection collection;
 
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "author_uuid")
     private User author;
