@@ -40,6 +40,13 @@ public class CompetitionRecord {
     @Column(name = "user_name")
     private String userName;
 
+    @Setter
+    @Column(name = "category_id")
+    private UUID categoryID;
+
+    @Setter
+    @Column(name = "category_name")
+    private String categoryName;
 
     @Setter
     @Column(name = "max_photos")

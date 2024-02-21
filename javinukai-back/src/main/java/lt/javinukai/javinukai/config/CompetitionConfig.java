@@ -18,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -60,9 +59,13 @@ public class CompetitionConfig {
 
         final List<CompetitionRecord> competitionRecordList = new ArrayList<>();
 
-        long initialPhotosCount = (user.getMaxSinglePhotos() > contest.getTotalSubmissions()) ? user.getMaxSinglePhotos() : contest.getTotalSubmissions();
+        long initialPhotosCount;
 
         for (int i = 0; i < contest.getCategories().size(); i++) {
+
+            Category currentCategory = contest.getCategories().get(i);
+            initialPhotosCount = currentCategory.getTotalSubmissions();
+
             CompetitionRecord competitionRecordToCreate = CompetitionRecord.builder()
                     .userID(user.getUuid())
                     .userName(user.getName())
@@ -71,6 +74,8 @@ public class CompetitionConfig {
                     .maxPhotos(initialPhotosCount)
 //                    .maxPhotos(user.getMaxSinglePhotos())
 //                    .maxPhotos(2)
+                    .categoryID(currentCategory.getId())
+                    .categoryName(currentCategory.getCategoryName())
                     .build();
             competitionRecordToCreate.addPhotos(
                     Arrays.asList("url1", "url2", "url3"),
@@ -125,9 +130,15 @@ public class CompetitionConfig {
                 .description("pokyčiai, patraukę akį")
                 .totalSubmissions(40)
                 .build();
-
-        final String messageForCategory = String.format("category was created, name -> %s, id -> none",
+        String messageForCategory = String.format("category was created, name -> %s, id -> none",
                 categoryToCreate01.getCategoryName());
+        log.info(messageForCategory);
+
+        final Category categoryToCreate02 = Category.builder()
+                .categoryName("tech")
+                .description("technologijos. keičiančios gyvenimą")
+                .totalSubmissions(35)
+                .build();
         log.info(messageForCategory);
 
         final Contest contestToCreate = Contest.builder()
@@ -136,6 +147,7 @@ public class CompetitionConfig {
                 .totalSubmissions(20)
                 .build();
         contestToCreate.addCategory(categoryToCreate01);
+        contestToCreate.addCategory(categoryToCreate02);
         final Contest savedContest = contestRepository.save(contestToCreate);
 
         final String messageForContest = String.format("contest was saved, name -> %s, id -> %s",

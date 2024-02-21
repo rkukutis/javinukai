@@ -37,30 +37,36 @@ public class CompetitionRecordService {
         this.userRepository = userRepository;
     }
 
-    public CompetitionRecord testServiceMethod(UUID contestID, UUID userID, long totalSubmissions) {
-
-        final Contest contest = contestRepository.findById(contestID).orElseThrow(
-                () -> new EntityNotFoundException("Contest was not found with ID: " + contestID));
-
-        final User user = userRepository.findById(userID).orElseThrow(
-                () -> new EntityNotFoundException("User was not found with ID: " + userID));
-
-
-        CompetitionRecord competitionRecord =  CompetitionRecord.builder()
-                .contestID(contestID)
-                .contestName(contest.getContestName())
-                .userID(userID)
-                .userName(user.getName())
-                .build();
-
-        competitionRecordRepository.save(competitionRecord);
-        return  competitionRecord;
-    }
+//    public CompetitionRecord testServiceMethod(UUID contestID, UUID userID, long totalSubmissions) {
+//
+//        final Contest contest = contestRepository.findById(contestID).orElseThrow(
+//                () -> new EntityNotFoundException("Contest was not found with ID: " + contestID));
+//
+//        final User user = userRepository.findById(userID).orElseThrow(
+//                () -> new EntityNotFoundException("User was not found with ID: " + userID));
+//
+//
+//        CompetitionRecord competitionRecord =  CompetitionRecord.builder()
+//                .contestID(contestID)
+//                .contestName(contest.getContestName())
+//                .userID(userID)
+//                .userName(user.getName())
+//                .build();
+//
+//        competitionRecordRepository.save(competitionRecord);
+//        return  competitionRecord;
+//    }
 
 
     public List<CompetitionRecord> retrieveAllCompetitionRecords() {
         final List<CompetitionRecord> competitionRecordList = competitionRecordRepository.findAll();
         log.info("{}: Retrieving all competition record list from database", this.getClass().getName());
+        return competitionRecordList;
+    }
+
+    public List<CompetitionRecord> retrieveCompetitionRecordsByUserID(UUID userID) {
+        final List<CompetitionRecord> competitionRecordList = competitionRecordRepository.findByUserID(userID);
+        log.info("Retrieving competition records from database, name - {}", this.getClass().getName());
         return competitionRecordList;
     }
 

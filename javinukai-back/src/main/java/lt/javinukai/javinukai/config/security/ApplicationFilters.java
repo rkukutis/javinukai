@@ -48,7 +48,7 @@ public class ApplicationFilters {
                         .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/contests/**").permitAll()
                         .requestMatchers("/api/v1/categories/**").permitAll()
-                        .requestMatchers("/api/v1/enter").permitAll()
+                        .requestMatchers("/api/v1/enter/**").permitAll()
                         //
                         .anyRequest().authenticated()
                 )
