@@ -12,13 +12,17 @@ import lt.javinukai.javinukai.entity.UserToken;
 import lt.javinukai.javinukai.enums.TokenType;
 import lt.javinukai.javinukai.repository.UserRepository;
 import lt.javinukai.javinukai.repository.UserTokenRepository;
+import lt.javinukai.javinukai.service.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,6 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 
@@ -43,6 +48,14 @@ class AuthorizationControllerTest {
     UserTokenRepository tokenRepository;
     @Autowired
     UserRepository userRepository;
+    @MockBean
+    EmailService mockEmailService;
+
+    @Captor
+    ArgumentCaptor<String> tokenCaptor;
+
+    @Captor
+    ArgumentCaptor<User> userCaptor;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -171,19 +184,19 @@ class AuthorizationControllerTest {
                         .content(objectMapper.writeValueAsString(register))
         ).andReturn();
 
+        verify(mockEmailService).sendEmailConfirmation(userCaptor.capture(), tokenCaptor.capture());
+        System.out.println(tokenCaptor.getValue());
+
         User user = userRepository.findByEmail("fbender@mail.com").get();
         assertFalse(user.isEnabled());
-        List<UserToken> tokens = tokenRepository
-                .findByUserUuidAndTypeOrderByCreatedAtDesc(user.getUuid(), TokenType.EMAIL_CONFIRM);
-        assertEquals(1, tokens.size());
-        UserToken confirmToken = tokens.get(0);
-        assertTrue(confirmToken.getExpiresAt().isAfter(confirmToken.getCreatedAt()));
-        assertEquals(user.getUuid(), confirmToken.getUser().getUuid());
+        assertNotNull(tokenCaptor.getValue());
+        assertEquals(user.getUuid() ,userCaptor.getValue().getUuid());
 
         MockHttpServletResponse response = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/auth/confirm-email")
-                        .param("token", confirmToken.getTokenValue())
+                        .param("token", tokenCaptor.getValue())
         ).andReturn().getResponse();
+
         assertEquals(200, response.getStatus());
         User enabledUser = userRepository.findByEmail("fbender@mail.com").get();
         assertTrue(enabledUser.isEnabled());
@@ -280,14 +293,16 @@ class AuthorizationControllerTest {
         ).andReturn().getResponse();
 
         assertEquals(200, response.getStatus());
+        verify(mockEmailService).sendPasswordResetToken(userCaptor.capture(), tokenCaptor.capture());
+        assertEquals(testUser.getUuid(), userCaptor.getValue().getUuid());
         List<UserToken> tokens = tokenRepository
                 .findByUserUuidAndTypeOrderByCreatedAtDesc(testUser.getUuid(), TokenType.PASSWORD_RESET);
         assertEquals(1, tokens.size());
-        UserToken resetToken = tokens.get(0);
-        assertEquals(testUser.getUuid(), resetToken.getUser().getUuid());
+
+
 
         PasswordResetRequest passwordResetRequest = PasswordResetRequest.builder()
-                .resetToken(resetToken.getTokenValue())
+                .resetToken(tokenCaptor.getValue())
                 .newPassword("moneymoneymoney")
                 .build();
 

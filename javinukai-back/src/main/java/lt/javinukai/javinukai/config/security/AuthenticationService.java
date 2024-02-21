@@ -8,10 +8,7 @@ import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.entity.UserToken;
 import lt.javinukai.javinukai.enums.TokenType;
-import lt.javinukai.javinukai.exception.InvalidTokenException;
-import lt.javinukai.javinukai.exception.TooManyRequestsException;
-import lt.javinukai.javinukai.exception.UserAlreadyExistsException;
-import lt.javinukai.javinukai.exception.UserNotFoundException;
+import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.UserRepository;
 import lt.javinukai.javinukai.service.EmailService;
 import lt.javinukai.javinukai.service.UserTokenService;
@@ -108,8 +105,11 @@ public class AuthenticationService {
     }
 
     public void resetPassword(String token, String newPassword) {
+        User user = userTokenService.getTokenUser(token, TokenType.PASSWORD_RESET);
+        if (passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new PasswordResetException("New password is the same as the old one");
+        }
         if (userTokenService.tokenIsValid(token, TokenType.PASSWORD_RESET)) {
-            User user = userTokenService.getTokenUser(token, TokenType.PASSWORD_RESET);
             user.setPassword(passwordEncoder.encode(newPassword));
             log.info("Setting new password {} for {}", newPassword, user);
             userRepository.save(user);
