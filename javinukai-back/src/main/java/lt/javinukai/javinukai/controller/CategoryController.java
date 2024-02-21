@@ -9,11 +9,13 @@ import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,9 +44,17 @@ public class CategoryController {
 
     @GetMapping(path = "/categories")
     public ResponseEntity<Page<Category>> retrieveAllCategories(@RequestParam(defaultValue = "1") int pageNumber,
-                                                                @RequestParam(defaultValue = "5") int pageSize) {
+                                                                @RequestParam(defaultValue = "5") int pageSize,
+                                                                @RequestParam(required = false) String keyword,
+                                                                @RequestParam(defaultValue = "categoryName") String sortBy,
+                                                                @RequestParam(defaultValue = "false") boolean sortDesc) {
         log.info("Request for retrieving all categories");
-        final Page<Category> page = categoryService.retrieveAllCategories(--pageNumber, pageSize);
+
+        Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        final Pageable pageable = PageRequest.of(--pageNumber, pageSize, sort);
+        final Page<Category> page = categoryService.retrieveAllCategories(pageable, keyword);
         log.info("Request for retrieving all categories, {} record(s) found", page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
     }

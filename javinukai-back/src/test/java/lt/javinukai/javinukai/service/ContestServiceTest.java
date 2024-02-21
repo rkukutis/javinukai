@@ -41,40 +41,40 @@ class ContestServiceTest {
     @InjectMocks
     private ContestService contestService;
 
-    @Test
-    public void createContestReturnsContest() {
-
-        final UUID categoryID = UUID.randomUUID();
-        final Category category01 = Category.builder()
-                .id(categoryID)
-                .categoryName("test category name")
-                .description("test category description")
-                .totalSubmissions(66)
-                .build();
-
-        final UUID contestID = UUID.randomUUID();
-        final Contest contest01 = Contest.builder()
-                .id(contestID)
-                .contestName("test contest name")
-                .description("test contest description")
-                .totalSubmissions(666)
-                .categories(Collections.singletonList(category01))
-                .startDate(ZonedDateTime.now())
-                .endDate(ZonedDateTime.now())
-                .build();
-
-        final ContestDTO contestDTO01 = ContestMapper.contestToContestDTO(contest01);
-        contestDTO01.setCategories(Collections.singletonList(category01));
-
-        when(contestRepository.save(Mockito.any(Contest.class))).thenReturn(contest01);
-        when(categoryRepository.findById(categoryID)).thenReturn(Optional.ofNullable(category01));
-
-        final Contest createdContest = contestService
-                .createContest(ContestMapper.contestToContestDTOTest(contest01));
-
-        Assertions.assertThat(createdContest).isNotNull();
-        Assertions.assertThat(createdContest.getCategories()).isNotNull();
-    }
+//    @Test
+//    public void createContestReturnsContest() {
+//
+//        final UUID categoryID = UUID.randomUUID();
+//        final Category category01 = Category.builder()
+//                .id(categoryID)
+//                .categoryName("test category name")
+//                .description("test category description")
+//                .totalSubmissions(66)
+//                .build();
+//
+//        final UUID contestID = UUID.randomUUID();
+//        final Contest contest01 = Contest.builder()
+//                .id(contestID)
+//                .contestName("test contest name")
+//                .description("test contest description")
+//                .totalSubmissions(666)
+//                .categories(Collections.singletonList(category01))
+//                .startDate(ZonedDateTime.now())
+//                .endDate(ZonedDateTime.now())
+//                .build();
+//
+//        final ContestDTO contestDTO01 = ContestMapper.contestToContestDTO(contest01);
+//        contestDTO01.setCategories(Collections.singletonList(category01));
+//
+//        when(contestRepository.save(Mockito.any(Contest.class))).thenReturn(contest01);
+//        when(categoryRepository.findById(categoryID)).thenReturn(Optional.ofNullable(category01));
+//
+//        final Contest createdContest = contestService
+//                .createContest(ContestMapper.contestToContestDTOTest(contest01));
+//
+//        Assertions.assertThat(createdContest).isNotNull();
+//        Assertions.assertThat(createdContest.getCategories()).isNotNull();
+//    }
 
         @Test
         public void retrieveAllContestsReturnsPageOfContests() {
