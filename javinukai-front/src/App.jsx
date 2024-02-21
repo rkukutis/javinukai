@@ -11,6 +11,7 @@ import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 import HomePage from "./pages/HomePage";
 import ImageUpload from "./Components/ImageUpload";
 import UserManagementPage from "./pages/UserManagementPage";
+import UserDetailsPage from "./pages/UserDetailsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,6 +50,10 @@ export default function App() {
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
               <Route path="/image-upload" element={<ImageUpload />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
+              <Route
+                path="/manage-users/:userId"
+                element={<UserDetailsPage />}
+              />
             </Route>
           </Routes>
         </BrowserRouter>

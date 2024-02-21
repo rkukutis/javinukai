@@ -53,9 +53,16 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody @Valid UserUpdateRequest updateDTO) {
         return ResponseEntity.ok().body(userService.updateUser(UserMapper.mapToUser(updateDTO), userId));
     }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<User> updateUserRole(@PathVariable UUID userId, @RequestBody User newUser) {
+        return ResponseEntity.ok().body(userService.updateUserForAdmin(userId, newUser));
+    }
+
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<List<User>> deleteUser(@PathVariable UUID userId) {

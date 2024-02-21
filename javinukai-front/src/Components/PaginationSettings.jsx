@@ -9,7 +9,10 @@ export default function PaginationSettings({
   const [searchedSurname, setSearchedSurname] = useState("");
 
   function handleNextPage() {
-    if (availablePageNumber === 1 || pagination.page === availablePageNumber)
+    if (
+      availablePageNumber === 1 ||
+      pagination.page === availablePageNumber - 1
+    )
       return;
     setPagination({ ...pagination, page: pagination.page + 1 });
   }
@@ -57,6 +60,7 @@ export default function PaginationSettings({
         <select
           className="py-2 px-4 bg-white rounded-md"
           onChange={handleLimitChange}
+          value={pagination.limit}
         >
           <option value={5}>5 users</option>
           <option value={10}>10 users</option>
@@ -69,6 +73,7 @@ export default function PaginationSettings({
         <select
           className="p-2 bg-white rounded-md"
           onChange={handleSortByChange}
+          value={pagination.sortBy}
         >
           <option value="name">Name</option>
           <option value="surname">Surname</option>
@@ -82,6 +87,7 @@ export default function PaginationSettings({
         <select
           className="p-2 bg-white rounded-md"
           onChange={handleSortDescChange}
+          value={pagination.sortDesc}
         >
           <option value="true">Descending</option>
           <option value="false">Ascending</option>

@@ -40,7 +40,7 @@ export default function Layout() {
         </div>
         {user && <NavBar />}
       </header>
-      <main className="min-h-[82vh] pb-10">
+      <main className="min-h-[82vh]">
         <Outlet />
       </main>
       <footer className="h-[10vh] bg-teal-600 text-slate-100 ">FOOTER</footer>

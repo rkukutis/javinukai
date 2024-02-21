@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import getUsers from "../services/users/getUsers";
 import PaginationSettings from "../Components/PaginationSettings";
-import Button from "../Components/Button";
+import SpinnerPage from "./SpinnerPage";
+import { Link } from "react-router-dom";
 
 const defaultPagination = {
   page: 0,
@@ -32,12 +33,12 @@ function UserCard({ userInfo }) {
           {userInfo.maxCollections}
         </p>
         <div className="flex items-center justify-end space-x-5">
-          <button className="bg-blue-500 px-2 py-3 text-slate-50 rounded-md">
+          <Link
+            to={userInfo.uuid}
+            className="bg-blue-400 hover:bg-blue-300 px-2 py-3 text-slate-50 rounded-md"
+          >
             Details
-          </button>
-          <button className="bg-yellow-500 px-5 py-3 text-slate-50 rounded-md">
-            Edit
-          </button>
+          </Link>
         </div>
       </div>
     </div>
@@ -67,23 +68,29 @@ export default function UserManagementPage() {
   });
 
   return (
-    <div className="w-full min-h-[82vh] lg:flex lg:flex-col lg:items-center bg-slate-50">
-      <div className="lg:w-3/4 w-full px-2">
-        <PaginationSettings
-          pagination={paginationSettings}
-          setPagination={setPaginationSettings}
-          availablePageNumber={data?.totalPages}
-        />
-        <div className="hidden lg:grid lg:grid-cols-5 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md">
-          <p>Name</p>
-          <p>Confirmed</p>
-          <p>Max singles</p>
-          <p>Max collections</p>
+    <>
+      {isFetching ? (
+        <SpinnerPage />
+      ) : (
+        <div className="w-full min-h-[82vh] lg:flex lg:flex-col lg:items-center bg-slate-50">
+          <div className="lg:w-3/4 w-full px-2">
+            <PaginationSettings
+              pagination={paginationSettings}
+              setPagination={setPaginationSettings}
+              availablePageNumber={data?.totalPages}
+            />
+            <div className="hidden lg:grid lg:grid-cols-5 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md">
+              <p>Name</p>
+              <p>Confirmed</p>
+              <p>Max singles</p>
+              <p>Max collections</p>
+            </div>
+            {data?.content.map((user) => (
+              <UserCard key={user.uuid} userInfo={user} />
+            ))}
+          </div>
         </div>
-        {data?.content.map((user) => (
-          <UserCard key={user.uuid} userInfo={user} />
-        ))}
-      </div>
-    </div>
+      )}
+    </>
   );
 }

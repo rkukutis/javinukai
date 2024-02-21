@@ -2,6 +2,7 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.exception.UserAlreadyExistsException;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
@@ -72,6 +73,25 @@ public class UserService {
         user.setMaxCollections(updatedUser.getMaxCollections());
         return userRepository.save(user);
     }
+
+    public User updateUserForAdmin(UUID userId, User updateUser) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+        UserRole previousRole = user.getRole();
+        boolean previousIsNonLocked = user.getIsNonLocked();
+        if (!previousRole.equals(updateUser.getRole())) {
+            user.setRole(updateUser.getRole());
+            log.info("Updating user {} role from {} to {}", user.getUuid(),
+                    previousRole, updateUser.getRole());
+        } else if (previousIsNonLocked != updateUser.getIsNonLocked()) {
+            user.setIsNonLocked(updateUser.getIsNonLocked());
+            log.info("Updating user {} isNonLocked state from {} to {}",
+                    user.getUuid(), previousIsNonLocked, updateUser.getIsNonLocked());
+        }
+        return userRepository.save(user);
+    }
+
+
     public List<User> deleteUser(UUID userId) {
         if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);
