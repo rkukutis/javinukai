@@ -49,7 +49,6 @@ public class CategoryController {
                                                                 @RequestParam(defaultValue = "categoryName") String sortBy,
                                                                 @RequestParam(defaultValue = "false") boolean sortDesc) {
         log.info("Request for retrieving all categories");
-
         Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sort = Sort.by(direction, sortBy);
 

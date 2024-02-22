@@ -60,10 +60,15 @@ public class ContestService {
         return createdContest;
     }
 
-    public Page<Contest> retrieveAllContests(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        log.info("{}: Retrieving all contest list from database", this.getClass().getName());
-        return contestRepository.findAll(pageable);
+    public Page<Contest> retrieveAllContests(Pageable pageable, String keyword) {
+
+        if (keyword == null || keyword.isEmpty()) {
+            log.info("{}: Retrieving all contests list from database", this.getClass().getName());
+            return contestRepository.findAll(pageable);
+        } else {
+            log.info("{}: Retrieving categories by name", this.getClass().getName());
+            return contestRepository.findByContestName(keyword, pageable);
+        }
     }
 
     public Contest retrieveContest(UUID id) {

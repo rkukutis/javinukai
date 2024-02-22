@@ -58,7 +58,6 @@ public class CategoryService {
             return categoryRepository.findAll(pageable);
         } else {
             log.info("{}: Retrieving categories by name", this.getClass().getName());
-//            return categoryRepository.findByCategoryNameContaining(keyword, pageable);
             return categoryRepository.findByCategoryName(keyword, pageable);
         }
     }

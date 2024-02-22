@@ -12,5 +12,4 @@ import java.util.UUID;
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     Category findByCategoryNameAndDescriptionAndTotalSubmissions(String categoryName, String description, long totalSubmissions);
     Page<Category> findByCategoryName(String categoryName, Pageable pageable);
-//    Page<Category> findByCategoryNameContaining(String categoryName, Pageable pageable);
 }
