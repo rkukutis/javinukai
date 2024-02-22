@@ -3,11 +3,13 @@ package lt.javinukai.javinukai.dto.request.user;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 
 @Builder
 @Getter
+@ToString
 public class UserUpdateRequest {
 
     @NotBlank
@@ -37,8 +39,12 @@ public class UserUpdateRequest {
 
     @NotNull
     @Min(0)
+    private Integer maxTotal;
+    @NotNull
+    @Min(0)
     private Integer maxSinglePhotos;
     @NotNull
     @Min(0)
     private Integer maxCollections;
+
 }

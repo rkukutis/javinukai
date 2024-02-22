@@ -5,9 +5,8 @@ import lombok.Getter;
 import lt.javinukai.javinukai.entity.User;
 
 @Builder
+@Getter
 public class AuthenticationResponse {
-    @Getter
     private final String token;
-    @Getter
     private final User user;
 }

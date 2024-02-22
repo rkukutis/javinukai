@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import resetPassword from "../services/resetPassword";
+import resetPassword from "../services/auth/resetPassword";
 import StyledInput from "../Components/StyledInput";
 import FormFieldError from "../Components/FormFieldError";
 import { useMutation } from "@tanstack/react-query";

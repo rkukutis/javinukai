@@ -17,6 +17,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -42,6 +43,8 @@ public class User implements UserDetails {
     @Setter
     private String institution;
     @Setter
+    private Integer maxTotal;
+    @Setter
     private Integer maxSinglePhotos;
     @Setter
     private Integer maxCollections;
@@ -58,6 +61,7 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserToken> tokens;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.MERGE)
     private List<Photo> images;
 

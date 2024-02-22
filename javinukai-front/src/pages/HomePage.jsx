@@ -3,7 +3,6 @@ import cat2 from "../assets/cat2.jpg";
 import cat3 from "../assets/cat3.jpg";
 import Button from "../Components/Button";
 import Modal from "../Components/Modal";
-import React from "react";
 import useModal from "../Components/UseModal";
 import useUserStore from "../stores/userStore";
 function HomePage() {

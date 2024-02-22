@@ -1,6 +1,5 @@
 package lt.javinukai.javinukai.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +38,7 @@ public class AuthorizationController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid UserRegistrationRequest registration) {
         log.info("Received registration request: {}", registration.toString());
-        authenticationService.register(registration);
+        authenticationService.register(registration, false);
         return ResponseEntity.created(URI.create("/users")).build();
     }
 
