@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CompetitionRecordRepository extends JpaRepository<CompetitionRecord, UUID> {
-    List<CompetitionRecord> findByUserID(UUID userID);
+//    List<CompetitionRecord> findByUserId(UUID userID);
 }

@@ -64,11 +64,11 @@ public class CompetitionRecordService {
         return competitionRecordList;
     }
 
-    public List<CompetitionRecord> retrieveCompetitionRecordsByUserID(UUID userID) {
-        final List<CompetitionRecord> competitionRecordList = competitionRecordRepository.findByUserID(userID);
-        log.info("Retrieving competition records from database, name - {}", this.getClass().getName());
-        return competitionRecordList;
-    }
+//    public List<CompetitionRecord> retrieveCompetitionRecordsByUserID(UUID userID) {
+//        final List<CompetitionRecord> competitionRecordList = competitionRecordRepository.findByUserID(userID);
+//        log.info("Retrieving competition records from database, name - {}", this.getClass().getName());
+//        return competitionRecordList;
+//    }
 
 
 

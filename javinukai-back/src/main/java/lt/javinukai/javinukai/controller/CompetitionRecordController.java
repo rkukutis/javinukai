@@ -47,12 +47,12 @@ public class CompetitionRecordController {
         return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/enter/{userID}")
-    public ResponseEntity<List<CompetitionRecord>> retrieveRecordsByUserID(@PathVariable @NotNull UUID userID) {
-        log.info("Request for retrieving records for user ID: {}", userID);
-        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveCompetitionRecordsByUserID(userID);
-        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
-    }
+//    @GetMapping(path = "/enter/{userID}")
+//    public ResponseEntity<List<CompetitionRecord>> retrieveRecordsByUserID(@PathVariable @NotNull UUID userID) {
+//        log.info("Request for retrieving records for user ID: {}", userID);
+//        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveCompetitionRecordsByUserID(userID);
+//        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
+//    }
 
 
 

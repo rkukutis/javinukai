@@ -58,6 +58,42 @@ public class Category {
     @LastModifiedDate
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
+//////////////////////////////////////////////
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<CompetitionRecord> competitionRecords = new ArrayList<>();
+////////////////////////////////////////////
+//    @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.DETACH, CascadeType.REFRESH})
+//    @Setter
+//    private List<CompetitionRecord> records;
+
+//    @Setter
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+//    @JoinTable(
+//            name = "record_category",
+//            joinColumns = @JoinColumn(name = "category_id"),
+//            inverseJoinColumns = @JoinColumn(name = "record_id")
+//    )
+//    @JsonIgnore
+//    private List<CompetitionRecord> records;
+
+
+
+//    public void addCompetitionRecord(CompetitionRecord competitionRecord) {
+//        if (records == null) {
+//            records = new ArrayList<>();
+//        }
+//        records.add(competitionRecord);
+//    }
+//
+//    public void removeCompetitionRecord(CompetitionRecord competitionRecord) {
+//        if (records == null) {
+//            return;
+//        }
+//        records.remove(competitionRecord);
+//    }
 
     public void addContest(Contest contest) {
         if (contests == null) {

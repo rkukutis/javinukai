@@ -59,30 +59,21 @@ public class CompetitionConfig {
 
         final List<CompetitionRecord> competitionRecordList = new ArrayList<>();
 
-        long initialPhotosCount;
+        for (Category currentCategory : contest.getCategories()) {
 
-        for (int i = 0; i < contest.getCategories().size(); i++) {
-
-            Category currentCategory = contest.getCategories().get(i);
-            initialPhotosCount = currentCategory.getTotalSubmissions();
-
-            CompetitionRecord competitionRecordToCreate = CompetitionRecord.builder()
-                    .userID(user.getUuid())
-                    .userName(user.getName())
-                    .contestID(contest.getId())
-                    .contestName(contest.getContestName())
-                    .maxPhotos(initialPhotosCount)
-//                    .maxPhotos(user.getMaxSinglePhotos())
-//                    .maxPhotos(2)
-                    .categoryID(currentCategory.getId())
-                    .categoryName(currentCategory.getCategoryName())
+            final CompetitionRecord competitionRecordToCreate = CompetitionRecord.builder()
+                    .category(currentCategory)
+                    .contest(contest)
+                    .user(user)
+                    .maxPhotos(currentCategory.getTotalSubmissions())
                     .build();
-            competitionRecordToCreate.addPhotos(
-                    Arrays.asList("url1", "url2", "url3"),
-                    competitionRecordToCreate.getMaxPhotos());
-            final CompetitionRecord savedCompetitionRecord = competitionRecordRepository.save(competitionRecordToCreate);
+            final CompetitionRecord savedCompetitionRecord = competitionRecordRepository
+                    .save(competitionRecordToCreate);
 
-            log.info("competition record saved, id -> {}", savedCompetitionRecord.getId());
+            savedCompetitionRecord.addPhotos(Arrays.asList("url1", "url2", "url3"), savedCompetitionRecord.getMaxPhotos());
+
+
+            competitionRecordRepository.save(savedCompetitionRecord);
             competitionRecordList.add(savedCompetitionRecord);
         }
 
@@ -104,14 +95,14 @@ public class CompetitionConfig {
                 .maxSinglePhotos(10)
                 .maxCollections(10)
                 .build();
-        log.info("saving user...");
+//        log.info("saving user...");
         final User savedUser = userRepository.save(userToCreate);
 
-        final String userInfo = String.format("user created, full name -> %s %s, email -> %s ",
-                savedUser.getName(),
-                savedUser.getSurname(),
-                savedUser.getEmail());
-        log.info(userInfo);
+//        final String userInfo = String.format("user created, full name -> %s %s, email -> %s ",
+//                savedUser.getName(),
+//                savedUser.getSurname(),
+//                savedUser.getEmail());
+//        log.info(userInfo);
 
         return savedUser;
     }
@@ -119,7 +110,7 @@ public class CompetitionConfig {
     private Contest assignCategoryToExistingContest(Contest contestToUpdate, Category categoryToAdd) {
         contestToUpdate.addCategory(categoryToAdd);
         final Contest updatedContest = contestRepository.save(contestToUpdate);
-        log.info("contest was updated");
+//        log.info("contest was updated");
         return updatedContest;
     }
 
@@ -130,16 +121,16 @@ public class CompetitionConfig {
                 .description("pokyčiai, patraukę akį")
                 .totalSubmissions(40)
                 .build();
-        String messageForCategory = String.format("category was created, name -> %s, id -> none",
-                categoryToCreate01.getCategoryName());
-        log.info(messageForCategory);
+//        String messageForCategory = String.format("category was created, name -> %s, id -> none",
+//                categoryToCreate01.getCategoryName());
+//        log.info(messageForCategory);
 
         final Category categoryToCreate02 = Category.builder()
                 .categoryName("tech")
                 .description("technologijos. keičiančios gyvenimą")
                 .totalSubmissions(35)
                 .build();
-        log.info(messageForCategory);
+//        log.info(messageForCategory);
 
         final Contest contestToCreate = Contest.builder()
                 .contestName("pro objektyvą - 2023")
@@ -150,10 +141,10 @@ public class CompetitionConfig {
         contestToCreate.addCategory(categoryToCreate02);
         final Contest savedContest = contestRepository.save(contestToCreate);
 
-        final String messageForContest = String.format("contest was saved, name -> %s, id -> %s",
-                savedContest.getContestName(),
-                savedContest.getId());
-        log.info(messageForContest);
+//        final String messageForContest = String.format("contest was saved, name -> %s, id -> %s",
+//                savedContest.getContestName(),
+//                savedContest.getId());
+//        log.info(messageForContest);
 
         return  savedContest;
     }
@@ -165,10 +156,10 @@ public class CompetitionConfig {
                 .totalSubmissions(30)
                 .build();
         final Category savedCategory = categoryRepository.save(categoryToCreate01);
-        final String messageForCategory = String.format("category was saved, name -> %s, id -> %s",
-                savedCategory.getCategoryName(),
-                savedCategory.getId());
-        log.info(messageForCategory);
+//        final String messageForCategory = String.format("category was saved, name -> %s, id -> %s",
+//                savedCategory.getCategoryName(),
+//                savedCategory.getId());
+//        log.info(messageForCategory);
         return savedCategory;
     }
 }

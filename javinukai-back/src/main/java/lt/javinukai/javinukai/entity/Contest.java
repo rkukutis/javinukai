@@ -41,7 +41,11 @@ public class Contest {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
-
+////////////////////////////////////////////////////////////////////////
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<CompetitionRecord> competitionRecords = new ArrayList<>();
+/////////////////////////////////////////////////////////////////////////
     @Setter
     @Column(name = "total_submissions")
     private long totalSubmissions;
