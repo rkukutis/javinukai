@@ -9,6 +9,10 @@ spring:
     username: sa
     password: password
     driverClassName: org.h2.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 logging:
@@ -17,22 +21,23 @@ logging:
       javinukai: INFO
     org:
       springframework:
-        security: INFO
+        security: TRACE
         jpa: INFO
 app:
-  scheme: http
-  host: localhost:8080
+  scheme: https
+  host: javinukai.rhoopoe.com
   email:
-    host: sandbox.smtp.mailtrap.io
-    port: 2525
+    host: smtp.gmail.com
+    port: 587
     auth:
-      user: 3a1005aa68b999
-      password: 497c640c28dda1
+      user: notrealuser23
+      password: testtesttest
   constants:
     user-defaults:
       max-photos:
-        single: 20
-        collection: 20
+        total: 50
+        single: 30
+        collection: 6
     security:
       token:
         length: 128
