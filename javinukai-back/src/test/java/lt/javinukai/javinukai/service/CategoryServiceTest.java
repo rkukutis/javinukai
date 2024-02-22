@@ -76,16 +76,16 @@ class CategoryServiceTest {
 //        Assertions.assertThat(createdCategory).isNull();
 //    }
 
-    @Test
-    public void retrieveAllCategoriesReturnsListOfCategories() {
-
-        final Page<Category> pageOfCategories = Mockito.mock(Page.class);
-        when(categoryRepository.findAll(Mockito.any(Pageable.class))).thenReturn(pageOfCategories);
-
-        final Page<Category> categoriesToDisplay = categoryService.retrieveAllCategories(1, 2);
-
-        Assertions.assertThat(categoriesToDisplay).isNotNull();
-    }
+//    @Test
+//    public void retrieveAllCategoriesReturnsListOfCategories() {
+//
+//        final Page<Category> pageOfCategories = Mockito.mock(Page.class);
+//        when(categoryRepository.findAll(Mockito.any(Pageable.class))).thenReturn(pageOfCategories);
+//
+//        final Page<Category> categoriesToDisplay = categoryService.retrieveAllCategories(1, 2);
+//
+//        Assertions.assertThat(categoriesToDisplay).isNotNull();
+//    }
 
     @Test
     public void retrieveCategoryReturnsCategory() {

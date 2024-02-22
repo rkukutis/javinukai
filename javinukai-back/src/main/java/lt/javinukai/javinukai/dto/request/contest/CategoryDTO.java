@@ -37,4 +37,5 @@ public class CategoryDTO {
     private long totalSubmissions;
 
     private List<String> uploadedPhotos;
+
 }
