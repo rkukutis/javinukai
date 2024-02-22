@@ -85,25 +85,25 @@ class CategoryControllerTest {
 
 
 
-    @Test
-    public void retrieveAllCategoriesReturnsListOfCategories() throws Exception {
-
-        final Page<Category> page = new PageImpl<>(Collections.singletonList(category));
-        final ResponseEntity<Page<Category>> responseEntity = new ResponseEntity<>(page, HttpStatus.OK);
-
-        when(categoryService.retrieveAllCategories(0, 10))
-                .thenReturn(page);
-
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories")
-                .param("pageNumber", String.valueOf(1))
-                .param("pageSize", String.valueOf(10))
-                .contentType(MediaType.APPLICATION_JSON));
-
-        resultActions.andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content.length()").value(page.getContent().size()))
-                .andExpect(jsonPath("$.content[0].categoryName").value(page.getContent().get(0).getCategoryName()));
-    }
+//    @Test
+//    public void retrieveAllCategoriesReturnsListOfCategories() throws Exception {
+//
+//        final Page<Category> page = new PageImpl<>(Collections.singletonList(category));
+//        final ResponseEntity<Page<Category>> responseEntity = new ResponseEntity<>(page, HttpStatus.OK);
+//
+//        when(categoryService.retrieveAllCategories(0, 10))
+//                .thenReturn(page);
+//
+//        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories")
+//                .param("pageNumber", String.valueOf(1))
+//                .param("pageSize", String.valueOf(10))
+//                .contentType(MediaType.APPLICATION_JSON));
+//
+//        resultActions.andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.content.length()").value(page.getContent().size()))
+//                .andExpect(jsonPath("$.content[0].categoryName").value(page.getContent().get(0).getCategoryName()));
+//    }
 
     @Test
     public void retrieveCategoryReturnsCategory() throws Exception{

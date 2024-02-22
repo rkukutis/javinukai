@@ -9,13 +9,11 @@ import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -53,10 +51,15 @@ public class CategoryService {
         return new CategoryCreationResponse(createCategory, httpStatus,message);
     }
 
-    public Page<Category> retrieveAllCategories(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        log.info("{}: Retrieving all category list from database", this.getClass().getName());
-        return categoryRepository.findAll(pageable);
+    public Page<Category> retrieveAllCategories(Pageable pageable, String keyword) {
+
+        if (keyword == null || keyword.isEmpty()) {
+            log.info("{}: Retrieving all categories list from database", this.getClass().getName());
+            return categoryRepository.findAll(pageable);
+        } else {
+            log.info("{}: Retrieving categories by name", this.getClass().getName());
+            return categoryRepository.findByCategoryName(keyword, pageable);
+        }
     }
 
     public Category retrieveCategory(UUID id) {

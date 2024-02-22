@@ -45,8 +45,10 @@ public class ApplicationFilters {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         //
+                        .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/contests/**").permitAll()
                         .requestMatchers("/api/v1/categories/**").permitAll()
+                        .requestMatchers("/api/v1/enter/**").permitAll()
                         //
                         .anyRequest().authenticated()
                 )
