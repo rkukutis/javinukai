@@ -2,7 +2,9 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.config.security.AuthenticationService;
 import lt.javinukai.javinukai.config.security.UserRole;
+import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.exception.UserAlreadyExistsException;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
@@ -21,27 +23,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationService authenticationService;
 
-    @Value("${app.constants.user-defaults.max-photos.single}")
-    private int defaultMaxSinglePhotos;
-
-    @Value("${app.constants.user-defaults.max-photos.collection}")
-    private int defaultMaxCollections;
-
-
-    public User createUser(User newUser) {
-        if (userRepository.findByEmail(newUser.getEmail()).isPresent()) {
-            log.warn("Can not create new user with email {} as one already exists", newUser.getEmail());
-            throw new UserAlreadyExistsException("User with email " + newUser.getEmail() + " already exists!");
-        }
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        newUser.setMaxSinglePhotos(defaultMaxSinglePhotos);
-        newUser.setMaxCollections(defaultMaxCollections);
-        User createdUser = userRepository.save(newUser);
-        log.info("Created new user: {}", createdUser);
-        return createdUser;
+    public User createUser(UserRegistrationRequest registrationRequest) {
+       return authenticationService.register(registrationRequest, true);
     }
+
     public User getUser(UUID userId) {
         User user =  userRepository.findById(userId)
                 .orElseThrow(()-> new UserNotFoundException(userId));
@@ -69,8 +56,9 @@ public class UserService {
         user.setIsFreelance(updatedUser.getIsFreelance());
         user.setInstitution(updatedUser.getInstitution());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
-        user.setMaxSinglePhotos(updatedUser.getMaxSinglePhotos());
-        user.setMaxCollections(updatedUser.getMaxCollections());
+        //user.setMaxTotal(updatedUser.getMaxTotal());
+        //user.setMaxSinglePhotos(updatedUser.getMaxSinglePhotos());
+        //user.setMaxCollections(updatedUser.getMaxCollections());
         return userRepository.save(user);
     }
 

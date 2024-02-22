@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "./Button";
+import Button from "../Button";
 
 export default function PaginationSettings({
   pagination,
@@ -78,8 +78,11 @@ export default function PaginationSettings({
           <option value="name">Name</option>
           <option value="surname">Surname</option>
           <option value="email">Email</option>
-          <option value="maxSinglePhotos">Max singles</option>
-          <option value="maxCollections">Max collections</option>
+          <option value="role">Role</option>
+          <option value="maxTotal">Max entries per contest</option>
+          <option value="maxSinglePhotos">Max singles per category</option>
+          <option value="maxCollections">Max collections per category</option>
+          <option value="isEnabled">Confirmed</option>
         </select>
       </section>
       <section className="flex flex-col space-y-2">
@@ -95,7 +98,7 @@ export default function PaginationSettings({
       </section>
       <section className="flex flex-col space-y-2">
         <label>Search by surname</label>
-        <div className="flex space-x-3">
+        <div className="lg:flex-row flex lg:space-x-3 space-y-2 lg:space-y-0 flex-col">
           <input
             className="p-2 bg-white rounded-md"
             placeholder="Surname"

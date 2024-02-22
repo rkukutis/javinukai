@@ -39,8 +39,12 @@ public class UserUpdateRequest {
 
     @NotNull
     @Min(0)
+    private Integer maxTotal;
+    @NotNull
+    @Min(0)
     private Integer maxSinglePhotos;
     @NotNull
     @Min(0)
     private Integer maxCollections;
+
 }

@@ -35,8 +35,9 @@ app:
   constants:
     user-defaults:
       max-photos:
-        single: 20
-        collection: 20
+        total: 50
+        single: 30
+        collection: 6
     security:
       token:
         length: 128

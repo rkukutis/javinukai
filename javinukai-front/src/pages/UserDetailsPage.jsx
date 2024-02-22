@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getUser from "../services/users/getUser";
 import SpinnerPage from "./SpinnerPage";
 import { DangerZone } from "../Components/user-management/DangerZone";
 import formatTimestap from "../utils/formatTimestap";
+import Button from "../Components/Button";
 
 function UserDetailsField({ fieldName, fieldValue }) {
   return (
@@ -16,8 +17,9 @@ function UserDetailsField({ fieldName, fieldValue }) {
 }
 
 function UserDetailsPage() {
+  const navigate = useNavigate();
   const { userId } = useParams();
-  const { data, isFetching, error } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => getUser(userId),
   });
@@ -28,10 +30,10 @@ function UserDetailsPage() {
         <SpinnerPage />
       ) : (
         <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-100">
-          <div className="lg:w-3/4 w-full h-fit bg-white lg:my-4 lg:p-8 rounded-md">
-            <div className="lg:grid lg:grid-cols-2">
-              <div>
-                <h1 className="text-xl">Personal Details</h1>
+          <div className="lg:w-3/4 w-full h-fit bg-white shadow-md lg:my-4 p-8 rounded-md">
+            <article className="lg:grid lg:grid-cols-2 flex flex-col space-y-4 lg:space-y-0 pb-4">
+              <section>
+                <h1 className="text-2xl">Personal Details</h1>
                 <UserDetailsField fieldName="Name" fieldValue={data?.name} />
                 <UserDetailsField
                   fieldName="Surname"
@@ -56,9 +58,9 @@ function UserDetailsPage() {
                     fieldValue={data?.institution}
                   />
                 )}
-              </div>
-              <div className="">
-                <h1 className="text-xl">Account details</h1>
+              </section>
+              <section className="">
+                <h1 className="text-2xl">Account details</h1>
                 <UserDetailsField
                   fieldName="Account ID"
                   fieldValue={data?.uuid}
@@ -82,9 +84,27 @@ function UserDetailsPage() {
                   fieldValue={data?.isNonLocked ? "No" : "Yes"}
                 />
                 <UserDetailsField fieldName="Role" fieldValue={data?.role} />
-              </div>
-            </div>
+                <UserDetailsField
+                  fieldName="Max photos per contest"
+                  fieldValue={data?.maxTotal}
+                />
+                <UserDetailsField
+                  fieldName="Max photos for Singles categories"
+                  fieldValue={data?.maxSinglePhotos}
+                />
+                <UserDetailsField
+                  fieldName="Max photos for Collections categories"
+                  fieldValue={data?.maxCollections}
+                />
+              </section>
+            </article>
             <DangerZone userData={data} />
+            <Button
+              onClick={() => navigate("/manage-users")}
+              extraStyle="text-lg mt-2 w-full lg:w-fit"
+            >
+              Back
+            </Button>
           </div>
         </div>
       )}

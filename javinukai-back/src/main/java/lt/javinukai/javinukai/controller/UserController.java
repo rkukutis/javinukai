@@ -48,8 +48,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody @Valid UserRegistrationRequest registration) {
         log.info("Creating user manually: {}", registration);
-        User newUser = UserMapper.mapToUser(registration);
-        return ResponseEntity.ok().body(userService.createUser(newUser));
+        return ResponseEntity.ok().body(userService.createUser(registration));
     }
 
     @PutMapping("/{userId}")

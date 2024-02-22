@@ -3,7 +3,7 @@ function Button({ children, onClick, id, extraStyle }) {
     <button
       id={id}
       onClick={onClick}
-      className={`bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded-md ${extraStyle}`}
+      className={`bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded-md transition ease-in-out ${extraStyle}`}
     >
       {children}
     </button>

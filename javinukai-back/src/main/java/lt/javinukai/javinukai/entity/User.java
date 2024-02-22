@@ -43,6 +43,8 @@ public class User implements UserDetails {
     @Setter
     private String institution;
     @Setter
+    private Integer maxTotal;
+    @Setter
     private Integer maxSinglePhotos;
     @Setter
     private Integer maxCollections;
