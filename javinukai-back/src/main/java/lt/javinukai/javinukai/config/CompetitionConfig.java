@@ -101,6 +101,7 @@ public class CompetitionConfig {
                 .isNonLocked(true)
                 .role(UserRole.USER)
                 .password(passwordEncoder.encode("password"))
+                .maxTotal(10)
                 .maxSinglePhotos(10)
                 .maxCollections(10)
                 .build();
