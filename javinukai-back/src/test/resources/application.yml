@@ -27,7 +27,6 @@ app:
   scheme: https
   host: javinukai-api.rhoopoe.com
   client: javinukai.rhoopoe.com
-
   email:
     contact-address: jdoe@mail.com
     sender-address: notrealuser23@gmail.com
