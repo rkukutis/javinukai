@@ -1,4 +1,4 @@
-package lt.javinukai.javinukai.config;
+package lt.javinukai.javinukai.config.mail;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,13 +14,13 @@ public class MailConfig {
     // username: pmo55400@zslsz.com
     // password: 98u7}sPeU'Ds@az
 
-    @Value("${app.email.host}")
+    @Value("${app.email.smtp-server.host}")
     private String host;
-    @Value("${app.email.port}")
+    @Value("${app.email.smtp-server.port}")
     private int port;
-    @Value("${app.email.auth.user}")
+    @Value("${app.email.smtp-server.auth.user}")
     private String user;
-    @Value("${app.email.auth.password}")
+    @Value("${app.email.smtp-server.auth.password}")
     private String password;
 
     @Bean
