@@ -1,3 +1,6 @@
+import { Menu } from '@headlessui/react'
+import { Bars3Icon } from '@heroicons/react/20/solid'
+import { useTranslation } from 'react-i18next'
 import { Menu } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import useUserStore from "../stores/userStore";
@@ -5,10 +8,10 @@ import useUserStore from "../stores/userStore";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
 // eslint-disable-next-line react/prop-types
 export default function DropDownMenu({ mutationFunction }) {
   const { user } = useUserStore();
+  const { t } = useTranslation();
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -42,30 +45,27 @@ export default function DropDownMenu({ mutationFunction }) {
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  Manage Users
+                  {t('dropdownMenu.accountSettings')}
                 </a>
               )}
             </Menu.Item>
-          )}
-
-          <form method="POST" action="#">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={mutationFunction}
-                  type="submit"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block w-full px-4 py-2 text-left text-sm"
-                  )}
-                >
-                  Log out
-                </button>
-              )}
-            </Menu.Item>
-          </form>
-        </div>
-      </Menu.Items>
+            <form method="POST" action="#">
+              <Menu.Item>
+                {({ active }) => (
+                  <button  onClick={mutationFunction}
+                    type="submit"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block w-full px-4 py-2 text-left text-sm'
+                    )}
+                  >
+                    {t('dropdownMenu.logout')}
+                  </button>
+                )}
+              </Menu.Item>
+            </form>
+          </div>
+        </Menu.Items>
     </Menu>
   );
 }
