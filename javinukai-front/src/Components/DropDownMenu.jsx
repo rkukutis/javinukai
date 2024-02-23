@@ -1,6 +1,7 @@
 
 import { Menu } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/20/solid'
+import { useTranslation } from 'react-i18next'
 
 
 function classNames(...classes) {
@@ -10,6 +11,7 @@ function classNames(...classes) {
 
 // eslint-disable-next-line react/prop-types
 export default function DropDownMenu({mutationFunction}) {
+  const { t } = useTranslation();
   
   
 
@@ -34,7 +36,7 @@ export default function DropDownMenu({mutationFunction}) {
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  Account settings
+                  {t('dropdownMenu.accountSettings')}
                 </a>
               )}
             </Menu.Item>
@@ -48,7 +50,7 @@ export default function DropDownMenu({mutationFunction}) {
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
                   >
-                    Log out
+                    {t('dropdownMenu.logout')}
                   </button>
                 )}
               </Menu.Item>

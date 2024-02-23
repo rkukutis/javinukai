@@ -6,8 +6,12 @@ import { useMutation } from "@tanstack/react-query";
 import logoutUser from "../services/logoutUser";
 import Button from "./Button";
 import DropDownMenu from "./DropDownMenu";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
+
 
 function Layout() {
+  const { t } = useTranslation();
   const { user, removeUser } = useUserStore((state) => state);
   const navigate = useNavigate();
   const { mutate } = useMutation({
@@ -16,7 +20,7 @@ function Layout() {
       logoutUser();
     },
     onSuccess: () => {
-      toast.success("Logged out successfully");
+      toast.success(t('layout.loggedOutSuccess'));
       removeUser();
       navigate("/");
     },
@@ -25,19 +29,23 @@ function Layout() {
 
   return (
     <div>
-      <header className="text h-[12vh] bg-slate-700 text-slate-100">
+      <header className="text min-h-[12vh] bg-slate-700 text-slate-100">
         <div className="flex justify-between items-center px-6 py-2">
-          <a href="/">WEBSITE NAME</a>
-          {user ? (
-            <div>
+          <div>
+            <a href="/">{t('layout.name')}</a>
+          </div>
+          <div className="flex justify-between space-x-4 items-center px-2 py-2">
+            <LanguageSwitcher />
+            {user ? (
               <DropDownMenu mutationFunction={mutate}></DropDownMenu>
-            </div>
-          ) : (
-            <Link to="/login">
-              <Button>Log In</Button>
-            </Link>
-          )}
+            ) : (
+              <Link to="/login">
+                <Button>{t('layout.login')}</Button>
+              </Link>
+            )}
+          </div>
         </div>
+
         {user && <NavBar />}
       </header>
       <main className="min-h-[82vh] pb-10">
