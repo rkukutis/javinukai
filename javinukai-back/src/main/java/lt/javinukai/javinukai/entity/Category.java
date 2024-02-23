@@ -58,11 +58,12 @@ public class Category {
     @LastModifiedDate
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
-//////////////////////////////////////////////
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JsonIgnore
     private List<CompetitionRecord> competitionRecords = new ArrayList<>();
-////////////////////////////////////////////
+
 //    @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
 //            CascadeType.DETACH, CascadeType.REFRESH})
 //    @Setter
@@ -78,8 +79,6 @@ public class Category {
 //    )
 //    @JsonIgnore
 //    private List<CompetitionRecord> records;
-
-
 
 //    public void addCompetitionRecord(CompetitionRecord competitionRecord) {
 //        if (records == null) {

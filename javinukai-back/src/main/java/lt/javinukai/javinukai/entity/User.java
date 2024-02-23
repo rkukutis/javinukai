@@ -60,11 +60,12 @@ public class User implements UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.MERGE)
     private List<Photo> images;
-///////////////////////////////////////////////////////////
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<CompetitionRecord> competitionRecords;
-////////////////////////////////////////////////////////////
+
     @CreatedDate
     private ZonedDateTime createdAt;
     @LastModifiedDate

@@ -47,33 +47,21 @@ public class CompetitionRecordController {
         return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/enter/{userID}")
+    public ResponseEntity<List<CompetitionRecord>> retrieveRecordsByUserID(@PathVariable @NotNull UUID userID) {
+        log.info("Request for retrieving records for user ID: {}", userID);
+        final User userToFind = userService.getUser(userID);
+        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveCompetitionRecordsByUser(userToFind);
+        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
+    }
+
 //    @GetMapping(path = "/enter/{userID}")
 //    public ResponseEntity<List<CompetitionRecord>> retrieveRecordsByUserID(@PathVariable @NotNull UUID userID) {
 //        log.info("Request for retrieving records for user ID: {}", userID);
-//        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveCompetitionRecordsByUserID(userID);
+//        final User userToFind = userService.getUser(userID);
+//        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveCompetitionRecordsByUser(userToFind);
 //        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
 //    }
-
-
-
-
-
-//    @PostMapping(path = "/enter")
-//    public ResponseEntity<CompetitionRecord> enterCompetition() {
-//
-//        final List<Contest> contestList = contestService.retrieveAllContests(0, 10).getContent();
-//        final UUID contestID = contestList.get(0).getId();
-//
-//        final List<User> userList = userService.getUsers();
-//        final UUID userID = userList.get(0).getUuid();
-//
-//        long totalSubmissions = contestList.get(0).getTotalSubmissions();
-//
-//        CompetitionRecord competitionRecord = competitionRecordService.testServiceMethod(contestID, userID, totalSubmissions);
-//        return new ResponseEntity<>(competitionRecord, HttpStatus.OK);
-//    }
-
-
 
 
 

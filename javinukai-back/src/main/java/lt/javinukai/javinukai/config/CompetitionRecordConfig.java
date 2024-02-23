@@ -22,7 +22,7 @@ import java.util.List;
 
 @Configuration
 @Slf4j
-public class CompetitionConfig {
+public class CompetitionRecordConfig {
 
     private final ContestRepository contestRepository;
     private final CategoryRepository categoryRepository;
@@ -31,11 +31,11 @@ public class CompetitionConfig {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CompetitionConfig(ContestRepository contestRepository,
-                             CategoryRepository categoryRepository,
-                             CompetitionRecordRepository competitionRecordRepository,
-                             UserRepository userRepository,
-                             PasswordEncoder passwordEncoder) {
+    public CompetitionRecordConfig(ContestRepository contestRepository,
+                                   CategoryRepository categoryRepository,
+                                   CompetitionRecordRepository competitionRecordRepository,
+                                   UserRepository userRepository,
+                                   PasswordEncoder passwordEncoder) {
         this.contestRepository = contestRepository;
         this.categoryRepository = categoryRepository;
         this.competitionRecordRepository = competitionRecordRepository;
@@ -50,9 +50,19 @@ public class CompetitionConfig {
             final Contest newContest = createContestAndCategory();
             final Contest updatedFinalContest = assignCategoryToExistingContest(newContest, newCategory);
             final User userToParticipate = createNewUser();
-            final List<CompetitionRecord> enterCompetitionWithDefaultLimits =
+            final List<CompetitionRecord> competitionRecordsWithDefaultLimits =
                     placeRecord(userToParticipate, updatedFinalContest);
+            final List<CompetitionRecord> updateCompetitionRecord = deleteRecord(competitionRecordsWithDefaultLimits);
+
         };
+    }
+
+    private List<CompetitionRecord> deleteRecord(List<CompetitionRecord> enterCompetitionRecordWithDefaultLimits) {
+
+        final List<CompetitionRecord> competitionRecordList = enterCompetitionRecordWithDefaultLimits;
+        competitionRecordRepository.deleteById(competitionRecordList.get(0).getId());
+        competitionRecordList.remove(competitionRecordList.get(0));
+        return competitionRecordList;
     }
 
     private List<CompetitionRecord> placeRecord(User user, Contest contest) {
@@ -71,7 +81,6 @@ public class CompetitionConfig {
                     .save(competitionRecordToCreate);
 
             savedCompetitionRecord.addPhotos(Arrays.asList("url1", "url2", "url3"), savedCompetitionRecord.getMaxPhotos());
-
 
             competitionRecordRepository.save(savedCompetitionRecord);
             competitionRecordList.add(savedCompetitionRecord);
@@ -95,14 +104,7 @@ public class CompetitionConfig {
                 .maxSinglePhotos(10)
                 .maxCollections(10)
                 .build();
-//        log.info("saving user...");
         final User savedUser = userRepository.save(userToCreate);
-
-//        final String userInfo = String.format("user created, full name -> %s %s, email -> %s ",
-//                savedUser.getName(),
-//                savedUser.getSurname(),
-//                savedUser.getEmail());
-//        log.info(userInfo);
 
         return savedUser;
     }
@@ -110,7 +112,6 @@ public class CompetitionConfig {
     private Contest assignCategoryToExistingContest(Contest contestToUpdate, Category categoryToAdd) {
         contestToUpdate.addCategory(categoryToAdd);
         final Contest updatedContest = contestRepository.save(contestToUpdate);
-//        log.info("contest was updated");
         return updatedContest;
     }
 
@@ -121,16 +122,12 @@ public class CompetitionConfig {
                 .description("pokyčiai, patraukę akį")
                 .totalSubmissions(40)
                 .build();
-//        String messageForCategory = String.format("category was created, name -> %s, id -> none",
-//                categoryToCreate01.getCategoryName());
-//        log.info(messageForCategory);
 
         final Category categoryToCreate02 = Category.builder()
                 .categoryName("tech")
                 .description("technologijos. keičiančios gyvenimą")
                 .totalSubmissions(35)
                 .build();
-//        log.info(messageForCategory);
 
         final Contest contestToCreate = Contest.builder()
                 .contestName("pro objektyvą - 2023")
@@ -140,11 +137,6 @@ public class CompetitionConfig {
         contestToCreate.addCategory(categoryToCreate01);
         contestToCreate.addCategory(categoryToCreate02);
         final Contest savedContest = contestRepository.save(contestToCreate);
-
-//        final String messageForContest = String.format("contest was saved, name -> %s, id -> %s",
-//                savedContest.getContestName(),
-//                savedContest.getId());
-//        log.info(messageForContest);
 
         return  savedContest;
     }
@@ -156,10 +148,6 @@ public class CompetitionConfig {
                 .totalSubmissions(30)
                 .build();
         final Category savedCategory = categoryRepository.save(categoryToCreate01);
-//        final String messageForCategory = String.format("category was saved, name -> %s, id -> %s",
-//                savedCategory.getCategoryName(),
-//                savedCategory.getId());
-//        log.info(messageForCategory);
         return savedCategory;
     }
 }

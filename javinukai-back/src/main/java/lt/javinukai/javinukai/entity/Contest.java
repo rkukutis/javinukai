@@ -41,11 +41,12 @@ public class Contest {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
-////////////////////////////////////////////////////////////////////////
-    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonIgnore
     private List<CompetitionRecord> competitionRecords = new ArrayList<>();
-/////////////////////////////////////////////////////////////////////////
+
     @Setter
     @Column(name = "total_submissions")
     private long totalSubmissions;
