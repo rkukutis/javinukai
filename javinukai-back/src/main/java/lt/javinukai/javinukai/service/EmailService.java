@@ -27,6 +27,8 @@ private final JavaMailSender mailSender;
     private String httpScheme;
     @Value("${app.email.sender-address}")
     private String sender;
+    @Value("${app.email.contact-address}")
+    private String contact;
 
     private void sendMail(String receiverEmail, String subject, String message) {
         SimpleMailMessage email = new SimpleMailMessage();
@@ -62,7 +64,7 @@ private final JavaMailSender mailSender;
 
                 Best regards,\s
 
-                Lithuanian press photography\s""", user.getName(), user.getSurname(), uri.toString(), sender);
+                Lithuanian press photography\s""", user.getName(), user.getSurname(), uri.toString(), contact);
 
         sendMail(user.getEmail(), "Confirm your email address", message);
     }
@@ -91,7 +93,7 @@ private final JavaMailSender mailSender;
 
                 Best regards,\s
 
-                ShapeLithuanian press photography""",user.getName(), user.getSurname(), uri.toString(), sender);
+                ShapeLithuanian press photography""",user.getName(), user.getSurname(), uri.toString(), contact);
 
         sendMail(user.getEmail(), "Reset your password", message);
     }

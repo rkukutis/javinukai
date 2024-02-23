@@ -29,6 +29,7 @@ app:
   client: javinukai.rhoopoe.com
 
   email:
+    contact-address: jdoe@mail.com
     sender-address: notrealuser23@gmail.com
     smtp-server:
       host: smtp.gmail.com
