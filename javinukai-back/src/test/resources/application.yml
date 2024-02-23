@@ -32,11 +32,11 @@ app:
     contact-address: jdoe@mail.com
     sender-address: notrealuser23@gmail.com
     smtp-server:
-      host: smtp.gmail.com
+      host: sandbox.smtp.mailtrap.io
       port: 587
       auth:
-        user: notrealuser23
-        password: hjfu lnsx jbyd ehtx
+        user: b592590922d018
+        password: 78ed625418f6ca
   constants:
     user-defaults:
       max-photos:

@@ -1,0 +1,44 @@
+{
+  "dropdownMenu": {
+    "accountSettings": "Account settings",
+    "logout": "Log out",
+    "manageUsers": "Manage users"
+  },
+
+  "navbar": {
+    "name1": "Home",
+    "name2": "Images",
+    "name3": "add text3",
+    "name4": "add text4"
+  },
+
+  "layout": {
+    "name": "Website name",
+    "login": "Log in",
+    "loggedOutSuccess": "Logged out successfully!"
+  },
+
+  "homepage": {
+    "description": "Description",
+    "loginToParticipate": "Log in to participate",
+    "participate": "Participate",
+    "confirmParticipation": "Confirm participation",
+    "login": "Log in"
+  },
+
+  "modal": {
+    "closeModal": "Close"
+  },
+
+  "loginPage": {
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "emailValidFormat": "Email must be of a valid format",
+    "password": "Password",
+    "forgotPassword": "Forgotten password?",
+    "passwordRequired": "Password is required",
+    "register": "Register",
+    "login": "Log in",
+    "loginSuccess": "Logged in successfully"
+  }
+}
