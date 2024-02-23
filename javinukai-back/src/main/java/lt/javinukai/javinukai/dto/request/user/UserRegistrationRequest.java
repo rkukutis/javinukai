@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 @Builder
+@ToString
 @Getter
 public class UserRegistrationRequest {
 

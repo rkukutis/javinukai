@@ -3,14 +3,14 @@ import toast from "react-hot-toast";
 import NavBar from "./NavBar";
 import useUserStore from "../stores/userStore";
 import { useMutation } from "@tanstack/react-query";
-import logoutUser from "../services/logoutUser";
+import logoutUser from "../services/auth/logoutUser";
 import Button from "./Button";
 import DropDownMenu from "./DropDownMenu";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 
-function Layout() {
+export default function Layout() {
   const { t } = useTranslation();
   const { user, removeUser } = useUserStore((state) => state);
   const navigate = useNavigate();
@@ -45,15 +45,12 @@ function Layout() {
             )}
           </div>
         </div>
-
         {user && <NavBar />}
       </header>
-      <main className="min-h-[82vh] pb-10">
+      <main className="min-h-[82vh]">
         <Outlet />
       </main>
       <footer className="h-[10vh] bg-teal-600 text-slate-100 ">FOOTER</footer>
     </div>
   );
 }
-
-export default Layout;

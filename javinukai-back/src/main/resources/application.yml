@@ -26,17 +26,22 @@ logging:
 app:
   scheme: http
   host: localhost:8080
+  client: localhost:5173
+
   email:
-    host: smtp.gmail.com
-    port: 587
-    auth:
-      user: notrealuser23
-      password: hjfu lnsx jbyd ehtx
+    sender-address: notrealuser23@gmail.com
+    smtp-server:
+      host: smtp.gmail.com
+      port: 587
+      auth:
+        user: notrealuser23
+        password: hjfu lnsx jbyd ehtx
   constants:
     user-defaults:
       max-photos:
-        single: 20
-        collection: 20
+        total: 50
+        single: 30
+        collection: 6
     security:
       token:
         length: 128

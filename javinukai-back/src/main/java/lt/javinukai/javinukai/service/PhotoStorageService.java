@@ -61,8 +61,8 @@ public class PhotoStorageService {
                 String localPath = storeInFileSystem(processedImage.getResizedImage(size),
                         imageName, size);
                 String url = new URIBuilder()
-                        .setScheme("http")
-                        .setHost("localhost:8080")
+                        .setScheme("https")
+                        .setHost("javinukai-api.rhoopoe.com")
                         .setPathSegments("api", "v1", "images", imageName)
                         .setParameter("size", size.value).toString();
                 pathsAndUrls.put(size, List.of(localPath, url));

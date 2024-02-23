@@ -6,8 +6,8 @@ import toast from "react-hot-toast";
 import useUserStore from "../stores/userStore";
 import StyledInput from "../Components/StyledInput";
 import validateEmail from "../utils/validateEmail";
-import loginUser from "../services/loginUser";
 import { useTranslation } from "react-i18next";
+import loginUser from "../services/auth/loginUser";
 
 function LoginPage() {
   const { t } = useTranslation();

@@ -41,8 +41,15 @@ public class ContestService {
 
         final List<Category> categoryList = new ArrayList<>();
         for (Category category : contestDTO.getCategories()) {
-            final Category categoryIn = categoryRepository.findById(category.getId()).orElseThrow(
-                    () -> new EntityNotFoundException("category was not found with ID: " + category.getId()));
+            final Category categoryIn = categoryRepository
+                    .findByCategoryNameAndDescriptionAndTotalSubmissions(
+                            category.getCategoryName(),
+                            category.getDescription(),
+                            category.getTotalSubmissions());
+
+                if (categoryIn == null) {
+                    throw new EntityNotFoundException("category was not found with ID: " + category.getId());
+                };
             categoryList.add(categoryIn);
         }
 
@@ -53,10 +60,15 @@ public class ContestService {
         return createdContest;
     }
 
-    public Page<Contest> retrieveAllContests(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        log.info("{}: Retrieving all contest list from database", this.getClass().getName());
-        return contestRepository.findAll(pageable);
+    public Page<Contest> retrieveAllContests(Pageable pageable, String keyword) {
+
+        if (keyword == null || keyword.isEmpty()) {
+            log.info("{}: Retrieving all contests list from database", this.getClass().getName());
+            return contestRepository.findAll(pageable);
+        } else {
+            log.info("{}: Retrieving categories by name", this.getClass().getName());
+            return contestRepository.findByContestName(keyword, pageable);
+        }
     }
 
     public Contest retrieveContest(UUID id) {
