@@ -1,7 +1,9 @@
-package lt.javinukai.javinukai.config.security;
+package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.config.security.JwtService;
+import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
@@ -10,8 +12,6 @@ import lt.javinukai.javinukai.entity.UserToken;
 import lt.javinukai.javinukai.enums.TokenType;
 import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.UserRepository;
-import lt.javinukai.javinukai.service.EmailService;
-import lt.javinukai.javinukai.service.UserTokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,6 +1,4 @@
-import { Menu } from '@headlessui/react'
-import { Bars3Icon } from '@heroicons/react/20/solid'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import { Menu } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import useUserStore from "../stores/userStore";
@@ -21,51 +19,49 @@ export default function DropDownMenu({ mutationFunction }) {
       </div>
 
       <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-        <div className="py-1">
+        <Menu.Item>
+          {({ active }) => (
+            <a
+              href="#"
+              className={classNames(
+                active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                "block px-4 py-2 text-sm"
+              )}
+            >
+              {t("dropdownMenu.accountSettings")}
+            </a>
+          )}
+        </Menu.Item>
+        {user.role == "ADMIN" && (
           <Menu.Item>
             {({ active }) => (
               <a
-                href="#"
+                href="/manage-users"
                 className={classNames(
                   active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                   "block px-4 py-2 text-sm"
                 )}
               >
-                Account settings
+                {t("dropdownMenu.manageUsers")}
               </a>
             )}
           </Menu.Item>
-          {user.role == "ADMIN" && (
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/manage-users"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  {t('dropdownMenu.accountSettings')}
-                </a>
+        )}
+        <Menu.Item>
+          {({ active }) => (
+            <button
+              onClick={mutationFunction}
+              type="submit"
+              className={classNames(
+                active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                "block w-full px-4 py-2 text-left text-sm"
               )}
-            </Menu.Item>
-            <form method="POST" action="#">
-              <Menu.Item>
-                {({ active }) => (
-                  <button  onClick={mutationFunction}
-                    type="submit"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
-                    )}
-                  >
-                    {t('dropdownMenu.logout')}
-                  </button>
-                )}
-              </Menu.Item>
-            </form>
-          </div>
-        </Menu.Items>
+            >
+              {t("dropdownMenu.logout")}
+            </button>
+          )}
+        </Menu.Item>
+      </Menu.Items>
     </Menu>
   );
 }

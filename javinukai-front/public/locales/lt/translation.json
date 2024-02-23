@@ -1,7 +1,8 @@
 {
   "dropdownMenu": {
     "accountSettings": "Vartotojo nustatymai",
-    "logout": "Atsijungti"
+    "logout": "Atsijungti",
+    "manageUsers": "Valdyti vartotojus"
   },
 
   "navbar": {

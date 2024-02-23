@@ -27,7 +27,6 @@ app:
   scheme: http
   host: localhost:8080
   client: localhost:5173
-
   email:
     sender-address: notrealuser23@gmail.com
     smtp-server:

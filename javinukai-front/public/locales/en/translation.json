@@ -1,7 +1,8 @@
 {
   "dropdownMenu": {
     "accountSettings": "Account settings",
-    "logout": "Log out"
+    "logout": "Log out",
+    "manageUsers": "Manage users"
   },
 
   "navbar": {
@@ -40,5 +41,4 @@
     "login": "Log in",
     "loginSuccess": "Logged in successfully"
   }
-
 }
