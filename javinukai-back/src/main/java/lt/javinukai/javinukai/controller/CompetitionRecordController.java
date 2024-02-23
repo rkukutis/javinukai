@@ -1,23 +1,22 @@
 package lt.javinukai.javinukai.controller;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
-import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.User;
-import lt.javinukai.javinukai.repository.UserRepository;
 import lt.javinukai.javinukai.service.CategoryService;
 import lt.javinukai.javinukai.service.CompetitionRecordService;
 import lt.javinukai.javinukai.service.ContestService;
 import lt.javinukai.javinukai.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/v1")
@@ -40,30 +39,21 @@ public class CompetitionRecordController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "/enter")
-    public ResponseEntity<List<CompetitionRecord>> retrieveAllRecords() {
-        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveAllCompetitionRecords();
+    @GetMapping(path = "/records")
+    public ResponseEntity<Page<CompetitionRecord>> retrieveAllRecords(@RequestParam(defaultValue = "1") int pageNumber,
+                                                                      @RequestParam(defaultValue = "25") int pageSize,
+                                                                      @RequestParam(required = false) String keyword,
+                                                                      @RequestParam(defaultValue = "createdAt") String sortBy,
+                                                                      @RequestParam(defaultValue = "false") boolean sortDesc) {
+
         log.info("Request for retrieving all competition records");
-        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
+        Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        final Pageable pageable = PageRequest.of(--pageNumber, pageSize, sort);
+        final Page<CompetitionRecord> page = competitionRecordService.retrieveAllCompetitionRecords(pageable, keyword);
+        log.info("Request for retrieving all competition records, {} records found", page.getTotalElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
-
-    @GetMapping(path = "/enter/{userID}")
-    public ResponseEntity<List<CompetitionRecord>> retrieveRecordsByUserID(@PathVariable @NotNull UUID userID) {
-        log.info("Request for retrieving records for user ID: {}", userID);
-        final User userToFind = userService.getUser(userID);
-        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveCompetitionRecordsByUser(userToFind);
-        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
-    }
-
-//    @GetMapping(path = "/enter/{userID}")
-//    public ResponseEntity<List<CompetitionRecord>> retrieveRecordsByUserID(@PathVariable @NotNull UUID userID) {
-//        log.info("Request for retrieving records for user ID: {}", userID);
-//        final User userToFind = userService.getUser(userID);
-//        final List<CompetitionRecord> competitionRecordList = competitionRecordService.retrieveCompetitionRecordsByUser(userToFind);
-//        return new ResponseEntity<>(competitionRecordList, HttpStatus.OK);
-//    }
-
-
-
 
 }

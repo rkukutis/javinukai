@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
@@ -35,6 +36,8 @@ public class CategoryDTO {
     @Min(value = 1, message = "AT_LEAST_ONE")
     @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
     private long totalSubmissions;
+
+    private PhotoSubmissionType type;
 
     private List<String> uploadedPhotos;
 

@@ -6,6 +6,7 @@ import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
@@ -52,7 +53,7 @@ public class CompetitionRecordConfig {
             final User userToParticipate = createNewUser();
             final List<CompetitionRecord> competitionRecordsWithDefaultLimits =
                     placeRecord(userToParticipate, updatedFinalContest);
-            final List<CompetitionRecord> updateCompetitionRecord = deleteRecord(competitionRecordsWithDefaultLimits);
+//            final List<CompetitionRecord> updateCompetitionRecord = deleteRecord(competitionRecordsWithDefaultLimits);
 
         };
     }
@@ -121,12 +122,14 @@ public class CompetitionRecordConfig {
                 .categoryName("įvykiai")
                 .description("pokyčiai, patraukę akį")
                 .totalSubmissions(40)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         final Category categoryToCreate02 = Category.builder()
                 .categoryName("tech")
                 .description("technologijos. keičiančios gyvenimą")
                 .totalSubmissions(35)
+                .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
         final Contest contestToCreate = Contest.builder()
@@ -146,6 +149,7 @@ public class CompetitionRecordConfig {
                 .categoryName("pasaulio šalys")
                 .description("už gimtinės ribų")
                 .totalSubmissions(30)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
         final Category savedCategory = categoryRepository.save(categoryToCreate01);
         return savedCategory;

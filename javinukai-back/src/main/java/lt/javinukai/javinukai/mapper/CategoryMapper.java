@@ -11,6 +11,7 @@ public class CategoryMapper {
                 .description(categoryDTO.getDescription())
                 .totalSubmissions(categoryDTO.getTotalSubmissions())
                 .uploadedPhotos(categoryDTO.getUploadedPhotos())
+                .type(categoryDTO.getType())
                 .build();
     }
 
@@ -20,6 +21,7 @@ public class CategoryMapper {
                 .categoryName(category.getCategoryName())
                 .description(category.getDescription())
                 .totalSubmissions(category.getTotalSubmissions())
+                .type(category.getType())
                 .build();
     }
 }

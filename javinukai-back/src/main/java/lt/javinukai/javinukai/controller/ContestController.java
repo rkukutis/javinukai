@@ -3,12 +3,9 @@ package lt.javinukai.javinukai.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.service.CategoryService;
-import lt.javinukai.javinukai.service.CompetitionRecordService;
 import lt.javinukai.javinukai.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,6 +43,7 @@ public class ContestController {
                                                              @RequestParam(required = false) String keyword,
                                                              @RequestParam(defaultValue = "contestName") String sortBy,
                                                              @RequestParam(defaultValue = "false") boolean sortDesc) {
+
         log.info("Request for retrieving all contests");
         Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sort = Sort.by(direction, sortBy);

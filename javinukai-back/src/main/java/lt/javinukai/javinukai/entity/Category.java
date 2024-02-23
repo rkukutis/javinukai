@@ -3,6 +3,8 @@ package lt.javinukai.javinukai.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
+import lt.javinukai.javinukai.enums.TokenType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -64,35 +66,9 @@ public class Category {
     @JsonIgnore
     private List<CompetitionRecord> competitionRecords = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.DETACH, CascadeType.REFRESH})
-//    @Setter
-//    private List<CompetitionRecord> records;
-
-//    @Setter
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinTable(
-//            name = "record_category",
-//            joinColumns = @JoinColumn(name = "category_id"),
-//            inverseJoinColumns = @JoinColumn(name = "record_id")
-//    )
-//    @JsonIgnore
-//    private List<CompetitionRecord> records;
-
-//    public void addCompetitionRecord(CompetitionRecord competitionRecord) {
-//        if (records == null) {
-//            records = new ArrayList<>();
-//        }
-//        records.add(competitionRecord);
-//    }
-//
-//    public void removeCompetitionRecord(CompetitionRecord competitionRecord) {
-//        if (records == null) {
-//            return;
-//        }
-//        records.remove(competitionRecord);
-//    }
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private PhotoSubmissionType type;
 
     public void addContest(Contest contest) {
         if (contests == null) {
