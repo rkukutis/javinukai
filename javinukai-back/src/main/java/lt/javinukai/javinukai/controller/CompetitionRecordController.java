@@ -1,11 +1,11 @@
 package lt.javinukai.javinukai.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.dto.request.contest.CompetitionRecordDTO;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
-import lt.javinukai.javinukai.service.CategoryService;
 import lt.javinukai.javinukai.service.CompetitionRecordService;
-import lt.javinukai.javinukai.service.ContestService;
-import lt.javinukai.javinukai.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,30 +13,31 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1")
 @Slf4j
 public class CompetitionRecordController {
 
-    private final CategoryService categoryService;
-    private final ContestService contestService;
     private final CompetitionRecordService competitionRecordService;
-    private final UserService userService;
 
     @Autowired
-    public CompetitionRecordController(CategoryService categoryService,
-                                       ContestService contestService,
-                                       CompetitionRecordService competitionRecordService,
-                                       UserService userService) {
-        this.categoryService = categoryService;
-        this.contestService = contestService;
+    public CompetitionRecordController(CompetitionRecordService competitionRecordService) {
         this.competitionRecordService = competitionRecordService;
-        this.userService = userService;
+    }
+
+    @PostMapping(path = "/records")
+    public ResponseEntity<List<CompetitionRecord>> addUserToContest(@RequestParam UUID contestID,
+                                              @RequestParam UUID userID) {
+
+        final List<CompetitionRecord> usersCompetitionRecords =
+                competitionRecordService.createUsersCompetitionRecords(contestID, userID);
+
+        return new ResponseEntity<>(usersCompetitionRecords, HttpStatus.OK);
     }
 
     @GetMapping(path = "/records")
@@ -54,6 +55,27 @@ public class CompetitionRecordController {
         final Page<CompetitionRecord> page = competitionRecordService.retrieveAllCompetitionRecords(pageable, keyword);
         log.info("Request for retrieving all competition records, {} records found", page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "/records/{recordID}")
+    public ResponseEntity<CompetitionRecord> updateRecord(@PathVariable @NotNull UUID recordID,
+                                                          @RequestBody @Valid CompetitionRecordDTO recordDTO) {
+        log.info("Request for updating competition record with ID: {}", recordID);
+        final CompetitionRecord updatedRecord = competitionRecordService
+                .updateCompetitionRecord(recordID, recordDTO);
+        return new ResponseEntity<>(updatedRecord, HttpStatus.OK);
+    }
+
+    /*
+    v1 - ištrina atskirą įrašą, nemanau, kad taip galima daryti
+    nežinau ar DELETE išvis reikalingas, gal užteks, kad pašalinus user, category, contest
+    jis bus pašalintas per kaskadą
+     */
+    @DeleteMapping(path = "/records/{recordID}")
+    public ResponseEntity<?> deleteRecord(@PathVariable @NotNull UUID recordID) {
+        log.info("Request for deleting record with ID: {}", recordID);
+        competitionRecordService.deleteRecord(recordID);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

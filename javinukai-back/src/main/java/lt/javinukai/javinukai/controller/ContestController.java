@@ -79,7 +79,7 @@ public class ContestController {
 
     @DeleteMapping(path = "/contests/{id}")
     public ResponseEntity<?> deleteContest(@PathVariable @NotNull UUID id) {
-            log.info("Request for deleting contest with ID: {}", id);
+        log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
