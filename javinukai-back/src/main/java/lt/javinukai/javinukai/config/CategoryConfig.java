@@ -2,6 +2,7 @@ package lt.javinukai.javinukai.config;
 
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class CategoryConfig {
                 .categoryName("gamta")
                 .description("ne mūsų kurta aplinka")
                 .totalSubmissions(100)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
         categoryRepository.save(category01);
     }
@@ -46,12 +48,14 @@ public class CategoryConfig {
                 .categoryName("asmenys")
                 .description("gyvenimiška patirtis")
                 .totalSubmissions(100)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
         incompleteContest.addCategory(category01);
         Category category02 = Category.builder()
                 .categoryName("asmenys")
                 .description("gyvenimiška patirtis")
                 .totalSubmissions(555)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
         incompleteContest.addCategory(category02);
         contestRepository.save(incompleteContest);
@@ -63,12 +67,14 @@ public class CategoryConfig {
                 .categoryName("knyga")
                 .description("spausdintas žodis")
                 .totalSubmissions(100)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         Category category02 = Category.builder()
                 .categoryName("mokyklos klasė")
                 .description("dažnam pažįstama")
                 .totalSubmissions(50)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         Contest contest01 = Contest.builder()
@@ -92,18 +98,21 @@ public class CategoryConfig {
                 .categoryName("medicina")
                 .description("slaugos mokslas")
                 .totalSubmissions(100)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         Category category02 = Category.builder()
                 .categoryName("sportas")
                 .description("citius, altius, fortius")
                 .totalSubmissions(20)
+                .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
         Category category03 = Category.builder()
                 .categoryName("istorija")
                 .description("daugiau, nei kaulai ir griuvėsiai")
                 .totalSubmissions(500)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         Contest contest01 = Contest.builder()

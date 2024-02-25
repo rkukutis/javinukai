@@ -4,6 +4,7 @@ package lt.javinukai.javinukai.dto.request.contest;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
@@ -34,7 +35,7 @@ public class CategoryDTO {
     @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
     private long totalSubmissions;
 
-    @NotBlank
+    @NotNull
     private PhotoSubmissionType type;
 
     private List<String> uploadedPhotos;
