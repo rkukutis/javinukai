@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -135,6 +136,8 @@ public class CompetitionRecordConfig {
         final Contest contestToCreate = Contest.builder()
                 .contestName("pro objektyvą - 2023")
                 .description("gražiauisios 2023-ųjų akimirkos")
+                .startDate(ZonedDateTime.now())
+                .endDate(ZonedDateTime.now())
                 .totalSubmissions(20)
                 .build();
         contestToCreate.addCategory(categoryToCreate01);
