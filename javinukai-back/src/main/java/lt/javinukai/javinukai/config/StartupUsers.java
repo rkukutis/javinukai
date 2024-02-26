@@ -9,8 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Files;
@@ -34,16 +33,28 @@ public class StartupUsers {
         return values;
     }
 
+    private InputStream getFileAsIOStream(String fileName) {
+        InputStream ioStream = this.getClass()
+                .getClassLoader()
+                .getResourceAsStream(fileName);
+
+        if (ioStream == null) {
+            throw new IllegalArgumentException(fileName + " is not found");
+        }
+        return ioStream;
+    }
+
     @Bean
     CommandLineRunner initialize() {
         return args -> {
             List<List<String>> records = new ArrayList<>();
-            try (Scanner scanner = new Scanner(new File("src/main/resources/test-data/users.csv"))) {
+            InputStream is = getFileAsIOStream("test-data/users.csv");
+            try (Scanner scanner = new Scanner(is)) {
                 while (scanner.hasNextLine()) {
                     records.add(getRecordFromLine(scanner.nextLine()));
                 }
             }
-            for(List<String> user : records) {
+            for (List<String> user : records) {
                 User createdUser = User.builder()
                         .name(user.get(0))
                         .surname(user.get(1))
@@ -58,12 +69,12 @@ public class StartupUsers {
                         .isNonLocked(Boolean.parseBoolean(user.get(10)))
                         .phoneNumber(user.get(11))
                         .birthYear(Integer.parseInt(user.get(12)))
-                        .password(passwordEncoder.encode(user.get(0)))
+                        .password(passwordEncoder.encode(user.get(13)))
                         .build();
                 userRepository.save(createdUser);
             }
         };
-    }
+    };
 
     @Bean
     CommandLineRunner createDirectories() {
