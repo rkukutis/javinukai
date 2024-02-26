@@ -30,8 +30,6 @@ public class CategoryService {
     @Transactional
     public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
 
-        log.info("-------------- category in sevice -> " + categoryDTO.toString());
-
         Category categoryInRepo = categoryRepository.findByCategoryNameAndDescriptionAndTotalSubmissions(
                 categoryDTO.getCategoryName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
 
@@ -48,7 +46,6 @@ public class CategoryService {
         Category category = CategoryMapper.categoryDTOToCategory(categoryDTO);
         final Category createCategory = categoryRepository.save(category);
         log.info("{}: Created and added new category to database", this.getClass().getName());
-        log.info("-------------- category in sevice, after mapping -> " + category.toString());
         httpStatus = HttpStatus.CREATED;
         message = String.format("Request for category creation completed, given ID: %s", category.getId());
         return new CategoryCreationResponse(createCategory, httpStatus,message);
