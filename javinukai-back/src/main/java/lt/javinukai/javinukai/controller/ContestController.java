@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +34,8 @@ public class ContestController {
     }
 
     @PostMapping(path = "/contests")
+//    public ResponseEntity<Contest> createContest(@RequestBody @Valid ContestDTO contestDTO,
+//                                                 @AuthenticationPrincipal UserDetails userDetails) {
     public ResponseEntity<Contest> createContest(@RequestBody @Valid ContestDTO contestDTO) {
         final Contest createdContest = contestService.createContest(contestDTO);
         log.info("Request for contest creation completed, given ID: {}", createdContest.getId());

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
@@ -33,6 +34,7 @@ public class ContestService {
 
     @Transactional
     public Contest createContest(ContestDTO contestDTO) {
+//        public Contest createContest(ContestDTO contestDTO, User user) {
 
         final Contest contest = ContestMapper.contestDTOToContest(contestDTO);
         final Contest createdContest = contestRepository.save(contest);
@@ -52,6 +54,7 @@ public class ContestService {
         }
 
         createdContest.setCategories(categoryList);
+//        createdContest.setCreatedBy(user);
         contestRepository.save(contest);
 
         log.info("{}: Created and added new contest to database", this.getClass().getName());

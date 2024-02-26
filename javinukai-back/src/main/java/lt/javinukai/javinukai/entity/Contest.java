@@ -67,9 +67,9 @@ public class Contest {
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
 
-//    @Setter
-//    @Column
-//    private User author;
+    @Setter
+    @Column(name = "created_by")
+    private User createdBy;
 
     public void addCategory(Category category) {
         if (categories == null) {

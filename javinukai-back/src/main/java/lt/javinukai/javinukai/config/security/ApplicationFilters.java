@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.config.security;
 
 import lombok.RequiredArgsConstructor;
+import lt.javinukai.javinukai.entity.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -47,6 +48,7 @@ public class ApplicationFilters {
                         //
                         .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/contests/**").permitAll()
+//                        .requestMatchers("/api/v1/contests/**").hasRole(String.valueOf(UserRole.ADMIN))
                         .requestMatchers("/api/v1/categories/**").permitAll()
                         .requestMatchers("/api/v1/records/**").permitAll()
                         //
