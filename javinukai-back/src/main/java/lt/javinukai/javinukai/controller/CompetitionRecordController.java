@@ -105,12 +105,12 @@ public class CompetitionRecordController {
     v1 - ištrina atskirą įrašą, nemanau, kad taip galima daryti
     nežinau ar DELETE išvis reikalingas, gal užteks, kad pašalinus user, category, contest
     jis bus pašalintas per kaskadą
-     */
-    @DeleteMapping(path = "/records/{recordID}")
-    public ResponseEntity<?> deleteRecord(@PathVariable @NotNull UUID recordID) {
-        log.info("Request for deleting record with ID: {}", recordID);
-        competitionRecordService.deleteRecord(recordID);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+//     */
+//    @DeleteMapping(path = "/records/{recordID}")
+//    public ResponseEntity<?> deleteRecord(@PathVariable @NotNull UUID recordID) {
+//        log.info("Request for deleting record with ID: {}", recordID);
+//        competitionRecordService.deleteRecord(recordID);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
 }

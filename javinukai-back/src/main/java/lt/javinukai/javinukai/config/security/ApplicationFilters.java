@@ -34,7 +34,7 @@ public class ApplicationFilters {
                 .csrf(AbstractHttpConfigurer::disable)
                 /*
                 may be needed for when we have https
-                .logout(logout -> logout
+                .logout(logout -> logoutergedAnnotations$SearchStrategy
                         .logoutUrl("/api/v1/auth/logout")
                         .addLogoutHandler(headerWriterLogoutHandler)
                         .logoutSuccessHandler(logoutSuccessHandler)

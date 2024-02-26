@@ -44,7 +44,7 @@ public class ContestController {
 
     @GetMapping(path = "/contests")
     public ResponseEntity<Page<Contest>> retrieveAllContests(@RequestParam(defaultValue = "1") int pageNumber,
-                                                             @RequestParam(defaultValue = "5") int pageSize,
+                                                             @RequestParam(defaultValue = "25") int pageSize,
                                                              @RequestParam(required = false) String keyword,
                                                              @RequestParam(defaultValue = "contestName") String sortBy,
                                                              @RequestParam(defaultValue = "false") boolean sortDesc) {

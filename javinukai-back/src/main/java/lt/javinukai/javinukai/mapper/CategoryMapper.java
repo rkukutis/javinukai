@@ -8,9 +8,6 @@ import lt.javinukai.javinukai.entity.Category;
 public class CategoryMapper {
 
     public static Category categoryDTOToCategory(CategoryDTO categoryDTO) {
-
-        log.info("-------------- category in mapper -> " + categoryDTO.toString());
-
         return Category.builder()
                 .categoryName(categoryDTO.getCategoryName())
                 .description(categoryDTO.getDescription())

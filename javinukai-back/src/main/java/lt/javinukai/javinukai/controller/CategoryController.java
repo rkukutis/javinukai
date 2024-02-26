@@ -46,7 +46,7 @@ public class CategoryController {
 
     @GetMapping(path = "/categories")
     public ResponseEntity<Page<Category>> retrieveAllCategories(@RequestParam(defaultValue = "1") int pageNumber,
-                                                                @RequestParam(defaultValue = "5") int pageSize,
+                                                                @RequestParam(defaultValue = "25") int pageSize,
                                                                 @RequestParam(required = false) String keyword,
                                                                 @RequestParam(defaultValue = "categoryName") String sortBy,
                                                                 @RequestParam(defaultValue = "false") boolean sortDesc) {
