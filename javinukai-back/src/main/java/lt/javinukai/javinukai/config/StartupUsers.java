@@ -37,6 +37,7 @@ public class StartupUsers {
     @Bean
     CommandLineRunner initialize() {
         return args -> {
+            /*
             List<List<String>> records = new ArrayList<>();
             try (Scanner scanner = new Scanner(new File("src/main/resources/test-data/users.csv"))) {
                 while (scanner.hasNextLine()) {
@@ -62,6 +63,44 @@ public class StartupUsers {
                         .build();
                 userRepository.save(createdUser);
             }
+             */
+
+            User admin = User.builder()
+                    .name("John")
+                    .surname("Doe")
+                    .email("jdoe@mail.com")
+                    .institution("LRT")
+                    .isFreelance(false)
+                    .maxTotal(50)
+                    .maxSinglePhotos(30)
+                    .maxCollections(6)
+                    .role(UserRole.ADMIN)
+                    .isEnabled(true)
+                    .isNonLocked(true)
+                    .phoneNumber("+37047812482")
+                    .birthYear(1984)
+                    .password(passwordEncoder.encode("password"))
+                    .build();
+
+            User user = User.builder()
+                    .name("Antanas")
+                    .surname("Vandalas")
+                    .email("user@mail.com")
+                    .institution("Delfi")
+                    .isFreelance(false)
+                    .maxTotal(50)
+                    .maxSinglePhotos(30)
+                    .maxCollections(6)
+                    .role(UserRole.USER)
+                    .isEnabled(true)
+                    .isNonLocked(true)
+                    .phoneNumber("+37047812482")
+                    .birthYear(1995)
+                    .password(passwordEncoder.encode("password"))
+                    .build();
+
+            userRepository.saveAll(List.of(admin, user));
+
         };
     }
 
