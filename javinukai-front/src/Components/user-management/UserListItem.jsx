@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function UserListItem({ userInfo }) {
+  const { t } = useTranslation();
+  
   return (
     <Link
       to={userInfo.uuid}
@@ -20,7 +23,7 @@ export function UserListItem({ userInfo }) {
           {userInfo.maxCollections}
         </p>
         <p className="hidden lg:flex items-center justify-left">
-          {userInfo.isEnabled ? "Yes" : "No"}
+          {userInfo.isEnabled ? t('PaginationSettings.fieldIsEnabledYes') : t('PaginationSettings.fieldIsEnabledNo')}
         </p>
       </div>
     </Link>

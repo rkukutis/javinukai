@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import StyledInput from "./StyledInput";
 import FormFieldError from "./FormFieldError";
+import { useTranslation } from "react-i18next";
 
 function getMultipartFormData(title, description, images) {
   let formData = new FormData();
@@ -29,7 +30,7 @@ function ImageUpload() {
   const { mutate, isPending } = useMutation({
     mutationFn: (multipartFormData) => uploadImages(multipartFormData),
     onSuccess: (createdCollection) => {
-      toast.success("Images have been uploaded");
+      toast.success(t('imageUpload.imagesUploaded'));
       setFiles([]);
       reset();
       setUploadedCollection(createdCollection);
@@ -46,25 +47,27 @@ function ImageUpload() {
   function onSubmit(formData) {
     const { title, description } = formData;
     if (files.length === 0) {
-      toast.error("You must add some images");
+      toast.error(t('imageUpload.imagesAdd'));
       return;
     }
     mutate(getMultipartFormData(title, description, files));
   }
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-full min-h-[82vh] flex flex-col justify-center items-center bg-slate-50">
       <div className="w-full bg-white lg:w-1/3 border-2 px-3 py-5">
-        <h1 className="text-2xl text-center">Upload photo(s)</h1>
+        <h1 className="text-2xl text-center">{t('imageUpload.photoUploadTitle')}</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <section className="form-field">
             <label>
-              Title<span className="text-red-600">*</span>
+            {t('imageUpload.photoUpload')}<span className="text-red-600">*</span>
             </label>
             <input
               className="form-field__input"
               {...register("title", {
-                required: "Title is required",
+                required: t('imageUpload.photoTitleRequired'),
               })}
             />
             {errors.title && (
@@ -73,12 +76,12 @@ function ImageUpload() {
           </section>
           <section className="form-field">
             <label>
-              Description<span className="text-red-600">*</span>
+              {t('imageUpload.photoDescription')}<span className="text-red-600">*</span>
             </label>
             <textarea
               className="form-field__input"
               {...register("description", {
-                required: "Description is required",
+                required: t('imageUpload.photoDescriptionRequired'),
               })}
             />
             {errors.description && (
@@ -87,14 +90,11 @@ function ImageUpload() {
           </section>
           <section>
             <ul className="list-disc">
-              <p>Photo requirements:</p>
+              <p>{t('imageUpload.photoRequirements')}</p>
               <div className="pl-5">
-                <li>
-                  Long edge of photo must be longer than 2500px and shorter than
-                  4000px
-                </li>
-                <li>Each photo must be less than 10 MB in size</li>
-                <li>All photos combined must be less than 50 MB</li>
+                <li>{t('imageUpload.photoDimensions')}</li>
+                <li>{t('imageUpload.photoSize')}</li>
+                <li>{t('imageUpload.photoAllSize')}</li>
               </div>
             </ul>
             <div
@@ -103,9 +103,9 @@ function ImageUpload() {
             >
               <input {...getInputProps()} />
               {isDragActive ? (
-                <p>Drop here</p>
+                <p>{t('imageUpload.photoSelectorActive')}</p>
               ) : (
-                <p>Select or drop photos here</p>
+                <p>{t('imageUpload.photoSelector')}</p>
               )}
             </div>
             {files.map((file) => (
@@ -117,14 +117,14 @@ function ImageUpload() {
             disabled={isPending}
             id="image-upload-form"
             type="submit"
-            value={isPending ? "Uploading..." : "Upload photo(s)"}
+            value={isPending ? t('imageUpload.photoUploading') : t('imageUpload.photoUpload')}
           />
         </form>
         {uploadedCollection && (
           <div className="mt-3 border-2 p-3">
-            <h1>Title: {uploadedCollection?.name}</h1>
-            <p>Description: {uploadedCollection?.description}</p>
-            <p>Created: {uploadedCollection?.createdAt}</p>
+            <h1>{t('imageUpload.collectionTitle')} {uploadedCollection?.name}</h1>
+            <p>{t('imageUpload.collectionDescription')} {uploadedCollection?.description}</p>
+            <p>{t('imageUpload.collectionCreatedAt')} {uploadedCollection?.createdAt}</p>
             {uploadedCollection?.images.map((image) => (
               <img key={image.uuid} src={image.urlThumbnail} />
             ))}

@@ -26,7 +26,7 @@ function HomePage() {
           style={{ width: "40%", height: "40%", maxHeight: "80vh" }}
         />
         <div className="flex flex-col items-center justify-center p-5">
-          <p className="ml-4">contest 20</p>
+          <p className="ml-4">contest 1</p>
           <p>{t('homepage.description')}</p>
           {user ? (
             <Button onClick={() => openModal("modal1")}>{t('homepage.participate')}</Button>
@@ -39,7 +39,7 @@ function HomePage() {
             id="modal1"
             openModal={openModal} 
           >
-            <h2 className="text-xl font-semibold mb-4">Participate</h2>
+            <h2 className="text-xl font-semibold mb-4">Contest 1</h2>
             <p className="text-gray-700 mb-4">{t('homepage.description')}</p>
             <button onClick={() => handleConfirm("consoleLog", "modal1")}>{t('homepage.confirmParticipation')}</button>
           </Modal>
@@ -51,7 +51,7 @@ function HomePage() {
           >
             <h2>{t('homepage.loginToParticipate')}</h2>
             <p>{t('homepage.description')}</p>
-            <button onClick={() => handleConfirm("redirect", "modal2")}>LOG IN</button>
+            <button onClick={() => handleConfirm("redirect", "modal2")}>{t('homepage.login')}</button>
           </Modal>
          
         </div>
@@ -65,33 +65,33 @@ function HomePage() {
           style={{ width: "40%", height: "40%", maxHeight: "80vh" }}
         />
         <div className="fle items-center justify-center p-5">
-          <p className="ml-4">contest 2091</p>
+          <p className="ml-4">contest 2</p>
          
          <p>{t('homepage.description')}</p>
          {user ? (
-            <Button onClick={() => openModal("modal1")}>{t('homepage.participate')}</Button>
+            <Button onClick={() => openModal("modal3")}>{t('homepage.participate')}</Button>
           ) : (
-            <Button onClick={() => openModal("modal2")}>{t('homepage.loginToParticipate')}</Button>
+            <Button onClick={() => openModal("modal4")}>{t('homepage.loginToParticipate')}</Button>
           )}
           <Modal
-            isOpen={modalStates.modal1}
-            closeModal={() => closeModal("modal1")}
-            id="modal1"
+            isOpen={modalStates.modal3}
+            closeModal={() => closeModal("modal3")}
+            id="modal3"
             openModal={openModal} 
           >
-            <h2 className="text-xl font-semibold mb-4">Participate</h2>
+            <h2 className="text-xl font-semibold mb-4">contest 2</h2>
             <p className="text-gray-700 mb-4">{t('homepage.description')}</p>
-            <button onClick={() => handleConfirm("consoleLog", "modal1")}>{t('homepage.confirmParticipation')}</button>
+            <button onClick={() => handleConfirm("consoleLog", "modal3")}>{t('homepage.confirmParticipation')}</button>
           </Modal>
           <Modal
-            isOpen={modalStates.modal2}
-            closeModal={() => closeModal("modal2")}
-            id="modal2"
+            isOpen={modalStates.modal4}
+            closeModal={() => closeModal("modal4")}
+            id="modal4"
             openModal={openModal} 
           >
             <h2>{t('homepage.loginToParticipate')}</h2>
             <p>{t('homepage.description')}</p>
-            <button onClick={() => handleConfirm("redirect", "modal2")}>LOG IN</button>
+            <button onClick={() => handleConfirm("redirect", "modal4")}>{t('homepage.login')}</button>
           </Modal>
          
         </div>
@@ -105,32 +105,32 @@ function HomePage() {
           style={{ width: "40%", height: "40%", maxHeight: "80vh" }}
         />
         <div className="fle items-center justify-center p-5">
-          <p className="ml-4">contest 2018</p>
+          <p className="ml-4">contest 2</p>
           <p>{t('homepage.description')}</p>
           {user ? (
-            <Button onClick={() => openModal("modal1")}>{t('homepage.participate')}</Button>
+            <Button onClick={() => openModal("modal5")}>{t('homepage.participate')}</Button>
           ) : (
-            <Button onClick={() => openModal("modal2")}>{t('homepage.loginToParticipate')}</Button>
+            <Button onClick={() => openModal("modal6")}>{t('homepage.loginToParticipate')}</Button>
           )}
           <Modal
-            isOpen={modalStates.modal1}
-            closeModal={() => closeModal("modal1")}
-            id="modal1"
+            isOpen={modalStates.modal5}
+            closeModal={() => closeModal("modal5")}
+            id="modal5"
             openModal={openModal} 
           >
-            <h2 className="text-xl font-semibold mb-4">VISU KONTESTU PAVADINIMAI VIENODI?</h2>
+            <h2 className="text-xl font-semibold mb-4">Contest 3</h2>
             <p className="text-gray-700 mb-4">{t('homepage.description')}</p>
-            <button onClick={() => handleConfirm("consoleLog", "modal1")}>{t('homepage.confirmParticipation')}</button>
+            <button onClick={() => handleConfirm("consoleLog", "modal5")}>{t('homepage.confirmParticipation')}</button>
           </Modal>
           <Modal
-            isOpen={modalStates.modal2}
-            closeModal={() => closeModal("modal2")}
-            id="modal2"
+            isOpen={modalStates.modal6}
+            closeModal={() => closeModal("modal6")}
+            id="modal6"
             openModal={openModal} 
           >
             <h2>{t('homepage.loginToParticipate')}</h2>
             <p>{t('homepage.description')}</p>
-            <button onClick={() => handleConfirm("redirect", "modal2")}>{t('homepage.login')}</button>
+            <button onClick={() => handleConfirm("redirect", "modal6")}>{t('homepage.login')}</button>
           </Modal>
         </div>
       </div>
