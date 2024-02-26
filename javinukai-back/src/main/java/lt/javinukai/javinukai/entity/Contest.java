@@ -34,13 +34,18 @@ public class Contest {
 
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinTable(
             name = "contest_category",
             joinColumns = @JoinColumn(name = "contest_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
+
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
+    private List<CompetitionRecord> competitionRecords = new ArrayList<>();
 
     @Setter
     @Column(name = "total_submissions")
@@ -61,6 +66,10 @@ public class Contest {
     @LastModifiedDate
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
+
+    @Setter
+    @Column(name = "created_by")
+    private User createdBy;
 
     public void addCategory(Category category) {
         if (categories == null) {

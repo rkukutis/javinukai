@@ -1,8 +1,10 @@
 package lt.javinukai.javinukai.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
 
+@Slf4j
 public class CategoryMapper {
 
     public static Category categoryDTOToCategory(CategoryDTO categoryDTO) {
@@ -11,6 +13,7 @@ public class CategoryMapper {
                 .description(categoryDTO.getDescription())
                 .totalSubmissions(categoryDTO.getTotalSubmissions())
                 .uploadedPhotos(categoryDTO.getUploadedPhotos())
+                .type(categoryDTO.getType())
                 .build();
     }
 
@@ -20,6 +23,7 @@ public class CategoryMapper {
                 .categoryName(category.getCategoryName())
                 .description(category.getDescription())
                 .totalSubmissions(category.getTotalSubmissions())
+                .type(category.getType())
                 .build();
     }
 }

@@ -4,9 +4,10 @@ package lt.javinukai.javinukai.dto.request.contest;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lt.javinukai.javinukai.entity.Category;
-import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
@@ -21,7 +22,6 @@ public class CategoryDTO {
 
     private UUID id;
 
-    @NonNull
     @NotBlank
     @Length(max = 100, message = "CATEGORY_NAME_LENGTH_EXCEEDED")
     private String categoryName;
@@ -31,11 +31,12 @@ public class CategoryDTO {
 
     private List<Category> contests;
 
-    @NonNull
     @Min(value = 1, message = "AT_LEAST_ONE")
     @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
     private long totalSubmissions;
 
-    private List<String> uploadedPhotos;
+    @NotNull
+    private PhotoSubmissionType type;
 
+    private List<String> uploadedPhotos;
 }
