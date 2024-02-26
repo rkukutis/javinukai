@@ -70,7 +70,7 @@ public class StartupUsers {
                         .isNonLocked(Boolean.parseBoolean(user.get(10)))
                         .phoneNumber(user.get(11))
                         .birthYear(Integer.parseInt(user.get(12)))
-                        .password(passwordEncoder.encode(user.get(0)))
+                        .password(passwordEncoder.encode(user.get(13)))
                         .build();
                 userRepository.save(createdUser);
             }
