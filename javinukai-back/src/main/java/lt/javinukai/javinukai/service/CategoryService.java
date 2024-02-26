@@ -76,6 +76,7 @@ public class CategoryService {
         categoryToUpdate.setCategoryName(categoryDTO.getCategoryName());
         categoryToUpdate.setDescription(categoryDTO.getDescription());
         categoryToUpdate.setTotalSubmissions(categoryDTO.getTotalSubmissions());
+        categoryToUpdate.setType(categoryDTO.getType());
         log.info("{}: Updating category", this.getClass().getName());
         return categoryRepository.save(categoryToUpdate);
     }

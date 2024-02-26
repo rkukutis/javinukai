@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../Button";
+import { useTranslation } from "react-i18next";
 
 export default function PaginationSettings({
   pagination,
@@ -44,69 +45,71 @@ export default function PaginationSettings({
     setPagination({ ...pagination, surnameContains: searchedSurname });
   }
 
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col px-2 py-3 space-y-2 lg:items-end lg:justify-center lg:py-3 lg:flex-row lg:w-full lg:space-x-6">
       <section className="flex space-x-3 justify-center">
-        <Button onClick={handlePreviousPage}>Previous</Button>
+        <Button onClick={handlePreviousPage}>{t('PaginationSettings.previousPage')}</Button>
         <p className="text-xl py-1 px-4 rounded-full bg-white">
           {pagination.page + 1}
         </p>
         <Button extraStyle="px-8" onClick={handleNextPage}>
-          Next
+        {t('PaginationSettings.nextPage')}
         </Button>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>Users per page</label>
+        <label>{t('PaginationSettings.usersTitle')}</label>
         <select
           className="py-2 px-4 bg-white rounded-md"
           onChange={handleLimitChange}
           value={pagination.limit}
         >
-          <option value={5}>5 users</option>
-          <option value={10}>10 users</option>
-          <option value={100}>100 users</option>
-          <option value={200}>200 users</option>
+          <option value={10}>10 {t('PaginationSettings.users')}</option>
+          <option value={25}>25 {t('PaginationSettings.users')}</option>
+          <option value={50}>50 {t('PaginationSettings.users')}</option>
+          <option value={100}>100 {t('PaginationSettings.users')}</option>
         </select>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>Sort by field</label>
+        <label>{t('PaginationSettings.fieldTitle')}</label>
         <select
           className="p-2 bg-white rounded-md"
           onChange={handleSortByChange}
           value={pagination.sortBy}
         >
-          <option value="name">Name</option>
-          <option value="surname">Surname</option>
-          <option value="email">Email</option>
-          <option value="role">Role</option>
-          <option value="maxTotal">Max entries per contest</option>
-          <option value="maxSinglePhotos">Max singles per category</option>
-          <option value="maxCollections">Max collections per category</option>
-          <option value="isEnabled">Confirmed</option>
+          <option value="name">{t('PaginationSettings.fieldName')}</option>
+          <option value="surname">{t('PaginationSettings.fieldSurname')}</option>
+          <option value="email">{t('PaginationSettings.fieldEmail')}</option>
+          <option value="role">{t('PaginationSettings.fieldRole')}</option>
+          <option value="maxTotal">{t('PaginationSettings.fieldMaxTotalEntries')}</option>
+          <option value="maxSinglePhotos">{t('PaginationSettings.fieldMaxSingles')}</option>
+          <option value="maxCollections">{t('PaginationSettings.fieldMaxCollections')}</option>
+          <option value="isEnabled">{t('PaginationSettings.fieldIsEnabled')}</option>
         </select>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>Sort direction</label>
+        <label>{t('PaginationSettings.sortTitle')}</label>
         <select
           className="p-2 bg-white rounded-md"
           onChange={handleSortDescChange}
           value={pagination.sortDesc}
         >
-          <option value="true">Descending</option>
-          <option value="false">Ascending</option>
+          <option value="true">{t('PaginationSettings.sortDescending')}</option>
+          <option value="false">{t('PaginationSettings.sortAscending')}</option>
         </select>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>Search by surname</label>
+        <label>{t('PaginationSettings.searchTitle')}</label>
         <div className="lg:flex-row flex lg:space-x-3 space-y-2 lg:space-y-0 flex-col">
           <input
             className="p-2 bg-white rounded-md"
-            placeholder="Surname"
+            placeholder={t('PaginationSettings.searchPlaceholder')}
             onKeyDown={handleSurnameSearchKeydown}
             onChange={handleSurnameFieldChange}
             value={searchedSurname}
           />
-          <Button onClick={handleSurnameSearchClick}>Search</Button>
+          <Button onClick={handleSurnameSearchClick}>{t('PaginationSettings.searchButton')}</Button>
         </div>
       </section>
     </div>

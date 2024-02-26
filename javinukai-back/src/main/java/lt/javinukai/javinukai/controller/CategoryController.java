@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -44,7 +46,7 @@ public class CategoryController {
 
     @GetMapping(path = "/categories")
     public ResponseEntity<Page<Category>> retrieveAllCategories(@RequestParam(defaultValue = "1") int pageNumber,
-                                                                @RequestParam(defaultValue = "5") int pageSize,
+                                                                @RequestParam(defaultValue = "25") int pageSize,
                                                                 @RequestParam(required = false) String keyword,
                                                                 @RequestParam(defaultValue = "categoryName") String sortBy,
                                                                 @RequestParam(defaultValue = "false") boolean sortDesc) {

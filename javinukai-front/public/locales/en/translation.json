@@ -8,7 +8,7 @@
   "navbar": {
     "name1": "Home",
     "name2": "Images",
-    "name3": "add text3",
+    "name3": "Contests",
     "name4": "add text4"
   },
 
@@ -40,5 +40,107 @@
     "register": "Register",
     "login": "Log in",
     "loginSuccess": "Logged in successfully"
+  },
+
+  "imageUpload": {
+    "imagesUploaded": "Images have been uploaded",
+    "imagesAdd": "You must add some images",
+    "photoUploadTitle": "Upload photo(s)",
+    "photoUpload": "Upload photo(s)",
+    "photoTitle": "Title",
+    "photoTitleRequired": "Title is required",
+    "photoDescription": "Description",
+    "photoDescriptionRequired": "Description is required",
+    "photoRequirements": "Photo requirements:",
+    "photoDimensions": "Long edge of photo must be longer than 2500px and shorter than 4000px",
+    "photoSize": "Each photo must be less than 10 MB in size",
+    "photoAllSize": "All photos combined must be less than 50 MB",
+    "photoSelectorActive": "Drop here",
+    "photoSelector": "Select or drop photos here",
+    "photoUploading": "Uploading...",
+    "collectionTitle": "Title:",
+    "collectionDescription": "Description:",
+    "collectionCreatedAt": "Created:"
+  },
+
+  "PaginationSettings": {
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "usersTitle": "Users per page",
+    "users": "users",
+    "fieldTitle": "Sort by field",
+    "fieldName": "Name",
+    "fieldSurname": "Surname",
+    "fieldEmail": "Email",
+    "fieldRole": "Role",
+    "fieldMaxTotalEntries": "Max entries per contest",
+    "fieldMaxSingles": "Max singles per category",
+    "fieldMaxCollections": "Max collections per category",
+    "fieldLimits": "Limits",
+    "fieldIsEnabled": "Confirmed", 
+    "sortTitle": "Sort direction",
+    "sortDescending": "Descending",
+    "sortAscending": "Ascending",
+    "searchTitle": "Search by surname",
+    "searchPlaceholder": "Surname",
+    "searchButton": "Search",
+    "fieldIsEnabledYes": "Yes",
+    "fieldIsEnabledNo": "No"
+  },
+
+  "ConfirmEmailPage": {
+    "emailConfirmed": "Your email has been confirmed"
+  },
+
+  "ForgotPassPage": {
+    "title": "Forgot your passowrd?",
+    "description": "You will receive an email with a link and instructions on how to reset your password. Please keep in mind that your password reset link will be valid for only 10 minutes.",
+    "emailPlaceholder": "Please enter your email",
+    "emailRequired": "Email is required",
+    "emailValidFormat": "Email must be of a valid format",
+    "submitEmail": "Submit"
+  },
+
+  "RegisterPage": {
+    "registrationSuccess": "Registered successfully. Please confirm your email",
+    "name": "Name",
+    "nameRequired": "Name is required",
+    "nameContains": "Name must contain only alphabetic characters",
+    "nameLength": "Name must not exceed 20 characters",
+
+    "surname": "Surname",
+    "surnameRequired": "Surname is required",
+    "surnameContains": "Surname must contain only alphabetic characters",
+    "surnameLength": "Surname must not exceed 20 characters",
+
+    "birthYear": "Birth year",
+    "birthYearRequired": "Birth year is required",
+    "birthYearValid": "Date must be valid. A valid example: '1984'",
+    "birthYearMax": "Birth year can not be later than",
+    "birthYearMin": "Birth year can not be earlier than 1900",
+
+    "phoneNumber": "Phone number",
+    "phoneNumberRequired": "Phone number is required",
+    "phoneNumberValid": "Phone number must be valid",
+    "phoneNumberLength": "Phone number must not exceed 15 characters",
+
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "emailValid": "Email must be of a valid format",
+    "emailLength": "Email must not exceed 200 characters",
+
+    "password": "Password",
+    "passwordRequired": "Password is required",
+    "passwordValid": "Password must be at least 8 symbols long",
+    "passwordConfirm": "Confirm Password",
+    "passwordConfirmRequired": "Password confirmation is required",
+    "passwordConfirmMustMatch": "Passwords must match",
+    
+    "affiliationFreelance": "Freelance",
+    "affiliationInstitution": "Represented media",
+    "affiliationInstitutionName": "Name of representative institution",
+    "affiliationInstitutionRequired": "Institution name is required",
+    "affiliationInstitutionNameLength": "Institution name must not exceed 50 characters",
+    "registerSubmit": "Register"
   }
 }

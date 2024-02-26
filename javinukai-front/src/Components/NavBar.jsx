@@ -2,13 +2,6 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useTranslation } from "react-i18next";
 
-const navigation = [
-  { name: "Home", href: "/", current: false },
-  { name: "Images", href: "/image-upload", current: false },
-  { name: "Text", href: "#", current: false },
-  { name: "Add text4", href: "#", current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -17,10 +10,10 @@ export default function NavBar() {
   const { t } = useTranslation();
 
   const navigation = [
-    { name: t("navbar.name1"), href: "/", current: false },
-    { name: t("navbar.name2"), href: "/image-upload", current: false },
-    { name: t("navbar.name3"), href: "#", current: false },
-    { name: t("navbar.name4"), href: "#", current: false },
+    { name: t('navbar.name1'), href: "/", current: false },
+    { name: t('navbar.name2'), href: "/image-upload", current: false },
+    { name: t('navbar.name3'), href: "#", current: false },
+    { name: t('navbar.name4'), href: "#", current: false },
   ];
 
   return (
