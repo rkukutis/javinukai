@@ -1,0 +1,44 @@
+{
+  "dropdownMenu": {
+    "accountSettings": "Vartotojo nustatymai",
+    "logout": "Atsijungti",
+    "manageUsers": "Valdyti vartotojus"
+  },
+
+  "navbar": {
+    "name1": "Namai",
+    "name2": "Nuotraukos",
+    "name3": "add text3",
+    "name4": "add text4"
+  },
+
+  "layout": {
+    "name": "Javinukai",
+    "login": "Prisijungimas",
+    "loggedOutSuccess": "Sėkmingai atsijungėte!"
+  },
+
+  "homepage": {
+    "description": "Aprašymas",
+    "loginToParticipate": "Prisijunkite norėdami dalyvauti",
+    "participate": "Dalyvauti",
+    "confirmParticipation": "Patvirtinti dalyvavimą",
+    "login": "Prisijunkite"
+  },
+
+  "modal": {
+    "closeModal": "Uždaryti"
+  },
+
+  "loginPage": {
+    "email": "El. paštas",
+    "emailRequired": "Būtina įvesti el. paštą",
+    "emailValidFormat": "El. paštas turi būti tinkamo formato",
+    "password": "Slaptažodis",
+    "forgotPassword": "Pamiršote slaptažodį?",
+    "passwordRequired": "Būtina įvesti slaptažodį",
+    "register": "Registracija",
+    "login": "Prisijungti",
+    "loginSuccess": "Sėkmingai prisijungėte"
+  }
+}

@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 @Builder
+@ToString
 @Getter
 public class LoginRequest {
     @NotBlank

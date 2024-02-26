@@ -1,11 +1,10 @@
 package lt.javinukai.javinukai.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.config.security.AuthenticationService;
+import lt.javinukai.javinukai.service.AuthenticationService;
 import lt.javinukai.javinukai.dto.request.auth.ForgotPasswordRequest;
 import lt.javinukai.javinukai.dto.request.auth.PasswordResetRequest;
 import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
@@ -39,7 +38,7 @@ public class AuthorizationController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid UserRegistrationRequest registration) {
         log.info("Received registration request: {}", registration.toString());
-        authenticationService.register(registration);
+        authenticationService.register(registration, false);
         return ResponseEntity.created(URI.create("/users")).build();
     }
 
@@ -73,9 +72,9 @@ public class AuthorizationController {
     private ResponseCookie getResponseCookie(String name, String value, int hoursValid) {
         return ResponseCookie.from(name, value)
                 .maxAge(Duration.ofHours(hoursValid))
-                .httpOnly(false)
-                .secure(false)
-                .sameSite("lax")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("strict")
                 .path("/")
                 .build();
     }

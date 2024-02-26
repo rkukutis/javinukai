@@ -1,7 +1,9 @@
-package lt.javinukai.javinukai.config.security;
+package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.config.security.JwtService;
+import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
@@ -10,14 +12,10 @@ import lt.javinukai.javinukai.entity.UserToken;
 import lt.javinukai.javinukai.enums.TokenType;
 import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.UserRepository;
-import lt.javinukai.javinukai.service.EmailService;
-import lt.javinukai.javinukai.service.UserTokenService;
-import lt.javinukai.javinukai.utility.RandomTokenGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,18 +33,21 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+
+    @Value("${app.constants.user-defaults.max-photos.total}")
+    private int defaultMaxTotal;
     @Value("${app.constants.user-defaults.max-photos.single}")
     private int defaultMaxSinglePhotos;
-
     @Value("${app.constants.user-defaults.max-photos.collection}")
     private int defaultMaxCollections;
 
-    public void register(UserRegistrationRequest userRegistrationRequest) {
+
+    public User register(UserRegistrationRequest userRegistrationRequest, boolean isRegisteredByAdmin) {
         if (userRepository.findByEmail(userRegistrationRequest.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException("USER_ALREADY_EXISTS_ERROR");
         }
+        log.info("Manual user registration request by admin, enabling user on creation");
         log.info("Registering new user: {}", userRegistrationRequest);
-
         var user = User.builder()
                 .name(userRegistrationRequest.getName())
                 .surname(userRegistrationRequest.getSurname())
@@ -55,15 +56,17 @@ public class AuthenticationService {
                 .birthYear(userRegistrationRequest.getBirthYear())
                 .password(passwordEncoder.encode(userRegistrationRequest.getPassword()))
                 .role(UserRole.USER)
+                .maxTotal(defaultMaxTotal)
                 .maxSinglePhotos(defaultMaxSinglePhotos)
                 .maxCollections(defaultMaxCollections)
                 .isNonLocked(true)
-                .isEnabled(false) // User needs to confirm email before logging in
+                .isEnabled(isRegisteredByAdmin)
                 .institution(userRegistrationRequest.getInstitution())
                 .isFreelance(userRegistrationRequest.getInstitution() == null)
                 .build();
-        userRepository.save(user);
-        sendEmailWithToken(user, TokenType.EMAIL_CONFIRM);
+        User createdUser = userRepository.save(user);
+        sendEmailWithToken(createdUser, TokenType.EMAIL_CONFIRM);
+        return createdUser;
     }
 
     public AuthenticationResponse login(LoginRequest loginRequest) {

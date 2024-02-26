@@ -2,9 +2,13 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.config.security.UserRole;
+import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
 import lt.javinukai.javinukai.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +19,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
-    public User createUser(User newUser) {
-        User createdUser = userRepository.save(newUser);
-        log.debug("{}: Created new user {}",this.getClass().getName(), createdUser.getUuid());
-        return createdUser;
+    public User createUser(UserRegistrationRequest registrationRequest) {
+       return authenticationService.register(registrationRequest, true);
     }
+
     public User getUser(UUID userId) {
         User user =  userRepository.findById(userId)
                 .orElseThrow(()-> new UserNotFoundException(userId));
@@ -28,11 +32,14 @@ public class UserService {
         return user;
     }
 
-    public List<User> getUsers() {
-        // this needs pagination
-        List<User> users =  userRepository.findAll();
-        log.debug("{}: Fetched all users from database", this.getClass().getName());
-        return users;
+    public Page<User> getUsers(PageRequest pageRequest, String surname) {
+        if (surname == null) {
+            log.info("Fetching all users from database");
+            return userRepository.findAll(pageRequest);
+        } else {
+            log.info("Fetching all users with surname {} from database", surname);
+            return userRepository.findBySurnameContainingIgnoreCase(surname, pageRequest);
+        }
     }
     public User updateUser(User updatedUser, UUID userId) {
         User user = userRepository.findById(userId)
@@ -45,10 +52,30 @@ public class UserService {
         user.setIsFreelance(updatedUser.getIsFreelance());
         user.setInstitution(updatedUser.getInstitution());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
-        user.setMaxSinglePhotos(updatedUser.getMaxSinglePhotos());
-        user.setMaxCollections(updatedUser.getMaxCollections());
+        //user.setMaxTotal(updatedUser.getMaxTotal());
+        //user.setMaxSinglePhotos(updatedUser.getMaxSinglePhotos());
+        //user.setMaxCollections(updatedUser.getMaxCollections());
         return userRepository.save(user);
     }
+
+    public User updateUserForAdmin(UUID userId, User updateUser) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+        UserRole previousRole = user.getRole();
+        boolean previousIsNonLocked = user.getIsNonLocked();
+        if (!previousRole.equals(updateUser.getRole())) {
+            user.setRole(updateUser.getRole());
+            log.info("Updating user {} role from {} to {}", user.getUuid(),
+                    previousRole, updateUser.getRole());
+        } else if (previousIsNonLocked != updateUser.getIsNonLocked()) {
+            user.setIsNonLocked(updateUser.getIsNonLocked());
+            log.info("Updating user {} isNonLocked state from {} to {}",
+                    user.getUuid(), previousIsNonLocked, updateUser.getIsNonLocked());
+        }
+        return userRepository.save(user);
+    }
+
+
     public List<User> deleteUser(UUID userId) {
         if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);

@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
-import forgotPassword from "../services/forgotPassword";
+import forgotPassword from "../services/auth/forgotPassword";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import validateEmail from "../utils/validateEmail";
 import StyledInput from "../Components/StyledInput";
+import FormFieldError from "../Components/FormFieldError";
 
 function ForgotPassPage() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const { mutate } = useMutation({
     mutationFn: (data) => forgotPassword(data.email),
@@ -39,6 +44,9 @@ function ForgotPassPage() {
                   validateEmail(val) || "Email must be of a valid format",
               })}
             />
+            {errors.email && (
+              <FormFieldError>{errors.email.message}</FormFieldError>
+            )}
             <StyledInput id="submit-email" type="submit" value="Submit" />
           </section>
         </form>

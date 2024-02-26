@@ -6,9 +6,11 @@ import toast from "react-hot-toast";
 import useUserStore from "../stores/userStore";
 import StyledInput from "../Components/StyledInput";
 import validateEmail from "../utils/validateEmail";
-import loginUser from "../services/loginUser";
+import { useTranslation } from "react-i18next";
+import loginUser from "../services/auth/loginUser";
 
 function LoginPage() {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -20,7 +22,7 @@ function LoginPage() {
   const { mutate } = useMutation({
     mutationFn: (data) => loginUser(data),
     onSuccess: (loggedInUser) => {
-      toast.success("Logged in successfully");
+      toast.success(t('loginPage.loginSuccess'));
       setUser(loggedInUser);
       navigate("/");
     },
@@ -40,13 +42,13 @@ function LoginPage() {
           onSubmit={handleSubmit(handleLoginSubmit)}
         >
           <section className="form-field">
-            <label>Email</label>
+            <label>{t('loginPage.email')}</label>
             <input
               className="form-field__input"
               {...register("email", {
-                required: "Email is required",
+                required: t('loginPage.emailRequired'),
                 validate: (val) =>
-                  validateEmail(val) || "Email must be of a valid format",
+                  validateEmail(val) || t('loginPage.emailValidFormat'),
               })}
             />
             {errors.email && (
@@ -54,21 +56,21 @@ function LoginPage() {
             )}
           </section>
           <section className="flex flex-col space-y-1">
-            <label className="text text-slate-800">Password</label>
+            <label className="text text-slate-800">{t('loginPage.password')}</label>
             <input
               type="password"
               className="form-field__input"
-              {...register("password", { required: "Password is required" })}
+              {...register("password", { required: t('loginPage.passwordRequired') })}
             />
             {errors.password && (
               <FormFieldError>{errors.password.message}</FormFieldError>
             )}
             <div className="flex space-x-4 text-blue-500 text-sm pt-2">
-              <Link to="/forgot-password">Forgotten password?</Link>
-              <Link to="/register">Register</Link>
+              <Link to="/forgot-password">{t('loginPage.forgotPassword')}</Link>
+              <Link to="/register">{t('loginPage.register')}</Link>
             </div>
           </section>
-          <StyledInput id="login-submit" value="Log In" type="submit" />
+          <StyledInput id="login-submit" value={t('loginPage.login')} type="submit" />
         </form>
       </div>
     </div>
