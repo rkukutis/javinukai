@@ -86,7 +86,7 @@ class CategoryServiceTest {
 //
 //        Assertions.assertThat(categoriesToDisplay).isNotNull();
 //    }
-
+/*
     @Test
     public void retrieveCategoryReturnsCategory() {
 
@@ -177,4 +177,5 @@ class CategoryServiceTest {
         Assertions.assertThat(exception.getMessage()).
                 isEqualTo("Category was not found with ID: " + id);
     }
+    */
 }

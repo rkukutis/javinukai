@@ -30,8 +30,10 @@ export default function App() {
           gutter={12}
           containerStyle={{ margin: "8px" }}
           toastOptions={{
-            success: { duration: 3000 },
-            error: { duration: 5000 },
+            className: "toaster-notification",
+            id: "toaster-notification",
+            success: { duration: 15000 },
+            error: { duration: 15000 },
             style: {
               fontSize: "16px",
               maxWidth: "500px",
