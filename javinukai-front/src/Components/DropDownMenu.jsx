@@ -28,7 +28,7 @@ export default function DropDownMenu({ mutationFunction }) {
                 "block px-4 py-2 text-sm"
               )}
             >
-              {t("dropdownMenu.accountSettings")}
+              {t('dropdownMenu.accountSettings')}
             </a>
           )}
         </Menu.Item>
@@ -42,7 +42,7 @@ export default function DropDownMenu({ mutationFunction }) {
                   "block px-4 py-2 text-sm"
                 )}
               >
-                {t("dropdownMenu.manageUsers")}
+                {t('dropdownMenu.manageUsers')}
               </a>
             )}
           </Menu.Item>
@@ -57,7 +57,7 @@ export default function DropDownMenu({ mutationFunction }) {
                 "block w-full px-4 py-2 text-left text-sm"
               )}
             >
-              {t("dropdownMenu.logout")}
+              {t('dropdownMenu.logout')}
             </button>
           )}
         </Menu.Item>

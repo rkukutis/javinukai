@@ -7,8 +7,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import StyledInput from "../Components/StyledInput";
 import validateEmail from "../utils/validateEmail";
+import { useTranslation } from "react-i18next";
 
 function RegisterPage() {
+  const { t } = useTranslation()
   const [affiliation, setAffiliation] = useState("freelance");
   const navigate = useNavigate();
   const {
@@ -23,7 +25,7 @@ function RegisterPage() {
   const { mutate } = useMutation({
     mutationFn: (data) => registerUser(data),
     onSuccess: () => {
-      toast.success("Registered successfully. Please confirm your email");
+      toast.success(t('RegisterPage.registrationSuccess'));
       reset();
       navigate("/");
     },
@@ -51,19 +53,19 @@ function RegisterPage() {
           onSubmit={handleSubmit(onSubmit)}
         >
           <section className="form-field">
-            <label>Name</label>
+            <label>{t('RegisterPage.name')}</label>
             <input
               id="name"
               className="form-field__input"
               {...register("name", {
-                required: { value: true, message: "Name is required" },
+                required: { value: true, message: t('RegisterPage.nameRequired') },
                 pattern: {
                   value: /^\S*$/,
-                  message: "Name must contain only alphabetic characters",
+                  message: t('RegisterPage.nameContains'),
                 },
                 maxLength: {
                   value: 20,
-                  message: "Name must not exceed 20 characters",
+                  message: t('RegisterPage.nameLength'),
                 },
               })}
             />
@@ -72,19 +74,19 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>Surname</label>
+            <label>{t('RegisterPage.surname')}</label>
             <input
               id="surname"
               className="form-field__input"
               {...register("surname", {
-                required: { value: true, message: "Surname is required" },
+                required: { value: true, message: t('RegisterPage.surnameRequired') },
                 pattern: {
                   value: /^\S*$/,
-                  message: "Surname must contain only alphabetic characters",
+                  message: t('RegisterPage.surnameContains'),
                 },
                 maxLength: {
                   value: 20,
-                  message: "Surname must not exceed 20 characters",
+                  message: t('RegisterPage.surnnameLength'),
                 },
               })}
             />
@@ -93,23 +95,23 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>Birth Year</label>
+            <label>{t('RegisterPage.birthYear')}</label>
             <input
               id="birth-year"
               className="form-field__input"
               {...register("birthYear", {
-                required: { value: true, message: "Birth year is required" },
+                required: { value: true, message: t('RegisterPage.birthYearRequired') },
                 pattern: {
                   value: /^\d{4}$/,
-                  message: "Date must be valid. A valid example: '1984'",
+                  message: t('RegisterPage.birthYearValid'),
                 },
                 max: {
                   value: new Date().getFullYear(),
-                  message: `Birth year can not be later than ${new Date().getFullYear()}`,
+                  message: t('RegisterPage.birthYearMax') + ' ' + new Date().getFullYear()
                 },
                 min: {
                   value: 1900,
-                  message: "Birth year can not be earlier than 1900",
+                  message: t('RegisterPage.birthYearMin'),
                 },
               })}
             />
@@ -118,19 +120,19 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>Phone number</label>
+            <label>{t('RegisterPage.phoneNumber')}</label>
             <input
               id="phone-number"
               className="form-field__input"
               {...register("phoneNumber", {
-                required: { value: true, message: "Phone number is required" },
+                required: { value: true, message: t('RegisterPage.phoneNumberRequired') },
                 pattern: {
                   value: /^\+?\d{9,11}$/,
-                  message: "Phone number must be valid",
+                  message: t('RegisterPage.phoneNumberValid'),
                 },
                 maxLength: {
                   value: 16,
-                  message: "Phone number must not exceed 15 numbers",
+                  message: t('RegisterPage.phoneNumberLength'),
                 },
               })}
             />
@@ -139,16 +141,16 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>Email</label>
+            <label>{t('RegisterPage.email')}</label>
             <input
               className="form-field__input"
               {...register("email", {
-                required: { value: true, message: "Email is required" },
+                required: { value: true, message: t('RegisterPage.emailRequired') },
                 validate: (val) =>
-                  validateEmail(val) || "Email must be of a valid format",
+                  validateEmail(val) || t('RegisterPage.emailValid'),
                 maxLength: {
                   value: 200,
-                  message: "Email must not exceed 200 characters",
+                  message: t('RegisterPage.emailLength'),
                 },
               })}
             />
@@ -157,16 +159,16 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>Password</label>
+            <label>{t('RegisterPage.password')}</label>
             <input
               type="password"
               id="password"
               className="form-field__input"
               {...register("password", {
-                required: { value: true, message: "Password is required" },
+                required: { value: true, message: t('RegisterPage.passwordRequired') },
                 minLength: {
                   value: 8,
-                  message: "Password must be at least 8 symbols long",
+                  message: t('RegisterPage.passwordValid'),
                 },
               })}
             />
@@ -175,16 +177,16 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>Confirm Password</label>
+            <label>{t('RegisterPage.passwordConfirm')}</label>
             <input
               type="password"
               id="password-confirm"
               className="form-field__input"
               {...register("passwordConfirm", {
-                required: "Password confirmation is required",
+                required: t('RegisterPage.passwordConfirmRequired'),
                 validate: (value) => {
                   if (watch("password") != value) {
-                    return "Passwords must match";
+                    return t('RegisterPage.passwordConfirmMustMatch');
                   }
                 },
               })}
@@ -200,22 +202,20 @@ function RegisterPage() {
               value={affiliation}
               onChange={(e) => onAffiliationChange(e.target.value)}
             >
-              <option value="freelance">Laisvai samdomas</option>
-              <option value="institution">
-                Atstovaujama žiniasklaidos priemonė
-              </option>
+              <option value="freelance">{t('RegisterPage.affiliationFreelance')}</option>
+              <option value="institution">{t('RegisterPage.affiliationInstitution')}</option>
             </select>
             {affiliation === "institution" && (
               <div className="form-field">
-                <label>Atstovaujamos priemonės pavadinimas</label>
+                <label>{t('RegisterPage.affiliationInstitutionName')}</label>
                 <input
                   id="institution"
                   className="form-field__input"
                   {...register("institution", {
-                    required: "Institution name is required",
+                    required: t('RegisterPage.affiliationInstitutionRequired'),
                     maxLength: {
                       value: 50,
-                      message: "Institution name must not exceed 50 characters",
+                      message: t('RegisterPage.affiliationInstitutionLength'),
                     },
                   })}
                 />
@@ -227,7 +227,7 @@ function RegisterPage() {
           </section>
           <StyledInput
             id="registration-submit"
-            value="Register"
+            value={t('RegisterPage.registerSubmit')}
             type="submit"
           />
         </form>
