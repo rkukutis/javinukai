@@ -30,7 +30,9 @@ export function UserListItem({ userInfo }) {
               userInfo.isEnabled ? "bg-green-500" : "bg-red-500"
             }`}
           >
-            {userInfo.isEnabled ? "Yes" : "No"}
+            {userInfo.isEnabled
+              ? t("PaginationSettings.fieldIsEnabledYes")
+              : t("PaginationSettings.fieldIsEnabledNo")}
           </span>
         </div>
         <div className="hidden xl:flex items-center justify-center text-white">
@@ -39,7 +41,9 @@ export function UserListItem({ userInfo }) {
               userInfo.isNonLocked ? "bg-green-500" : "bg-red-500"
             }`}
           >
-            {userInfo.isNonLocked ? "No" : "Yes"}
+            {userInfo.isNonLocked
+              ? t("PaginationSettings.fieldIsEnabledNo")
+              : t("PaginationSettings.fieldIsEnabledYes")}
           </span>
         </div>
       </div>

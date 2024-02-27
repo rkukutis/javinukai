@@ -10,7 +10,7 @@ const defaultPagination = {
   page: 0,
   limit: 10,
   sortBy: "surname",
-  sortDesc: "true",
+  sortDesc: "false",
   surnameContains: null,
 };
 

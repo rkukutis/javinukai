@@ -23,7 +23,7 @@ export default function PaginationSettings({
   }
   function handleLimitChange(e) {
     e.preventDefault();
-    setPagination({ ...pagination, limit: e.target.value });
+    setPagination({ ...pagination, limit: e.target.value, page: 0 });
   }
   function handleSortByChange(e) {
     e.preventDefault();
@@ -46,17 +46,23 @@ export default function PaginationSettings({
   }
 
   const { t } = useTranslation();
-
   return (
-    <div className="flex flex-col px-2 py-3 space-y-2 xl:items-end xl:justify-center xl:py-3 xl:flex-row xl:w-full xl:space-x-6">
-      <section className="flex space-x-3 justify-center">
-        <Button onClick={handlePreviousPage}>
+    <div className="flex flex-col px-2 py-3 space-y-2 xl:grid xl:grid-cols-4 xl:grid-rows-2 xl:gap-2">
+      <section className="flex space-x-3 justify-center xl:col-span-4 xl:h-fit xl:self-end">
+        <Button disabled={pagination.page == 0} onClick={handlePreviousPage}>
           {t("PaginationSettings.previousPage")}
         </Button>
         <p className="text-xl py-1 px-4 rounded-full bg-white">
-          {pagination.page + 1}
+          {pagination.page + 1 + "/" + (availablePageNumber || pagination.page)}
         </p>
-        <Button extraStyle="px-8" onClick={handleNextPage}>
+        <Button
+          disabled={
+            availablePageNumber === 1 ||
+            pagination.page === availablePageNumber - 1
+          }
+          extraStyle="px-8"
+          onClick={handleNextPage}
+        >
           {t("PaginationSettings.nextPage")}
         </Button>
       </section>
@@ -118,7 +124,7 @@ export default function PaginationSettings({
         <label>{t("PaginationSettings.searchTitle")}</label>
         <div className="lg:flex-row flex lg:space-x-3 space-y-2 lg:space-y-0 flex-col">
           <input
-            className="p-2 bg-white rounded-md"
+            className="p-2 bg-white rounded-md w-full"
             placeholder={t("PaginationSettings.searchPlaceholder")}
             onKeyDown={handleSurnameSearchKeydown}
             onChange={handleSurnameFieldChange}
