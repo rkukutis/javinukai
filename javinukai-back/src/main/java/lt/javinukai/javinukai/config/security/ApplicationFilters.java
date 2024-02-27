@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.config.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -26,27 +27,27 @@ public class ApplicationFilters {
     private final AuthenticationProvider authenticationProvider;
     private final LogoutSuccessHandler logoutSuccessHandler;
     private final HeaderWriterLogoutHandler headerWriterLogoutHandler;
+
+    @Value("${app.client}")
+    private String client;
+    @Value("${app.scheme}")
+    private String httpScheme;
+
     @Bean
     public SecurityFilterChain filters(HttpSecurity http) throws Exception {
         // localhost:8080/swagger-ui/index.html - Swagger
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                /*
-                may be needed for when we have https
-                .logout(logout -> logout
-                        .logoutUrl("/api/v1/auth/logout")
-                        .addLogoutHandler(headerWriterLogoutHandler)
-                        .logoutSuccessHandler(logoutSuccessHandler)
-                )
-                 */
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         //
+                        .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/api/v1/contests/**").permitAll()
                         .requestMatchers("/api/v1/categories/**").permitAll()
+                        .requestMatchers("/api/v1/records/**").permitAll()
                         //
                         .anyRequest().authenticated()
                 )
@@ -62,7 +63,7 @@ public class ApplicationFilters {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedOrigins(List.of(httpScheme + "://" + client));
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

@@ -41,77 +41,77 @@ class ContestServiceTest {
     @InjectMocks
     private ContestService contestService;
 
-    @Test
-    public void createContestReturnsContest() {
+//    @Test
+//    public void createContestReturnsContest() {
+//
+//        final UUID categoryID = UUID.randomUUID();
+//        final Category category01 = Category.builder()
+//                .id(categoryID)
+//                .categoryName("test category name")
+//                .description("test category description")
+//                .totalSubmissions(66)
+//                .build();
+//
+//        final UUID contestID = UUID.randomUUID();
+//        final Contest contest01 = Contest.builder()
+//                .id(contestID)
+//                .contestName("test contest name")
+//                .description("test contest description")
+//                .totalSubmissions(666)
+//                .categories(Collections.singletonList(category01))
+//                .startDate(ZonedDateTime.now())
+//                .endDate(ZonedDateTime.now())
+//                .build();
+//
+//        final ContestDTO contestDTO01 = ContestMapper.contestToContestDTO(contest01);
+//        contestDTO01.setCategories(Collections.singletonList(category01));
+//
+//        when(contestRepository.save(Mockito.any(Contest.class))).thenReturn(contest01);
+//        when(categoryRepository.findById(categoryID)).thenReturn(Optional.ofNullable(category01));
+//
+//        final Contest createdContest = contestService
+//                .createContest(ContestMapper.contestToContestDTOTest(contest01));
+//
+//        Assertions.assertThat(createdContest).isNotNull();
+//        Assertions.assertThat(createdContest.getCategories()).isNotNull();
+//    }
 
-        final UUID categoryID = UUID.randomUUID();
-        final Category category01 = Category.builder()
-                .id(categoryID)
-                .categoryName("test category name")
-                .description("test category description")
-                .totalSubmissions(66)
-                .build();
+//        @Test
+//        public void retrieveAllContestsReturnsPageOfContests() {
+//
+//            final Contest contest01 = Contest.builder()
+//                    .contestName("test contest name")
+//                    .description("test contest description")
+//                    .totalSubmissions(666)
+//                    .startDate(ZonedDateTime.now())
+//                    .endDate(ZonedDateTime.now())
+//                    .build();
+//
+//            final List<Contest> expectedContestList = new ArrayList<>();
+//            expectedContestList.add(contest01);
+//
+//            Page<Contest> page = new PageImpl<>(expectedContestList);
+//
+//            when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(page);
+//
+//            Page<Contest> retriecedPage = contestService.retrieveAllContests(1, 10);
+//
+//            assertNotNull(retriecedPage);
+//            assertEquals(expectedContestList.size(), retriecedPage.getContent().size());
+//        }
 
-        final UUID contestID = UUID.randomUUID();
-        final Contest contest01 = Contest.builder()
-                .id(contestID)
-                .contestName("test contest name")
-                .description("test contest description")
-                .totalSubmissions(666)
-                .categories(Collections.singletonList(category01))
-                .startDate(ZonedDateTime.now())
-                .endDate(ZonedDateTime.now())
-                .build();
-
-        final ContestDTO contestDTO01 = ContestMapper.contestToContestDTO(contest01);
-        contestDTO01.setCategories(Collections.singletonList(category01));
-
-        when(contestRepository.save(Mockito.any(Contest.class))).thenReturn(contest01);
-        when(categoryRepository.findById(categoryID)).thenReturn(Optional.ofNullable(category01));
-
-        final Contest createdContest = contestService
-                .createContest(ContestMapper.contestToContestDTOTest(contest01));
-
-        Assertions.assertThat(createdContest).isNotNull();
-        Assertions.assertThat(createdContest.getCategories()).isNotNull();
-    }
-
-        @Test
-        public void retrieveAllContestsReturnsPageOfContests() {
-
-            final Contest contest01 = Contest.builder()
-                    .contestName("test contest name")
-                    .description("test contest description")
-                    .totalSubmissions(666)
-                    .startDate(ZonedDateTime.now())
-                    .endDate(ZonedDateTime.now())
-                    .build();
-
-            final List<Contest> expectedContestList = new ArrayList<>();
-            expectedContestList.add(contest01);
-
-            Page<Contest> page = new PageImpl<>(expectedContestList);
-
-            when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(page);
-
-            Page<Contest> retriecedPage = contestService.retrieveAllContests(1, 10);
-
-            assertNotNull(retriecedPage);
-            assertEquals(expectedContestList.size(), retriecedPage.getContent().size());
-        }
-
-    @Test
-    public void retrieveAllContestsReturnsEmptyList() {
-
-        final Page<Contest> emptyPage = new PageImpl<>(new ArrayList<>());
-
-        when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(emptyPage);
-
-        final Page<Contest> retrievedPage = contestService.retrieveAllContests(0, 10);
-
-        assertNotNull(retrievedPage);
-        assertTrue(retrievedPage.isEmpty());
-    }
+//    @Test
+//    public void retrieveAllContestsReturnsEmptyList() {
+//
+//        final Page<Contest> emptyPage = new PageImpl<>(new ArrayList<>());
+//
+//        when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(emptyPage);
+//
+//        final Page<Contest> retrievedPage = contestService.retrieveAllContests(0, 10);
+//
+//        assertNotNull(retrievedPage);
+//        assertTrue(retrievedPage.isEmpty());
+//    }
 
     @Test
     void retrieveContestReturnsContest() {

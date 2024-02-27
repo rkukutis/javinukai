@@ -1,0 +1,147 @@
+{
+  "dropdownMenu": {
+    "accountSettings": "Vartotojo nustatymai",
+    "logout": "Atsijungti",
+    "manageUsers": "Valdyti vartotojus"
+  },
+
+  "navbar": {
+    "name1": "Namai",
+    "name2": "Nuotraukos",
+    "name3": "Konkursai",
+    "name4": "add text4"
+  },
+
+  "layout": {
+    "name": "Javinukai",
+    "login": "Prisijungimas",
+    "loggedOutSuccess": "Sėkmingai atsijungėte!"
+  },
+
+  "homepage": {
+    "description": "Aprašymas",
+    "loginToParticipate": "Prisijunkite norėdami dalyvauti",
+    "participate": "Dalyvauti",
+    "confirmParticipation": "Patvirtinti dalyvavimą",
+    "login": "Prisijunkite"
+  },
+
+  "modal": {
+    "closeModal": "Uždaryti"
+  },
+
+  "loginPage": {
+    "email": "El. paštas",
+    "emailRequired": "Būtina įvesti el. paštą",
+    "emailValidFormat": "El. paštas turi būti tinkamo formato",
+    "password": "Slaptažodis",
+    "forgotPassword": "Pamiršote slaptažodį?",
+    "passwordRequired": "Būtina įvesti slaptažodį",
+    "register": "Registracija",
+    "login": "Prisijungti",
+    "loginSuccess": "Sėkmingai prisijungėte"
+  },
+
+  "imageUpload": {
+    "imagesUploaded": "Nuotraukos buvo įkeltos",
+    "imagesAdd": "Turite pridėti keletą nuotraukų",
+    "photoUploadTitle": "Įkelti nuotrauką(-as)",
+    "photoUpload": "Įkelti nuotrauką(-as)",
+    "photoTitle": "Pavadinimas",
+    "photoTitleRequired": "Pavadinimas yra būtinas",
+    "photoDescription": "Aprašymas",
+    "photoDescriptionRequired": "Aprašymas yra būtinas",
+    "photoRequirements": "Reikalavimai nuotraukai:",
+    "photoDimensions": "Ilgasis nuotraukos kraštas turi būti ilgesnis nei 2500 pikselių ir trumpesnis nei 4000 pikselių",
+    "photoSize": "Kiekviena nuotrauka turi būti mažesnė nei 10 MB",
+    "photoAllSize": "Visos nuotraukos kartu turi būti mažesnės nei 50 MB",
+    "photoSelectorActive": "Dėkite nuotraukas čia",
+    "photoSelector": "Pasirinkite arba dėkite nuotraukas čia",
+    "photoUploading": "Nuotraukos keliamos...",
+    "collectionTitle": "Pavadinimas:",
+    "collectionDescription": "Aprašymas:",
+    "collectionCreatedAt": "Sukurta:"
+  },
+
+  "PaginationSettings": {
+    "previousPage": "Ankstesnis",
+    "nextPage": "Sekantis",
+    "usersTitle": "Vartotojų per puslapį",
+    "users": "vartotojai",
+    "fieldTitle": "Rūšiuoti pagal lauką",
+    "fieldName": "Vardas",
+    "fieldSurname": "Pavardė",
+    "fieldEmail": "El. paštas",
+    "fieldRole": "Rolė",
+    "fieldMaxTotalEntries": "Maksimalus pateikimų skaičius",
+    "fieldMaxSingles": "Maksimalus pavienių pateikimų skaičius per kategoriją",
+    "fieldMaxCollections": "Maksimalus serijų pateikimų skaičius per kategoriją",
+    "fieldLimits": "Limitai",
+    "fieldIsEnabled": "Patvirtinta(s)", 
+    "sortTitle": "Rūšiavimo tvarka",
+    "sortDescending": "Mažėjanti",
+    "sortAscending": "Didėjanti",
+    "searchTitle": "Ieškoti pagal pavardę",
+    "searchPlaceholder": "Pavardė",
+    "searchButton": "Ieškoti",
+    "fieldIsEnabledYes": "Taip",
+    "fieldIsEnabledNo": "Ne"
+  },
+
+  "ConfirmEmailPage": {
+    "emailConfirmed": "Jūsų el. paštas buvo patvirtintas"
+  },
+
+  "ForgotPassPage": {
+    "title": "Užmiršote slaptažodį?",
+    "description": "Gausite el. laišką su nuoroda ir instrukcijomis, kaip iš naujo nustatyti slaptažodį. Atminkite, kad slaptažodžio nustatymo iš naujo nuoroda galios tik 10 minučių.",
+    "emailPlaceholder": "Prašau įveskite savo el. paštą",
+    "emailRequired": "El paštas yra būtinas",
+    "emailValidFormat": "El. paštas turi būti tinkamo formato",
+    "submitEmail": "Pateikti"
+  },
+
+    "RegisterPage": {
+      "registrationSuccess": "Sėkmingai užsiregistravote. Prašau patvirtinkite savo el. paštą. ",
+      "name": "Vardas",
+      "nameRequired": "Vardas yra būtinas",
+      "nameContains": "Varde turi būti tik abėcėlės simboliai",
+      "nameLength": "Vardas neturi viršyti 20 simbolių",
+
+      "surname": "Pavardė",
+      "surnameRequired": "Pavardė yra būtina",
+      "surnameContains": "Pavardėje turi būti tik abėcėlės simboliai",
+      "surnameLength": "Pavardė neturi viršyti 20 simbolių",
+
+      "birthYear": "Gimimo metai",
+      "birthYearRequired": "Gimimo metai yra būtini",
+      "birthYearValid": "Data turi būti validi. Validus pavyzdys: '1984' ",
+      "birthYearMax": "Gimimo metai negali būti vėliau nei",
+      "birthYearMin": "Gimimo metai negali būti anksčiau nei 1900m.",
+
+      "phoneNumber": "Telefono numeris",
+      "phoneNumberRequired": "Telefono numeris yra būtinas",
+      "phoneNumberValid": "Telefono numeris turi būti validus",
+      "phoneNumberLength": "Telefono numeris neturi viršyti 15 simbolių",
+
+      "email": "El. paštas",
+      "emailRequired": "El. paštas yra būtinas",
+      "emailValid": "El. pašto adresas turi būti tinkamo formato",
+      "emailLength": "El. pašto adresas neturi viršyti 200 simbolių",
+
+      "password": "Slaptažodis",
+      "passwordRequired": "Slaptažodis yra būtinas",
+      "passwordValid": "Slaptažodis turi būti bent 8 simbolių ilgio",
+      "passwordConfirm": "Patvirtinti slaptažodį",
+      "passwordConfirmRequired": "Būtinas slaptažodžio patvirtinimas",
+      "passwordConfirmMustMatch": "Slaptažodžiai turi sutapti",
+
+      "affiliationFreelance": "Laisvai samdomas",
+      "affiliationInstitution": "Atstovaujama žiniasklaidos priemonė",
+      "affiliationInstitutionName": "Atstovaujamos įstaigos pavadinimas",
+      "affiliationInstitutionRequired": "Įstaigos pavadinimas yra būtinas",
+      "affiliationInstitutionNameLength": "Įstaigos pavadinimas neturi viršyti 50 simbolių",
+      "registerSubmit": "Registruotis"
+    }
+  }
+

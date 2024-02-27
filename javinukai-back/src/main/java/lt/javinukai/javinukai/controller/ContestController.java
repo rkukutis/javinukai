@@ -3,16 +3,20 @@ package lt.javinukai.javinukai.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.service.CategoryService;
+import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +34,8 @@ public class ContestController {
     }
 
     @PostMapping(path = "/contests")
+//    public ResponseEntity<Contest> createContest(@RequestBody @Valid ContestDTO contestDTO,
+//                                                 @AuthenticationPrincipal UserDetails userDetails) {
     public ResponseEntity<Contest> createContest(@RequestBody @Valid ContestDTO contestDTO) {
         final Contest createdContest = contestService.createContest(contestDTO);
         log.info("Request for contest creation completed, given ID: {}", createdContest.getId());
@@ -38,9 +44,17 @@ public class ContestController {
 
     @GetMapping(path = "/contests")
     public ResponseEntity<Page<Contest>> retrieveAllContests(@RequestParam(defaultValue = "1") int pageNumber,
-                                                             @RequestParam(defaultValue = "5") int pageSize) {
+                                                             @RequestParam(defaultValue = "25") int pageSize,
+                                                             @RequestParam(required = false) String keyword,
+                                                             @RequestParam(defaultValue = "contestName") String sortBy,
+                                                             @RequestParam(defaultValue = "false") boolean sortDesc) {
+
         log.info("Request for retrieving all contests");
-        final Page<Contest> page = contestService.retrieveAllContests(--pageNumber, pageSize);
+        Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        final Pageable pageable = PageRequest.of(--pageNumber, pageSize, sort);
+        final Page<Contest> page = contestService.retrieveAllContests(pageable, keyword);
         log.info("Request for retrieving all contests, {} record(s) found", page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
@@ -70,7 +84,7 @@ public class ContestController {
 
     @DeleteMapping(path = "/contests/{id}")
     public ResponseEntity<?> deleteContest(@PathVariable @NotNull UUID id) {
-            log.info("Request for deleting contest with ID: {}", id);
+        log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

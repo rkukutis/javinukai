@@ -3,6 +3,8 @@ package lt.javinukai.javinukai.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
+import lt.javinukai.javinukai.enums.TokenType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -17,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class Category {
 
     @Id
@@ -58,6 +61,15 @@ public class Category {
     @LastModifiedDate
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @JsonIgnore
+    private List<CompetitionRecord> competitionRecords = new ArrayList<>();
+
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private PhotoSubmissionType type;
 
     public void addContest(Contest contest) {
         if (contests == null) {

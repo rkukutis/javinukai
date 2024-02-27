@@ -2,17 +2,13 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.config.security.AuthenticationService;
 import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
-import lt.javinukai.javinukai.exception.UserAlreadyExistsException;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
 import lt.javinukai.javinukai.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
