@@ -98,6 +98,9 @@ export default function PaginationSettings({
           <option value="isEnabled">
             {t("PaginationSettings.fieldIsEnabled")}
           </option>
+          <option value="isNonLocked">
+            {t("PaginationSettings.fieldIsNonLocked")}
+          </option>
         </select>
       </section>
       <section className="flex flex-col space-y-2">

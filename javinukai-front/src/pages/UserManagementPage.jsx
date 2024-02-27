@@ -54,10 +54,12 @@ export default function UserManagementPage() {
           </p>
           <p>{t("PaginationSettings.fieldRole")}</p>
           <p>{t("PaginationSettings.fieldLimits")}</p>
-          <p className="text-center">
+          <p className="text-center break-all">
             {t("PaginationSettings.fieldIsEnabled")}
           </p>
-          <p className="text-center">Blocked</p>
+          <p className="text-center break-all">
+            {t("PaginationSettings.fieldIsNonLocked")}
+          </p>
         </div>
         {isFetching ? (
           <div className="h-[50vh] flex flex-col justify-center items-center">
