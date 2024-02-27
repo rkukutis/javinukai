@@ -45,7 +45,7 @@ export default function PaginationSettings({
   }
 
   return (
-    <div className="flex flex-col px-2 py-3 space-y-2 lg:items-end lg:justify-center lg:py-3 lg:flex-row lg:w-full lg:space-x-6">
+    <div className="flex flex-col px-2 py-3 space-y-2 xl:items-end xl:justify-center xl:py-3 xl:flex-row xl:w-full xl:space-x-6">
       <section className="flex space-x-3 justify-center">
         <Button onClick={handlePreviousPage}>Previous</Button>
         <p className="text-xl py-1 px-4 rounded-full bg-white">
@@ -98,7 +98,7 @@ export default function PaginationSettings({
       </section>
       <section className="flex flex-col space-y-2">
         <label>Search by surname</label>
-        <div className="lg:flex-row flex lg:space-x-3 space-y-2 lg:space-y-0 flex-col">
+        <div className="xl:flex-row flex xl:space-x-3 space-y-2 xl:space-y-0 flex-col">
           <input
             className="p-2 bg-white rounded-md"
             placeholder="Surname"

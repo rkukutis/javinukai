@@ -36,20 +36,21 @@ export default function UserManagementPage() {
   });
 
   return (
-    <div className="w-full min-h-[82vh] lg:flex lg:flex-col lg:items-center bg-slate-50">
-      <div className="lg:w-3/4 w-full px-2">
+    <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
+      <div className="xl:w-3/4 w-full px-2">
         <PaginationSettings
           pagination={paginationSettings}
           setPagination={setPaginationSettings}
           availablePageNumber={data?.totalPages}
         />
-        <div className="hidden lg:grid lg:grid-cols-6 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
+        <div className="hidden xl:grid xl:grid-cols-9 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
           <p>Name</p>
           <p>Surname</p>
-          <p>Email</p>
+          <p className="text col-span-3">Email</p>
           <p>Role</p>
           <p>Limits</p>
-          <p>Confirmed</p>
+          <p className="text-center">Confirmed</p>
+          <p className="text-center">Blocked</p>
         </div>
         {isFetching ? (
           <div className="h-[50vh] flex flex-col justify-center items-center">
