@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.JwtService;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.entity.Category;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.service.CategoryService;
 import lt.javinukai.javinukai.service.ContestService;
@@ -33,6 +34,7 @@ import java.util.UUID;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -58,13 +60,16 @@ class CategoryControllerTest {
 
     private CategoryDTO categoryDTO;
     private Category category;
+    private ResponseEntity<Category> categoryResponse;
 
     @BeforeEach
     public void init() {
         categoryDTO = CategoryDTO.builder()
+                .id(UUID.randomUUID())
                 .categoryName("test category name")
                 .description("testCategory description")
                 .totalSubmissions(66)
+                .type(PhotoSubmissionType.SINGLE)
                 .build();
         category = CategoryMapper.categoryDTOToCategory(categoryDTO);
     }
@@ -119,19 +124,20 @@ class CategoryControllerTest {
                 .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
     }
 
-//    @Test
-//    public void updateCategoryReturnsCreated() throws Exception {
-//
-//        given(categoryService.createCategory(ArgumentMatchers.any()))
-//                .willReturn(category);
-//
-//        ResultActions response = mockMvc.perform(post("/api/v1/categories")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(categoryDTO)));
-//
-//        response.andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
-//    }
+    @Test
+    public void updateCategoryReturnsOK() throws Exception {
+
+        UUID categoryID = categoryDTO.getId();
+        given(categoryService.updateCategory(ArgumentMatchers.eq(categoryID), ArgumentMatchers.any()))
+                .willReturn(category);
+
+        ResultActions response = mockMvc.perform(put("/api/v1/categories/{id}", categoryID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(categoryDTO)));
+
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
+    }
 
 
 }

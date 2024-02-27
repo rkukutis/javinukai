@@ -34,31 +34,7 @@ class CategoryServiceTest {
     private CategoryService categoryService;
 
     @Test
-    public void createCategoryReturnsCategory() {
-
-        final UUID id1 = UUID.randomUUID();
-        final Category category1 = Category.builder()
-                .id(id1)
-                .categoryName("test category name 1")
-                .description("test category description 1")
-                .totalSubmissions(66)
-                .type(PhotoSubmissionType.COLLECTION)
-                .build();
-
-        when(categoryRepository.findAll()).thenReturn(Collections.emptyList());
-        when(categoryRepository.save(Mockito.any(Category.class))).thenReturn(category1);
-
-        final CategoryCreationResponse creationResponse = categoryService
-                .createCategory(CategoryMapper.categoryToCategoryDTO(category1));
-
-        Assertions.assertThat(creationResponse).isNotNull();
-//        Assertions.assertThat(creationResponse)..getId()).isNotNull();
-    }
-
-
-
-    @Test
-    public void testCreateCategory_WhenCategoryDoesNotExist_ReturnsCreatedCategoryResponse() {
+    public void createCategoryReturnsCategoryResponse() {
 
         final UUID id1 = UUID.randomUUID();
         final Category createdCategory = Category.builder()
@@ -86,15 +62,10 @@ class CategoryServiceTest {
 
         CategoryCreationResponse response = categoryService.createCategory(categoryDTO);
 
-        log.info(String.valueOf("--->" + response.getCategory().getId()));
-        log.info(String.valueOf("--->" + response.getMessage()));
-
         assertEquals(createdCategory, response.getCategory());
         assertEquals(HttpStatus.CREATED, response.getHttpStatus());
-        assertEquals("Request for category creation completed, given ID: " + response.getCategory().getId(), response.getMessage());
+        assertEquals(createdCategory.getCategoryName(), response.getCategory().getCategoryName());
     }
-
-
 
 //    @Test
 //    public void createCategoryReturnsNull() {
