@@ -10,7 +10,7 @@ const defaultPagination = {
   page: 0,
   limit: 10,
   sortBy: "surname",
-  sortDesc: "true",
+  sortDesc: "false",
   surnameContains: null,
 };
 
@@ -37,22 +37,29 @@ export default function UserManagementPage() {
   });
 
   const { t } = useTranslation();
-  
+
   return (
-    <div className="w-full min-h-[82vh] lg:flex lg:flex-col lg:items-center bg-slate-50">
-      <div className="lg:w-3/4 w-full px-2">
+    <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
+      <div className="xl:w-3/4 w-full px-2">
         <PaginationSettings
           pagination={paginationSettings}
           setPagination={setPaginationSettings}
           availablePageNumber={data?.totalPages}
         />
-        <div className="hidden lg:grid lg:grid-cols-6 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
-          <p>{t('PaginationSettings.fieldName')}</p>
-          <p>{t('PaginationSettings.fieldSurname')}</p>
-          <p>{t('PaginationSettings.fieldEmail')}</p>
-          <p>{t('PaginationSettings.fieldRole')}</p>
-          <p>{t('PaginationSettings.fieldLimits')}</p>
-          <p>{t('PaginationSettings.fieldIsEnabled')}</p>
+        <div className="hidden xl:grid xl:grid-cols-9 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
+          <p>{t("PaginationSettings.fieldName")}</p>
+          <p>{t("PaginationSettings.fieldSurname")}</p>
+          <p className="text col-span-3">
+            {t("PaginationSettings.fieldEmail")}
+          </p>
+          <p>{t("PaginationSettings.fieldRole")}</p>
+          <p>{t("PaginationSettings.fieldLimits")}</p>
+          <p className="text-center break-all">
+            {t("PaginationSettings.fieldIsEnabled")}
+          </p>
+          <p className="text-center break-all">
+            {t("PaginationSettings.fieldIsNonLocked")}
+          </p>
         </div>
         {isFetching ? (
           <div className="h-[50vh] flex flex-col justify-center items-center">
