@@ -5,8 +5,11 @@ import StyledInput from "../Components/StyledInput";
 import FormFieldError from "../Components/FormFieldError";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 function ResetPassPage() {
+  const { t } = useTranslation();
+  
   const {
     watch,
     register,
@@ -20,7 +23,7 @@ function ResetPassPage() {
   const { mutate } = useMutation({
     mutationFn: (data) => resetPassword(data),
     onSuccess: () => {
-      toast.success("Password has been changed");
+      toast.success(t('ResetPassPage.passChangeSuccess'));
       reset();
       navigate("/");
     },
@@ -34,7 +37,7 @@ function ResetPassPage() {
     const token = searchParams.get("token");
     if (!token) {
       toast.error(
-        "Error: please check that your password reset link is correct."
+        t('ResetPassPage.passChangeError')
       );
       return;
     }
@@ -48,16 +51,16 @@ function ResetPassPage() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <section className="form-field">
-          <label>New password</label>
+          <label>{t('ResetPassPage.passTitle')}</label>
           <input
             type="password"
             id="new-password"
             className="form-field__input"
             {...register("password", {
-              required: "Password is required",
+              required: t('ResetPassPage.passRequired'),
               minLength: {
                 value: 8,
-                message: "Password must be at least 8 symbols long",
+                message: t('ResetPassPage.passLength'),
               },
             })}
           />
@@ -66,20 +69,20 @@ function ResetPassPage() {
           )}
         </section>
         <section className="form-field">
-          <label>Confirm new password</label>
+          <label>{t('ResetPassPage.passTitleConfirm')}</label>
           <input
             type="password"
             id="confirm-new-password"
             className="form-field__input"
             {...register("passwordConfirm", {
-              required: "Password confirmation is required",
+              required: t('ResetPassPage.passConfirmRequired'),
               minLength: {
                 value: 8,
-                message: "Password must be at least 8 symbols long",
+                message: t('ResetPassPage.passLength'),
               },
               validate: (value) => {
                 if (watch("password") != value) {
-                  return "Passwords must match";
+                  return t('ResetPassPage.passMustMatch');
                 }
               },
             })}
@@ -88,7 +91,7 @@ function ResetPassPage() {
             <FormFieldError>{errors.passwordConfirm.message}</FormFieldError>
           )}
         </section>
-        <StyledInput id="reset-pass-submit" type="submit" value="Submit" />
+        <StyledInput id="reset-pass-submit" type="submit" value={t('ResetPassPage.passSubmit')} />
       </form>
     </div>
   );
