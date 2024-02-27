@@ -1,9 +1,12 @@
-function Button({ children, onClick, id, extraStyle }) {
+function Button({ children, onClick, id, extraStyle, disabled }) {
   return (
     <button
+      disabled={disabled}
       id={id}
       onClick={onClick}
-      className={`bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded-md transition ease-in-out ${extraStyle}`}
+      className={`bg-blue-400 hover:bg-blue-500 ${
+        disabled ? "bg-blue-300 cursor-not-allowed hover:bg-blue-300" : ""
+      } text-white py-2 px-4 rounded-md transition ease-in-out ${extraStyle}`}
     >
       {children}
     </button>

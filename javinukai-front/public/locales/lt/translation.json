@@ -77,7 +77,8 @@
     "fieldMaxSingles": "Maksimalus pavienių pateikimų skaičius per kategoriją",
     "fieldMaxCollections": "Maksimalus serijų pateikimų skaičius per kategoriją",
     "fieldLimits": "Limitai",
-    "fieldIsEnabled": "Patvirtinta(s)", 
+    "fieldIsEnabled": "Patvirtinta(s)",
+    "fieldIsNonLocked": "Blokuota(s)",
     "sortTitle": "Rūšiavimo tvarka",
     "sortDescending": "Mažėjanti",
     "sortAscending": "Didėjanti",
@@ -101,8 +102,8 @@
     "submitEmail": "Pateikti",
     "resetSuccess": "Slaptažodžio atstatymo el.laiškas sėkmingai išsiųstas "
   },
-
-    "RegisterPage": {
+  
+  "RegisterPage": {
       "registrationSuccess": "Sėkmingai užsiregistravote. Prašau patvirtinkite savo el. paštą. ",
       "name": "Vardas",
       "nameRequired": "Vardas yra būtinas",
@@ -213,6 +214,4 @@
       "unblockAccount": "Atblokuoti",
       "deleteAccountButton": "Ištrinti"
     }
-
-  }
-
+}

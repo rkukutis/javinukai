@@ -77,7 +77,8 @@
     "fieldMaxSingles": "Max singles per category",
     "fieldMaxCollections": "Max collections per category",
     "fieldLimits": "Limits",
-    "fieldIsEnabled": "Confirmed", 
+    "fieldIsEnabled": "Confirmed",
+    "fieldIsNonLocked": "Blocked",
     "sortTitle": "Sort direction",
     "sortDescending": "Descending",
     "sortAscending": "Ascending",
@@ -136,7 +137,7 @@
     "passwordConfirm": "Confirm Password",
     "passwordConfirmRequired": "Password confirmation is required",
     "passwordConfirmMustMatch": "Passwords must match",
-    
+
     "affiliationFreelance": "Freelance",
     "affiliationInstitution": "Represented media",
     "affiliationInstitutionName": "Name of representative institution",
