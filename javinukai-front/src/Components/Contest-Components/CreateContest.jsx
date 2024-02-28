@@ -18,7 +18,7 @@ function CreateContest({ contestDTO }) {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/categories');
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND}/api/v1/categories`);
       setCategoriesList(response.data.content);
     } catch (error) {
       console.error('Error fetching categories:', error);
