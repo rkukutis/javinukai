@@ -5,6 +5,7 @@ import SpinnerPage from "./SpinnerPage";
 import { DangerZone } from "../Components/user-management/DangerZone";
 import formatTimestap from "../utils/formatTimestap";
 import Button from "../Components/Button";
+import { useTranslation } from "react-i18next";
 
 function UserDetailsField({ fieldName, fieldValue }) {
   return (
@@ -17,6 +18,7 @@ function UserDetailsField({ fieldName, fieldValue }) {
 }
 
 function UserDetailsPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { userId } = useParams();
   const { data, isFetching } = useQuery({
@@ -33,67 +35,73 @@ function UserDetailsPage() {
           <div className="lg:w-3/4 w-full h-fit bg-white shadow-md lg:my-4 p-8 rounded-md">
             <article className="lg:grid lg:grid-cols-2 flex flex-col space-y-4 lg:space-y-0 pb-4">
               <section>
-                <h1 className="text-2xl">Personal Details</h1>
-                <UserDetailsField fieldName="Name" fieldValue={data?.name} />
+                <h1 className="text-2xl">{t('UserDetailsPage.personalTitle')}</h1>
+                <UserDetailsField 
+                fieldName={t('UserDetailsPage.personalName')}
+                 fieldValue={data?.name} />
                 <UserDetailsField
-                  fieldName="Surname"
+                  fieldName={t('UserDetailsPage.personalSurname')}
                   fieldValue={data?.surname}
                 />
-                <UserDetailsField fieldName="Email" fieldValue={data?.email} />
+                <UserDetailsField 
+                fieldName={t('UserDetailsPage.personalEmail')}
+                 fieldValue={data?.email} />
                 <UserDetailsField
-                  fieldName="Birth year"
+                  fieldName={t('UserDetailsPage.personalBirthYear')}
                   fieldValue={data?.birthYear}
                 />
                 <UserDetailsField
-                  fieldName="Phone Number"
+                  fieldName={t('UserDetailsPage.personalPhoneNumber')}
                   fieldValue={data?.phoneNumber}
                 />
                 <UserDetailsField
-                  fieldName="Freelance"
-                  fieldValue={data?.isFreelance ? "Yes" : "No"}
+                  fieldName={t('UserDetailsPage.personalFreelance')}
+                  fieldValue={data?.isFreelance ? t('UserDetailsPage.isTrue') : t('UserDetailsPage.isFalse')}
                 />
                 {!data?.isFreelance && (
                   <UserDetailsField
-                    fieldName="Institution"
+                    fieldName={t('UserDetailsPage.personalInstitution')}
                     fieldValue={data?.institution}
                   />
                 )}
               </section>
               <section className="">
-                <h1 className="text-2xl">Account details</h1>
+                <h1 className="text-2xl">{t('UserDetailsPage.accountTitle')}</h1>
                 <UserDetailsField
-                  fieldName="Account ID"
+                  fieldName={t('UserDetailsPage.accountID')}
                   fieldValue={data?.uuid}
                 />
                 <UserDetailsField
-                  fieldName="Creation date"
+                  fieldName={t('UserDetailsPage.accountCreationDate')}
                   fieldValue={formatTimestap(data?.createdAt)}
                 />
                 {data?.modifiedAt && (
                   <UserDetailsField
-                    fieldName="Last changed date"
+                    fieldName={t('UserDetailsPage.accountLastModifiedDate')}
                     fieldValue={formatTimestap(data?.modifiedAt)}
                   />
                 )}
                 <UserDetailsField
-                  fieldName="User email confirmed"
-                  fieldValue={data?.isEnabled ? "Yes" : "No"}
+                  fieldName={t('UserDetailsPage.accountEmailConfirmed')}
+                  fieldValue={data?.isEnabled ? t('UserDetailsPage.isTrue') : t('UserDetailsPage.isFalse')}
                 />
                 <UserDetailsField
-                  fieldName="Account is locked"
-                  fieldValue={data?.isNonLocked ? "No" : "Yes"}
+                  fieldName={t('UserDetailsPage.accountIsLocked')}
+                  fieldValue={data?.isNonLocked ? t('UserDetailsPage.isFalse') : t('UserDetailsPage.isTrue')}
                 />
-                <UserDetailsField fieldName="Role" fieldValue={data?.role} />
+                <UserDetailsField 
+                fieldName={t('UserDetailsPage.accountRole')}
+                fieldValue={data?.role} />
                 <UserDetailsField
-                  fieldName="Max photos per contest"
+                  fieldName={t('UserDetailsPage.accountMaxPhotosContest')}
                   fieldValue={data?.maxTotal}
                 />
                 <UserDetailsField
-                  fieldName="Max photos for Singles categories"
+                  fieldName={t('UserDetailsPage.accountMaxSinglesCategories')}
                   fieldValue={data?.maxSinglePhotos}
                 />
                 <UserDetailsField
-                  fieldName="Max photos for Collections categories"
+                  fieldName={t('UserDetailsPage.accountMaxCollectionCategories')}
                   fieldValue={data?.maxCollections}
                 />
               </section>
@@ -103,7 +111,7 @@ function UserDetailsPage() {
               onClick={() => navigate("/manage-users")}
               extraStyle="text-lg mt-2 w-full lg:w-fit"
             >
-              Back
+              {t('UserDetailsPage.backButton')}
             </Button>
           </div>
         </div>

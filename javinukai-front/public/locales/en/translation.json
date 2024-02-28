@@ -99,7 +99,8 @@
     "emailPlaceholder": "Please enter your email",
     "emailRequired": "Email is required",
     "emailValidFormat": "Email must be of a valid format",
-    "submitEmail": "Submit"
+    "submitEmail": "Submit",
+    "resetSuccess": "Password reset email sent successfully"
   },
 
   "RegisterPage": {
@@ -143,5 +144,74 @@
     "affiliationInstitutionRequired": "Institution name is required",
     "affiliationInstitutionNameLength": "Institution name must not exceed 50 characters",
     "registerSubmit": "Register"
+  },
+
+  "services": {
+    "uploadImagesError": "Could not upload images",
+    "resetPasswordError": "An error has occured while trying to reset your password",
+    "resetPasswordOldPasswordError": "New password can not be old password",
+    "resetPasswordResetLinkInvalid": "Password reset link is invalid or expired",
+    "forgotPasswordError": "Please check your email for the password reset link",
+    "loginUserError": "Incorrect credentials",
+    "logoutUserError": "Error occured while logging out",
+    "registerUserExistsError": "An user with this email already exists",
+    "registerUserError": "Registration failed. Please try again later"
+  },
+
+  "ResetPassPage": {
+    "passChangeSuccess": "Password has been successfully changed",
+    "passChangeError": "Error: please check that your password reset link is correct",
+    "passTitle": "New password",
+    "passRequired": "Password is required",
+    "passLength": "Password must be at least 8 symbols long",
+    "passTitleConfirm": "Confirm new password",
+    "passConfirmRequired": "Password confirmation is required",
+    "passMustMatch": "Passwords must match",
+    "passSubmit": "Submit"
+  },
+
+  "UserDetailsPage": {
+    "personalTitle": "Personal Details",
+    "personalName": "Name",
+    "personalSurname": "Surname",
+    "personalEmail": "Email",
+    "personalBirthYear": "Birth year",
+    "personalPhoneNumber": "Phone number",
+    "personalFreelance": "Freelance",
+    "personalInstitution": "Institution",
+    "accountTitle": "Account details",
+    "accountID": "Account ID",
+    "accountCreationDate": "Creation date",
+    "accountLastModifiedDate": "Last modified date",
+    "accountEmailConfirmed": "User email confirmed",
+    "accountIsLocked": "Account is locked",
+    "accountRole": "Role",
+    "accountMaxPhotosContest": "Max photos per contest",
+    "accountMaxSinglesCategories": "Max photos for Singles categories",
+    "accountMaxCollectionCategories": "Max photos for Collections categories",
+    "backButton": "Back",
+    "isTrue": "Yes",
+    "isFalse": "No"
+  },
+
+  "DangerZone": {
+    "title": "Danger zone",
+    "permissionsChangedSuccess": "User permissions changed",
+    "deletedSuccess": "User {{username}} deleted successfully",
+    "newRoleSame": "New role is the same as old one",
+    "changeRole": "You are about to change this user's role to {{newRole}}. Are you sure?",
+    "userBlock": "You are about to {{action}} block this account. Are you sure?",
+    "unTranslation": "un",
+    "userDelete": "You are about to delete this user's account. This action is irreversible. Are you sure?",
+    "changeUserTitle": "Change user role",
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "jury": "Jury",
+    "user": "User",
+    "roleUpdateTitle": "Update role",
+    "accountActionsTitle": "Account actions",
+    "blockAccount": "Block account",
+    "unblockAccount": "Unblock account",
+    "deleteAccountButton": "Delete account"
   }
 }
