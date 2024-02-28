@@ -1,5 +1,4 @@
-export default async function ({registrationInfo, t}) {
-  console.log(registrationInfo, t)
+export default async function ({ registrationInfo, t }) {
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND}/api/v1/auth/register`,
     {
@@ -18,9 +17,9 @@ export default async function ({registrationInfo, t}) {
     const err = await res.json();
     switch (err.title) {
       case "USER_ALREADY_EXISTS_ERROR":
-        throw new Error(t('services.registerUserExistsError'));
+        throw new Error(t("services.registerUserExistsError"));
       default:
-        throw new Error(t('services.registerUserError'));
+        throw new Error(t("services.registerUserError"));
     }
   }
 }

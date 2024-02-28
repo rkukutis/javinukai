@@ -36,7 +36,7 @@ function RegisterPage() {
   });
 
   function onSubmit(formData) {
-    mutate({registrationInfo: {formData}, t});
+    mutate({ registrationInfo: formData, t });
   }
 
   function onAffiliationChange(newAffiliation) {
