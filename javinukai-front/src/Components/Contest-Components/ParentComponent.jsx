@@ -9,10 +9,12 @@ function ParentComponent() {
     // Fetch contest data from API
     const fetchContests = async () => {
       try {
-        const response = await axios.get('/api/v1/contests');
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND}/api/v1/contests`
+        );
         setContests(response.data);
       } catch (error) {
-        console.error('Error fetching contests:', error);
+        console.error("Error fetching contests:", error);
       }
     };
 

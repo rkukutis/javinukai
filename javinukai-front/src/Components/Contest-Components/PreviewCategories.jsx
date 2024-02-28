@@ -12,7 +12,11 @@ function PreviewCategories() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get("http://localhost:8080/api/v1/categories?pageNumber=1&pageSize=5&sortBy=categoryName&sortDesc=false");
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND
+          }/api/v1/categories?pageNumber=1&pageSize=5&sortBy=categoryName&sortDesc=false`
+        );
         setCategories(response.data.content);
         setLoading(false);
       } catch (error) {
@@ -25,7 +29,9 @@ function PreviewCategories() {
   }, []);
 
   const handleEditCategory = (categoryId) => {
-    const categoryToEdit = categories.find(category => category.id === categoryId);
+    const categoryToEdit = categories.find(
+      (category) => category.id === categoryId
+    );
     setSelectedCategory(categoryToEdit);
     setShowModal(true);
   };
