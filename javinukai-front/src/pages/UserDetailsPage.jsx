@@ -89,9 +89,10 @@ function UserDetailsPage() {
                   fieldName={t('UserDetailsPage.accountIsLocked')}
                   fieldValue={data?.isNonLocked ? t('UserDetailsPage.isFalse') : t('UserDetailsPage.isTrue')}
                 />
-                <UserDetailsField 
+                <UserDetailsField
                 fieldName={t('UserDetailsPage.accountRole')}
-                fieldValue={data?.role} />
+                fieldValue={t(`roles.${data?.role}`) || data?.role}
+                                />
                 <UserDetailsField
                   fieldName={t('UserDetailsPage.accountMaxPhotosContest')}
                   fieldValue={data?.maxTotal}

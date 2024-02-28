@@ -14,7 +14,7 @@ async function forgotPassword(email) {
     }
   );
   if (res.status === 429) {
-    throw new Error("Please check your email for the password reset link");
+    throw new Error();
   }
 }
 

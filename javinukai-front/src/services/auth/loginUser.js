@@ -10,7 +10,7 @@ export default async function (loginInfo) {
     },
     body: JSON.stringify(loginInfo),
   });
-  if (!res.ok) throw new Error("Incorrect credentials");
+  if (!res.ok) throw new Error();
   const data = await res.json();
   return data;
 }
