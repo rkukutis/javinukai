@@ -1,7 +1,4 @@
-import { useTranslation } from "react-i18next";
-
 export default async function (formData) {
-  const { t } = useTranslation();
   const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/v1/images`, {
     method: "POST",
     mode: "cors",
@@ -10,7 +7,7 @@ export default async function (formData) {
     body: formData,
   });
   if (!res.ok) {
-    throw new Error(t('services.uploadImagesError'));
+    throw new Error();
   }
   return await res.json();
 }

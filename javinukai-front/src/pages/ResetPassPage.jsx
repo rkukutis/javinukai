@@ -41,7 +41,7 @@ function ResetPassPage() {
       );
       return;
     }
-    mutate({ token, newPassword: formData.password });
+    mutate({data:{ token, newPassword: formData.password }, t});
   }
 
   return (

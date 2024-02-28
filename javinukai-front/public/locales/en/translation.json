@@ -213,5 +213,12 @@
     "blockAccount": "Block account",
     "unblockAccount": "Unblock account",
     "deleteAccountButton": "Delete account"
+  },
+
+  "roles": {
+    "ADMIN": "Admin",
+    "USER": "User",
+    "JURY": "Jury",
+    "MODERATOR": "Moderator"
   }
 }

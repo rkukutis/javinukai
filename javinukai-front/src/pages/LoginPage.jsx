@@ -26,7 +26,7 @@ function LoginPage() {
       setUser(loggedInUser);
       navigate("/");
     },
-    onError: (err) => toast.error(err.message),
+    onError: () => toast.error(t('services.loginUserError')),
   });
 
   const handleLoginSubmit = async (formData) => {
