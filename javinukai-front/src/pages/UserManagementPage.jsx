@@ -46,13 +46,14 @@ export default function UserManagementPage() {
           setPagination={setPaginationSettings}
           availablePageNumber={data?.totalPages}
         />
-        <div className="hidden xl:grid xl:grid-cols-9 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
+        <div className="hidden xl:grid xl:grid-cols-10 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
           <p>{t("PaginationSettings.fieldName")}</p>
           <p>{t("PaginationSettings.fieldSurname")}</p>
           <p className="text col-span-3">
             {t("PaginationSettings.fieldEmail")}
           </p>
-          <p>{t("PaginationSettings.fieldRole")}</p>
+          <p className="text col-span-2">
+            {t("PaginationSettings.fieldRole")}</p>
           <p>{t("PaginationSettings.fieldLimits")}</p>
           <p className="text-center break-all">
             {t("PaginationSettings.fieldIsEnabled")}

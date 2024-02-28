@@ -10,13 +10,19 @@ const lngs = {
 export default function LanguageSwitcher() {
   const currentLanguage = i18next.language;
 
+  const handleChangeLanguage = (lng) => {
+    i18next.changeLanguage(lng).then(() => {
+      window.location.reload();
+    });
+  };
+  
   return (
     <div className="flex">
       {Object.keys(lngs).map((lng) => (
         <button
           type="submit"
           key={lng}
-          onClick={() => i18next.changeLanguage(lng)}
+          onClick={() => handleChangeLanguage(lng)}
           disabled={currentLanguage === lng}
           className={`flex items-center mx-1.5 border-blue-500 ${currentLanguage === lng ? 'border-2' : 'border-0' }`}
         >

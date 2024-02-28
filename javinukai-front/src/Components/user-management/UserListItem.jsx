@@ -9,7 +9,7 @@ export function UserListItem({ userInfo }) {
       to={userInfo.uuid}
       className="flex py-4 shadow bg-white xl:px-3 border-white border-4 transition ease-in-out hover:border-teal-400 hover:border-4 hover:cursor-pointer my-2 rounded-md"
     >
-      <div className="xl:grid xl:grid-cols-9 px-3 xl:px-0 w-full flex justify-between">
+      <div className="xl:grid xl:grid-cols-10 px-3 xl:px-0 w-full flex justify-between">
         <div>
           <span className="">{userInfo.name}</span>{" "}
           <span className="xl:hidden inline">{userInfo.surname}</span>
@@ -19,7 +19,7 @@ export function UserListItem({ userInfo }) {
         <p className="xl:block hidden break-all text-wrap col-span-3">
           {userInfo.email}
         </p>
-        <p className="xl:flex items-center justify-left">{userInfo.role}</p>
+        <p className="xl:flex items-center justify-left col-span-2" >{t(`roles.${userInfo.role}`) || userInfo.role}</p>
         <p className="hidden xl:flex items-center justify-left">
           {userInfo.maxTotal}/{userInfo.maxSinglePhotos}/
           {userInfo.maxCollections}

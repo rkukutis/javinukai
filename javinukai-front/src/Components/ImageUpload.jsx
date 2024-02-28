@@ -35,7 +35,7 @@ function ImageUpload() {
       reset();
       setUploadedCollection(createdCollection);
     },
-    onError: (err) => toast.error(err.message),
+    onError: () => toast.error(t('services.uploadImagesError')),
   });
 
   const onDrop = useCallback((acceptedFiles) => {

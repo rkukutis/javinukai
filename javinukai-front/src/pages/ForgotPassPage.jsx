@@ -17,7 +17,7 @@ function ForgotPassPage() {
   const { mutate } = useMutation({
     mutationFn: (data) => forgotPassword(data.email),
     onSuccess: () => toast.success(t('ForgotPassPage.resetSuccess')),
-    onError: (err) => toast.error(err.message),
+    onError: () => toast.error(t('services.forgotPasswordError')),
   });
 
   function onSubmit(formData) {

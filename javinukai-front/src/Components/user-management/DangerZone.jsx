@@ -46,7 +46,7 @@ export function DangerZone({ userData }) {
   const deleteUserMutation = useMutation({
     mutationFn: (data) => deleteUser(data),
     onSuccess: () => {
-      toast.success(t('DangerZone.deletedSuccess', { username: userData.uuid }));
+      toast.success(t('DangerZone.deletedSuccess', { username: userData.email }));
       queryClient.invalidateQueries(["users"]);
       navigate("/manage-users");
     },
