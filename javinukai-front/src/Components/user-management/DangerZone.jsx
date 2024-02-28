@@ -8,35 +8,10 @@ import { useNavigate } from "react-router-dom";
 import deleteUser from "../../services/users/deleteUser";
 import { useTranslation } from "react-i18next";
 
-function ConfirmationModal({ children, onResponse, onModalSet }) {
-  
-  return (
-    <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md backdrop-brightness-50 flex flex-col justify-center items-center">
-      <div className="lg:w-[20rem] bg-white flex flex-col space-y-4 items-center px-6 py-4 rounded-md">
-        <h1 className="text-2xl text-center">{children}</h1>
-        <div className="grid grid-cols-2 w-full gap-x-4">
-          <Button
-            extraStyle="bg-green-500 hover:bg-green-400"
-            onClick={() => onResponse(true)}
-          >
-            Yes
-          </Button>
-          <Button
-            extraStyle="bg-red-500 hover:bg-red-400"
-            onClick={() => onResponse(false)}
-          >
-            No
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function DangerZone({ userData }) {
   const { t } = useTranslation();
   const { user } = useUserStore((state) => state);
-  const getUserMutation = useMutation({
+  const updateUserMutation = useMutation({
     mutationFn: (data) => updateUser(data),
     onSuccess: () => {
       toast.success(t('DangerZone.permissionsChangedSuccess'));
@@ -46,7 +21,7 @@ export function DangerZone({ userData }) {
   const deleteUserMutation = useMutation({
     mutationFn: (data) => deleteUser(data),
     onSuccess: () => {
-      toast.success(t('DangerZone.deletedSuccess', { username: userData.email }));
+      toast.success(t('DangerZone.deletedSuccess', { username: `${userData.name} ${userData.surname} (${userData.email})`}));
       queryClient.invalidateQueries(["users"]);
       navigate("/manage-users");
     },
@@ -64,7 +39,7 @@ export function DangerZone({ userData }) {
       !confirm(
         t('DangerZone.changeRole', { newRole })))
       return;
-    getUserMutation.mutate({ ...userData, role: newRole });
+    updateUserMutation.mutate({ ...userData, role: newRole });
   }
 
   function handleToggleLockAccount() {
@@ -74,7 +49,10 @@ export function DangerZone({ userData }) {
       )
     )
       return;
-    getUserMutation.mutate({ ...userData, isNonLocked: !userData.isNonLocked });
+    updateUserMutation.mutate({
+      ...userData,
+      isNonLocked: !userData.isNonLocked,
+    });
   }
 
   function handleDeleteAccount() {
