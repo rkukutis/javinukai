@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -70,6 +71,11 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<CompetitionRecord> competitionRecords;
 
+    @Setter
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<ParticipationRequest> participationRequests;
+
     @CreatedDate
     private ZonedDateTime createdAt;
     @LastModifiedDate
@@ -123,10 +129,12 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = ZonedDateTime.now();
     }
+
     @PreUpdate
     protected void onUpdate() {
         this.modifiedAt = ZonedDateTime.now();
