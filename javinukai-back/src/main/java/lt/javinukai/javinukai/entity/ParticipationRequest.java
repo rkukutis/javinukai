@@ -33,8 +33,8 @@ public class ParticipationRequest {
     private Contest contest;
 
     @Setter
-    @Column(name = "participation_accepted")
-    private Boolean participationAccepted;
+    @Column(name = "can_participate")
+    private Boolean canParticipate;
 
     @CreatedDate
     @Column(name = "created_at")

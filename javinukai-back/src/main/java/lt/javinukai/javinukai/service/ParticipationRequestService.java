@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.ParticipationRequest;
 import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.exception.UserNotFoundException;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.ParticipationRequestRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,13 +24,6 @@ public class ParticipationRequestService {
     private final UserRepository userRepository;
     private final ContestRepository contestRepository;
 
-
-//    @Autowired
-//    public ParticipationRequestService(ParticipationRequestRepository participationRequestRepository) {
-//        this.participationRequestRepository = participationRequestRepository;
-//
-//    }
-
     public List<ParticipationRequest> findAllRequests() {
 
         return participationRequestRepository.findAll();
@@ -40,11 +35,38 @@ public class ParticipationRequestService {
         User user = userRepository.findById(userId).get();
 
         ParticipationRequest request = participationRequestRepository.save(ParticipationRequest.builder()
-                .participationAccepted(false)
+                .canParticipate(null)
                 .contest(temp)
                 .user(user)
                 .build());
         return request;
     }
 
+    public ParticipationRequest getRequestById(UUID requestId) {
+        ParticipationRequest participationRequest =  participationRequestRepository.findById(requestId)
+                .orElseThrow(() -> new EntityNotFoundException("Participation request was not found with ID: " + requestId));
+        log.debug("Fetched participation request {} from database", participationRequest.getRequestId());
+        return participationRequest;
+    }
+
+    @Transactional
+    public ParticipationRequest updateRequestStatus (UUID requestId, Boolean decision){
+        final ParticipationRequest tempRequest = participationRequestRepository.findById(requestId)
+                .orElseThrow(()->new EntityNotFoundException("Participation request was not found with ID: " + requestId));
+        tempRequest.setCanParticipate(decision);
+        return participationRequestRepository.save(tempRequest);
+
+    }
+
+
+    @Transactional
+    public List<ParticipationRequest> deleteParticipationRequest(UUID participationRequestId) {
+        if (participationRequestRepository.existsById(participationRequestId)) {
+            participationRequestRepository.deleteById(participationRequestId);
+            log.debug("Deleted participation request {}", participationRequestId);
+            return participationRequestRepository.findAll();
+        } else {
+            throw new EntityNotFoundException("Participation request was not found with ID: " + participationRequestId);
+        }
+    }
 }
