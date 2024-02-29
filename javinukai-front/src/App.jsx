@@ -17,7 +17,6 @@ import CategoryPage from "./pages/CategoryPage";
 import CategoryPreview from "./Components/Contest-Components/CategoryPreview";
 import PreviewPage from "./pages/PreviewPage";
 
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -37,8 +36,8 @@ export default function App() {
           toastOptions={{
             className: "toaster-notification",
             id: "toaster-notification",
-            success: { duration: 15000 },
-            error: { duration: 15000 },
+            success: { duration: 5000 },
+            error: { duration: 5000 },
             style: {
               fontSize: "16px",
               maxWidth: "500px",
@@ -57,11 +56,13 @@ export default function App() {
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
               <Route path="/image-upload" element={<ImageUpload />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
-              <Route path="/manage-users/:userId" element={<UserDetailsPage />} />
+              <Route
+                path="/manage-users/:userId"
+                element={<UserDetailsPage />}
+              />
               <Route path="/contest-page" element={<ContestPage />} />
               <Route path="/category-page" element={<CategoryPage />} />
-              <Route path="Preview-page" element={<PreviewPage/>} />
-              
+              <Route path="Preview-page" element={<PreviewPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
