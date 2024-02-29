@@ -76,8 +76,8 @@ function CreateCategory() {
             }`}
           />
           {errors.totalSubmissions && (
-            <span className="text-red-500">Total submissions must be greater than 0</span>
-          )}
+  <FormFieldError message="Total submissions must be greater than 0" />
+)}
         </div>
         <div className="mb-4">
           <label htmlFor="type" className="block text-gray-700">

@@ -116,16 +116,20 @@ function CreateContest({ contestDTO }) {
   />
 </div>
 <div className="grid grid-cols-2 gap-x-4 mb-4">
+<div className="grid grid-cols-2 gap-x-4 mb-4">
   <div>
     <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date:</label>
     <input
       type="date"
       id="startDate" 
-      {...register("startDate", { required: true })}
+      {...register("startDate", { required: true, min: { value: 1, message: "Start Date is required" } })}
       className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
     />
-    {errors.startDate && <FormFieldError message="This field is required" />}
+    {errors.startDate && (
+      <FormFieldError message={errors.startDate.message} />
+    )}
   </div>
+</div>
   <div>
     <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date:</label>
     <input
@@ -134,7 +138,8 @@ function CreateContest({ contestDTO }) {
       {...register("endDate", { required: true, min: 1 })}
       className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
     />
-    {errors.endDate && <FormFieldError message="This field is required" />}
+    {errors.endDate && (
+    <FormFieldError message={errors.endDate.message} />)}
   </div>
 </div>
 <div className="mb-4">
