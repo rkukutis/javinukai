@@ -34,6 +34,7 @@ public class CompetitionRecordController {
         this.competitionRecordService = competitionRecordService;
     }
 
+    // manau, kad nauji record'ai bus kuriami automatiškai, taigi post kontrolerio nereikės
     @PostMapping(path = "/records")
     public ResponseEntity<List<CompetitionRecord>> addUserToContest(@RequestParam UUID contestID,
                                               @RequestParam UUID userID) {

@@ -42,6 +42,9 @@ public class CompetitionRecord {
 //    @JsonIgnore
     private User user;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "competitionRecord", cascade = CascadeType.MERGE)
+    private List<PhotoCollection> entries;
+
     @Setter
     @Column(name = "max_photos")
     private long maxPhotos;

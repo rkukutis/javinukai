@@ -23,7 +23,6 @@ public class PhotoCollection {
     private UUID uuid;
     private String name;
     private String description;
-    private UUID category;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -32,6 +31,11 @@ public class PhotoCollection {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection", cascade = CascadeType.MERGE)
     private List<Photo> images;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinColumn(name = "competition_record_id", referencedColumnName = "id")
+    private CompetitionRecord competitionRecord;
 
     private ZonedDateTime createdAt;
     private ZonedDateTime modifiedAt;

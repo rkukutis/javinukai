@@ -2,6 +2,7 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
@@ -11,8 +12,6 @@ import lt.javinukai.javinukai.exception.NoImagesException;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
 import org.apache.http.client.utils.URIBuilder;
-import org.hibernate.annotations.Cache;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,23 +28,24 @@ import java.util.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PhotoStorageService {
+public class PhotoService {
     private final ContestService contestService;
+    private final CompetitionRecordService recordService;
     private final PhotoCollectionRepository contestantImageCollectionRepository;
 
-    public PhotoCollection createImage(MultipartFile[] images, String description, String title,
-                                       UUID categoryID, UserDetails userDetails)
-            throws IOException {
-        User author = (User) userDetails;
+    public PhotoCollection createPhoto(MultipartFile[] images, String description, String title,
+                                       UUID recordId, User participant) throws IOException {
         // we have to check image validity before working with them because we cant roll back file IO
-        checkImageSizes(images);
-        log.info("Received {} photos(s) from user {} for category {}",
-                images.length, author.getEmail(), categoryID);
+        log.info("Received {} photos(s) from user {} for competition record {}",
+                images.length, participant.getEmail(), recordId);
+
+        CompetitionRecord competitionRecord = recordService.retrieveRecordById(recordId);
+
         PhotoCollection collection = contestantImageCollectionRepository.save(PhotoCollection.builder()
                 .name(title)
                 .description(description)
-                .category(categoryID)
-                .author(author)
+                .author(participant)
+                .competitionRecord(competitionRecord)
                 .images(new ArrayList<>())
                 .build()
         );
@@ -70,7 +70,7 @@ public class PhotoStorageService {
             var contestantImage = Photo.builder()
                     .uuid(uuid)
                     .localPathFull(imageName)
-                    .author(author)
+                    .author(participant)
                     .collection(collection)
                     .localPathFull(pathsAndUrls.get(ImageSize.FULL).get(0))
                     .localPathMiddle(pathsAndUrls.get(ImageSize.MIDDLE).get(0))

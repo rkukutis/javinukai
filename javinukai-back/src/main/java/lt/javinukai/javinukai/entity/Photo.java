@@ -36,6 +36,7 @@ public class Photo {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "author_uuid")
+    @JsonIgnore
     private User author;
 
     private ZonedDateTime createdAt;

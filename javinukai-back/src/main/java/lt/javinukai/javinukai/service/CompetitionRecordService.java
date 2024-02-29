@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CompetitionRecordDTO;
 import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
@@ -30,20 +31,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CompetitionRecordService {
 
     private final ContestRepository contestRepository;
     private final CompetitionRecordRepository competitionRecordRepository;
     private final UserRepository userRepository;
-
-    @Autowired
-    public CompetitionRecordService (ContestRepository contestRepository,
-                                     CompetitionRecordRepository competitionRecordRepository,
-                                     UserRepository userRepository) {
-        this.contestRepository = contestRepository;
-        this.competitionRecordRepository = competitionRecordRepository;
-        this.userRepository = userRepository;
-    }
 
     @Transactional
     public UserParticipationResponse createUsersCompetitionRecords(UUID contestID, UUID userID) {
@@ -72,6 +65,7 @@ public class CompetitionRecordService {
                     .build();
         }
 
+        // čia matau sukuria record'us visoms kategorijoms, reikia tikėtis, kad kategorijų nebus daug
         final List<CompetitionRecord> usersCompetitionRecords = new ArrayList<>();
         for (Category category : contestToParticipateIn.getCategories()) {
             final CompetitionRecord record = CompetitionRecord.builder()
@@ -133,6 +127,11 @@ public class CompetitionRecordService {
                     .orElseThrow(()-> new UserNotFoundException(keyword));
             return competitionRecordRepository.findByUser(userToFind, pageable);
         }
+    }
+
+    public CompetitionRecord retrieveRecordById(UUID recordId) {
+        return competitionRecordRepository.findById(recordId)
+                .orElseThrow(() -> new EntityNotFoundException("Competition record " + recordId + " not found"));
     }
 
 //    public Page<CompetitionRecordResponse> retrieveAllCompetitionRecords(Pageable pageable, String keyword) {
