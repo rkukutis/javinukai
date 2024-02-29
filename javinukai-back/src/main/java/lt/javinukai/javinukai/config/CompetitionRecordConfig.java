@@ -75,6 +75,7 @@ public class CompetitionRecordConfig {
 
             final CompetitionRecord competitionRecordToCreate = CompetitionRecord.builder()
                     .category(currentCategory)
+                    .entries(null)
                     .contest(contest)
                     .user(user)
                     .maxPhotos(currentCategory.getTotalSubmissions())

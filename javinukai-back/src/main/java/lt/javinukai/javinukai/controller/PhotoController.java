@@ -30,14 +30,15 @@ public class PhotoController {
     public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
                                                         @RequestParam("title") @NotBlank String title,
                                                         @RequestParam("description") @NotBlank String description,
-                                                        @RequestParam("recordId") @NotNull UUID recordId,
+                                                        @RequestParam("contestId") @NotNull UUID contestId,
+                                                        @RequestParam("categoryId") @NotNull UUID categoryId,
                                                         @AuthenticationPrincipal User participant
     ) throws IOException {
         if (images.length < 1 ) {
             throw new NoImagesException("No jpg images were provided with request");
         }
         return ResponseEntity.ok()
-                .body(photoService.createPhoto(images, title, description, recordId, participant));
+                .body(photoService.createPhoto(images, title, description, contestId, categoryId, participant));
     }
 
     @GetMapping("{image}")
