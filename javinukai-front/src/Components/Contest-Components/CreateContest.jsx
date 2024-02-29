@@ -7,10 +7,13 @@ import EditCategoryModal from "./EditCategoryModal";
 
 function CreateContest({ contestDTO }) {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [totalSubmissions, setTotalSubmissions] = useState(0);
+  const [totalSubmissions, setTotalSubmissions] = useState(50);
   const [categoriesList, setCategoriesList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showOnlyAddedCategories, setShowOnlyAddedCategories] = useState(false);
+
 
   useEffect(() => {
     fetchCategories();
@@ -80,7 +83,12 @@ function CreateContest({ contestDTO }) {
       console.error('Error creating contest:', error);
     }
   };
-  
+  const handleTotalSubmissionsChange = (e) => {
+    const newValue = e.target.value;
+    if (newValue >= 1) {
+      setTotalSubmissions(newValue);
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
@@ -123,7 +131,7 @@ function CreateContest({ contestDTO }) {
     <input
       type="date"
       id="endDate" 
-      {...register("endDate", { required: true })}
+      {...register("endDate", { required: true, min: 1 })}
       className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
     />
     {errors.endDate && <FormFieldError message="This field is required" />}
@@ -134,43 +142,48 @@ function CreateContest({ contestDTO }) {
   <input
     type="number"
     id="totalSubmissions"
+    min="1"
     value={totalSubmissions}
-    onChange={(e) => setTotalSubmissions(e.target.value)}
+    onChange={handleTotalSubmissionsChange}
     className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
   />
 </div>
-<div>
 
+<div className="mb-4">
+  <label htmlFor="searchCategory" className="block text-sm font-medium text-gray-700">
+    Search Categories:
+  </label>
+  <input
+    type="text"
+    id="searchCategory"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+    placeholder="Search categories by name..."
+  />
 </div>
-        <div className="mb-4">
-          <label htmlFor="contestName" className="block text-sm font-medium text-gray-700">Contest Name:</label>
-          {/* Input fields */}
-        </div>
-        {/* Other form fields */}
-
-        <div className="mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">Add Categories:</label>
-          <div>
-            {categoriesList.map(category => (
-              <div key={category.id} className="flex items-center justify-between border border-gray-200 p-2 rounded-md mb-2">
-                <div>
-                <h3>{category.categoryName} - {category.type}</h3>
+<div>
+  {categoriesList
+    .filter(category => category.categoryName.toLowerCase().includes(searchQuery.toLowerCase()))
+    .map(category => (
+      <div key={category.id} className="flex items-center justify-between border border-gray-200 p-2 rounded-md mb-2">
+        <div>
+          <h3>{category.categoryName} - {category.type}</h3>
           <p>Description: {category.description}</p>
           <p>Total Submissions: {category.totalSubmissions}</p>
-                </div>
-                
-                <div>
-                  <button type="button" onClick={() => handleEditCategory(category)} className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">Edit Category</button>
-                  {category.added ? (
-                    <button type="button" onClick={() => handleRemoveCategory(category.id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Remove</button>
-                  ) : (
-                    <button type="button" onClick={() => handleAddCategory(category)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
+        
+        <div>
+          <button type="button" onClick={() => handleEditCategory(category)} className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">Edit Category</button>
+          {category.added ? (
+            <button type="button" onClick={() => handleRemoveCategory(category.id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Remove</button>
+          ) : (
+            <button type="button" onClick={() => handleAddCategory(category)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>
+          )}
+        </div>
+      </div>
+    ))}
+</div>
 
         <div>
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Create Contest</button>

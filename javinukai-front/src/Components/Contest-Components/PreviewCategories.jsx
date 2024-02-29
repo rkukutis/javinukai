@@ -1,32 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import EditCategoryModal from "./EditCategoryModal";
 
 function PreviewCategories() {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("recent");
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND
-          }/api/v1/categories?pageNumber=1&pageSize=5&sortBy=categoryName&sortDesc=false`
-        );
-        setCategories(response.data.content);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
+  const { data: categories, isLoading, error } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND}/api/v1/categories`
+      );
+      return response.data.content;
     }
+  });
 
-    fetchData();
-  }, []);
+  const filteredCategories = categories?.filter((category) =>
+    category.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleEditCategory = (categoryId) => {
     const categoryToEdit = categories.find(
@@ -41,20 +36,48 @@ function PreviewCategories() {
     setSelectedCategory(null);
   };
 
-  if (loading) {
+  if (isLoading) {
     return <div className="text-center mt-4">Loading...</div>;
   }
 
   if (error) {
-    return <div className="text-center mt-4">Error: {error}</div>;
+    return <div className="text-center mt-4">Error: {error.message}</div>;
   }
+
+  const sortedCategories = filteredCategories.sort((a, b) => {
+    if (sortBy === "recent") {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    } else if (sortBy === "submissions") {
+      return b.totalSubmissions - a.totalSubmissions;
+    }
+    return 0;
+  });
 
   return (
     <div className="p-4">
       <h2 className="text-2xl font-semibold mb-4">Categories</h2>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.id} className="mb-4 border-b pb-4">
+      <div className="flex justify-between mb-4">
+        <div>
+          <input
+            type="text"
+            placeholder="Search by name..."
+            className="border border-gray-300 rounded-md px-3 py-1 mr-2"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="border border-gray-300 rounded-md px-3 py-1"
+          >
+            <option value="recent">Recently Added</option>
+            <option value="submissions">Most Total Submissions</option>
+          </select>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {sortedCategories.map((category) => (
+          <div key={category.id} className="mb-4 border-b pb-4">
             <div>
               <strong>Name:</strong> {category.categoryName}
             </div>
@@ -81,9 +104,9 @@ function PreviewCategories() {
             >
               Edit
             </button>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">

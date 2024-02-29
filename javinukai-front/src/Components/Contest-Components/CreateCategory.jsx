@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormFieldError from "../FormFieldError";
 
+
 function CreateCategory() {
   const {
     register,
@@ -47,7 +48,7 @@ function CreateCategory() {
             }`}
           />
           {errors.categoryName && (
-            <FormFieldError message="This field is required" />
+            <FormFieldError>{errors.categoryName.message}</FormFieldError>
           )}
         </div>
         <div className="mb-4">
@@ -75,7 +76,7 @@ function CreateCategory() {
             }`}
           />
           {errors.totalSubmissions && (
-            <FormFieldError message="Total submissions must be greater than 0" />
+            <span className="text-red-500">Total submissions must be greater than 0</span>
           )}
         </div>
         <div className="mb-4">
