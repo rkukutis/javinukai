@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.entity.Contest;
@@ -22,26 +23,27 @@ public class ParticipationRequestService {
     private final ContestRepository contestRepository;
 
 
-
-
 //    @Autowired
 //    public ParticipationRequestService(ParticipationRequestRepository participationRequestRepository) {
 //        this.participationRequestRepository = participationRequestRepository;
 //
 //    }
 
-    public List<ParticipationRequest> findAllRequests(){
+    public List<ParticipationRequest> findAllRequests() {
 
         return participationRequestRepository.findAll();
     }
 
-    public ParticipationRequest createParticipationRequest(Contest contest){
+    public ParticipationRequest createParticipationRequest(UUID contestId, UUID userId) {
+        Contest temp = contestRepository.findById(contestId)
+                .orElseThrow(() -> new EntityNotFoundException("Contest was not found with ID: " + contestId));
+        User user = userRepository.findById(userId).get();
 
         ParticipationRequest request = participationRequestRepository.save(ParticipationRequest.builder()
-                        .canParticipate(true)
-                        .participationAccepted(false)
-                        .contest(contest)
-                        .build());
+                .participationAccepted(false)
+                .contest(temp)
+                .user(user)
+                .build());
         return request;
     }
 

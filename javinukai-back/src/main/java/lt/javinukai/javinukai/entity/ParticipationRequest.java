@@ -36,10 +36,6 @@ public class ParticipationRequest {
     @Column(name = "participation_accepted")
     private Boolean participationAccepted;
 
-    @Setter
-    @Column(name = "can_participate")
-    private Boolean canParticipate;
-
     @CreatedDate
     @Column(name = "created_at")
     private ZonedDateTime createdAt;

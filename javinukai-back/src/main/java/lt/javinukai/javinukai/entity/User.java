@@ -72,6 +72,7 @@ public class User implements UserDetails {
     private List<CompetitionRecord> competitionRecords;
 
     @Setter
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<ParticipationRequest> participationRequests;

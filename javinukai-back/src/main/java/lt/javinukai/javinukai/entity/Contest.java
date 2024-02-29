@@ -48,6 +48,7 @@ public class Contest {
     private List<CompetitionRecord> competitionRecords = new ArrayList<>();
 
     @Setter
+    @JsonIgnore
     @OneToMany(mappedBy = "contest",
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<ParticipationRequest> participationRequests;
