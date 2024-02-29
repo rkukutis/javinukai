@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.controller;
 
+import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.ParticipationRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.service.ParticipationRequestService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/test")
@@ -23,15 +25,16 @@ public class ParticipationRequestController {
         this.participationRequestService = participationRequestService;
     }
 
-    @GetMapping("/request")
-    public List<ParticipationRequest> findAllRequests(){
-        return participationRequestService.findAllRequests();
-    }
+//    @GetMapping("/request")
+//    public List<ParticipationRequest> findAllRequests(){
+//        return participationRequestService.findAllRequests();
+//    }
 
     @PostMapping("/request")
-    public ParticipationRequest create (ParticipationRequest participationRequest, @AuthenticationPrincipal User user){
-        participationRequestService.createParticipationRequest(participationRequestService,);
-        return participationRequest;
+    public ParticipationRequest create (@AuthenticationPrincipal User user, Contest contest){
+        ParticipationRequest newRequest = participationRequestService.createParticipationRequest(contest);
+        newRequest.setUser(user);
+        return newRequest;
     }
 
 

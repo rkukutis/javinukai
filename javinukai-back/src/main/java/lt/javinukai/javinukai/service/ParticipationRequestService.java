@@ -2,6 +2,7 @@ package lt.javinukai.javinukai.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.ParticipationRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.repository.ContestRepository;
@@ -34,15 +35,14 @@ public class ParticipationRequestService {
         return participationRequestRepository.findAll();
     }
 
-    public ParticipationRequest createParticipationRequest(ParticipationRequest participationRequest,
-                                                           ContestRepository contestRepository,
-                                                           User user){
-        ParticipationRequest request = participationRequestRepository.save(ParticipationRequest.builder()
-                .contest()
-                .user(user)
-                .build());
+    public ParticipationRequest createParticipationRequest(Contest contest){
 
-        return participationRequestRepository.save(request);
+        ParticipationRequest request = participationRequestRepository.save(ParticipationRequest.builder()
+                        .canParticipate(true)
+                        .participationAccepted(false)
+                        .contest(contest)
+                        .build());
+        return request;
     }
 
 }

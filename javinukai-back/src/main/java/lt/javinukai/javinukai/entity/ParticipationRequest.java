@@ -32,7 +32,6 @@ public class ParticipationRequest {
     @JoinColumn(name = "contest_id")
     private Contest contest;
 
-
     @Setter
     @Column(name = "participation_accepted")
     private Boolean participationAccepted;
