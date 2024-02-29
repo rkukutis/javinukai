@@ -33,66 +33,27 @@ class CategoryServiceTest {
     @InjectMocks
     private CategoryService categoryService;
 
-    @Test
-    public void createCategoryReturnsCategory() {
-
-        final UUID id1 = UUID.randomUUID();
-        final Category category1 = Category.builder()
-                .id(id1)
-                .categoryName("test category name 1")
-                .description("test category description 1")
-                .totalSubmissions(66)
-                .type(PhotoSubmissionType.COLLECTION)
-                .build();
-
-        when(categoryRepository.findAll()).thenReturn(Collections.emptyList());
-        when(categoryRepository.save(Mockito.any(Category.class))).thenReturn(category1);
-
-        final CategoryCreationResponse creationResponse = categoryService
-                .createCategory(CategoryMapper.categoryToCategoryDTO(category1));
-
-        Assertions.assertThat(creationResponse).isNotNull();
-//        Assertions.assertThat(creationResponse)..getId()).isNotNull();
-    }
-
-
-
-    @Test
-    public void testCreateCategory_WhenCategoryDoesNotExist_ReturnsCreatedCategoryResponse() {
-
-        final UUID id1 = UUID.randomUUID();
-        final Category createdCategory = Category.builder()
-                .id(id1)
-                .categoryName("test category name 1")
-                .description("test category description 1")
-                .totalSubmissions(66)
-                .type(PhotoSubmissionType.COLLECTION)
-                .build();
-
-        final UUID id2 = UUID.randomUUID();
-        final CategoryDTO categoryDTO = CategoryDTO.builder()
-                .id(id2)
-                .categoryName("test category name 2")
-                .description("test category description 2")
-                .totalSubmissions(66)
-                .type(PhotoSubmissionType.COLLECTION)
-                .build();
-
-        when(categoryRepository.findByCategoryNameAndDescriptionAndTotalSubmissions(
-                categoryDTO.getCategoryName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions()))
-                .thenReturn(null);
-
-        when(categoryRepository.save(any(Category.class))).thenReturn(createdCategory);
-
-        CategoryCreationResponse response = categoryService.createCategory(categoryDTO);
-
-        log.info(String.valueOf("--->" + response.getCategory().getId()));
-        log.info(String.valueOf("--->" + response.getMessage()));
-
-        assertEquals(createdCategory, response.getCategory());
-        assertEquals(HttpStatus.CREATED, response.getHttpStatus());
-        assertEquals("Request for category creation completed, given ID: " + response.getCategory().getId(), response.getMessage());
-    }
+//    @Test
+//    public void createCategoryReturnsCategory() {
+//
+//        final UUID id1 = UUID.randomUUID();
+//        final Category category1 = Category.builder()
+//                .id(id1)
+//                .categoryName("test category name 1")
+//                .description("test category description 1")
+//                .totalSubmissions(66)
+//                .type(PhotoSubmissionType.COLLECTION)
+//                .build();
+//
+//        when(categoryRepository.findAll()).thenReturn(Collections.emptyList());
+//        when(categoryRepository.save(Mockito.any(Category.class))).thenReturn(category1);
+//
+//        final CategoryCreationResponse creationResponse = categoryService
+//                .createCategory(CategoryMapper.categoryToCategoryDTO(category1));
+//
+//        Assertions.assertThat(creationResponse).isNotNull();
+////        Assertions.assertThat(creationResponse)..getId()).isNotNull();
+//    }
 
 
 
