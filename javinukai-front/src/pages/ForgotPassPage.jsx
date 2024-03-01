@@ -16,11 +16,12 @@ function ForgotPassPage() {
 
   const { mutate } = useMutation({
     mutationFn: (data) => forgotPassword(data.email),
-    onSuccess: () => toast.success(t('ForgotPassPage.resetSuccess')),
-    onError: () => toast.error(t('services.forgotPasswordError')),
+    onSuccess: () => toast.success(t("ForgotPassPage.resetSuccess")),
+    onError: () => toast.error(t("services.forgotPasswordError")),
   });
 
   function onSubmit(formData) {
+    console.log("form data -> ", formData);
     mutate(formData);
   }
 
@@ -29,23 +30,29 @@ function ForgotPassPage() {
     <div className="w-full min-h-[82vh] flex flex-col justify-center items-center">
       <div className="mx-2 px-2 py-4 border-2 rounded-sm border-slate-100 bg-slate-50 lg:w-1/3">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="text text-lg font-semibold">{t('ForgotPassPage.title')}</h2>
-          <p>{t('ForgotPassPage.description')}</p>
+          <h2 className="text text-lg font-semibold">
+            {t("ForgotPassPage.title")}
+          </h2>
+          <p>{t("ForgotPassPage.description")}</p>
           <section className="flex flex-col space-y-2 mt-3">
             <input
               className="px-2 py-1 rounded-sm"
               id="recovery-email"
-              placeholder={t('ForgotPassPage.emailPlaceholder')}
+              placeholder={t("ForgotPassPage.emailPlaceholder")}
               {...register("email", {
-                required: t('ForgotPassPage.emailRequired'),
+                required: t("ForgotPassPage.emailRequired"),
                 validate: (val) =>
-                  validateEmail(val) || t('ForgotPassPage.emailValidFormat'),
+                  validateEmail(val) || t("ForgotPassPage.emailValidFormat"),
               })}
             />
             {errors.email && (
               <FormFieldError>{errors.email.message}</FormFieldError>
             )}
-            <StyledInput id="submit-email" type="submit" value={t('ForgotPassPage.submitEmail')} />
+            <StyledInput
+              id="submit-email"
+              type="submit"
+              value={t("ForgotPassPage.submitEmail")}
+            />
           </section>
         </form>
       </div>

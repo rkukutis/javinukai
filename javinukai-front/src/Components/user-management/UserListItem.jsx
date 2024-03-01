@@ -19,7 +19,9 @@ export function UserListItem({ userInfo }) {
         <p className="xl:block hidden break-all text-wrap col-span-3">
           {userInfo.email}
         </p>
-        <p className="xl:flex items-center justify-left col-span-2" >{t(`roles.${userInfo.role}`) || userInfo.role}</p>
+        <p className="xl:flex items-center justify-left col-span-2">
+          {t(`roles.${userInfo.role}`) || userInfo.role}
+        </p>
         <p className="hidden xl:flex items-center justify-left">
           {userInfo.maxTotal}/{userInfo.maxSinglePhotos}/
           {userInfo.maxCollections}
@@ -35,7 +37,7 @@ export function UserListItem({ userInfo }) {
               : t("PaginationSettings.fieldIsEnabledNo")}
           </span>
         </div>
-        <div className="hidden xl:flex items-center justify-center text-white">
+        <div className="hidden xl:flestartx items-center justify-center text-white">
           <span
             className={`text px-3 rounded-md ${
               userInfo.isNonLocked ? "bg-green-500" : "bg-red-500"

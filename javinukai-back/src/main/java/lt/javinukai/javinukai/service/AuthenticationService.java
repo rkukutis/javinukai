@@ -121,6 +121,20 @@ public class AuthenticationService {
         }
     }
 
+    public void changePassword(String token, String newPassword) {
+        User user = userTokenService.getTokenUser(token, TokenType.PASSWORD_RESET);
+        if (passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new PasswordResetException("New password is the same as the old one");
+        }
+        if (userTokenService.tokenIsValid(token, TokenType.PASSWORD_RESET)) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            log.info("Setting new password {} for {}", newPassword, user);
+            userRepository.save(user);
+        } else {
+            throw new InvalidTokenException();
+        }
+    }
+
     private void sendEmailWithToken(User user, TokenType type) {
         String tokenValue = userTokenService.createTokenForUser(user, type);
         if (type == TokenType.EMAIL_CONFIRM){

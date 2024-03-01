@@ -35,74 +35,100 @@ function UserDetailsPage() {
           <div className="lg:w-3/4 w-full h-fit bg-white shadow-md lg:my-4 p-8 rounded-md">
             <article className="lg:grid lg:grid-cols-2 flex flex-col space-y-4 lg:space-y-0 pb-4">
               <section>
-                <h1 className="text-2xl">{t('UserDetailsPage.personalTitle')}</h1>
-                <UserDetailsField 
-                fieldName={t('UserDetailsPage.personalName')}
-                 fieldValue={data?.name} />
+                <h1 className="text-2xl">
+                  {t("UserDetailsPage.personalTitle")}
+                </h1>
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.personalSurname')}
+                  fieldName={t("UserDetailsPage.personalName")}
+                  fieldValue={data?.name}
+                />
+                <UserDetailsField
+                  fieldName={t("UserDetailsPage.personalSurname")}
                   fieldValue={data?.surname}
                 />
-                <UserDetailsField 
-                fieldName={t('UserDetailsPage.personalEmail')}
-                 fieldValue={data?.email} />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.personalBirthYear')}
+                  fieldName={t("UserDetailsPage.personalEmail")}
+                  fieldValue={data?.email}
+                />
+                <UserDetailsField
+                  fieldName={t("UserDetailsPage.personalBirthYear")}
                   fieldValue={data?.birthYear}
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.personalPhoneNumber')}
+                  fieldName={t("UserDetailsPage.personalPhoneNumber")}
                   fieldValue={data?.phoneNumber}
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.personalFreelance')}
-                  fieldValue={data?.isFreelance ? t('UserDetailsPage.isTrue') : t('UserDetailsPage.isFalse')}
+                  fieldName={t("UserDetailsPage.personalFreelance")}
+                  fieldValue={
+                    data?.isFreelance
+                      ? t("UserDetailsPage.isTrue")
+                      : t("UserDetailsPage.isFalse")
+                  }
                 />
                 {!data?.isFreelance && (
                   <UserDetailsField
-                    fieldName={t('UserDetailsPage.personalInstitution')}
+                    fieldName={t("UserDetailsPage.personalInstitution")}
                     fieldValue={data?.institution}
                   />
                 )}
+                <Button
+                  onClick={() => navigate("/change-password")}
+                  extraStyle="text-lg mt-2 w-full lg:w-fit"
+                >
+                  {t("UserDetailsPage.changePasswordButton")}
+                </Button>
               </section>
               <section className="">
-                <h1 className="text-2xl">{t('UserDetailsPage.accountTitle')}</h1>
+                <h1 className="text-2xl">
+                  {t("UserDetailsPage.accountTitle")}
+                </h1>
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountID')}
+                  fieldName={t("UserDetailsPage.accountID")}
                   fieldValue={data?.uuid}
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountCreationDate')}
+                  fieldName={t("UserDetailsPage.accountCreationDate")}
                   fieldValue={formatTimestap(data?.createdAt)}
                 />
                 {data?.modifiedAt && (
                   <UserDetailsField
-                    fieldName={t('UserDetailsPage.accountLastModifiedDate')}
+                    fieldName={t("UserDetailsPage.accountLastModifiedDate")}
                     fieldValue={formatTimestap(data?.modifiedAt)}
                   />
                 )}
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountEmailConfirmed')}
-                  fieldValue={data?.isEnabled ? t('UserDetailsPage.isTrue') : t('UserDetailsPage.isFalse')}
+                  fieldName={t("UserDetailsPage.accountEmailConfirmed")}
+                  fieldValue={
+                    data?.isEnabled
+                      ? t("UserDetailsPage.isTrue")
+                      : t("UserDetailsPage.isFalse")
+                  }
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountIsLocked')}
-                  fieldValue={data?.isNonLocked ? t('UserDetailsPage.isFalse') : t('UserDetailsPage.isTrue')}
+                  fieldName={t("UserDetailsPage.accountIsLocked")}
+                  fieldValue={
+                    data?.isNonLocked
+                      ? t("UserDetailsPage.isFalse")
+                      : t("UserDetailsPage.isTrue")
+                  }
                 />
                 <UserDetailsField
-                fieldName={t('UserDetailsPage.accountRole')}
-                fieldValue={t(`roles.${data?.role}`) || data?.role}
-                                />
+                  fieldName={t("UserDetailsPage.accountRole")}
+                  fieldValue={t(`roles.${data?.role}`) || data?.role}
+                />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountMaxPhotosContest')}
+                  fieldName={t("UserDetailsPage.accountMaxPhotosContest")}
                   fieldValue={data?.maxTotal}
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountMaxSinglesCategories')}
+                  fieldName={t("UserDetailsPage.accountMaxSinglesCategories")}
                   fieldValue={data?.maxSinglePhotos}
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountMaxCollectionCategories')}
+                  fieldName={t(
+                    "UserDetailsPage.accountMaxCollectionCategories"
+                  )}
                   fieldValue={data?.maxCollections}
                 />
               </section>
@@ -112,7 +138,7 @@ function UserDetailsPage() {
               onClick={() => navigate("/manage-users")}
               extraStyle="text-lg mt-2 w-full lg:w-fit"
             >
-              {t('UserDetailsPage.backButton')}
+              {t("UserDetailsPage.backButton")}
             </Button>
           </div>
         </div>

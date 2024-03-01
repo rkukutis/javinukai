@@ -150,30 +150,30 @@ class CompetitionRecordControllerTest {
                 .andExpect(status().is(HttpStatus.OK.value()));
     }
 
-//    @Test
-//    void retrieveAllRecordsReturnsPage_Success() throws Exception {
-//
-//        List<CompetitionRecord> records = new ArrayList<>();
-//        CompetitionRecord record = CompetitionRecord.builder()
-//                .id(UUID.randomUUID())
-//                .user(user)
-//                .category(category)
-//                .contest(contest)
-//                .build();
-//        records.add(record);
-//
-//        Page<CompetitionRecord> page = new PageImpl<>(records);
-//
-//        when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.of(user));
-//        when(competitionRecordRepository.findByUser(any(User.class), any(Pageable.class))).thenReturn(page);
-//        when(competitionRecordRepository.findAll(any(Pageable.class))).thenReturn(page);
-//
-//        mockMvc.perform(get("/api/v1/records")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.content.length()").value(records.size()));
-//    }
+    @Test
+    void retrieveAllRecordsReturnsPage_Success() throws Exception {
+
+        List<CompetitionRecord> records = new ArrayList<>();
+        CompetitionRecord record = CompetitionRecord.builder()
+                .id(UUID.randomUUID())
+                .user(user)
+                .category(category)
+                .contest(contest)
+                .build();
+        records.add(record);
+
+        Page<CompetitionRecord> page = new PageImpl<>(records);
+
+        when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.of(user));
+        when(competitionRecordRepository.findByUser(any(User.class), any(Pageable.class))).thenReturn(page);
+        when(competitionRecordRepository.findAll(any(Pageable.class))).thenReturn(page);
+
+        mockMvc.perform(get("/api/v1/records")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content.length()").value(records.size()));
+    }
 
     @Test
     void testUpdateRecord_Success() {
