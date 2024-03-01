@@ -48,7 +48,7 @@ public class CategoryController {
     public ResponseEntity<Page<Category>> retrieveAllCategories(@RequestParam(defaultValue = "1") int pageNumber,
                                                                 @RequestParam(defaultValue = "25") int pageSize,
                                                                 @RequestParam(required = false) String keyword,
-                                                                @RequestParam(defaultValue = "categoryName") String sortBy,
+                                                                @RequestParam(defaultValue = "name") String sortBy,
                                                                 @RequestParam(defaultValue = "false") boolean sortDesc) {
         log.info("Request for retrieving all categories");
         Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;

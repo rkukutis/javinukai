@@ -88,6 +88,7 @@ public class CompetitionRecordService {
                 .build();
     }
 
+    // this will retrieve the entries for the jury
     public Page<CompetitionRecord> retrieveCompetitionRecords(Pageable pageable, String keyword,
                                                                  UUID contestId, UUID categoryId) {
         if (keyword == null || keyword.isEmpty()) {
@@ -99,6 +100,10 @@ public class CompetitionRecordService {
                     .orElseThrow(()-> new UserNotFoundException(keyword));
             return competitionRecordRepository.findByUser(userToFind, pageable);
         }
+    }
+
+    public Page<CompetitionRecord> retrieveAllUserCompetitionRecords(Pageable pageable, UUID userId) {
+        return competitionRecordRepository.findByUserId(pageable, userId);
     }
 
     @Transactional
@@ -123,7 +128,7 @@ public class CompetitionRecordService {
     }
 
     public CompetitionRecord retrieveUserCompetitionRecord(UUID categoryId, UUID contestId, UUID userId) {
-        return competitionRecordRepository.findByCategoryIdAndContestIdAndUserUuid(categoryId, contestId, userId)
+        return competitionRecordRepository.findByCategoryIdAndContestIdAndUserId(categoryId, contestId, userId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(
                         "Competition record for user %s in contest %s category %s not found",
                         userId, contestId, categoryId

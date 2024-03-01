@@ -122,22 +122,22 @@ public class CompetitionRecordConfig {
     private Contest createContestAndCategory() {
 
         final Category categoryToCreate01 = Category.builder()
-                .categoryName("įvykiai")
+                .name("įvykiai")
                 .description("pokyčiai, patraukę akį")
                 .totalSubmissions(40)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         final Category categoryToCreate02 = Category.builder()
-                .categoryName("tech")
+                .name("tech")
                 .description("technologijos. keičiančios gyvenimą")
                 .totalSubmissions(35)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
         final Contest contestToCreate = Contest.builder()
-                .contestName("pro objektyvą - 2023")
-                .description("gražiauisios 2023-ųjų akimirkos")
+                .name("Sed dignissim eget ipsum quis feugiat")
+                .description("Suspendisse euismod sollicitudin tellus in porta. Praesent faucibus elit eu arcu mattis, ac vehicula massa tincidunt. In auctor mi rhoncus nisl ultrices, a posuere elit pharetra. Aenean tempor arcu at orci aliquam, et pharetra sapien dapibus. Pellentesque volutpat dolor lectus. Proin venenatis, nulla in rutrum egestas, arcu tellus viverra ipsum, eget condimentum risus diam ut ante. Aliquam volutpat viverra risus, eget sodales augue dignissim in. Nulla nulla elit, gravida at placerat eu, tristique vel lacus. Duis a nisi id orci scelerisque bibendum posuere ut leo. Integer fringilla enim at rhoncus congue. Integer viverra quis ipsum non consectetur. Aenean egestas id lorem in dictum. ")
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
                 .totalSubmissions(20)
@@ -151,7 +151,7 @@ public class CompetitionRecordConfig {
 
     private Category createCategory() {
         final Category categoryToCreate01 = Category.builder()
-                .categoryName("pasaulio šalys")
+                .name("pasaulio šalys")
                 .description("už gimtinės ribų")
                 .totalSubmissions(30)
                 .type(PhotoSubmissionType.SINGLE)

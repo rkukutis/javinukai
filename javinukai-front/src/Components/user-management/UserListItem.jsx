@@ -3,10 +3,9 @@ import { useTranslation } from "react-i18next";
 
 export function UserListItem({ userInfo }) {
   const { t } = useTranslation();
-
   return (
     <Link
-      to={userInfo.uuid}
+      to={userInfo.id}
       className="flex py-4 shadow bg-white xl:px-3 border-white border-4 transition ease-in-out hover:border-teal-400 hover:border-4 hover:cursor-pointer my-2 rounded-md"
     >
       <div className="xl:grid xl:grid-cols-9 px-3 xl:px-0 w-full flex justify-between">

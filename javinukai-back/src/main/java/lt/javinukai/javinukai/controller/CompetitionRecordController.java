@@ -42,16 +42,30 @@ public class CompetitionRecordController {
                                               @AuthenticationPrincipal User participant) {
 
         final UserParticipationResponse userParticipationResponse = competitionRecordService
-                .createUsersCompetitionRecords(contestID, participant.getUuid());
+                .createUsersCompetitionRecords(contestID, participant.getId());
         final List<CompetitionRecord> usersCompetitionRecords = userParticipationResponse.getRecords();
         final HttpStatus httpStatus = userParticipationResponse.getHttpStatus();
         final String message = userParticipationResponse.getMessage();
-
         log.info(message);
         return new ResponseEntity<>(usersCompetitionRecords, httpStatus);
     }
 
+    // this endpoint is for the participant to check his own options
+    @GetMapping(path = "/records")
+    public ResponseEntity<Page<CompetitionRecord>> retrieveUserCompetitionRecords(@AuthenticationPrincipal User participant,
+                                                                                  @RequestParam(defaultValue = "0") int pageNumber,
+                                                                                  @RequestParam(defaultValue = "25") int pageSize,
+                                                                                  @RequestParam(defaultValue = "createdAt") String sortBy,
+                                                                                  @RequestParam(defaultValue = "false") boolean sortDesc) {
+        Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+        final Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        return ResponseEntity.ok().body(competitionRecordService
+                .retrieveAllUserCompetitionRecords(pageable, participant.getId())
+        );
+    }
 
+    // this one is for the jury
     @GetMapping(path = "/records/contest/{contestId}/category/{categoryId}")
     public ResponseEntity<Page<CompetitionRecord>> retrieveRecords(@PathVariable UUID contestId,
                                                                       @PathVariable UUID categoryId,

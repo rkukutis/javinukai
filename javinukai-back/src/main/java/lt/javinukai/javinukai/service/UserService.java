@@ -28,7 +28,7 @@ public class UserService {
     public User getUser(UUID userId) {
         User user =  userRepository.findById(userId)
                 .orElseThrow(()-> new UserNotFoundException(userId));
-        log.debug("Fetched user {} from database", user.getUuid());
+        log.debug("Fetched user {} from database", user.getId());
         return user;
     }
 
@@ -44,7 +44,7 @@ public class UserService {
     public User updateUser(User updatedUser, UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
-        log.debug("{}: Updating user {}", this.getClass().getName(), user.getUuid());
+        log.debug("{}: Updating user {}", this.getClass().getName(), user.getId());
         user.setName(updatedUser.getName());
         user.setSurname(updatedUser.getSurname());
         user.setEmail(updatedUser.getEmail());
@@ -65,12 +65,12 @@ public class UserService {
         boolean previousIsNonLocked = user.getIsNonLocked();
         if (!previousRole.equals(updateUser.getRole())) {
             user.setRole(updateUser.getRole());
-            log.info("Updating user {} role from {} to {}", user.getUuid(),
+            log.info("Updating user {} role from {} to {}", user.getId(),
                     previousRole, updateUser.getRole());
         } else if (previousIsNonLocked != updateUser.getIsNonLocked()) {
             user.setIsNonLocked(updateUser.getIsNonLocked());
             log.info("Updating user {} isNonLocked state from {} to {}",
-                    user.getUuid(), previousIsNonLocked, updateUser.getIsNonLocked());
+                    user.getId(), previousIsNonLocked, updateUser.getIsNonLocked());
         }
         return userRepository.save(user);
     }

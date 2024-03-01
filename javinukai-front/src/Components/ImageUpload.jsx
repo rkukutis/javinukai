@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 
 function getMultipartFormData(title, description, images) {
   let formData = new FormData();
+  formData.append("contestId");
   formData.append("categoryId", "a201c592-7daf-465e-92ab-6c3f9a45c1a9");
   formData.append("title", title);
   formData.append("description", description);
@@ -30,7 +31,7 @@ function ImageUpload() {
   const { mutate, isPending } = useMutation({
     mutationFn: (multipartFormData) => uploadImages(multipartFormData),
     onSuccess: (createdCollection) => {
-      toast.success(t('imageUpload.imagesUploaded'));
+      toast.success(t("imageUpload.imagesUploaded"));
       setFiles([]);
       reset();
       setUploadedCollection(createdCollection);
@@ -47,7 +48,7 @@ function ImageUpload() {
   function onSubmit(formData) {
     const { title, description } = formData;
     if (files.length === 0) {
-      toast.error(t('imageUpload.imagesAdd'));
+      toast.error(t("imageUpload.imagesAdd"));
       return;
     }
     mutate(getMultipartFormData(title, description, files));
@@ -58,16 +59,19 @@ function ImageUpload() {
   return (
     <div className="w-full min-h-[82vh] flex flex-col justify-center items-center bg-slate-50">
       <div className="w-full bg-white lg:w-1/3 border-2 px-3 py-5">
-        <h1 className="text-2xl text-center">{t('imageUpload.photoUploadTitle')}</h1>
+        <h1 className="text-2xl text-center">
+          {t("imageUpload.photoUploadTitle")}
+        </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <section className="form-field">
             <label>
-            {t('imageUpload.photoUpload')}<span className="text-red-600">*</span>
+              {t("imageUpload.photoUpload")}
+              <span className="text-red-600">*</span>
             </label>
             <input
               className="form-field__input"
               {...register("title", {
-                required: t('imageUpload.photoTitleRequired'),
+                required: t("imageUpload.photoTitleRequired"),
               })}
             />
             {errors.title && (
@@ -76,12 +80,13 @@ function ImageUpload() {
           </section>
           <section className="form-field">
             <label>
-              {t('imageUpload.photoDescription')}<span className="text-red-600">*</span>
+              {t("imageUpload.photoDescription")}
+              <span className="text-red-600">*</span>
             </label>
             <textarea
               className="form-field__input"
               {...register("description", {
-                required: t('imageUpload.photoDescriptionRequired'),
+                required: t("imageUpload.photoDescriptionRequired"),
               })}
             />
             {errors.description && (
@@ -90,11 +95,11 @@ function ImageUpload() {
           </section>
           <section>
             <ul className="list-disc">
-              <p>{t('imageUpload.photoRequirements')}</p>
+              <p>{t("imageUpload.photoRequirements")}</p>
               <div className="pl-5">
-                <li>{t('imageUpload.photoDimensions')}</li>
-                <li>{t('imageUpload.photoSize')}</li>
-                <li>{t('imageUpload.photoAllSize')}</li>
+                <li>{t("imageUpload.photoDimensions")}</li>
+                <li>{t("imageUpload.photoSize")}</li>
+                <li>{t("imageUpload.photoAllSize")}</li>
               </div>
             </ul>
             <div
@@ -103,9 +108,9 @@ function ImageUpload() {
             >
               <input {...getInputProps()} />
               {isDragActive ? (
-                <p>{t('imageUpload.photoSelectorActive')}</p>
+                <p>{t("imageUpload.photoSelectorActive")}</p>
               ) : (
-                <p>{t('imageUpload.photoSelector')}</p>
+                <p>{t("imageUpload.photoSelector")}</p>
               )}
             </div>
             {files.map((file) => (
@@ -117,14 +122,26 @@ function ImageUpload() {
             disabled={isPending}
             id="image-upload-form"
             type="submit"
-            value={isPending ? t('imageUpload.photoUploading') : t('imageUpload.photoUpload')}
+            value={
+              isPending
+                ? t("imageUpload.photoUploading")
+                : t("imageUpload.photoUpload")
+            }
           />
         </form>
         {uploadedCollection && (
           <div className="mt-3 border-2 p-3">
-            <h1>{t('imageUpload.collectionTitle')} {uploadedCollection?.name}</h1>
-            <p>{t('imageUpload.collectionDescription')} {uploadedCollection?.description}</p>
-            <p>{t('imageUpload.collectionCreatedAt')} {uploadedCollection?.createdAt}</p>
+            <h1>
+              {t("imageUpload.collectionTitle")} {uploadedCollection?.name}
+            </h1>
+            <p>
+              {t("imageUpload.collectionDescription")}{" "}
+              {uploadedCollection?.description}
+            </p>
+            <p>
+              {t("imageUpload.collectionCreatedAt")}{" "}
+              {uploadedCollection?.createdAt}
+            </p>
             {uploadedCollection?.images.map((image) => (
               <img key={image.uuid} src={image.urlThumbnail} />
             ))}

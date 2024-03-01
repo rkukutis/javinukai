@@ -30,7 +30,7 @@ public class CategoryService {
     @Transactional
     public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
 
-        Category categoryInRepo = categoryRepository.findByCategoryNameAndDescriptionAndTotalSubmissions(
+        Category categoryInRepo = categoryRepository.findByNameAndDescriptionAndTotalSubmissions(
                 categoryDTO.getCategoryName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
 
         HttpStatus httpStatus;
@@ -58,7 +58,7 @@ public class CategoryService {
             return categoryRepository.findAll(pageable);
         } else {
             log.info("{}: Retrieving categories by name", this.getClass().getName());
-            return categoryRepository.findByCategoryName(keyword, pageable);
+            return categoryRepository.findByName(keyword, pageable);
         }
     }
 
@@ -73,7 +73,7 @@ public class CategoryService {
     public Category updateCategory(UUID id, CategoryDTO categoryDTO) {
         final Category categoryToUpdate = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category was not found with ID: " + id));
-        categoryToUpdate.setCategoryName(categoryDTO.getCategoryName());
+        categoryToUpdate.setName(categoryDTO.getCategoryName());
         categoryToUpdate.setDescription(categoryDTO.getDescription());
         categoryToUpdate.setTotalSubmissions(categoryDTO.getTotalSubmissions());
         categoryToUpdate.setType(categoryDTO.getType());

@@ -19,7 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class Category {
 
     @Id
@@ -29,10 +28,10 @@ public class Category {
 
     @Setter
     @Column(name = "name")
-    private String categoryName;
+    private String name;
 
     @Setter
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Setter

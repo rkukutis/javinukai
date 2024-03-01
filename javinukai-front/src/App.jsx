@@ -12,6 +12,7 @@ import HomePage from "./pages/HomePage";
 import ImageUpload from "./Components/ImageUpload";
 import UserManagementPage from "./pages/UserManagementPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
+import ContestPage from "./pages/ContestPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,7 +43,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
+              <Route index element={<ContestPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />

@@ -19,7 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class CompetitionRecord {
 
     @Id
@@ -38,7 +37,7 @@ public class CompetitionRecord {
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "uuid")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
 //    @JsonIgnore
     private User user;
 

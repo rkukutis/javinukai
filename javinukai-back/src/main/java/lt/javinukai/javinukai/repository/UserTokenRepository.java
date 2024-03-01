@@ -14,5 +14,5 @@ public interface UserTokenRepository extends JpaRepository<UserToken, UUID> {
 
     Optional<UserToken> findByTokenValueAndType(String tokenValue, TokenType type);
 
-    List<UserToken> findByUserUuidAndTypeOrderByCreatedAtDesc(UUID userId, TokenType type);
+    List<UserToken> findByUserIdAndTypeOrderByCreatedAtDesc(UUID userId, TokenType type);
 }

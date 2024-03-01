@@ -16,7 +16,8 @@ import java.util.UUID;
 public interface CompetitionRecordRepository extends JpaRepository<CompetitionRecord, UUID> {
 
     Page<CompetitionRecord> findByUser(User user, Pageable pageable);
+    Page<CompetitionRecord> findByUserId(Pageable pageable, UUID userId);
     List<CompetitionRecord> findByUserAndContest(User user, Contest contest);
     Page<CompetitionRecord> findByCategoryIdAndContestId(Pageable pageable, UUID categoryId, UUID contestId);
-    Optional<CompetitionRecord> findByCategoryIdAndContestIdAndUserUuid(UUID categoryId, UUID contestId, UUID userId);
+    Optional<CompetitionRecord> findByCategoryIdAndContestIdAndUserId(UUID categoryId, UUID contestId, UUID userId);
 }

@@ -20,13 +20,15 @@ public class PhotoCollection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    @Column(name = "id")
+    private UUID id;
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "author_uuid")
+    @JoinColumn(name = "author_id")
     private User author;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection", cascade = CascadeType.MERGE)

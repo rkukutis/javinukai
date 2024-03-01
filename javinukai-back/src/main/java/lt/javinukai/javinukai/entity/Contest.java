@@ -26,10 +26,10 @@ public class Contest {
 
     @Setter
     @Column(name = "name")
-    private String contestName;
+    private String name;
 
     @Setter
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Setter

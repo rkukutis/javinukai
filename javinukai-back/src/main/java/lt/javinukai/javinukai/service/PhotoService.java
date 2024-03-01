@@ -47,7 +47,7 @@ public class PhotoService {
         log.info("Received {} photos(s) from user {} for contest {} category {}",
                 images.length, participant.getEmail(), contestId, categoryId);
         CompetitionRecord competitionRecord = recordService
-                .retrieveUserCompetitionRecord(categoryId, contestId, participant.getUuid());
+                .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
         PhotoCollection collection = contestantImageCollectionRepository.save(PhotoCollection.builder()
                 .name(title)
                 .description(description)
@@ -63,7 +63,7 @@ public class PhotoService {
             String imageName = uuid + ".jpg";
             Map<ImageSize, List<String>> pathsAndUrls = getImagePathsAndUrls(image, imageName);
             var contestantImage = Photo.builder()
-                    .uuid(uuid)
+                    .id(uuid)
                     .localPathFull(imageName)
                     .author(participant)
                     .collection(collection)
