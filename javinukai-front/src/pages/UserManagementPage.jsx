@@ -5,6 +5,7 @@ import PaginationSettings from "../Components/user-management/PaginationSettings
 import { UserListItem } from "../Components/user-management/UserListItem";
 import { BarLoader } from "react-spinners";
 import { useTranslation } from "react-i18next";
+import ChangePage from "../Components/user-management/ChangePage";
 
 const defaultPagination = {
   page: 0,
@@ -73,6 +74,13 @@ export default function UserManagementPage() {
             ))}
           </>
         )}
+      </div>
+      <div>
+        <ChangePage
+        pagination={paginationSettings}
+        setPagination={setPaginationSettings}
+        availablePageNumber={data?.totalPages}
+        />
       </div>
     </div>
   );
