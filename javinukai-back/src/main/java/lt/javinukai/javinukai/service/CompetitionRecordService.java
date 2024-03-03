@@ -106,6 +106,8 @@ public class CompetitionRecordService {
         return competitionRecordRepository.findByUserId(pageable, userId);
     }
 
+
+
     @Transactional
     public CompetitionRecord updateCompetitionRecord(UUID recordID, CompetitionRecordDTO competitionRecordDTO) {
 

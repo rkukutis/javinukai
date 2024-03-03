@@ -35,8 +35,8 @@ public class CategoryConfig {
 
     private void createCategory() {
         Category category01 = Category.builder()
-                .name("gamta")
-                .description("ne mūsų kurta aplinka")
+                .name("Vivamus tempus suscipit neque")
+                .description("Nullam in justo vel elit hendrerit cursus. Vivamus tempus suscipit neque, at commodo nisl vulputate in. Proin lobortis quis tellus vel euismod. Cras tincidunt elementum ante in consequat. Etiam lobortis sagittis risus, sed tempor erat dictum eget. Proin scelerisque sed. ")
                 .totalSubmissions(100)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
@@ -45,15 +45,15 @@ public class CategoryConfig {
 
     private void addCategoryToExistingContest(Contest incompleteContest) {
         Category category01 = Category.builder()
-                .name("asmenys")
-                .description("gyvenimiška patirtis")
+                .name("Nulla id risus sed purus dapibu")
+                .description("Cras ipsum eros, mollis id elementum in, facilisis eu quam. Nulla id risus sed purus dapibus fringilla vel eu nunc. Nam tristique quam non erat laoreet, eu gravida ligula egestas. Morbi aliquam nec turpis eu sodales. Nam dapibus suscipit dui. ")
                 .totalSubmissions(100)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
         incompleteContest.addCategory(category01);
         Category category02 = Category.builder()
-                .name("asmenys")
-                .description("gyvenimiška patirtis")
+                .name("Phasellus lacinia massa")
+                .description("Quisque at orci vitae nisi efficitur condimentum vel vel mauris. Morbi bibendum turpis dolor, quis volutpat mi pellentesque vel. Phasellus lacinia massa vitae volutpat convallis. Praesent id felis euismod, fringilla est eu, eleifend orci. Ut nec nunc ac tellus laoreet. ")
                 .totalSubmissions(555)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
@@ -95,22 +95,22 @@ public class CategoryConfig {
     private void createContestAndCategories() {
 
         Category category01 = Category.builder()
-                .name("medicina")
-                .description("slaugos mokslas")
+                .name("condimentum vel vel mauris")
+                .description("Quisque at orci vitae nisi efficitur condimentum vel vel mauris. Morbi bibendum turpis dolor, quis volutpat mi pellentesque vel. Phasellus lacinia massa vitae volutpat convallis. Praesent id felis euismod, fringilla est eu, eleifend orci. Ut nec nunc ac tellus laoreet")
                 .totalSubmissions(100)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         Category category02 = Category.builder()
-                .name("sportas")
-                .description("citius, altius, fortius")
+                .name("Sed maximus nisi condimentum")
+                .description("Nunc consequat dapibus enim, eu tempus erat pretium sed. Integer condimentum sed risus eget vehicula. Maecenas eu sem libero. Suspendisse rhoncus sodales sagittis. Sed maximus nisi condimentum, molestie quam vel, iaculis libero. Sed eros nulla, consequat ut sem id, eleifend")
                 .totalSubmissions(20)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
         Category category03 = Category.builder()
-                .name("istorija")
-                .description("daugiau, nei kaulai ir griuvėsiai")
+                .name("Pellentesque egestas egestas suscipit")
+                .description("Pellentesque nec nunc mattis ex mollis varius. Aliquam non odio ultricies, eleifend sapien ac, scelerisque lectus. Pellentesque egestas egestas suscipit. Cras nec commodo quam. Morbi porttitor nunc tincidunt augue egestas, sagittis ullamcorper tortor tempus. Duis condimentum turpis felis, sed malesuada")
                 .totalSubmissions(500)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();

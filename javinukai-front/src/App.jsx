@@ -12,7 +12,9 @@ import HomePage from "./pages/HomePage";
 import ImageUpload from "./Components/ImageUpload";
 import UserManagementPage from "./pages/UserManagementPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
-import ContestPage from "./pages/ContestPage";
+import ContestsPage from "./pages/ContestsPage";
+import ContestDetailsPage from "./pages/ContestDetailsPage";
+import UserSubmissionView from "./Components/UserSubmissionView";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,13 +45,26 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<ContestPage />} />
+              <Route index element={<ContestsPage />} />
+              <Route
+                path="/contest/:contestId"
+                element={<ContestDetailsPage />}
+              >
+                <Route
+                  path="category/:categoryId/upload"
+                  element={<ImageUpload />}
+                />
+                <Route
+                  path="category/:categoryId/my-entries"
+                  element={<UserSubmissionView />}
+                />
+                <Route path="category/:categoryId/entries" />
+              </Route>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-              <Route path="/image-upload" element={<ImageUpload />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
               <Route
                 path="/manage-users/:userId"

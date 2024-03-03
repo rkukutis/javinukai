@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
@@ -14,18 +15,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ContestService contestService;
 
-    @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
@@ -89,5 +89,9 @@ public class CategoryService {
         } else {
             throw new EntityNotFoundException("Category was not found with ID: " + id);
         }
+    }
+
+    public List<Category> retrieveContestCategories(UUID contestId) {
+        return contestService.retrieveContest(contestId).getCategories();
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -59,6 +60,15 @@ public class CategoryController {
         log.info("Request for retrieving all categories, {} record(s) found", page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/categories/contest/{contestId}")
+    public ResponseEntity<List<Category>> retrieveContestCategories(@PathVariable UUID contestId) {
+        log.info("Request for retrieving all categories for contest {}", contestId);
+        List<Category> retrievedCategories = categoryService.retrieveContestCategories(contestId);
+        log.info("Returning {} categories for contest {}", retrievedCategories.size(), contestId);
+        return ResponseEntity.ok().body(retrievedCategories);
+    }
+
 
     @GetMapping(path = "/categories/{id}")
     public ResponseEntity<Category> retrieveCategory(@PathVariable @NotNull UUID id) {

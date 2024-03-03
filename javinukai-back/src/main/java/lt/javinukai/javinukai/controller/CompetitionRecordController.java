@@ -65,6 +65,16 @@ public class CompetitionRecordController {
         );
     }
 
+    @GetMapping(path = "records/contest/{contestId}/category/{categoryId}/my-record")
+    public ResponseEntity<CompetitionRecord> retrieveSpecificUserRecord(@PathVariable UUID contestId,
+                                                                        @PathVariable UUID categoryId,
+                                                                        @AuthenticationPrincipal User participant) {
+        CompetitionRecord record = competitionRecordService
+                .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
+        log.info("Retrieving competition record {}", record.getId());
+        return ResponseEntity.ok().body(record);
+    }
+
     // this one is for the jury
     @GetMapping(path = "/records/contest/{contestId}/category/{categoryId}")
     public ResponseEntity<Page<CompetitionRecord>> retrieveRecords(@PathVariable UUID contestId,

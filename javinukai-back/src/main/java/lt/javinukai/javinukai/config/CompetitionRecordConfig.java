@@ -122,15 +122,15 @@ public class CompetitionRecordConfig {
     private Contest createContestAndCategory() {
 
         final Category categoryToCreate01 = Category.builder()
-                .name("įvykiai")
-                .description("pokyčiai, patraukę akį")
+                .name("Morbi sit amet sodales ante")
+                .description("Etiam sollicitudin iaculis erat eu ornare. Aliquam erat volutpat. Mauris interdum est vitae leo egestas bibendum. Phasellus sodales molestie mauris at blandit. Morbi sit amet sodales ante, ac iaculis libero. Nulla a mattis ante, quis hendrerit turpis. Quisque magna turpis")
                 .totalSubmissions(40)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         final Category categoryToCreate02 = Category.builder()
-                .name("tech")
-                .description("technologijos. keičiančios gyvenimą")
+                .name("Etiam scelerisque scelerisque quam")
+                .description("Sed ac arcu ultricies, maximus tortor eget, tincidunt ante. Morbi non finibus neque, ac dapibus tellus. Cras nec fringilla nulla, id sagittis dui. Sed eget luctus neque. Etiam scelerisque scelerisque quam sit amet ullamcorper. Nullam eros purus, mollis sed interdum")
                 .totalSubmissions(35)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
@@ -151,8 +151,8 @@ public class CompetitionRecordConfig {
 
     private Category createCategory() {
         final Category categoryToCreate01 = Category.builder()
-                .name("pasaulio šalys")
-                .description("už gimtinės ribų")
+                .name("Morbi consectetur in massa nec scelerisque")
+                .description("Integer vel risus nulla. Aenean quis vulputate felis, eget sagittis magna. Duis id lacus dignissim, egestas turpis at, interdum enim. Morbi consectetur in massa nec scelerisque. Vivamus viverra, ante vel varius condimentum, est sem gravida turpis, eu imperdiet purus ex. ")
                 .totalSubmissions(30)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();

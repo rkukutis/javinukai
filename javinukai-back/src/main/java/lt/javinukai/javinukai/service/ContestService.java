@@ -61,7 +61,7 @@ public class ContestService {
         return createdContest;
     }
 
-    public Page<Contest> retrieveAllContests(Pageable pageable, String keyword) {
+    public Page<Contest> retrieveAllContests(Pageable pageable, String keyword, UUID UserId) {
 
         if (keyword == null || keyword.isEmpty()) {
             log.info("{}: Retrieving all contests list from database", this.getClass().getName());
