@@ -1,7 +1,9 @@
-async function resetPassword({ data, t }) {
-  console.log(data, t);
+async function changePassword({ data, t }) {
+
+  console.log(data);
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND}/api/v1/auth/reset-password`,
+    "http://localhost:8080/api/v1/auth/change-password",
+    // `${import.meta.env.VITE_BACKEND}/api/v1/auth/change-password`,
     {
       method: "POST",
       mode: "cors",
@@ -30,4 +32,4 @@ async function resetPassword({ data, t }) {
   }
 }
 
-export default resetPassword;
+export default changePassword;

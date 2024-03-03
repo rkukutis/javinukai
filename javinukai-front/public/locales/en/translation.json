@@ -220,5 +220,17 @@
     "USER": "User",
     "JURY": "Jury",
     "MODERATOR": "Moderator"
+  },
+
+  "ChangeUsersPasswordForm": {
+    "oldPassword": "Old password",
+    "newPassword": "New password",
+    "newPasswordConfirmation": "Confirm new password",
+    "confirmChangePasswordButton": "Confirm change",
+    "discardChangePasswordButton": "Discard change",
+    "changePasswordSuccess": "Password was successfully changed",
+    "changePasswordFailAsCurrent": "Password is the same as current one",
+    "changePasswordFailDoNotMatch": "Password and password confimation do not match"
   }
+
 }
