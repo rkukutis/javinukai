@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -133,6 +134,23 @@ public class AuthenticationService {
         } else {
             throw new InvalidTokenException();
         }
+    }
+
+    public void changePasswordOmDemand(User userToFind, String newPassword) {
+        User user = userRepository.findById(userToFind.getUuid())
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userToFind.getUuid()));
+
+//        if (!passwordEncoder.matches(userToFind.getPassword(), user.getPassword())) {
+//            throw new IllegalArgumentException("Old password is incorrect");
+//        }
+
+        if (passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new PasswordResetException("New password is the same as the old one");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        log.info("Setting new password {} for user: {}", newPassword, user.getUsername());
+        userRepository.save(user);
     }
 
     private void sendEmailWithToken(User user, TokenType type) {

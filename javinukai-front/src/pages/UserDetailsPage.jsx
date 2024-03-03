@@ -6,6 +6,7 @@ import { DangerZone } from "../Components/user-management/DangerZone";
 import formatTimestap from "../utils/formatTimestap";
 import Button from "../Components/Button";
 import { useTranslation } from "react-i18next";
+import ChangePassword from "../Components/user-management/ChangePassword";
 
 function UserDetailsField({ fieldName, fieldValue }) {
   return (
@@ -73,7 +74,9 @@ function UserDetailsPage() {
                   />
                 )}
                 <Button
-                  onClick={() => navigate("/change-password")}
+                  onClick={() =>
+                    navigate("/change-password", { state: { userData: data } })
+                  }
                   extraStyle="text-lg mt-2 w-full lg:w-fit"
                 >
                   {t("UserDetailsPage.changePasswordButton")}

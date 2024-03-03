@@ -21,7 +21,6 @@ function ForgotPassPage() {
   });
 
   function onSubmit(formData) {
-    console.log("form data -> ", formData);
     mutate(formData);
   }
 

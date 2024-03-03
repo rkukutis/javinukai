@@ -149,8 +149,10 @@
   "services": {
     "uploadImagesError": "Could not upload images",
     "resetPasswordError": "An error has occured while trying to reset your password",
+    "changePasswordError": "An error has occured while trying to reset your password",
     "resetPasswordOldPasswordError": "New password can not be old password",
     "resetPasswordResetLinkInvalid": "Password reset link is invalid or expired",
+    "changePasswordResetLinkInvalid": "Password change link is invalid or expired",
     "forgotPasswordError": "Please check your email for the password reset link",
     "loginUserError": "Incorrect credentials",
     "logoutUserError": "Error occured while logging out",
@@ -192,7 +194,7 @@
     "backButton": "Back",
     "isTrue": "Yes",
     "isFalse": "No",
-    "changePasswordButton":"Change password"
+    "changePasswordButton": "Change password"
   },
 
   "DangerZone": {
@@ -233,5 +235,4 @@
     "changePasswordFailAsCurrent": "Password is the same as current one",
     "changePasswordFailDoNotMatch": "Password and password confimation do not match"
   }
-
 }

@@ -1,63 +1,61 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import FormFieldError from "../FormFieldError";
 import StyledInput from "../StyledInput";
-import Button from "../Button";
 import changePassword from "../../services/auth/changePassword";
-import axios from "axios";
+import useUserStore from "../../stores/userStore";
+import { useState } from "react";
 
 function ChangePassword() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
+
+  const location = useLocation();
+  const { userData } = location.state;
+  console.log("user data in ChangePassword.jsx -> ", userData);
 
   const {
-    reset,
+    // reset,
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({ mode: "onBlur" });
+  } = useForm();
 
-  // const { mutate } = useMutation({
-  //   mutationFn: (formData, userData, t) =>
-  //     changePassword(formData, userData, t),
-  //   onSuccess: () => {
-  //     toast.success(t("RegisterPage.registrationSuccess"));
-  //     navigate("/");
-  //   },
-  //   onError: (err) => {
-  //     toast.error(err.message);
-  //     reset();
-  //   },
-  // });
+  const { mutate } = useMutation({
+    mutationFn: (formData) =>
+      changePassword({userData, formData, t}),
+    onSuccess: () => {
+      toast.success(t("ChangeUsersPasswordForm.changePasswordSuccess"));
+      // reset();
+      // navigate("/manage-users");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+      // reset();
+    },
+  });
 
   function onSubmit(formData) {
-
-    console.log("onSubmit token", token);
-
-    axios
-      .post("http://localhost:8080/api/v1/change-password", {
-        resetToken: token,
-        newPassword: "123456789",
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
-
     // if (!token) {
     //   toast.error(t("ResetPassPage.passChangeError"));
     //   return;
     // }
-    // mutate({ data: { token, newPassword: formData.newPassword }, t });
-
-    console.log("form data -> ", formData);
+    mutate(formData);
   }
+
+  // const location = useLocation();
+  // const data = location.state.data;
+
+  // const navigate = useNavigate();
+  // const [searchParams] = useSearchParams();
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center justify-center">
@@ -140,7 +138,6 @@ function ChangePassword() {
             value={t("ChangeUsersPasswordForm.confirmChangePasswordButton")}
             type="submit"
           />
-          <Button />
         </form>
       </div>
     </div>

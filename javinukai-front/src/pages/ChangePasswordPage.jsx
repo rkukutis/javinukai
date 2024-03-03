@@ -2,9 +2,10 @@ import ChangePassword from "../Components/user-management/ChangePassword";
 
 function ChangePasswordPage() {
 
+
   return (
     <div>
-      <ChangePassword />
+      <ChangePassword/>
     </div>
   );
 }
