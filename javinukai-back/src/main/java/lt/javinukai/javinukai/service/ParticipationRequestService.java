@@ -50,10 +50,10 @@ public class ParticipationRequestService {
     }
 
     @Transactional
-    public ParticipationRequest updateRequestStatus (UUID requestId, Boolean decision){
+    public ParticipationRequest updateRequestStatus (UUID requestId, Boolean canParticipate){
         final ParticipationRequest tempRequest = participationRequestRepository.findById(requestId)
                 .orElseThrow(()->new EntityNotFoundException("Participation request was not found with ID: " + requestId));
-        tempRequest.setCanParticipate(decision);
+        tempRequest.setCanParticipate(canParticipate);
         return participationRequestRepository.save(tempRequest);
 
     }

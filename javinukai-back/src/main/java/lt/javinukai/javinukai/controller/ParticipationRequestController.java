@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 @Slf4j
 public class ParticipationRequestController {
     private ParticipationRequestService participationRequestService;
@@ -48,8 +48,8 @@ public class ParticipationRequestController {
     }
 
     @PatchMapping("/request/{requestId}")
-    public ResponseEntity<ParticipationRequest> updateRequestStatus(@PathVariable UUID requestId, @RequestParam Boolean decision) {
-        return ResponseEntity.ok().body(participationRequestService.updateRequestStatus(requestId, decision));
+    public ResponseEntity<ParticipationRequest> updateRequestStatus(@PathVariable UUID requestId, @RequestParam Boolean canParticipate) {
+        return ResponseEntity.ok().body(participationRequestService.updateRequestStatus(requestId, canParticipate));
     }
 
 //    @DeleteMapping("/request/{id}")
