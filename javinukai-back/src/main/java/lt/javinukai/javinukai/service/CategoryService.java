@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
@@ -14,23 +15,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ContestService contestService;
 
-    @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
 
-        Category categoryInRepo = categoryRepository.findByCategoryNameAndDescriptionAndTotalSubmissions(
+        Category categoryInRepo = categoryRepository.findByNameAndDescriptionAndTotalSubmissions(
                 categoryDTO.getCategoryName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
 
         HttpStatus httpStatus;
@@ -58,7 +58,7 @@ public class CategoryService {
             return categoryRepository.findAll(pageable);
         } else {
             log.info("{}: Retrieving categories by name", this.getClass().getName());
-            return categoryRepository.findByCategoryName(keyword, pageable);
+            return categoryRepository.findByName(keyword, pageable);
         }
     }
 
@@ -73,7 +73,7 @@ public class CategoryService {
     public Category updateCategory(UUID id, CategoryDTO categoryDTO) {
         final Category categoryToUpdate = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category was not found with ID: " + id));
-        categoryToUpdate.setCategoryName(categoryDTO.getCategoryName());
+        categoryToUpdate.setName(categoryDTO.getCategoryName());
         categoryToUpdate.setDescription(categoryDTO.getDescription());
         categoryToUpdate.setTotalSubmissions(categoryDTO.getTotalSubmissions());
         categoryToUpdate.setType(categoryDTO.getType());
@@ -89,5 +89,9 @@ public class CategoryService {
         } else {
             throw new EntityNotFoundException("Category was not found with ID: " + id);
         }
+    }
+
+    public List<Category> retrieveContestCategories(UUID contestId) {
+        return contestService.retrieveContest(contestId).getCategories();
     }
 }

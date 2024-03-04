@@ -20,11 +20,11 @@ public class CompetitionRecordMapper {
                 .usersFirstName(record.getUser().getName())
                 .usersLastName(record.getUser().getSurname())
                 .usersEmailAddress(record.getUser().getEmail())
-                .contestName(record.getContest().getContestName())
+                .contestName(record.getContest().getName())
                 .contestDescription(record.getContest().getDescription())
                 .contestStartDate(record.getContest().getStartDate())
                 .contestEndDate(record.getContest().getEndDate())
-                .categoryName(record.getCategory().getCategoryName())
+                .categoryName(record.getCategory().getName())
                 .categoryDescription(record.getCategory().getDescription())
                 .totalSubmissions(record.getCategory().getTotalSubmissions())
                 .build();

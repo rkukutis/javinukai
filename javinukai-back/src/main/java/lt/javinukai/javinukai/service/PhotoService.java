@@ -1,7 +1,9 @@
 package lt.javinukai.javinukai.service;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
@@ -11,9 +13,7 @@ import lt.javinukai.javinukai.exception.NoImagesException;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
 import org.apache.http.client.utils.URIBuilder;
-import org.hibernate.annotations.Cache;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,48 +29,43 @@ import java.util.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PhotoStorageService {
-    private final ContestService contestService;
+public class PhotoService {
+    private final CompetitionRecordService recordService;
     private final PhotoCollectionRepository contestantImageCollectionRepository;
 
-    public PhotoCollection createImage(MultipartFile[] images, String description, String title,
-                                       UUID categoryID, UserDetails userDetails)
-            throws IOException {
-        User author = (User) userDetails;
+    @Value("${app.scheme}")
+    private String scheme;
+
+    @Value("${app.host}")
+    private String host;
+
+    public PhotoCollection createPhoto(MultipartFile[] images, String description, String title, UUID contestId,
+                                       UUID categoryId, User participant) throws IOException {
         // we have to check image validity before working with them because we cant roll back file IO
-        checkImageSizes(images);
-        log.info("Received {} photos(s) from user {} for category {}",
-                images.length, author.getEmail(), categoryID);
+        // checkImageSizes(images); temp disabled
+
+        log.info("Received {} photos(s) from user {} for contest {} category {}",
+                images.length, participant.getEmail(), contestId, categoryId);
+        CompetitionRecord competitionRecord = recordService
+                .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
         PhotoCollection collection = contestantImageCollectionRepository.save(PhotoCollection.builder()
                 .name(title)
                 .description(description)
-                .category(categoryID)
-                .author(author)
+                .author(participant)
+                .competitionRecord(competitionRecord)
                 .images(new ArrayList<>())
                 .build()
         );
-
         //  each image will be processed into 4 sizes
         for (MultipartFile image : images) {
             UUID uuid = UUID.randomUUID();
             // Image entity UUID will be set manually
             String imageName = uuid + ".jpg";
-            ProcessedImage processedImage = new ProcessedImage(image);
-            Map<ImageSize, List<String>> pathsAndUrls = new HashMap<>();
-            for (ImageSize size : ImageSize.values()) {
-                String localPath = storeInFileSystem(processedImage.getResizedImage(size),
-                        imageName, size);
-                String url = new URIBuilder()
-                        .setScheme("https")
-                        .setHost("javinukai-api.rhoopoe.com")
-                        .setPathSegments("api", "v1", "images", imageName)
-                        .setParameter("size", size.value).toString();
-                pathsAndUrls.put(size, List.of(localPath, url));
-            }
+            Map<ImageSize, List<String>> pathsAndUrls = getImagePathsAndUrls(image, imageName);
             var contestantImage = Photo.builder()
-                    .uuid(uuid)
+                    .id(uuid)
                     .localPathFull(imageName)
-                    .author(author)
+                    .author(participant)
                     .collection(collection)
                     .localPathFull(pathsAndUrls.get(ImageSize.FULL).get(0))
                     .localPathMiddle(pathsAndUrls.get(ImageSize.MIDDLE).get(0))
@@ -85,6 +80,23 @@ public class PhotoStorageService {
         }
         return contestantImageCollectionRepository.save(collection);
     }
+
+    private Map<ImageSize, List<String>> getImagePathsAndUrls(MultipartFile image, String name) throws IOException {
+        ProcessedImage processedImage = new ProcessedImage(image);
+        Map<ImageSize, List<String>> pathsAndUrls = new HashMap<>();
+        for (ImageSize size : ImageSize.values()) {
+            String localPath = storeInFileSystem(processedImage.getResizedImage(size),
+                    name, size);
+            String url = new URIBuilder()
+                    .setScheme(scheme)
+                    .setHost(host)
+                    .setPathSegments("api", "v1", "images", name)
+                    .setParameter("size", size.value).toString();
+            pathsAndUrls.put(size, List.of(localPath, url));
+        }
+        return  pathsAndUrls;
+    }
+
 
     public byte[] getImageById(UUID imageId, ImageSize size) throws IOException {
         try {

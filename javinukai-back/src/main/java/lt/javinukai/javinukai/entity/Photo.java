@@ -18,7 +18,9 @@ import java.util.UUID;
 public class Photo {
 
     @Id
-    private UUID uuid;
+    @Column(name = "id")
+    // This is NOT auto-generated
+    private UUID id;
 
     private String localPathFull;
     private String localPathMiddle;
@@ -31,11 +33,12 @@ public class Photo {
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "collection_uuid")
+    @JoinColumn(name = "collection_id")
     private PhotoCollection collection;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "author_uuid")
+    @JoinColumn(name = "author_id")
+    @JsonIgnore
     private User author;
 
     private ZonedDateTime createdAt;

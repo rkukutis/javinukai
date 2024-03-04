@@ -24,7 +24,8 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    @Column(name = "id")
+    private UUID id;
 
     @Setter
     private String name;
@@ -145,7 +146,7 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return Objects.equals(uuid, user.uuid) && Objects.equals(name, user.name)
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name)
                 && Objects.equals(password, user.password)
                 && Objects.equals(surname, user.surname)
                 && Objects.equals(email, user.email)
@@ -164,7 +165,7 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, name, password, surname, email, birthYear, phoneNumber, isFreelance,
+        return Objects.hash(id, name, password, surname, email, birthYear, phoneNumber, isFreelance,
                 institution, maxSinglePhotos, maxCollections, isEnabled,
                 isNonLocked, role, tokens, createdAt, modifiedAt);
     }

@@ -75,6 +75,7 @@ public class CompetitionRecordConfig {
 
             final CompetitionRecord competitionRecordToCreate = CompetitionRecord.builder()
                     .category(currentCategory)
+                    .entries(null)
                     .contest(contest)
                     .user(user)
                     .maxPhotos(currentCategory.getTotalSubmissions())
@@ -121,22 +122,22 @@ public class CompetitionRecordConfig {
     private Contest createContestAndCategory() {
 
         final Category categoryToCreate01 = Category.builder()
-                .categoryName("įvykiai")
-                .description("pokyčiai, patraukę akį")
+                .name("Morbi sit amet sodales ante")
+                .description("Etiam sollicitudin iaculis erat eu ornare. Aliquam erat volutpat. Mauris interdum est vitae leo egestas bibendum. Phasellus sodales molestie mauris at blandit. Morbi sit amet sodales ante, ac iaculis libero. Nulla a mattis ante, quis hendrerit turpis. Quisque magna turpis")
                 .totalSubmissions(40)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
         final Category categoryToCreate02 = Category.builder()
-                .categoryName("tech")
-                .description("technologijos. keičiančios gyvenimą")
+                .name("Etiam scelerisque scelerisque quam")
+                .description("Sed ac arcu ultricies, maximus tortor eget, tincidunt ante. Morbi non finibus neque, ac dapibus tellus. Cras nec fringilla nulla, id sagittis dui. Sed eget luctus neque. Etiam scelerisque scelerisque quam sit amet ullamcorper. Nullam eros purus, mollis sed interdum")
                 .totalSubmissions(35)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
         final Contest contestToCreate = Contest.builder()
-                .contestName("pro objektyvą - 2023")
-                .description("gražiauisios 2023-ųjų akimirkos")
+                .name("Sed dignissim eget ipsum quis feugiat")
+                .description("Suspendisse euismod sollicitudin tellus in porta. Praesent faucibus elit eu arcu mattis, ac vehicula massa tincidunt. In auctor mi rhoncus nisl ultrices, a posuere elit pharetra. Aenean tempor arcu at orci aliquam, et pharetra sapien dapibus. Pellentesque volutpat dolor lectus. Proin venenatis, nulla in rutrum egestas, arcu tellus viverra ipsum, eget condimentum risus diam ut ante. Aliquam volutpat viverra risus, eget sodales augue dignissim in. Nulla nulla elit, gravida at placerat eu, tristique vel lacus. Duis a nisi id orci scelerisque bibendum posuere ut leo. Integer fringilla enim at rhoncus congue. Integer viverra quis ipsum non consectetur. Aenean egestas id lorem in dictum. ")
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
                 .totalSubmissions(20)
@@ -150,8 +151,8 @@ public class CompetitionRecordConfig {
 
     private Category createCategory() {
         final Category categoryToCreate01 = Category.builder()
-                .categoryName("pasaulio šalys")
-                .description("už gimtinės ribų")
+                .name("Morbi consectetur in massa nec scelerisque")
+                .description("Integer vel risus nulla. Aenean quis vulputate felis, eget sagittis magna. Duis id lacus dignissim, egestas turpis at, interdum enim. Morbi consectetur in massa nec scelerisque. Vivamus viverra, ante vel varius condimentum, est sem gravida turpis, eu imperdiet purus ex. ")
                 .totalSubmissions(30)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();

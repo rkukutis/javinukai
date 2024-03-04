@@ -54,7 +54,7 @@ public class UserTokenService {
                 .findByTokenValueAndType(tokenEncoder.encode(tokenValue), type);
         if (tokenOptional.isEmpty()) return false;
         UserToken token = tokenOptional.get();
-        if (!userRepository.existsById(token.getUser().getUuid())) return false;
+        if (!userRepository.existsById(token.getUser().getId())) return false;
         boolean isValid = ZonedDateTime.now().isBefore(token.getExpiresAt());
         if(isValid){
             token.setExpiresAt(ZonedDateTime.now());
@@ -66,13 +66,13 @@ public class UserTokenService {
         String hashedReceivedToken = tokenEncoder.encode(tokenValue);
         UserToken token = userTokenRepository.findByTokenValueAndType(hashedReceivedToken, type)
                 .orElseThrow(() -> new InvalidTokenException("Invalid token"));
-        User user =  userRepository.findById(token.getUser().getUuid())
+        User user =  userRepository.findById(token.getUser().getId())
                 .orElseThrow(() -> new InvalidTokenException("No user associated with supplied token"));
         log.info("Returning {} for {} token", user, type);
         return user;
     }
 
     public List<UserToken> findAllUserTokens(UUID userID, TokenType type) {
-        return userTokenRepository.findByUserUuidAndTypeOrderByCreatedAtDesc(userID, type);
+        return userTokenRepository.findByUserIdAndTypeOrderByCreatedAtDesc(userID, type);
     }
 }

@@ -26,15 +26,16 @@ public class Contest {
 
     @Setter
     @Column(name = "name")
-    private String contestName;
+    private String name;
 
     @Setter
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @JsonIgnore
     @JoinTable(
             name = "contest_category",
             joinColumns = @JoinColumn(name = "contest_id"),

@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CompetitionRecordDTO;
 import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
@@ -30,20 +31,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CompetitionRecordService {
 
     private final ContestRepository contestRepository;
     private final CompetitionRecordRepository competitionRecordRepository;
     private final UserRepository userRepository;
-
-    @Autowired
-    public CompetitionRecordService (ContestRepository contestRepository,
-                                     CompetitionRecordRepository competitionRecordRepository,
-                                     UserRepository userRepository) {
-        this.contestRepository = contestRepository;
-        this.competitionRecordRepository = competitionRecordRepository;
-        this.userRepository = userRepository;
-    }
 
     @Transactional
     public UserParticipationResponse createUsersCompetitionRecords(UUID contestID, UUID userID) {
@@ -72,6 +65,7 @@ public class CompetitionRecordService {
                     .build();
         }
 
+        // čia matau sukuria record'us visoms kategorijoms, reikia tikėtis, kad kategorijų nebus daug
         final List<CompetitionRecord> usersCompetitionRecords = new ArrayList<>();
         for (Category category : contestToParticipateIn.getCategories()) {
             final CompetitionRecord record = CompetitionRecord.builder()
@@ -94,39 +88,12 @@ public class CompetitionRecordService {
                 .build();
     }
 
-//    @Transactional
-//    public List<CompetitionRecordResponse> createUsersCompetitionRecords(UUID contestID, UUID userID) {
-//
-//        final Contest contestToParticipateIn = contestRepository.findById(contestID).orElseThrow(
-//                () -> new EntityNotFoundException("Contest was not found with ID: " + contestID));
-//
-//        final User participantUser = userRepository.findById(userID).orElseThrow(
-//                ()-> new UserNotFoundException(userID));
-//
-//        final List<CompetitionRecord> usersCompetitionRecords = new ArrayList<>();
-//
-//        for (Category category : contestToParticipateIn.getCategories()) {
-//
-//            final CompetitionRecord record = CompetitionRecord.builder()
-//                    .contest(contestToParticipateIn)
-//                    .user(participantUser)
-//                    .category(category)
-//                    .maxPhotos(category.getTotalSubmissions()) //ateity reiks keisti į kintamąjį su logika
-//                    .build();
-//            final CompetitionRecord savedRecord = competitionRecordRepository.save(record);
-//            usersCompetitionRecords.add(savedRecord);
-//        }
-//
-//        return usersCompetitionRecords.stream()
-//                .map(CompetitionRecordMapper::recordToRecordResponse)
-//                .collect(Collectors.toList());
-//    }
-
-    public Page<CompetitionRecord> retrieveAllCompetitionRecords(Pageable pageable, String keyword) {
-
+    // this will retrieve the entries for the jury
+    public Page<CompetitionRecord> retrieveCompetitionRecords(Pageable pageable, String keyword,
+                                                                 UUID contestId, UUID categoryId) {
         if (keyword == null || keyword.isEmpty()) {
             log.info("{}: Retrieving all competition records from database", this.getClass().getName());
-            return competitionRecordRepository.findAll(pageable);
+            return competitionRecordRepository.findByCategoryIdAndContestId(pageable, categoryId, contestId);
         } else {
             log.info("{}: Retrieving categories by use email", this.getClass().getName());
             final User userToFind = userRepository.findByEmail(keyword)
@@ -135,28 +102,11 @@ public class CompetitionRecordService {
         }
     }
 
-//    public Page<CompetitionRecordResponse> retrieveAllCompetitionRecords(Pageable pageable, String keyword) {
-//
-//        if (keyword == null || keyword.isEmpty()) {
-//            log.info("{}: Retrieving all competition records from database", this.getClass().getName());
-//            final Page<CompetitionRecord> page = competitionRecordRepository.findAll(pageable);
-//            final List<CompetitionRecordResponse> records = page.getContent()
-//                    .stream()
-//                    .map(CompetitionRecordMapper::recordToRecordResponse)
-//                    .toList();
-//            return new PageImpl<>(records);
-//        } else {
-//            log.info("{}: Retrieving categories by use email", this.getClass().getName());
-//            final User userToFind = userRepository.findByEmail(keyword)
-//                    .orElseThrow(()-> new UserNotFoundException(keyword));
-//            final Page<CompetitionRecord> page = competitionRecordRepository.findByUser(userToFind, pageable);
-//            final List<CompetitionRecordResponse> records = page.getContent()
-//                    .stream()
-//                    .map(CompetitionRecordMapper::recordToRecordResponse)
-//                    .toList();
-//            return new PageImpl<>(records);
-//        }
-//    }
+    public Page<CompetitionRecord> retrieveAllUserCompetitionRecords(Pageable pageable, UUID userId) {
+        return competitionRecordRepository.findByUserId(pageable, userId);
+    }
+
+
 
     @Transactional
     public CompetitionRecord updateCompetitionRecord(UUID recordID, CompetitionRecordDTO competitionRecordDTO) {
@@ -179,4 +129,11 @@ public class CompetitionRecordService {
         }
     }
 
+    public CompetitionRecord retrieveUserCompetitionRecord(UUID categoryId, UUID contestId, UUID userId) {
+        return competitionRecordRepository.findByCategoryIdAndContestIdAndUserId(categoryId, contestId, userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(
+                        "Competition record for user %s in contest %s category %s not found",
+                        userId, contestId, categoryId
+                )));
+    }
 }

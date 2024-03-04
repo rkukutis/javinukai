@@ -10,6 +10,6 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
-    Category findByCategoryNameAndDescriptionAndTotalSubmissions(String categoryName, String description, long totalSubmissions);
-    Page<Category> findByCategoryName(String categoryName, Pageable pageable);
+    Category findByNameAndDescriptionAndTotalSubmissions(String categoryName, String description, long totalSubmissions);
+    Page<Category> findByName(String categoryName, Pageable pageable);
 }

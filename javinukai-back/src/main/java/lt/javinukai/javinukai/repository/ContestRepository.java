@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 @Repository
 public interface ContestRepository extends JpaRepository<Contest, UUID> {
-    Page<Contest> findByContestName(String contestName, Pageable pageable);
+    Page<Contest> findByNameContainingIgnoreCase(Pageable pageable, String contestName);
 }

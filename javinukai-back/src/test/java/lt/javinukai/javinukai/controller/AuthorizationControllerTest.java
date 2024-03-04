@@ -190,7 +190,7 @@ class AuthorizationControllerTest {
         User user = userRepository.findByEmail("fbender@mail.com").get();
         assertFalse(user.isEnabled());
         assertNotNull(tokenCaptor.getValue());
-        assertEquals(user.getUuid() ,userCaptor.getValue().getUuid());
+        assertEquals(user.getId() ,userCaptor.getValue().getId());
 
         MockHttpServletResponse response = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/auth/confirm-email")
@@ -294,9 +294,9 @@ class AuthorizationControllerTest {
 
         assertEquals(200, response.getStatus());
         verify(mockEmailService).sendPasswordResetToken(userCaptor.capture(), tokenCaptor.capture());
-        assertEquals(testUser.getUuid(), userCaptor.getValue().getUuid());
+        assertEquals(testUser.getId(), userCaptor.getValue().getId());
         List<UserToken> tokens = tokenRepository
-                .findByUserUuidAndTypeOrderByCreatedAtDesc(testUser.getUuid(), TokenType.PASSWORD_RESET);
+                .findByUserIdAndTypeOrderByCreatedAtDesc(testUser.getId(), TokenType.PASSWORD_RESET);
         assertEquals(1, tokens.size());
 
 
