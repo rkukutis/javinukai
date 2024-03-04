@@ -24,7 +24,7 @@ export default function Layout() {
       removeUser();
       navigate("/");
     },
-    onError: (err) => toast.error(err.message),
+    onError: () => toast.error(t('services.logoutUserError')),
   });
 
   return (

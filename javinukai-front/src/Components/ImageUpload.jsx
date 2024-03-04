@@ -27,7 +27,7 @@ function ImageUpload() {
       setFiles([]);
       reset();
     },
-    onError: (err) => toast.error(err.message),
+    onError: () => toast.error(t('services.uploadImagesError')),
   });
 
   const onDrop = useCallback((acceptedFiles) => {

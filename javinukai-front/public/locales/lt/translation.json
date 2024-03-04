@@ -66,8 +66,8 @@
   "PaginationSettings": {
     "previousPage": "Ankstesnis",
     "nextPage": "Sekantis",
-    "usersTitle": "Vartotojų per puslapį",
-    "users": "vartotojai",
+    "usersTitle": "Vartotojai per puslapį",
+    "users": "vartotojų",
     "fieldTitle": "Rūšiuoti pagal lauką",
     "fieldName": "Vardas",
     "fieldSurname": "Pavardė",
@@ -213,5 +213,12 @@
       "blockAccount": "Blokuoti",
       "unblockAccount": "Atblokuoti",
       "deleteAccountButton": "Ištrinti"
-    }
+    },
+
+      "roles": {
+        "ADMIN": "Administratorius",
+        "USER": "Vartotojas",
+        "JURY": "Žiuri",
+        "MODERATOR": "Moderatorius"
+      }
 }

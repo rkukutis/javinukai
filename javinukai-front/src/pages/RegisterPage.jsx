@@ -36,7 +36,7 @@ function RegisterPage() {
   });
 
   function onSubmit(formData) {
-    mutate(formData);
+    mutate({ registrationInfo: formData, t });
   }
 
   function onAffiliationChange(newAffiliation) {
@@ -92,7 +92,7 @@ function RegisterPage() {
                 },
                 maxLength: {
                   value: 20,
-                  message: t("RegisterPage.surnnameLength"),
+                  message: t("RegisterPage.surnameLength"),
                 },
               })}
             />
