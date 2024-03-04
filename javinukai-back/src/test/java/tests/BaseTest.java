@@ -20,6 +20,7 @@ public class BaseTest {
     @BeforeEach
     void setup() {
         ChromeOptions options = new ChromeOptions();
+//        test
         options.addArguments("--headless");
         options.addArguments("disable-infobars");
         options.addArguments("--start-fullscreen");
