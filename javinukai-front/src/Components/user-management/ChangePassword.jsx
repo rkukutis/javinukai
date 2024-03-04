@@ -1,19 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import FormFieldError from "../FormFieldError";
-import StyledInput from "../StyledInput";
-import Button from "../Button";
 import changePassword from "../../services/auth/changePassword";
-import axios from "axios";
+import Button from "../Button";
 
 function ChangePassword() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
 
   const {
     reset,
@@ -21,53 +15,32 @@ function ChangePassword() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({ mode: "onBlur" });
+  } = useForm();
 
-  // const { mutate } = useMutation({
-  //   mutationFn: (formData, userData, t) =>
-  //     changePassword(formData, userData, t),
-  //   onSuccess: () => {
-  //     toast.success(t("RegisterPage.registrationSuccess"));
-  //     navigate("/");
-  //   },
-  //   onError: (err) => {
-  //     toast.error(err.message);
-  //     reset();
-  //   },
-  // });
+  const { mutate } = useMutation({
+    mutationFn: (formData) => changePassword({ formData, t }),
+    onSuccess: () => {
+      toast.success(t("ChangeUsersPasswordForm.changePasswordSuccess"));
+      reset();
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   function onSubmit(formData) {
-
-    console.log("onSubmit token", token);
-
-    axios
-      .post("http://localhost:8080/api/v1/change-password", {
-        resetToken: token,
-        newPassword: "123456789",
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
-
-    // if (!token) {
-    //   toast.error(t("ResetPassPage.passChangeError"));
-    //   return;
-    // }
-    // mutate({ data: { token, newPassword: formData.newPassword }, t });
-
-    console.log("form data -> ", formData);
+    mutate(formData);
   }
 
   return (
-    <div className="w-full min-h-[82vh] flex flex-col items-center justify-center">
-      <div className="p-3 w-full lg:w-2/5">
+    <div className="bg-white w-4/5 flex flex-col items-center justify-center">
+      <div className="pt-3 w-full lg:w-100 ">
         <form
           id="change-password-form"
-          className="flex flex-col space-y-2 bg-slate-50 p-2 rounded-sm"
+          className="bg-red-50 flex flex-col space-y-2 p-2 rounded-sm"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <section className="form-field">
+          <section className="form-field bg-red-50 ">
             <label>{t("ChangeUsersPasswordForm.oldPassword")}</label>
             <input
               type="password"
@@ -89,7 +62,7 @@ function ChangePassword() {
             )}
           </section>
 
-          <section className="form-field">
+          <section className="form-field bg-red-50">
             <label>{t("ChangeUsersPasswordForm.newPassword")}</label>
             <input
               type="password"
@@ -111,7 +84,7 @@ function ChangePassword() {
             )}
           </section>
 
-          <section className="form-field">
+          <section className="form-field bg-red-50">
             <label>
               {t("ChangeUsersPasswordForm.newPasswordConfirmation")}
             </label>
@@ -134,13 +107,15 @@ function ChangePassword() {
               </FormFieldError>
             )}
           </section>
-
-          <StyledInput
-            id="change-password-submit"
-            value={t("ChangeUsersPasswordForm.confirmChangePasswordButton")}
-            type="submit"
-          />
-          <Button />
+          <div className="flex justify-evenly">
+            <Button
+              id="change-password-submit"
+              extraStyle="text-lg mt-2 w-full lg:w-fit"
+              type="submit"
+            >
+              {t("ChangeUsersPasswordForm.confirmChangePasswordButton")}
+            </Button>
+          </div>
         </form>
       </div>
     </div>

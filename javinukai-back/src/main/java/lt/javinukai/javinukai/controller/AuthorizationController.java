@@ -94,6 +94,15 @@ public class AuthorizationController {
        return ResponseEntity.ok().body("Password has been reset");
     }
 
+    @PatchMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest,
+                                            @AuthenticationPrincipal User user
+    ) {
+        log.info("Received password change request from user: {}", user.getUsername());
+        authenticationService.changePasswordOmDemand(user, changePasswordRequest.getNewPassword(), changePasswordRequest.getOldPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody @Valid ForgotPasswordRequest forgotPasswordRequest) {
         log.info("Received forgot password request: {}", forgotPasswordRequest);

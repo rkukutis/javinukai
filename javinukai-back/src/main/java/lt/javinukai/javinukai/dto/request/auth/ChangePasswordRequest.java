@@ -13,4 +13,6 @@ public class ChangePasswordRequest {
     private String resetToken;
     @NotBlank
     private String newPassword;
+    @NotBlank
+    private String oldPassword;
 }
