@@ -118,13 +118,13 @@ class ContestServiceTest {
         UUID id = UUID.randomUUID();
 
         Category category01 = Category.builder()
-                .categoryName("gamta")
+                .name("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         Contest expectedContest = Contest.builder()
-                .contestName("viltis")
+                .name("viltis")
                 .description("paskutinė, nepabegusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)

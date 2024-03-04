@@ -43,7 +43,7 @@ public class ParticipationRequestController {
     @PostMapping("/request")
     public ParticipationRequest createParticipationRequest(@AuthenticationPrincipal User user,
                                                            @RequestParam UUID contestId) {
-        ParticipationRequest newRequest = participationRequestService.createParticipationRequest(contestId, user.getUuid());
+        ParticipationRequest newRequest = participationRequestService.createParticipationRequest(contestId, user.getId());
         return newRequest;
     }
 

@@ -79,7 +79,7 @@ class CategoryServiceTest {
         final UUID id1 = UUID.randomUUID();
         final Category category1 = Category.builder()
                 .id(id1)
-                .categoryName("test category name 1")
+                .name("test category name 1")
                 .description("test category description 1")
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
@@ -88,7 +88,7 @@ class CategoryServiceTest {
         final UUID id2 = UUID.randomUUID();
         final Category category2 = Category.builder()
                 .id(id2)
-                .categoryName("test category name 2")
+                .name("test category name 2")
                 .description("test category description 2")
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
@@ -115,7 +115,7 @@ class CategoryServiceTest {
         final UUID id1 = UUID.randomUUID();
         final Category category1 = Category.builder()
                 .id(id1)
-                .categoryName("test category name 1")
+                .name("test category name 1")
                 .description("test category description 1")
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
@@ -126,13 +126,13 @@ class CategoryServiceTest {
 
         Page<Category> page = new PageImpl<>(categoryList);
 
-        when(categoryRepository.findByCategoryName(anyString(), any(Pageable.class))).thenReturn(page);
+        when(categoryRepository.findByName(anyString(), any(Pageable.class))).thenReturn(page);
 
         Page<Category> result = categoryService.retrieveAllCategories(Pageable.unpaged(), "test category name 1");
 
         assertEquals(categoryList.size(), result.getTotalElements());
         assertEquals(categoryList, result.getContent());
-        verify(categoryRepository, times(1)).findByCategoryName(anyString(), any(Pageable.class));
+        verify(categoryRepository, times(1)).findByName(anyString(), any(Pageable.class));
     }
 
 //    @Test
@@ -197,7 +197,7 @@ class CategoryServiceTest {
         final UUID id = UUID.randomUUID();
         final Category category = Category.builder()
                 .id(id)
-                .categoryName("test category name")
+                .name("test category name")
                 .description("test category description")
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
@@ -214,7 +214,7 @@ class CategoryServiceTest {
         final UUID id = UUID.randomUUID();
         final Category category = Category.builder()
                 .id(id)
-                .categoryName("test category name")
+                .name("test category name")
                 .description("test category description")
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
