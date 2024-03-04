@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import getContests from "../services/contests/getContests";
-import PaginationSettingsReusable from "../Components/user-management/PaginationSettingsReusable";
+import PaginationSettings from "../Components/PaginationSettings";
 import ContestCard from "../Components/contest/ContestCard";
 
 const defaultPagination = {
@@ -37,7 +37,7 @@ function ContestsPage() {
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
       <div className="w-3/4 pb-4">
-        <PaginationSettingsReusable
+        <PaginationSettings
           limitObjectName="contests"
           sortFieldOptions={
             <>

@@ -15,6 +15,7 @@ import UserDetailsPage from "./pages/UserDetailsPage";
 import ContestsPage from "./pages/ContestsPage";
 import ContestDetailsPage from "./pages/ContestDetailsPage";
 import UserSubmissionView from "./Components/UserSubmissionView";
+import JurySubmissionView from "./Components/JurySubmissionView";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,8 +59,11 @@ export default function App() {
                   path="category/:categoryId/my-entries"
                   element={<UserSubmissionView />}
                 />
-                <Route path="category/:categoryId/entries" />
               </Route>
+              <Route
+                path="/contest/:contestId/category/:categoryId/contestant-entries"
+                element={<JurySubmissionView />}
+              />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />

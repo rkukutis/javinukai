@@ -1,48 +1,46 @@
 import { useState } from "react";
-import Button from "../Button";
+import Button from "./Button";
 import { useTranslation } from "react-i18next";
 
 export default function PaginationSettings({
   pagination,
   setPagination,
   availablePageNumber,
+  limitObjectName,
+  sortFieldOptions,
+  searchByFieldName,
+  firstPage,
+  lastPage,
 }) {
-  const [searchedSurname, setSearchedSurname] = useState("");
+  const [searchedField, setSearchedField] = useState("");
 
   function handleNextPage() {
-    if (
-      availablePageNumber === 1 ||
-      pagination.page === availablePageNumber - 1
-    )
-      return;
+    if (lastPage) return;
     setPagination({ ...pagination, page: pagination.page + 1 });
   }
   function handlePreviousPage() {
-    if (pagination.page === 0) return;
+    if (firstPage) return;
     setPagination({ ...pagination, page: pagination.page - 1 });
   }
   function handleLimitChange(e) {
-    e.preventDefault();
     setPagination({ ...pagination, limit: e.target.value, page: 0 });
   }
   function handleSortByChange(e) {
-    e.preventDefault();
     setPagination({ ...pagination, sortBy: e.target.value });
   }
   function handleSortDescChange(e) {
-    e.preventDefault();
     setPagination({ ...pagination, sortDesc: e.target.value });
   }
-  function handleSurnameFieldChange(e) {
-    setSearchedSurname(e.target.value);
+  function handleSearchFieldChange(e) {
+    setSearchedField(e.target.value);
   }
 
-  function handleSurnameSearchKeydown(e) {
+  function handleSearchFieldKeydown(e) {
     if (e.key !== "Enter") return;
-    handleSurnameSearchClick();
+    handleSearchClick();
   }
-  function handleSurnameSearchClick() {
-    setPagination({ ...pagination, surnameContains: searchedSurname });
+  function handleSearchClick() {
+    setPagination({ ...pagination, searchedField });
   }
 
   const { t } = useTranslation();
@@ -67,16 +65,16 @@ export default function PaginationSettings({
         </Button>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>{t("PaginationSettings.usersTitle")}</label>
+        <label>{limitObjectName} per page</label>
         <select
           className="py-2 px-4 bg-white rounded-md"
           onChange={handleLimitChange}
           value={pagination.limit}
         >
-          <option value={10}>10 {t("PaginationSettings.users")}</option>
-          <option value={25}>25 {t("PaginationSettings.users")}</option>
-          <option value={50}>50 {t("PaginationSettings.users")}</option>
-          <option value={100}>100 {t("PaginationSettings.users")}</option>
+          <option value={10}>10 {limitObjectName}</option>
+          <option value={25}>25 {limitObjectName}</option>
+          <option value={50}>50 {limitObjectName}</option>
+          <option value={100}>100 {limitObjectName}</option>
         </select>
       </section>
       <section className="flex flex-col space-y-2">
@@ -86,27 +84,7 @@ export default function PaginationSettings({
           onChange={handleSortByChange}
           value={pagination.sortBy}
         >
-          <option value="name">{t("PaginationSettings.fieldName")}</option>
-          <option value="surname">
-            {t("PaginationSettings.fieldSurname")}
-          </option>
-          <option value="email">{t("PaginationSettings.fieldEmail")}</option>
-          <option value="role">{t("PaginationSettings.fieldRole")}</option>
-          <option value="maxTotal">
-            {t("PaginationSettings.fieldMaxTotalEntries")}
-          </option>
-          <option value="maxSinglePhotos">
-            {t("PaginationSettings.fieldMaxSingles")}
-          </option>
-          <option value="maxCollections">
-            {t("PaginationSettings.fieldMaxCollections")}
-          </option>
-          <option value="isEnabled">
-            {t("PaginationSettings.fieldIsEnabled")}
-          </option>
-          <option value="isNonLocked">
-            {t("PaginationSettings.fieldIsNonLocked")}
-          </option>
+          {sortFieldOptions}
         </select>
       </section>
       <section className="flex flex-col space-y-2">
@@ -121,16 +99,16 @@ export default function PaginationSettings({
         </select>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>{t("PaginationSettings.searchTitle")}</label>
+        <label>Search by {searchByFieldName}</label>
         <div className="lg:flex-row flex lg:space-x-3 space-y-2 lg:space-y-0 flex-col">
           <input
             className="p-2 bg-white rounded-md w-full"
-            placeholder={t("PaginationSettings.searchPlaceholder")}
-            onKeyDown={handleSurnameSearchKeydown}
-            onChange={handleSurnameFieldChange}
-            value={searchedSurname}
+            placeholder={searchByFieldName}
+            onKeyDown={handleSearchFieldKeydown}
+            onChange={handleSearchFieldChange}
+            value={searchedField}
           />
-          <Button onClick={handleSurnameSearchClick}>
+          <Button onClick={handleSearchClick}>
             {t("PaginationSettings.searchButton")}
           </Button>
         </div>

@@ -3,7 +3,6 @@ import contestPhoto from "../../assets/contest-photo.jpg";
 import calendarIcon from "../../assets/icons/date_range_FILL0_wght400_GRAD0_opsz24.svg";
 import formatTimestap from "../../utils/formatTimestap";
 import Button from "../Button";
-import CategoryListing from "../category/CategoryListing";
 
 export default function ContestCard({ contestInfo }) {
   const navigate = useNavigate();
@@ -37,12 +36,6 @@ export default function ContestCard({ contestInfo }) {
           </div>
         </div>
       </div>
-      {/* <div className="text col-span-2 p-6 bg-teal-500 lg:rounded-r-md rounded-b-md">
-        <h1 className="text-white text-xl font-semibold">Categories</h1>
-        {contestInfo?.categories.map((category) => (
-          <CategoryListing key={category.id} categoryInfo={category} />
-        ))}
-      </div> */}
     </div>
   );
 }
