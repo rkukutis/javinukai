@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -23,7 +24,8 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    @Column(name = "id")
+    private UUID id;
 
     @Setter
     private String name;
@@ -69,6 +71,12 @@ public class User implements UserDetails {
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JsonIgnore
     private List<CompetitionRecord> competitionRecords;
+
+    @Setter
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<ParticipationRequest> participationRequests;
 
     @CreatedDate
     private ZonedDateTime createdAt;
@@ -123,10 +131,12 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = ZonedDateTime.now();
     }
+
     @PreUpdate
     protected void onUpdate() {
         this.modifiedAt = ZonedDateTime.now();
@@ -136,7 +146,7 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return Objects.equals(uuid, user.uuid) && Objects.equals(name, user.name)
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name)
                 && Objects.equals(password, user.password)
                 && Objects.equals(surname, user.surname)
                 && Objects.equals(email, user.email)
@@ -155,7 +165,7 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, name, password, surname, email, birthYear, phoneNumber, isFreelance,
+        return Objects.hash(id, name, password, surname, email, birthYear, phoneNumber, isFreelance,
                 institution, maxSinglePhotos, maxCollections, isEnabled,
                 isNonLocked, role, tokens, createdAt, modifiedAt);
     }

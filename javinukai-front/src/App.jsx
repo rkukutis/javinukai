@@ -12,9 +12,12 @@ import HomePage from "./pages/HomePage";
 import ImageUpload from "./Components/ImageUpload";
 import UserManagementPage from "./pages/UserManagementPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
+import ContestsPage from "./pages/ContestsPage";
+import ContestDetailsPage from "./pages/ContestDetailsPage";
+import UserSubmissionView from "./Components/UserSubmissionView";
+import JurySubmissionView from "./Components/JurySubmissionView";
 import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
-import CategoryPreview from "./Components/Contest-Components/CategoryPreview";
 import PreviewPage from "./pages/PreviewPage";
 
 const queryClient = new QueryClient({
@@ -48,13 +51,30 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route path="/contests" element={<ContestsPage />} />
               <Route index element={<HomePage />} />
+              <Route
+                path="/contest/:contestId"
+                element={<ContestDetailsPage />}
+              >
+                <Route
+                  path="category/:categoryId/upload"
+                  element={<ImageUpload />}
+                />
+                <Route
+                  path="category/:categoryId/my-entries"
+                  element={<UserSubmissionView />}
+                />
+              </Route>
+              <Route
+                path="/contest/:contestId/category/:categoryId/contestant-entries"
+                element={<JurySubmissionView />}
+              />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-              <Route path="/image-upload" element={<ImageUpload />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
               <Route
                 path="/manage-users/:userId"

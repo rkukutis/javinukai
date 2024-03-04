@@ -97,7 +97,7 @@ public class AuthenticationService {
     public void forgotPassword(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("No user with email " + email));
-        List<UserToken> userTokens = userTokenService.findAllUserTokens(user.getUuid(), TokenType.PASSWORD_RESET);
+        List<UserToken> userTokens = userTokenService.findAllUserTokens(user.getId(), TokenType.PASSWORD_RESET);
         if (!userTokens.isEmpty() && ZonedDateTime.now().isBefore(userTokens.get(0).getExpiresAt())) {
                 throw new TooManyRequestsException("User " + user.getEmail() +
                         " has already received a valid reset token." +

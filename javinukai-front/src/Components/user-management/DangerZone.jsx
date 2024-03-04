@@ -29,7 +29,7 @@ export function DangerZone({ userData }) {
   const [newRole, setNewRole] = useState(userData.role);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
+  
   function handleChangeRole() {
     if (newRole == userData.role) {
       toast.error(t('DangerZone.newRoleSame'));
@@ -37,7 +37,7 @@ export function DangerZone({ userData }) {
     }
     if (
       !confirm(
-        t('DangerZone.changeRole', { newRole })))
+        t('DangerZone.changeRole', { newRole: t(`roles.${newRole}`) })))
       return;
     updateUserMutation.mutate({ ...userData, role: newRole });
   }

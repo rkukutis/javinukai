@@ -9,6 +9,7 @@ import lt.javinukai.javinukai.dto.response.CompetitionRecordResponse;
 import lt.javinukai.javinukai.dto.response.UserParticipationResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
+import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.service.CompetitionRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,63 +36,66 @@ public class CompetitionRecordController {
         this.competitionRecordService = competitionRecordService;
     }
 
+    // manau, kad nauji record'ai bus kuriami automatiškai, taigi post kontrolerio nereikės
     @PostMapping(path = "/records")
     public ResponseEntity<List<CompetitionRecord>> addUserToContest(@RequestParam UUID contestID,
-                                              @RequestParam UUID userID) {
+                                              @AuthenticationPrincipal User participant) {
 
         final UserParticipationResponse userParticipationResponse = competitionRecordService
-                .createUsersCompetitionRecords(contestID, userID);
+                .createUsersCompetitionRecords(contestID, participant.getId());
         final List<CompetitionRecord> usersCompetitionRecords = userParticipationResponse.getRecords();
         final HttpStatus httpStatus = userParticipationResponse.getHttpStatus();
         final String message = userParticipationResponse.getMessage();
-
         log.info(message);
         return new ResponseEntity<>(usersCompetitionRecords, httpStatus);
     }
 
-//    @PostMapping(path = "/records")
-//    public ResponseEntity<List<CompetitionRecordResponse>> addUserToContest(@RequestParam UUID contestID,
-//                                                                            @RequestParam UUID userID) {
-//
-//        final List<CompetitionRecordResponse> usersCompetitionRecords =
-//                competitionRecordService.createUsersCompetitionRecords(contestID, userID);
-//
-//        return new ResponseEntity<>(usersCompetitionRecords, HttpStatus.CREATED);
-//    }
-
+    // this endpoint is for the participant to check his own options
     @GetMapping(path = "/records")
-    public ResponseEntity<Page<CompetitionRecord>> retrieveAllRecords(@RequestParam(defaultValue = "1") int pageNumber,
+    public ResponseEntity<Page<CompetitionRecord>> retrieveUserCompetitionRecords(@AuthenticationPrincipal User participant,
+                                                                                  @RequestParam(defaultValue = "0") int pageNumber,
+                                                                                  @RequestParam(defaultValue = "25") int pageSize,
+                                                                                  @RequestParam(defaultValue = "createdAt") String sortBy,
+                                                                                  @RequestParam(defaultValue = "false") boolean sortDesc) {
+        Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+        final Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        return ResponseEntity.ok().body(competitionRecordService
+                .retrieveAllUserCompetitionRecords(pageable, participant.getId())
+        );
+    }
+
+    @GetMapping(path = "records/contest/{contestId}/category/{categoryId}/my-record")
+    public ResponseEntity<CompetitionRecord> retrieveSpecificUserRecord(@PathVariable UUID contestId,
+                                                                        @PathVariable UUID categoryId,
+                                                                        @AuthenticationPrincipal User participant) {
+        CompetitionRecord record = competitionRecordService
+                .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
+        log.info("Retrieving competition record {}", record.getId());
+        return ResponseEntity.ok().body(record);
+    }
+
+    // this one is for the jury
+    @GetMapping(path = "/records/contest/{contestId}/category/{categoryId}")
+    public ResponseEntity<Page<CompetitionRecord>> retrieveRecords(@PathVariable UUID contestId,
+                                                                      @PathVariable UUID categoryId,
+                                                                      @RequestParam(defaultValue = "1") int pageNumber,
                                                                       @RequestParam(defaultValue = "25") int pageSize,
                                                                       @RequestParam(required = false) String keyword,
                                                                       @RequestParam(defaultValue = "createdAt") String sortBy,
                                                                       @RequestParam(defaultValue = "false") boolean sortDesc) {
 
-        log.info("Request for retrieving all competition records");
+        log.info("Request for retrieving competition {} category {} records", contestId, categoryId);
         Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sort = Sort.by(direction, sortBy);
 
         final Pageable pageable = PageRequest.of(--pageNumber, pageSize, sort);
-        final Page<CompetitionRecord> page = competitionRecordService.retrieveAllCompetitionRecords(pageable, keyword);
-        log.info("Request for retrieving all competition records, {} records found", page.getTotalElements());
+        final Page<CompetitionRecord> page = competitionRecordService.retrieveCompetitionRecords(
+                pageable, keyword, contestId, categoryId);
+        log.info("Request for retrieving competition {} category {} competition records, {} records found",
+                contestId, categoryId, page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
-
-//    @GetMapping(path = "/records")
-//    public ResponseEntity<Page<CompetitionRecordResponse>> retrieveAllRecords(@RequestParam(defaultValue = "1") int pageNumber,
-//                                                                      @RequestParam(defaultValue = "25") int pageSize,
-//                                                                      @RequestParam(required = false) String keyword,
-//                                                                      @RequestParam(defaultValue = "createdAt") String sortBy,
-//                                                                      @RequestParam(defaultValue = "false") boolean sortDesc) {
-//
-//        log.info("Request for retrieving all competition records");
-//        Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
-//        Sort sort = Sort.by(direction, sortBy);
-//
-//        final Pageable pageable = PageRequest.of(--pageNumber, pageSize, sort);
-//        final Page<CompetitionRecordResponse> page = competitionRecordService.retrieveAllCompetitionRecords(pageable, keyword);
-//        log.info("Request for retrieving all competition records, {} records found", page.getTotalElements());
-//        return new ResponseEntity<>(page, HttpStatus.OK);
-//    }
 
     @PatchMapping(path = "/records/{recordID}")
     public ResponseEntity<CompetitionRecord> updateRecord(@PathVariable @NotNull UUID recordID,

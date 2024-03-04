@@ -1,17 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import getUsers from "../services/users/getUsers";
-import PaginationSettings from "../Components/user-management/PaginationSettings";
+import PaginationSettings from "../Components/PaginationSettings";
 import { UserListItem } from "../Components/user-management/UserListItem";
 import { BarLoader } from "react-spinners";
 import { useTranslation } from "react-i18next";
+import ChangePage from "../Components/user-management/ChangePage";
 
 const defaultPagination = {
   page: 0,
   limit: 10,
   sortBy: "surname",
   sortDesc: "false",
-  surnameContains: null,
+  searchedField: null,
 };
 
 export default function UserManagementPage() {
@@ -24,7 +25,7 @@ export default function UserManagementPage() {
       paginationSettings.limit,
       paginationSettings.sortBy,
       paginationSettings.sortDesc,
-      paginationSettings.surnameContains,
+      paginationSettings.searchedField,
     ],
     queryFn: () =>
       getUsers(
@@ -32,7 +33,7 @@ export default function UserManagementPage() {
         paginationSettings.limit,
         paginationSettings.sortBy,
         paginationSettings.sortDesc,
-        paginationSettings.surnameContains
+        paginationSettings.searchedField
       ),
   });
 
@@ -45,6 +46,37 @@ export default function UserManagementPage() {
           pagination={paginationSettings}
           setPagination={setPaginationSettings}
           availablePageNumber={data?.totalPages}
+          limitObjectName="users"
+          sortFieldOptions={
+            <>
+              <option value="name">{t("PaginationSettings.fieldName")}</option>
+              <option value="surname">
+                {t("PaginationSettings.fieldSurname")}
+              </option>
+              <option value="email">
+                {t("PaginationSettings.fieldEmail")}
+              </option>
+              <option value="role">{t("PaginationSettings.fieldRole")}</option>
+              <option value="maxTotal">
+                {t("PaginationSettings.fieldMaxTotalEntries")}
+              </option>
+              <option value="maxSinglePhotos">
+                {t("PaginationSettings.fieldMaxSingles")}
+              </option>
+              <option value="maxCollections">
+                {t("PaginationSettings.fieldMaxCollections")}
+              </option>
+              <option value="isEnabled">
+                {t("PaginationSettings.fieldIsEnabled")}
+              </option>
+              <option value="isNonLocked">
+                {t("PaginationSettings.fieldIsNonLocked")}
+              </option>
+            </>
+          }
+          searchByFieldName="surname"
+          firstPage={data?.firs}
+          lastPage={data?.last}
         />
         <div className="hidden xl:grid xl:grid-cols-10 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
           <p>{t("PaginationSettings.fieldName")}</p>
@@ -73,6 +105,13 @@ export default function UserManagementPage() {
             ))}
           </>
         )}
+      </div>
+      <div>
+        <ChangePage
+        pagination={paginationSettings}
+        setPagination={setPaginationSettings}
+        availablePageNumber={data?.totalPages}
+        />
       </div>
     </div>
   );

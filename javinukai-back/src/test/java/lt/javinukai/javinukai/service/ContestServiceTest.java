@@ -118,13 +118,13 @@ class ContestServiceTest {
         UUID id = UUID.randomUUID();
 
         Category category01 = Category.builder()
-                .categoryName("gamta")
+                .name("gamta")
                 .description("ir taip aišku ")
                 .totalSubmissions(100)
                 .build();
 
         Contest expectedContest = Contest.builder()
-                .contestName("viltis")
+                .name("viltis")
                 .description("paskutinė, nepabegusi")
                 .categories(Collections.singletonList(category01))
                 .totalSubmissions(666)
@@ -140,39 +140,38 @@ class ContestServiceTest {
 
         verify(contestRepository, times(1)).findById(eq(id));
     }
-/*
-    @Test
-    void updateCategoriesOfContestReturnsContest() {
 
+//    @Test
+//    void updateCategoriesOfContestReturnsContest() {
+//
+//        final UUID categoryID = UUID.randomUUID();
+//        final Category category = new Category(categoryID,
+//                "test category name",
+//                "testCategory description",
+//                66,
+//                null, null, null, null);
+//        List<Category> categories = new ArrayList<>();
+//        categories.add(category);
+//
+//        when(categoryRepository.findById(categoryID)).thenReturn(Optional.of(category));
+//
+//        final UUID contestID = UUID.randomUUID();
+//        final Contest initialContest = new Contest(contestID,
+//                "test contest name",
+//                "test contest description",
+//                null,
+//                666,
+//                null, null, null, null);
+//
+//        when(contestRepository.findById(contestID)).thenReturn(Optional.ofNullable(initialContest));
+//        when(contestRepository.save(any(Contest.class))).thenReturn(initialContest);
+//
+//        final Contest updatedContest = contestService.updateCategoriesOfContest(initialContest.getId(), categories);
+//
+//        Assertions.assertThat(updatedContest).isNotNull();
+//        Assertions.assertThat(updatedContest.getId()).isNotNull();
+//    }
 
-        final UUID categoryID = UUID.randomUUID();
-        final Category category = new Category(categoryID,
-                "test category name",
-                "testCategory description",
-                66,
-                null, null, null, null);
-        List<Category> categories = new ArrayList<>();
-        categories.add(category);
-
-        when(categoryRepository.findById(categoryID)).thenReturn(Optional.of(category));
-
-        final UUID contestID = UUID.randomUUID();
-        final Contest initialContest = new Contest(contestID,
-                "test contest name",
-                "test contest description",
-                null,
-                666,
-                null, null, null, null);
-
-        when(contestRepository.findById(contestID)).thenReturn(Optional.ofNullable(initialContest));
-        when(contestRepository.save(any(Contest.class))).thenReturn(initialContest);
-
-        final Contest updatedContest = contestService.updateCategoriesOfContest(initialContest.getId(), categories);
-
-        Assertions.assertThat(updatedContest).isNotNull();
-        Assertions.assertThat(updatedContest.getId()).isNotNull();
-    }
-*/
     @Test
     void deleteContestSuccess() {
         UUID contestId = UUID.randomUUID();

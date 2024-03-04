@@ -26,7 +26,8 @@ public class UserToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    @Column(name = "id")
+    private UUID id;
 
     private String tokenValue;
 
@@ -44,7 +45,7 @@ public class UserToken {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JsonIgnore
-    @JoinColumn(name = "user_uuid")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @PrePersist

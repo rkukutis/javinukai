@@ -19,7 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class CompetitionRecord {
 
     @Id
@@ -38,9 +37,12 @@ public class CompetitionRecord {
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "uuid")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
 //    @JsonIgnore
     private User user;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "competitionRecord", cascade = CascadeType.MERGE)
+    private List<PhotoCollection> entries;
 
     @Setter
     @Column(name = "max_photos")
