@@ -7,12 +7,12 @@ import formatTimestap from "../utils/formatTimestap";
 import Button from "../Components/Button";
 import { useTranslation } from "react-i18next";
 
-function UserDetailsField({ fieldName, fieldValue }) {
+function UserDetailsField({ fieldName, fieldValue, className }) {
   return (
     <section className="text py-3">
       <label className="text-lg text-slate-900">{fieldName}</label>
       <span>: </span>
-      <span className="text-lg text-teal-600 text-wrap">{fieldValue}</span>
+      <span className={`text-lg text-wrap ${className  || 'text-teal-600'}`}>{fieldValue}</span>
     </section>
   );
 }
@@ -84,14 +84,16 @@ function UserDetailsPage() {
                 <UserDetailsField
                   fieldName={t('UserDetailsPage.accountEmailConfirmed')}
                   fieldValue={data?.isEnabled ? t('UserDetailsPage.isTrue') : t('UserDetailsPage.isFalse')}
+                  className={data?.isEnabled ? '' : 'text-red-500 font-bold'}
                 />
                 <UserDetailsField
                   fieldName={t('UserDetailsPage.accountIsLocked')}
                   fieldValue={data?.isNonLocked ? t('UserDetailsPage.isFalse') : t('UserDetailsPage.isTrue')}
+                  className={data?.isNonLocked ? '' : 'text-red-500 font-bold' }
                 />
                 <UserDetailsField
                 fieldName={t('UserDetailsPage.accountRole')}
-                fieldValue={t(`roles.${data?.role}`) || data?.role}
+                fieldValue={t(`roles.${data?.role}`) || data?.role}          
                                 />
                 <UserDetailsField
                   fieldName={t('UserDetailsPage.accountMaxPhotosContest')}
