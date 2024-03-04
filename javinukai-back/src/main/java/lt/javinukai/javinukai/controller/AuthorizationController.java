@@ -98,12 +98,11 @@ public class AuthorizationController {
 
     @PatchMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest,
-                                            @AuthenticationPrincipal UserDetails userDetails
+                                            @AuthenticationPrincipal User user
     ) {
-        log.info("Received password change request from user: {}", userDetails.getUsername());
-        final User user = (User) userDetails;
-        authenticationService.changePasswordOmDemand(user, changePasswordRequest.getNewPassword());
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        log.info("Received password change request from user: {}", user.getUsername());
+        authenticationService.changePasswordOmDemand(user, changePasswordRequest.getNewPassword(), changePasswordRequest.getOldPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/forgot-password")

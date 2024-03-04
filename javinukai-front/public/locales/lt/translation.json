@@ -149,10 +149,9 @@
   "services": {
     "uploadImagesError": "Nepavyko įkelti nuotraukų",
     "resetPasswordError": "Bandant iš naujo nustatyti slaptažodį įvyko klaida",
-    "changePasswordError": "Bandant pakeisti slaptažodį įvyko klaida",
+    "changePasswordError": "Bandant pakeisti slaptažodį įvyko klaida, darkart patikrinkite dabartinį",
     "resetPasswordOldPasswordError": "Naujas slaptažodis negali būti toks pat kaip senas",
     "resetPasswordResetLinkInvalid": "Slaptažodžio nustatymo iš naujo nuoroda neteisinga arba nebegalioja",
-    "changePasswordResetLinkInvalid": "Slaptažodžio pakeitimo nuoroda neteisinga arba nebegalioja",
     "forgotPasswordError": "Patikrinkite el. paštą, ar nėra slaptažodžio nustatymo iš naujo nuorodos",
     "loginUserError": "Neteisinga kredencialai",
     "logoutUserError": "Atsijungiant įvyko klaida",
@@ -226,7 +225,7 @@
   },
 
   "ChangeUsersPasswordForm": {
-    "oldPassword": "Senas slaptažodis",
+    "oldPassword": "Dabartinis slaptažodis",
     "newPassword": "Naujas slaptažodis",
     "newPasswordConfirmation": "Patvirtinti naują slaptažodį",
     "confirmChangePasswordButton": "Atlikti pakeitimus",

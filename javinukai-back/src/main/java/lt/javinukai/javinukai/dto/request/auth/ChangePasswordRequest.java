@@ -11,4 +11,6 @@ import lombok.*;
 public class ChangePasswordRequest {
     @NotBlank
     private String newPassword;
+    @NotBlank
+    private String oldPassword;
 }

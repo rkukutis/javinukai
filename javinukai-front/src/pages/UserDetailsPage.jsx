@@ -6,6 +6,7 @@ import { DangerZone } from "../Components/user-management/DangerZone";
 import formatTimestap from "../utils/formatTimestap";
 import Button from "../Components/Button";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import ChangePassword from "../Components/user-management/ChangePassword";
 
 function UserDetailsField({ fieldName, fieldValue }) {
@@ -26,6 +27,9 @@ function UserDetailsPage() {
     queryKey: ["user", userId],
     queryFn: () => getUser(userId),
   });
+
+  //šitą iškelti į Beno sukurtą puslapį
+  const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
 
   return (
     <>
@@ -75,12 +79,13 @@ function UserDetailsPage() {
                 )}
                 <Button
                   onClick={() =>
-                    navigate("/change-password", { state: { userData: data } })
+                    setIsShowPasswordVisible(!isShowPasswordVisible)
                   }
                   extraStyle="text-lg mt-2 w-full lg:w-fit"
                 >
                   {t("UserDetailsPage.changePasswordButton")}
                 </Button>
+                {isShowPasswordVisible && <ChangePassword />}
               </section>
               <section className="">
                 <h1 className="text-2xl">

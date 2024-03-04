@@ -149,10 +149,9 @@
   "services": {
     "uploadImagesError": "Could not upload images",
     "resetPasswordError": "An error has occured while trying to reset your password",
-    "changePasswordError": "An error has occured while trying to reset your password",
+    "changePasswordError": "An error has occured while trying to change your password, please check the current one",
     "resetPasswordOldPasswordError": "New password can not be old password",
     "resetPasswordResetLinkInvalid": "Password reset link is invalid or expired",
-    "changePasswordResetLinkInvalid": "Password change link is invalid or expired",
     "forgotPasswordError": "Please check your email for the password reset link",
     "loginUserError": "Incorrect credentials",
     "logoutUserError": "Error occured while logging out",
@@ -226,7 +225,7 @@
   },
 
   "ChangeUsersPasswordForm": {
-    "oldPassword": "Old password",
+    "oldPassword": "Current password",
     "newPassword": "New password",
     "newPasswordConfirmation": "Confirm new password",
     "confirmChangePasswordButton": "Confirm change",

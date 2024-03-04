@@ -16,7 +16,7 @@ import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
 import CategoryPreview from "./Components/Contest-Components/CategoryPreview";
 import PreviewPage from "./pages/PreviewPage";
-import ChangePasswordPage from "./pages/ChangePasswordPage";
+// import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 
 const queryClient = new QueryClient({
@@ -57,7 +57,7 @@ export default function App() {
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
               <Route path="/image-upload" element={<ImageUpload />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
-              <Route path="/change-password" element={<ChangePasswordPage />} />
+              {/* <Route path="/change-password" element={<ChangePasswordPage />} /> */}
               <Route
                 path="/manage-users/:userId"
                 element={<UserDetailsPage />}

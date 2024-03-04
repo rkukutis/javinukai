@@ -136,13 +136,11 @@ public class AuthenticationService {
         }
     }
 
-    public void changePasswordOmDemand(User userToFind, String newPassword) {
-        User user = userRepository.findById(userToFind.getUuid())
-                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userToFind.getUuid()));
+    public void changePasswordOmDemand(User user, String newPassword, String oldPassword) {
 
-//        if (!passwordEncoder.matches(userToFind.getPassword(), user.getPassword())) {
-//            throw new IllegalArgumentException("Old password is incorrect");
-//        }
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Old password is incorrect");
+        }
 
         if (passwordEncoder.matches(newPassword, user.getPassword())) {
             throw new PasswordResetException("New password is the same as the old one");
