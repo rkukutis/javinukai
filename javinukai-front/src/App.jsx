@@ -16,6 +16,9 @@ import ContestsPage from "./pages/ContestsPage";
 import ContestDetailsPage from "./pages/ContestDetailsPage";
 import UserSubmissionView from "./Components/UserSubmissionView";
 import JurySubmissionView from "./Components/JurySubmissionView";
+import ContestPage from "./pages/ContestPage";
+import CategoryPage from "./pages/CategoryPage";
+import PreviewPage from "./pages/PreviewPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,7 +49,8 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<ContestsPage />} />
+              <Route path="/contests" element={<ContestsPage />} />
+              <Route index element={<HomePage />} />
               <Route
                 path="/contest/:contestId"
                 element={<ContestDetailsPage />}
@@ -74,6 +78,9 @@ export default function App() {
                 path="/manage-users/:userId"
                 element={<UserDetailsPage />}
               />
+              <Route path="/contest-page" element={<ContestPage />} />
+              <Route path="/category-page" element={<CategoryPage />} />
+              <Route path="Preview-page" element={<PreviewPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
