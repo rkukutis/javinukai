@@ -19,6 +19,8 @@ import JurySubmissionView from "./Components/JurySubmissionView";
 import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
 import PreviewPage from "./pages/PreviewPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +47,7 @@ export default function App() {
               padding: "16px 24px",
             },
           }}
+          ord
         />
         <BrowserRouter>
           <Routes>
@@ -74,6 +77,7 @@ export default function App() {
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
+              <Route path="/change-password" element={<ChangePasswordPage />} />
               <Route
                 path="/manage-users/:userId"
                 element={<UserDetailsPage />}

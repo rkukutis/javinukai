@@ -1,8 +1,7 @@
 async function changePassword({ formData, t }) {
-
+  console.log(`${import.meta.env.VITE_BACKEND}/api/v1/change-password`);
   const res = await fetch(
-    // `${import.meta.env.VITE_BACKEND}/api/v1/reset-password`,
-    "http://localhost:8080/api/v1/auth/change-password",
+    `${import.meta.env.VITE_BACKEND}/api/v1/auth/change-password`,
     {
       method: "PATCH",
       mode: "cors",
@@ -12,15 +11,28 @@ async function changePassword({ formData, t }) {
         "Content-Type": "application/json",
         "User-Agent": "react-front",
       },
-      // body: JSON.stringify(data),
       body: JSON.stringify({
         newPassword: formData.newPassword,
         oldPassword: formData.oldPassword,
       }),
     }
   );
+
   if (!res.ok) {
-    throw new Error(t("services.changePasswordError"));
+    switch (res.status) {
+      case 409:
+        throw new Error(
+          t("ChangeUsersPasswordForm.changePasswordFailWrongCurrent")
+        );
+      case 406:
+        throw new Error(
+          t("ChangeUsersPasswordForm.changePasswordFailWrongCurrent")
+        );
+
+      default:
+        new Error(t("services.changePasswordError"));
+    }
   }
+  
 }
 export default changePassword;

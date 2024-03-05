@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.dto.request.auth.ChangePasswordRequest;
+import lt.javinukai.javinukai.dto.response.ChangePasswordOnDemandResponse;
 import lt.javinukai.javinukai.service.AuthenticationService;
 import lt.javinukai.javinukai.dto.request.auth.ForgotPasswordRequest;
 import lt.javinukai.javinukai.dto.request.auth.PasswordResetRequest;
@@ -13,6 +15,7 @@ import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -99,8 +102,11 @@ public class AuthorizationController {
                                             @AuthenticationPrincipal User user
     ) {
         log.info("Received password change request from user: {}", user.getUsername());
-        authenticationService.changePasswordOmDemand(user, changePasswordRequest.getNewPassword(), changePasswordRequest.getOldPassword());
-        return new ResponseEntity<>(HttpStatus.OK);
+        final ChangePasswordOnDemandResponse response = authenticationService.changePasswordOmDemand(
+                user,
+                changePasswordRequest.getNewPassword(),
+                changePasswordRequest.getOldPassword());
+        return new ResponseEntity<>(response.getMessage(), response.getHttpStatus());
     }
 
     @PostMapping("/forgot-password")
