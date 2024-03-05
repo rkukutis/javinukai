@@ -8,8 +8,6 @@ import Button from "../Components/Button";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import ChangePassword from "../Components/user-management/ChangePassword";
-import { useState } from "react";
-import ChangePassword from "../Components/user-management/ChangePassword";
 
 function UserDetailsField({ fieldName, fieldValue }) {
   return (
@@ -29,9 +27,6 @@ function UserDetailsPage() {
     queryKey: ["user", userId],
     queryFn: () => getUser(userId),
   });
-
-  //šitą iškelti į Beno sukurtą puslapį
-  const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
 
   //šitą iškelti į Beno sukurtą puslapį
   const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
@@ -61,7 +56,6 @@ function UserDetailsPage() {
                 />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.personalSurname")}
-                  fieldName={t("UserDetailsPage.personalSurname")}
                   fieldValue={data?.surname}
                 />
                 <UserDetailsField
@@ -74,11 +68,9 @@ function UserDetailsPage() {
                 />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.personalBirthYear")}
-                  fieldName={t("UserDetailsPage.personalBirthYear")}
                   fieldValue={data?.birthYear}
                 />
                 <UserDetailsField
-                  fieldName={t("UserDetailsPage.personalPhoneNumber")}
                   fieldName={t("UserDetailsPage.personalPhoneNumber")}
                   fieldValue={data?.phoneNumber}
                 />
@@ -89,29 +81,13 @@ function UserDetailsPage() {
                       ? t("UserDetailsPage.isTrue")
                       : t("UserDetailsPage.isFalse")
                   }
-                  fieldName={t("UserDetailsPage.personalFreelance")}
-                  fieldValue={
-                    data?.isFreelance
-                      ? t("UserDetailsPage.isTrue")
-                      : t("UserDetailsPage.isFalse")
-                  }
                 />
                 {!data?.isFreelance && (
                   <UserDetailsField
                     fieldName={t("UserDetailsPage.personalInstitution")}
-                    fieldName={t("UserDetailsPage.personalInstitution")}
                     fieldValue={data?.institution}
                   />
                 )}
-                <Button
-                  onClick={() =>
-                    setIsShowPasswordVisible(!isShowPasswordVisible)
-                  }
-                  extraStyle="text-lg mt-2 w-full lg:w-fit"
-                >
-                  {t("UserDetailsPage.changePasswordButton")}
-                </Button>
-                {isShowPasswordVisible && <ChangePassword />}
                 <Button
                   onClick={() =>
                     setIsShowPasswordVisible(!isShowPasswordVisible)
@@ -132,7 +108,6 @@ function UserDetailsPage() {
                 />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.accountCreationDate")}
-                  fieldName={t("UserDetailsPage.accountCreationDate")}
                   fieldValue={formatTimestap(data?.createdAt)}
                 />
                 {data?.modifiedAt && (
@@ -142,14 +117,22 @@ function UserDetailsPage() {
                   />
                 )}
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountEmailConfirmed')}
-                  fieldValue={data?.isEnabled ? t('UserDetailsPage.isTrue') : t('UserDetailsPage.isFalse')}
-                  className={data?.isEnabled ? '' : 'text-red-500 font-bold'}
+                  fieldName={t("UserDetailsPage.accountEmailConfirmed")}
+                  fieldValue={
+                    data?.isEnabled
+                      ? t("UserDetailsPage.isTrue")
+                      : t("UserDetailsPage.isFalse")
+                  }
+                  className={data?.isEnabled ? "" : "text-red-500 font-bold"}
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountIsLocked')}
-                  fieldValue={data?.isNonLocked ? t('UserDetailsPage.isFalse') : t('UserDetailsPage.isTrue')}
-                  className={data?.isNonLocked ? '' : 'text-red-500 font-bold' }
+                  fieldName={t("UserDetailsPage.accountIsLocked")}
+                  fieldValue={
+                    data?.isNonLocked
+                      ? t("UserDetailsPage.isFalse")
+                      : t("UserDetailsPage.isTrue")
+                  }
+                  className={data?.isNonLocked ? "" : "text-red-500 font-bold"}
                 />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.accountRole")}
