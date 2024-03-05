@@ -7,12 +7,14 @@ import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
+import lt.javinukai.javinukai.dto.response.ChangePasswordOnDemandResponse;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.entity.UserToken;
 import lt.javinukai.javinukai.enums.TokenType;
 import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -136,19 +138,30 @@ public class AuthenticationService {
         }
     }
 
-    public void changePasswordOmDemand(User user, String newPassword, String oldPassword) {
+    public ChangePasswordOnDemandResponse changePasswordOmDemand(User user, String newPassword, String oldPassword) {
+
+        HttpStatus httpStatus;
+        String responseMessage;
 
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new IllegalArgumentException("Old password is incorrect");
+            httpStatus = HttpStatus.CONFLICT;
+            responseMessage = "Old password is incorrect";
+            return new ChangePasswordOnDemandResponse(httpStatus, responseMessage);
         }
 
         if (passwordEncoder.matches(newPassword, user.getPassword())) {
-            throw new PasswordResetException("New password is the same as the old one");
+            httpStatus = HttpStatus.NOT_ACCEPTABLE;
+            responseMessage = "New password is the same as the old one";
+            return new ChangePasswordOnDemandResponse(httpStatus, responseMessage);
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
         log.info("Setting new password {} for user: {}", newPassword, user.getUsername());
         userRepository.save(user);
+
+        httpStatus = HttpStatus.OK;
+        responseMessage = "Password has been changed";
+        return new ChangePasswordOnDemandResponse(httpStatus, responseMessage);
     }
 
     private void sendEmailWithToken(User user, TokenType type) {

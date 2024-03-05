@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.auth.ChangePasswordRequest;
+import lt.javinukai.javinukai.dto.response.ChangePasswordOnDemandResponse;
 import lt.javinukai.javinukai.service.AuthenticationService;
 import lt.javinukai.javinukai.dto.request.auth.ForgotPasswordRequest;
 import lt.javinukai.javinukai.dto.request.auth.PasswordResetRequest;
@@ -101,8 +102,11 @@ public class AuthorizationController {
                                             @AuthenticationPrincipal User user
     ) {
         log.info("Received password change request from user: {}", user.getUsername());
-        authenticationService.changePasswordOmDemand(user, changePasswordRequest.getNewPassword(), changePasswordRequest.getOldPassword());
-        return new ResponseEntity<>(HttpStatus.OK);
+        final ChangePasswordOnDemandResponse response = authenticationService.changePasswordOmDemand(
+                user,
+                changePasswordRequest.getNewPassword(),
+                changePasswordRequest.getOldPassword());
+        return new ResponseEntity<>(response.getMessage(), response.getHttpStatus());
     }
 
     @PostMapping("/forgot-password")

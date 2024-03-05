@@ -231,6 +231,7 @@
     "confirmChangePasswordButton": "Atlikti pakeitimus",
     "discardChangePasswordButton": "Atšaukti pakeitimus",
     "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
+    "changePasswordFailWrongCurrent": "Įvestas blogas dabartinis slaptažodis",
     "changePasswordFailAsCurrent": "Slaptažodis sutampa su dabartiniu",
     "changePasswordFailDoNotMatch": "Pakeičiant nauji slaptažodžiai turi sutapti"
   }
