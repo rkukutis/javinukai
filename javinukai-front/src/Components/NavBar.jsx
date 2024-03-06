@@ -6,14 +6,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NavBar() {
+export default function NavBar({ user }) {
   const { t } = useTranslation();
 
   const navigation = [
-    { name: t('navbar.name1'), href: "/", current: false },
-    { name: t('navbar.name2'), href: "/image-upload", current: false },
-    { name: t('navbar.name3'), href: "/contest-page", current: false },
-    { name: t('navbar.name4'), href: "#", current: false },
+    { name: t("navbar.name1"), href: "/", current: false },
+    { name: t("navbar.name2"), href: "/contests", current: false },
+    { name: t("navbar.name3"), href: "/contest-page", current: false },
+    { name: t("navbar.name4"), href: "#", current: false },
   ];
 
   return (

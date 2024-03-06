@@ -7,8 +7,8 @@
 
   "navbar": {
     "name1": "Home",
-    "name2": "Images",
-    "name3": "Contests",
+    "name2": "Contests",
+    "name3": "Create new contest",
     "name4": "add text4"
   },
 
@@ -149,6 +149,7 @@
   "services": {
     "uploadImagesError": "Could not upload images",
     "resetPasswordError": "An error has occured while trying to reset your password",
+    "changePasswordError": "An error has occured while trying to change your password",
     "resetPasswordOldPasswordError": "New password can not be old password",
     "resetPasswordResetLinkInvalid": "Password reset link is invalid or expired",
     "forgotPasswordError": "Please check your email for the password reset link",
@@ -191,7 +192,8 @@
     "accountMaxCollectionCategories": "Max photos for Collections categories",
     "backButton": "Back",
     "isTrue": "Yes",
-    "isFalse": "No"
+    "isFalse": "No",
+    "changePasswordButton": "Change password"
   },
 
   "DangerZone": {
@@ -220,5 +222,17 @@
     "USER": "User",
     "JURY": "Jury",
     "MODERATOR": "Moderator"
+  },
+
+  "ChangeUsersPasswordForm": {
+    "oldPassword": "Current password",
+    "newPassword": "New password",
+    "newPasswordConfirmation": "Confirm new password",
+    "confirmChangePasswordButton": "Confirm change",
+    "discardChangePasswordButton": "Discard change",
+    "changePasswordSuccess": "Password was successfully changed",
+    "changePasswordFailWrongCurrent": "Current password is wrong",
+    "changePasswordFailAsCurrent": "Password is the same as current one",
+    "changePasswordFailDoNotMatch": "Password and password confimation do not match"
   }
 }

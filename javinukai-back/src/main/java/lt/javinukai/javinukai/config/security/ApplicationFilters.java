@@ -43,12 +43,15 @@ public class ApplicationFilters {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+<<<<<<< HEAD
                         //
 //                        .requestMatchers("/api/v1/users/**").permitAll()
 //                        .requestMatchers("/api/v1/contests/**").permitAll()
 //                        .requestMatchers("/api/v1/categories/**").permitAll()
 //                        .requestMatchers("/api/v1/records/**").permitAll()
 //                        //
+=======
+>>>>>>> 26fd194a5c6224635643ce4d6af48f859b6c33c6
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers // for dev - needed for h2 console page

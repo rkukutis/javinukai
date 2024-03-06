@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -48,7 +49,7 @@ public class CategoryController {
     public ResponseEntity<Page<Category>> retrieveAllCategories(@RequestParam(defaultValue = "1") int pageNumber,
                                                                 @RequestParam(defaultValue = "25") int pageSize,
                                                                 @RequestParam(required = false) String keyword,
-                                                                @RequestParam(defaultValue = "categoryName") String sortBy,
+                                                                @RequestParam(defaultValue = "name") String sortBy,
                                                                 @RequestParam(defaultValue = "false") boolean sortDesc) {
         log.info("Request for retrieving all categories");
         Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -59,6 +60,15 @@ public class CategoryController {
         log.info("Request for retrieving all categories, {} record(s) found", page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/categories/contest/{contestId}")
+    public ResponseEntity<List<Category>> retrieveContestCategories(@PathVariable UUID contestId) {
+        log.info("Request for retrieving all categories for contest {}", contestId);
+        List<Category> retrievedCategories = categoryService.retrieveContestCategories(contestId);
+        log.info("Returning {} categories for contest {}", retrievedCategories.size(), contestId);
+        return ResponseEntity.ok().body(retrievedCategories);
+    }
+
 
     @GetMapping(path = "/categories/{id}")
     public ResponseEntity<Category> retrieveCategory(@PathVariable @NotNull UUID id) {

@@ -5,13 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lt.javinukai.javinukai.entity.PhotoCollection;
+import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
 import lt.javinukai.javinukai.exception.NoImagesException;
-import lt.javinukai.javinukai.service.PhotoStorageService;
+import lt.javinukai.javinukai.service.PhotoService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,21 +23,22 @@ import java.util.UUID;
 @RequestMapping("/api/v1/images")
 @RequiredArgsConstructor
 public class PhotoController {
-    private final PhotoStorageService photoStorageService;
+    private final PhotoService photoService;
 
 
     @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
     public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
                                                         @RequestParam("title") @NotBlank String title,
                                                         @RequestParam("description") @NotBlank String description,
-                                                        @RequestParam("categoryId") @NotNull UUID categoryID,
-                                                        @AuthenticationPrincipal UserDetails userDetails
+                                                        @RequestParam("contestId") @NotNull UUID contestId,
+                                                        @RequestParam("categoryId") @NotNull UUID categoryId,
+                                                        @AuthenticationPrincipal User participant
     ) throws IOException {
         if (images.length < 1 ) {
             throw new NoImagesException("No jpg images were provided with request");
         }
         return ResponseEntity.ok()
-                .body(photoStorageService.createImage(images, title, description, categoryID, userDetails));
+                .body(photoService.createPhoto(images, title, description, contestId, categoryId, participant));
     }
 
     @GetMapping("{image}")
@@ -45,7 +46,7 @@ public class PhotoController {
             throws IOException {
         UUID imageId = UUID.fromString(image.split("\\.")[0]);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
-                .body(photoStorageService.getImageById(imageId, ImageSize.valueOf(size.toUpperCase())));
+                .body(photoService.getImageById(imageId, ImageSize.valueOf(size.toUpperCase())));
     }
 
 }
