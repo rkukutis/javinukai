@@ -9,12 +9,18 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import ChangePassword from "../Components/user-management/ChangePassword";
 
-function UserDetailsField({ fieldName, fieldValue }) {
+function UserDetailsField({ fieldName, fieldValue, valueIsRed }) {
   return (
     <section className="text py-3">
-      <label className="text-lg text-slate-900">{fieldName}</label>
+      <label className={`text-lg text-slate-900`}>{fieldName}</label>
       <span>: </span>
-      <span className="text-lg text-teal-600 text-wrap">{fieldValue}</span>
+      <span
+        className={`text-lg text-wrap ${
+          valueIsRed ? "text-red-500 font-bold" : "text-teal-600"
+        }`}
+      >
+        {fieldValue}
+      </span>
     </section>
   );
 }
@@ -40,13 +46,6 @@ function UserDetailsPage() {
           <div className="lg:w-3/4 w-full h-fit bg-white shadow-md lg:my-4 p-8 rounded-md">
             <article className="lg:grid lg:grid-cols-2 flex flex-col space-y-4 lg:space-y-0 pb-4">
               <section>
-                <h1 className="text-2xl">
-                  {t("UserDetailsPage.personalTitle")}
-                </h1>
-                <UserDetailsField
-                  fieldName={t("UserDetailsPage.personalName")}
-                  fieldValue={data?.name}
-                />
                 <h1 className="text-2xl">
                   {t("UserDetailsPage.personalTitle")}
                 </h1>
@@ -123,7 +122,7 @@ function UserDetailsPage() {
                       ? t("UserDetailsPage.isTrue")
                       : t("UserDetailsPage.isFalse")
                   }
-                  className={data?.isEnabled ? "" : "text-red-500 font-bold"}
+                  valueIsRed={!data?.isEnabled}
                 />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.accountIsLocked")}
@@ -132,7 +131,7 @@ function UserDetailsPage() {
                       ? t("UserDetailsPage.isFalse")
                       : t("UserDetailsPage.isTrue")
                   }
-                  className={data?.isNonLocked ? "" : "text-red-500 font-bold"}
+                  valueIsRed={!data?.isNonLocked}
                 />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.accountRole")}
@@ -159,7 +158,6 @@ function UserDetailsPage() {
               onClick={() => navigate("/manage-users")}
               extraStyle="text-lg mt-2 w-full lg:w-fit"
             >
-              {t("UserDetailsPage.backButton")}
               {t("UserDetailsPage.backButton")}
             </Button>
           </div>

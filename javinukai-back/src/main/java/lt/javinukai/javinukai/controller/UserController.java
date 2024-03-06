@@ -35,7 +35,7 @@ public class UserController {
     }
     @GetMapping
     public ResponseEntity<Page<User>> getAllUsers(@RequestParam(defaultValue = "0") @Min(0) Integer page,
-                                                  @RequestParam(defaultValue = "10") @Min(0) Integer limit,
+                                                  @RequestParam(defaultValue = "25") @Min(0) Integer limit,
                                                   @RequestParam(defaultValue = "name") String sortBy,
                                                   @RequestParam(defaultValue = "false") boolean sortDesc,
                                                   @RequestParam(required = false) String contains

@@ -36,7 +36,7 @@ export function UserListItem({ userInfo }) {
               : t("PaginationSettings.fieldIsEnabledNo")}
           </span>
         </div>
-        <div className="hidden xl:flestartx items-center justify-center text-white">
+        <div className="hidden xl:flex items-center justify-center text-white">
           <span
             className={`text px-3 rounded-md ${
               userInfo.isNonLocked ? "bg-green-500" : "bg-red-500"
