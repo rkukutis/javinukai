@@ -189,7 +189,8 @@
     "accountMaxCollectionCategories": "Maksimalus serijų pateikimų skaičius per kategoriją",
     "backButton": "Atgal",
     "isTrue": "Taip",
-    "isFalse": "Ne"
+    "isFalse": "Ne",
+    "changePasswordButton": "Pakeisti slaptažodį"
   },
 
   "ContestsPage": {
@@ -274,6 +275,6 @@
 
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
-    "COLLECTION": "Nuotraukų kolekcijos"
+    "COLLECTION": "Nuotraukų serijos"
   }
 }
