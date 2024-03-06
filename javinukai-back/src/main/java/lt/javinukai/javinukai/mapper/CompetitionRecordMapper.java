@@ -11,7 +11,6 @@ public class CompetitionRecordMapper {
     public static CompetitionRecord recordDTOToRecord(CompetitionRecordDTO competitionRecordDTO) {
         return CompetitionRecord.builder()
                 .maxPhotos(competitionRecordDTO.getMaxPhotos())
-                .photos(competitionRecordDTO.getPhotos())
                 .build();
     }
 

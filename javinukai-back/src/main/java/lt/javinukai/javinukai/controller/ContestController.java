@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +40,7 @@ public class ContestController {
     }
 
     @GetMapping(path = "/contests")
-    public ResponseEntity<Page<Contest>> retrieveAllContests(@AuthenticationPrincipal User participant,
+    public ResponseEntity<Page<Contest>> retrieveAllContests(
                                                              @RequestParam(defaultValue = "1") int pageNumber,
                                                              @RequestParam(defaultValue = "25") int pageSize,
                                                              @RequestParam(required = false) String name,
@@ -55,7 +52,7 @@ public class ContestController {
         Sort sort = Sort.by(direction, sortBy);
 
         final Pageable pageable = PageRequest.of(--pageNumber, pageSize, sort);
-        final Page<Contest> page = contestService.retrieveAllContests(pageable, name, participant.getId());
+        final Page<Contest> page = contestService.retrieveAllContests(pageable, name);
         log.info("Request for retrieving all contests, {} record(s) found", page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
     }

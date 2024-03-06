@@ -1,14 +1,19 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import expandMoreIcon from "../../assets/icons/expand_more_FILL0_wght400_GRAD0_opsz24.svg";
 import expandLessIcon from "../../assets/icons/expand_less_FILL0_wght400_GRAD0_opsz24.svg";
 import Button from "../Button";
+import useUserStore from "../../stores/userStore";
+import UserSubmissionView from "../UserSubmissionView";
+import { useTranslation } from "react-i18next";
 
 export function CategoryItem({
   categoryInfo,
-  contestId,
+  contestInfo,
   expandedCategory,
   onSetExpandedCategory,
 }) {
+  const { t } = useTranslation();
+  const { user } = useUserStore((state) => state);
   const navigate = useNavigate();
   const isExpanded = categoryInfo.id == expandedCategory;
 
@@ -30,36 +35,32 @@ export function CategoryItem({
             : "rounded-md bg-slate-50 text-slate-700"
         }`}
       >
-        <h1 className="text text-xl">
-          {categoryInfo.name} - {categoryInfo.type}
+        <h1 className="text lg:text-lg">
+          {categoryInfo.name} | {t(`categoryTypes.${categoryInfo.type}`)}
         </h1>
         <img src={isExpanded ? expandLessIcon : expandMoreIcon} />
       </div>
       {isExpanded && (
         <div className="text border-2 border-t-white border-teal-400 rounded-b-md py-2 px-3 text-slate-700 leading-relaxed flex-col space-y-3">
           <p>{categoryInfo.description}</p>
-          <div className=" flex xl:flex-row xl:space-x-4">
-            <Button
-              onClick={() => navigate(`category/${categoryInfo.id}/upload`)}
-            >
-              Add photos to category
-            </Button>
-            <Button
-              onClick={() => navigate(`category/${categoryInfo.id}/my-entries`)}
-            >
-              View my submissions
-            </Button>
-            <Button
-              onClick={() =>
-                navigate(
-                  `/contest/${contestId}/category/${categoryInfo.id}/contestant-entries`
-                )
-              }
-            >
-              View contestant photos
-            </Button>
-          </div>
-          <Outlet context={{ contestId, categoryId: categoryInfo.id }} />
+          {user && (
+            <div className=" flex xl:flex-row xl:space-x-4">
+              {user.role == "JURY" && (
+                <Button
+                  onClick={() =>
+                    navigate(
+                      `/contest/${contestInfo.id}/category/${categoryInfo.id}/contestant-entries`
+                    )
+                  }
+                >
+                  {t("CategoryItem.juryViewEntries")}
+                </Button>
+              )}
+            </div>
+          )}
+          {user && (
+            <UserSubmissionView contest={contestInfo} category={categoryInfo} />
+          )}
         </div>
       )}
     </div>

@@ -46,52 +46,57 @@ export default function UserManagementPage() {
           pagination={paginationSettings}
           setPagination={setPaginationSettings}
           availablePageNumber={data?.totalPages}
-          limitObjectName="users"
+          limitObjectName={t("UserManagementPage.userLimitObject")}
           sortFieldOptions={
             <>
-              <option value="name">{t("PaginationSettings.fieldName")}</option>
+              <option value="name">
+                {t("UserManagementPage.userNameOption")}
+              </option>
               <option value="surname">
-                {t("PaginationSettings.fieldSurname")}
+                {t("UserManagementPage.userSurnameIption")}
               </option>
               <option value="email">
-                {t("PaginationSettings.fieldEmail")}
+                {t("UserManagementPage.userEmailOption")}
               </option>
-              <option value="role">{t("PaginationSettings.fieldRole")}</option>
+              <option value="role">
+                {t("UserManagementPage.userRoleOption")}
+              </option>
               <option value="maxTotal">
-                {t("PaginationSettings.fieldMaxTotalEntries")}
+                {t("UserManagementPage.userMaxTotalOption")}
               </option>
               <option value="maxSinglePhotos">
-                {t("PaginationSettings.fieldMaxSingles")}
+                {t("UserManagementPage.userMaxSingleOption")}
               </option>
               <option value="maxCollections">
-                {t("PaginationSettings.fieldMaxCollections")}
+                {t("UserManagementPage.userMaxCollectionsOption")}
               </option>
               <option value="isEnabled">
-                {t("PaginationSettings.fieldIsEnabled")}
+                {t("UserManagementPage.userIsEnabledOption")}
               </option>
               <option value="isNonLocked">
-                {t("PaginationSettings.fieldIsNonLocked")}
+                {t("UserManagementPage.userisNonLockedOption")}
               </option>
             </>
           }
-          searchByFieldName="surname"
+          searchByFieldName={t("UserManagementPage.userSeachFieldName")}
           firstPage={data?.firs}
           lastPage={data?.last}
         />
         <div className="hidden xl:grid xl:grid-cols-10 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
-          <p>{t("PaginationSettings.fieldName")}</p>
-          <p>{t("PaginationSettings.fieldSurname")}</p>
+          <p>{t("UserManagementPage.userNameOption")}</p>
+          <p>{t("UserManagementPage.userSurnameIption")}</p>
           <p className="text col-span-3">
-            {t("PaginationSettings.fieldEmail")}
+            {t("UserManagementPage.userEmailOption")}
           </p>
           <p className="text col-span-2">
-            {t("PaginationSettings.fieldRole")}</p>
-          <p>{t("PaginationSettings.fieldLimits")}</p>
+            {t("UserManagementPage.userRoleOption")}
+          </p>
+          <p>{t("UserManagementPage.limits")}</p>
           <p className="text-center break-all">
-            {t("PaginationSettings.fieldIsEnabled")}
+            {t("UserManagementPage.userIsEnabledOption")}
           </p>
           <p className="text-center break-all">
-            {t("PaginationSettings.fieldIsNonLocked")}
+            {t("UserManagementPage.userisNonLockedOption")}
           </p>
         </div>
         {isFetching ? (
@@ -108,9 +113,9 @@ export default function UserManagementPage() {
       </div>
       <div>
         <ChangePage
-        pagination={paginationSettings}
-        setPagination={setPaginationSettings}
-        availablePageNumber={data?.totalPages}
+          pagination={paginationSettings}
+          setPagination={setPaginationSettings}
+          availablePageNumber={data?.totalPages}
         />
       </div>
     </div>

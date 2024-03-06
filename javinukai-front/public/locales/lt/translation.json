@@ -2,7 +2,8 @@
   "dropdownMenu": {
     "accountSettings": "Vartotojo nustatymai",
     "logout": "Atsijungti",
-    "manageUsers": "Valdyti vartotojus"
+    "manageUsers": "Valdyti vartotojus",
+    "createContest": "Sukurti konkursą"
   },
 
   "navbar": {
@@ -60,30 +61,27 @@
     "photoUploading": "Nuotraukos keliamos...",
     "collectionTitle": "Pavadinimas:",
     "collectionDescription": "Aprašymas:",
-    "collectionCreatedAt": "Sukurta:"
+    "collectionCreatedAt": "Sukurta:",
+    "PhotoNumberError": "Į šia kategoriją galite pateikti tik pavienes nuotraukas",
+    "entryLimitError": "Pateikimas atmestas. Jūs jau pasiekėte savo pateikimų limitą šiai kategorijai"
+  },
+
+  "uploadImages": {
+    "photoValidationError": "Nuotrauka {{photoName}} neatitinka reikalavimų",
+    "photoProcessingError": "Įvyko sistemos klaida talpinant nuotraukas",
+    "photoGeneralError:": "Įvyko klaida įkeliant nuotraukas"
   },
 
   "PaginationSettings": {
+    "perPage": "puslapyje",
     "previousPage": "Ankstesnis",
     "nextPage": "Sekantis",
-    "usersTitle": "Vartotojai per puslapį",
-    "users": "vartotojų",
     "fieldTitle": "Rūšiuoti pagal lauką",
-    "fieldName": "Vardas",
-    "fieldSurname": "Pavardė",
-    "fieldEmail": "El. paštas",
-    "fieldRole": "Rolė",
-    "fieldMaxTotalEntries": "Maksimalus pateikimų skaičius",
-    "fieldMaxSingles": "Maksimalus pavienių pateikimų skaičius per kategoriją",
-    "fieldMaxCollections": "Maksimalus serijų pateikimų skaičius per kategoriją",
-    "fieldLimits": "Limitai",
-    "fieldIsEnabled": "Patvirtinta(s)",
-    "fieldIsNonLocked": "Blokuota(s)",
     "sortTitle": "Rūšiavimo tvarka",
     "sortDescending": "Mažėjanti",
     "sortAscending": "Didėjanti",
-    "searchTitle": "Ieškoti pagal pavardę",
-    "searchPlaceholder": "Pavardė",
+    "placeholderField": "įveskite",
+    "searchTitle": "Ieškoti pagal",
     "searchButton": "Ieškoti",
     "fieldIsEnabledYes": "Taip",
     "fieldIsEnabledNo": "Ne"
@@ -194,6 +192,58 @@
     "isFalse": "Ne"
   },
 
+  "ContestsPage": {
+    "contestsLimitObject": "Konkursų",
+    "contestNameOption": "Pavadinimas",
+    "contestDescriptionOption": "Aprašymas",
+    "contestStartDateOption": "Pradžios data",
+    "contestEndDateOption": "Pabaigos data",
+    "contestTotalEntriesOption": "Pateikimų skaičius",
+    "contestSeachFieldName": "pavadinimą"
+  },
+
+  "ContestCard": {
+    "detailsButton": "Plačiau"
+  },
+
+  "ContestDetailsPage": {
+    "contest": "Konkursas",
+    "startDate": "Pradžia",
+    "endDate": "Pabaiga",
+    "description": "Aprašymas",
+    "categories": "Kategorijos"
+  },
+
+  "CategoryItem": {
+    "juryViewEntries": "Peržiūrėti dalyvių pateiktis"
+  },
+
+  "UserSubmissionView": {
+    "yourEntries": "Jūsų pateiktys",
+    "addNewEntry": "Pridėti naują pateiktį",
+    "cancel": "Atšaukti"
+  },
+
+  "ContestEntry": {
+    "photos": "nuotraukos",
+    "deletionConfirmation": "Ar tikrau norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas"
+  },
+
+  "UserManagementPage": {
+    "userLimitObject": "Vartotojų",
+    "userNameOption": "Vardas",
+    "userSurnameIption": "Pavardė",
+    "userEmailOption": "El. paštas",
+    "userRoleOption": "Rolė",
+    "userMaxTotalOption": "Maksimalus pateikimų skaičius",
+    "userMaxSingleOption": "Pateikimų pavienų pateikimų skaičius kategorijai",
+    "userMaxCollectionsOption": "Maksimalus serijų pateikimų skaičius kategorijai",
+    "userIsEnabledOption": "Patvirtinta(s)",
+    "userisNonLockedOption": "Blokuota(s)",
+    "userSeachFieldName": "pavardę",
+    "limits": "Limitai"
+  },
+
   "DangerZone": {
     "title": "Pavojinga zona",
     "permissionsChangedSuccess": "Vartotojo leidimai pakeisti sėkmingai",
@@ -220,5 +270,10 @@
     "USER": "Vartotojas",
     "JURY": "Žiuri",
     "MODERATOR": "Moderatorius"
+  },
+
+  "categoryTypes": {
+    "SINGLE": "Pavienės nuotraukos",
+    "COLLECTION": "Nuotraukų kolekcijos"
   }
 }

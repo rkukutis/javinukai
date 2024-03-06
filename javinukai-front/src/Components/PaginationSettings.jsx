@@ -65,7 +65,9 @@ export default function PaginationSettings({
         </Button>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>{limitObjectName} per page</label>
+        <label>
+          {limitObjectName} {t("PaginationSettings.perPage")}
+        </label>
         <select
           className="py-2 px-4 bg-white rounded-md"
           onChange={handleLimitChange}
@@ -99,11 +101,15 @@ export default function PaginationSettings({
         </select>
       </section>
       <section className="flex flex-col space-y-2">
-        <label>Search by {searchByFieldName}</label>
+        <label>
+          {t("PaginationSettings.searchTitle")} {searchByFieldName}
+        </label>
         <div className="lg:flex-row flex lg:space-x-3 space-y-2 lg:space-y-0 flex-col">
           <input
             className="p-2 bg-white rounded-md w-full"
-            placeholder={searchByFieldName}
+            placeholder={`${t(
+              "PaginationSettings.placeholderField"
+            )} ${searchByFieldName}`}
             onKeyDown={handleSearchFieldKeydown}
             onChange={handleSearchFieldChange}
             value={searchedField}
