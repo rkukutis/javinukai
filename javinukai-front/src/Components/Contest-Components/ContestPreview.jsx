@@ -1,40 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 function ContestPreview() {
-  const [contests, setContests] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("recent");
 
-  useEffect(() => {
-    const fetchContests = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND}/api/v1/contests`
-        );
-        setContests(response.data.content);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching contests:", error);
-      }
-    };
+  const { data: contests, isLoading } = useQuery({
+    queryKey: ['contests', sortBy],
+    queryFn: async ({ queryKey }) => {
+      const [, sortBy] = queryKey;
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND}/api/v1/contests`);
 
-    fetchContests();
-  }, []);
-
-  const filteredContests = contests.filter((contest) =>
-    contest.contestName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const sortedContests = filteredContests.sort((a, b) => {
-    if (sortBy === "recent") {
-      return new Date(b.createdAt) - new Date(a.createdAt);
-    } else if (sortBy === "totalCategories") {
-      return b.categories.length - a.categories.length;
-    }
-    return 0;
+      return response.data.content;
+    },
+    
   });
+
+  const filteredContests = contests ? contests.filter((contest) =>
+    contest.contestName.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : [];
 
   return (
     <div className="p-4">
@@ -58,11 +43,11 @@ function ContestPreview() {
           </select>
         </div>
       </div>
-      {loading ? (
+      {isLoading ? (
         <p className="text-gray-600">Loading...</p>
       ) : (
         <ul>
-          {sortedContests.map((contest) => (
+          {filteredContests.map((contest) => (
             <li key={contest.id} className="border rounded-md p-4 mb-4">
               <h3 className="text-lg font-semibold mb-2">
                 {contest.contestName}

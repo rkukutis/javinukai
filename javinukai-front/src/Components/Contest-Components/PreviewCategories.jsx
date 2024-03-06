@@ -13,7 +13,7 @@ function PreviewCategories() {
     queryKey: ["categories"],
     queryFn: async () => {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND}/api/v1/categories`
+        `${import.meta.env.VITE_BACKEND}/api/v1/categories`, {withCredentials: true}
       );
       return response.data.content;
     }

@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormFieldError from "../FormFieldError";
-import EditCategoryModal from "./EditCategoryModal"; 
+import EditCategoryModal from "./EditCategoryModal";
+import CreateCategory from "./CreateCategory";
 
 
 function CreateContest({ contestDTO }) {
@@ -12,8 +14,9 @@ function CreateContest({ contestDTO }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showOnlyAddedCategories, setShowOnlyAddedCategories] = useState(false);
-
+  const [showCreateCategory, setShowCreateCategory] = useState(false);
+  const [contestCreated, setContestCreated] = useState(false);
+  
 
   useEffect(() => {
     fetchCategories();
@@ -21,7 +24,7 @@ function CreateContest({ contestDTO }) {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND}/api/v1/categories`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND}/api/v1/categories`, { withCredentials: true });
       setCategoriesList(response.data.content);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -60,35 +63,47 @@ function CreateContest({ contestDTO }) {
   };
 
   const onSubmit = async (data) => {
-    try {
-      const startDate = new Date(data.startDate).toISOString();
-      const endDate = new Date(data.endDate).toISOString();
-
-      if (isNaN(Date.parse(startDate)) || isNaN(Date.parse(endDate))) {
-        console.error('Invalid date values');
-        return;
+    if (!showCreateCategory) {
+      try {
+        const startDate = new Date(data.startDate).toISOString();
+        const endDate = new Date(data.endDate).toISOString();
+  
+        if (isNaN(Date.parse(startDate)) || isNaN(Date.parse(endDate))) {
+          console.error('Invalid date values');
+          return;
+        }
+  
+        const contestData = {
+          ...data,
+          totalSubmissions,
+          startDate,
+          endDate,
+          categories: categoriesList.filter(category => category.added)
+        };
+  
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND}/api/v1/contests`, contestData, { withCredentials: true });
+        console.log('Contest created successfully:', response.data);
+        setContestCreated(true); 
+      } catch (error) {
+        console.error('Error creating contest:', error);
       }
-
-      const contestData = {
-        ...data,
-        totalSubmissions,
-        startDate,
-        endDate,
-        categories: categoriesList.filter(category => category.added)
-      };
-
-      const response = await axios.post('http://localhost:8080/api/v1/contests', contestData);
-      console.log('Contest created successfully:', response.data);
-    } catch (error) {
-      console.error('Error creating contest:', error);
     }
   };
+
   const handleTotalSubmissionsChange = (e) => {
     const newValue = e.target.value;
     if (newValue >= 1) {
       setTotalSubmissions(newValue);
     }
   };
+ 
+  const handleCreateCategory = () => {
+    setShowCreateCategory(true);
+  };
+  const handleCloseCategory = () => {
+    setShowCreateCategory(false);
+  };
+
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
@@ -96,103 +111,128 @@ function CreateContest({ contestDTO }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         
         <div className="mb-4">
-  <label htmlFor="contestName" className="block text-sm font-medium text-gray-700">Contest Name:</label>
-  <input
-    type="text"
-    id="contestName"
-    {...register("contestName", { required: true })}
-    defaultValue={contestDTO && contestDTO.contestName}
-    className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-  />
-  {errors.contestName && <FormFieldError message="This field is required" />}
-</div>
-<div className="mb-4">
-  <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
-  <textarea
-    id="description"
-    {...register("description")}
-    defaultValue={contestDTO && contestDTO.description}
-    className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-  />
-</div>
-<div className="grid grid-cols-2 gap-x-4 mb-4">
-<div className="grid grid-cols-2 gap-x-4 mb-4">
-  <div>
-    <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date:</label>
-    <input
-      type="date"
-      id="startDate" 
-      {...register("startDate", { required: true, min: { value: 1, message: "Start Date is required" } })}
-      className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-    />
-    {errors.startDate && (
-      <FormFieldError message={errors.startDate.message} />
-    )}
-  </div>
-</div>
-  <div>
-    <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date:</label>
-    <input
-      type="date"
-      id="endDate" 
-      {...register("endDate", { required: true, min: 1 })}
-      className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-    />
-    {errors.endDate && (
-    <FormFieldError message={errors.endDate.message} />)}
-  </div>
-</div>
-<div className="mb-4">
-  <label htmlFor="totalSubmissions" className="block text-sm font-medium text-gray-700">Total Submissions:</label>
-  <input
-    type="number"
-    id="totalSubmissions"
-    min="1"
-    value={totalSubmissions}
-    onChange={handleTotalSubmissionsChange}
-    className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-  />
-</div>
-
-<div className="mb-4">
-  <label htmlFor="searchCategory" className="block text-sm font-medium text-gray-700">
-    Search Categories:
-  </label>
-  <input
-    type="text"
-    id="searchCategory"
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-    className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-    placeholder="Search categories by name..."
-  />
-</div>
-<div>
-  {categoriesList
-    .filter(category => category.categoryName.toLowerCase().includes(searchQuery.toLowerCase()))
-    .map(category => (
-      <div key={category.id} className="flex items-center justify-between border border-gray-200 p-2 rounded-md mb-2">
-        <div>
-          <h3>{category.categoryName} - {category.type}</h3>
-          <p>Description: {category.description}</p>
-          <p>Total Submissions: {category.totalSubmissions}</p>
-        </div>
-        
-        <div>
-          <button type="button" onClick={() => handleEditCategory(category)} className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">Edit Category</button>
-          {category.added ? (
-            <button type="button" onClick={() => handleRemoveCategory(category.id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Remove</button>
-          ) : (
-            <button type="button" onClick={() => handleAddCategory(category)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>
+          <label htmlFor="contestName" className="block text-sm font-medium text-gray-700">Contest Name:</label>
+          <input
+            type="text"
+            id="contestName"
+            {...register("contestName", { required: "Required"})}
+            defaultValue={contestDTO && contestDTO.contestName}
+            className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+          />
+          {errors.contestName && (
+            <FormFieldError>{errors.contestName.message}</FormFieldError>
           )}
         </div>
-      </div>
-    ))}
-</div>
+        <div className="mb-4">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
+          <textarea
+            id="description"
+            {...register("description", { required: "Required"}) }
+            defaultValue={contestDTO && contestDTO.description}
+            className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+          />
+          {errors.description && (
+            <FormFieldError>{errors.description.message}</FormFieldError>
+          )}
 
-        <div>
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Create Contest</button>
         </div>
+        <div className="grid grid-cols-2 gap-x-4 mb-4">
+          <div>
+            <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date:</label>
+            <input
+              type="date"
+              id="startDate" 
+              {...register("startDate", { required: "Required", min: { value: 1 } })}
+              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+            {errors.startDate && (
+              <FormFieldError>{errors.startDate.message}</FormFieldError>
+            )}
+          </div>
+          <div>
+            <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date:</label>
+            <input
+              type="date"
+              id="endDate" 
+              {...register("endDate", { required: "Required", min: 1 })}
+              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+            {errors.endDate && (
+              <FormFieldError>{errors.endDate.message}</FormFieldError>
+            )}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="totalSubmissions" className="block text-sm font-medium text-gray-700">Total Submissions:</label>
+          <input
+            type="number"
+            id="totalSubmissions"
+            min="1"
+            {...register("totalSubmissions", { required: "Required", min: 1 })}
+            value={totalSubmissions}
+            onChange={handleTotalSubmissionsChange}
+            className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+          />
+          {errors.totalSubmissions && (
+              <FormFieldError>{errors.totalSubmissions.message}</FormFieldError>
+            )}
+        </div>
+        <div>
+      {showCreateCategory && (
+        <div>
+          <CreateCategory />
+          <button onClick={handleCloseCategory}>Close</button>
+        </div>
+      )}
+      
+      <button onClick={handleCreateCategory}>Create New Category</button>
+    </div>
+       
+
+        <div className="mb-4">
+          <label htmlFor="searchCategory" className="block text-sm font-medium text-gray-700">
+            Search Categories:
+          </label>
+          <input
+            type="text"
+            id="searchCategory"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            placeholder="Search categories by name..."
+          />
+        </div>
+        <div>
+          {categoriesList
+            .filter(category => category.categoryName.toLowerCase().includes(searchQuery.toLowerCase()))
+            .map(category => (
+              <div key={category.id} className="flex items-center justify-between border border-gray-200 p-2 rounded-md mb-2">
+                <div>
+                  <h3>{category.categoryName} - {category.type}</h3>
+                  <p>Description: {category.description}</p>
+                  <p>Total Submissions: {category.totalSubmissions}</p>
+                </div>
+                <div>
+                  <button type="button" onClick={() => handleEditCategory(category)} className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">Edit Category</button>
+                  {category.added ? (
+                    <button type="button" onClick={() => handleRemoveCategory(category.id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Remove</button>
+                  ) : (
+                    <button type="button" onClick={() => handleAddCategory(category)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>
+                  )}
+                </div>
+              </div>
+            ))}
+        </div>
+        {contestCreated && (
+          <div className="bg-green-200 text-green-800 px-4 py-2 rounded-md mb-4">
+            Contest created!
+          </div>
+        )}
+       
+          <div>
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Create Contest</button>
+          </div>
+        
       </form>
 
       {showModal && (
@@ -201,7 +241,7 @@ function CreateContest({ contestDTO }) {
             <EditCategoryModal
               category={selectedCategory}
               onClose={() => setShowModal(false)}
-            />
+            /> 
           </div>
         </div>
       )}
