@@ -6,13 +6,21 @@ import { DangerZone } from "../Components/user-management/DangerZone";
 import formatTimestap from "../utils/formatTimestap";
 import Button from "../Components/Button";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import ChangePassword from "../Components/user-management/ChangePassword";
 
-function UserDetailsField({ fieldName, fieldValue, className }) {
+function UserDetailsField({ fieldName, fieldValue, valueIsRed }) {
   return (
     <section className="text py-3">
-      <label className="text-lg text-slate-900">{fieldName}</label>
+      <label className={`text-lg text-slate-900`}>{fieldName}</label>
       <span>: </span>
-      <span className={`text-lg text-wrap ${className  || 'text-teal-600'}`}>{fieldValue}</span>
+      <span
+        className={`text-lg text-wrap ${
+          valueIsRed ? "text-red-500 font-bold" : "text-teal-600"
+        }`}
+      >
+        {fieldValue}
+      </span>
     </section>
   );
 }
@@ -25,6 +33,9 @@ function UserDetailsPage() {
     queryKey: ["user", userId],
     queryFn: () => getUser(userId),
   });
+
+  //šitą iškelti į Beno sukurtą puslapį
+  const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
 
   return (
     <>
@@ -45,6 +56,10 @@ function UserDetailsPage() {
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.personalSurname")}
                   fieldValue={data?.surname}
+                />
+                <UserDetailsField
+                  fieldName={t("UserDetailsPage.personalEmail")}
+                  fieldValue={data?.email}
                 />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.personalEmail")}
@@ -72,6 +87,15 @@ function UserDetailsPage() {
                     fieldValue={data?.institution}
                   />
                 )}
+                <Button
+                  onClick={() =>
+                    setIsShowPasswordVisible(!isShowPasswordVisible)
+                  }
+                  extraStyle="text-lg mt-2 w-full lg:w-fit"
+                >
+                  {t("UserDetailsPage.changePasswordButton")}
+                </Button>
+                {isShowPasswordVisible && <ChangePassword />}
               </section>
               <section className="">
                 <h1 className="text-2xl">
@@ -92,19 +116,27 @@ function UserDetailsPage() {
                   />
                 )}
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountEmailConfirmed')}
-                  fieldValue={data?.isEnabled ? t('UserDetailsPage.isTrue') : t('UserDetailsPage.isFalse')}
-                  className={data?.isEnabled ? '' : 'text-red-500 font-bold'}
+                  fieldName={t("UserDetailsPage.accountEmailConfirmed")}
+                  fieldValue={
+                    data?.isEnabled
+                      ? t("UserDetailsPage.isTrue")
+                      : t("UserDetailsPage.isFalse")
+                  }
+                  valueIsRed={!data?.isEnabled}
                 />
                 <UserDetailsField
-                  fieldName={t('UserDetailsPage.accountIsLocked')}
-                  fieldValue={data?.isNonLocked ? t('UserDetailsPage.isFalse') : t('UserDetailsPage.isTrue')}
-                  className={data?.isNonLocked ? '' : 'text-red-500 font-bold' }
+                  fieldName={t("UserDetailsPage.accountIsLocked")}
+                  fieldValue={
+                    data?.isNonLocked
+                      ? t("UserDetailsPage.isFalse")
+                      : t("UserDetailsPage.isTrue")
+                  }
+                  valueIsRed={!data?.isNonLocked}
                 />
                 <UserDetailsField
-                fieldName={t('UserDetailsPage.accountRole')}
-                fieldValue={t(`roles.${data?.role}`) || data?.role}
-                                />
+                  fieldName={t("UserDetailsPage.accountRole")}
+                  fieldValue={t(`roles.${data?.role}`) || data?.role}
+                />
                 <UserDetailsField
                   fieldName={t("UserDetailsPage.accountMaxPhotosContest")}
                   fieldValue={data?.maxTotal}

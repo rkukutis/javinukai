@@ -7,9 +7,11 @@ import formatTimestap from "../utils/formatTimestap";
 import { useState } from "react";
 import getCategories from "../services/categories/getCategories";
 import { CategoryItem } from "../Components/category/CategoryItem";
+import { useTranslation } from "react-i18next";
 
 function ContestDetailsPage() {
   const { contestId } = useParams();
+  const { t } = useTranslation();
   const [expandedCategory, setExpandedCategory] = useState("");
   const { data: contest, isFetching: isFetchingContest } = useQuery({
     queryKey: ["contest", contestId],
@@ -33,34 +35,40 @@ function ContestDetailsPage() {
             <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm backdrop-brightness-90 pr-6 back">
               <div className="ml-12 mt-12 flex-col space-y-6">
                 <h2 className="text text-lg top-4 text text-white xl:text-3xl">
-                  Contest
+                  {t("ContestDetailsPage.contest")}
                 </h2>
                 <h1 className="text text-xl xl:text-5xl text-white font-semibold">
                   {contest?.name}
                 </h1>
                 <div className="flex flex-col lg:flex-row lg:space-x-5 text-white text-xl">
-                  <span>Start date: {formatTimestap(contest?.startDate)}</span>
-                  <span>End date: {formatTimestap(contest?.endDate)}</span>
+                  <span>
+                    {t("ContestDetailsPage.startDate")}:{" "}
+                    {formatTimestap(contest?.startDate)}
+                  </span>
+                  <span>
+                    {t("ContestDetailsPage.endDate")}:{" "}
+                    {formatTimestap(contest?.endDate)}
+                  </span>
                 </div>
               </div>
             </div>
           </section>
           <section className="text text-slate-700 leading-loose text-lg">
             <h1 className="text-2xl text-teal-500 font-bold py-2">
-              Description
+              {t("ContestDetailsPage.description")}
             </h1>
             <p>{contest?.description}</p>
           </section>
           <section>
             <h1 className="text-2xl text-teal-500 font-bold py-2">
-              Categories
+              {t("ContestDetailsPage.categories")}
             </h1>
             <div className="flex-col space-y-1 mt-4">
               {categories?.map((category) => (
                 <CategoryItem
                   key={category.id}
                   categoryInfo={category}
-                  contestId={contest?.id}
+                  contestInfo={contest}
                   expandedCategory={expandedCategory}
                   onSetExpandedCategory={setExpandedCategory}
                 />

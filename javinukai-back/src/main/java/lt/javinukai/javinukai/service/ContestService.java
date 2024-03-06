@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
@@ -49,7 +48,7 @@ public class ContestService {
 
                 if (categoryIn == null) {
                     throw new EntityNotFoundException("category was not found with ID: " + category.getId());
-                };
+                }
             categoryList.add(categoryIn);
         }
 
@@ -61,7 +60,7 @@ public class ContestService {
         return createdContest;
     }
 
-    public Page<Contest> retrieveAllContests(Pageable pageable, String keyword, UUID UserId) {
+    public Page<Contest> retrieveAllContests(Pageable pageable, String keyword) {
 
         if (keyword == null || keyword.isEmpty()) {
             log.info("{}: Retrieving all contests list from database", this.getClass().getName());

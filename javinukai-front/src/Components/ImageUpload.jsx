@@ -1,64 +1,86 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import uploadImages from "../services/uploadImages";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import StyledInput from "./StyledInput";
 import FormFieldError from "./FormFieldError";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import getMultipartForm from "../utils/getMultipartForm";
 
-function ImageUpload() {
+function ImageUpload({
+  userRecord,
+  categoryInfo,
+  contestInfo,
+  setEntryFormOpen,
+}) {
+  const { t } = useTranslation();
   const [files, setFiles] = useState([]);
-  const { contestId, categoryId } = useParams();
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: (multipartFormData) => uploadImages(multipartFormData),
     onSuccess: () => {
       toast.success(t("imageUpload.imagesUploaded"));
       setFiles([]);
+      queryClient.invalidateQueries(["contestRecord"]);
+      setEntryFormOpen(false);
       reset();
     },
-    onError: () => toast.error(t('services.uploadImagesError')),
+    onError: (error) => {
+      console.log(error);
+      toast.error(error.message);
+    },
   });
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFiles(acceptedFiles);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      if (acceptedFiles.length !== 1 && categoryInfo.type === "SINGLE") {
+        toast.error(t("imageUpload.PhotoNumberError"));
+        return;
+      }
+      setFiles(acceptedFiles);
+    },
+    [categoryInfo.type, t]
+  );
 
   function onSubmit(formData) {
     const { title, description } = formData;
-    // if (files.length === 0) {
-    //   toast.error(t("imageUpload.imagesAdd"));
-    //   return;
-    // }
-
+    if (files.length === 0) {
+      toast.error(t("imageUpload.imagesAdd"));
+      return;
+    }
+    if (userRecord.entries.length + 1 > userRecord.maxPhotos) {
+      toast.error(t("imageUpload.entryLimitError"));
+      return;
+    }
     mutate({
-      data: getMultipartForm(title, description, contestId, categoryId, files),
+      data: getMultipartForm(
+        title,
+        description,
+        contestInfo.id,
+        categoryInfo.id,
+        files
+      ),
       t,
     });
   }
 
-  const { t } = useTranslation();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div className="w-full bg-white lg:w-1/3 border-2 px-3 py-5">
-      <h1 className="text-2xl text-center">
-        {t("imageUpload.photoUploadTitle")}
-      </h1>
+    <div className="w-full bg-white shadow rounded px-3 py-5">
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="form-field">
           <label>
-            {t("imageUpload.photoUpload")}
+            {t("imageUpload.photoTitle")}
             <span className="text-red-600">*</span>
           </label>
           <input
@@ -97,7 +119,7 @@ function ImageUpload() {
           </ul>
           <div
             {...getRootProps()}
-            className="text bg-blue-100 h-16 border-2 border-blue-300 border-dotted my-2 hover:border-dashed flex flex-col justify-center items-center"
+            className="text bg-blue-100 h-32 border-2 border-blue-300 border-dotted rounded my-2 hover:border-dashed hover:cursor-pointer flex flex-col justify-center items-center"
           >
             <input {...getInputProps()} />
             {isDragActive ? (

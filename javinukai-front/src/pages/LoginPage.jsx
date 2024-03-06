@@ -22,11 +22,11 @@ function LoginPage() {
   const { mutate } = useMutation({
     mutationFn: (data) => loginUser(data),
     onSuccess: (loggedInUser) => {
-      toast.success(t('loginPage.loginSuccess'));
+      toast.success(t("loginPage.loginSuccess"));
       setUser(loggedInUser);
       navigate("/");
     },
-    onError: () => toast.error(t('services.loginUserError')),
+    onError: () => toast.error(t("services.loginUserError")),
   });
 
   const handleLoginSubmit = async (formData) => {
@@ -34,21 +34,21 @@ function LoginPage() {
   };
 
   return (
-    <div className="w-full h-[82vh] flex flex-col justify-center items-center">
-      <div className="bg-slate-100 border-2 border-slate-200 p-3 w-5/6 lg:w-1/4 md:w-1/2">
+    <div className="w-full bg-slate-50 h-[82vh] flex flex-col justify-center items-center">
+      <div className="bg-white shadow rounded p-6 w-5/6 lg:w-2/5 md:w-1/2">
         <form
           id="login-form"
-          className="flex flex-col space-y-3"
+          className="flex flex-col space-y-5"
           onSubmit={handleSubmit(handleLoginSubmit)}
         >
           <section className="form-field">
-            <label>{t('loginPage.email')}</label>
+            <label className=" text-lg">{t("loginPage.email")}</label>
             <input
-              className="form-field__input"
+              className="form-field__input mt-3 "
               {...register("email", {
-                required: t('loginPage.emailRequired'),
+                required: t("loginPage.emailRequired"),
                 validate: (val) =>
-                  validateEmail(val) || t('loginPage.emailValidFormat'),
+                  validateEmail(val) || t("loginPage.emailValidFormat"),
               })}
             />
             {errors.email && (
@@ -56,21 +56,30 @@ function LoginPage() {
             )}
           </section>
           <section className="flex flex-col space-y-1">
-            <label className="text text-slate-800">{t('loginPage.password')}</label>
+            <label className="text text-slate-800 mb-3 text-lg">
+              {t("loginPage.password")}
+            </label>
             <input
               type="password"
               className="form-field__input"
-              {...register("password", { required: t('loginPage.passwordRequired') })}
+              {...register("password", {
+                required: t("loginPage.passwordRequired"),
+              })}
             />
             {errors.password && (
               <FormFieldError>{errors.password.message}</FormFieldError>
             )}
             <div className="flex space-x-4 text-blue-500 text-sm pt-2">
-              <Link to="/forgot-password">{t('loginPage.forgotPassword')}</Link>
-              <Link to="/register">{t('loginPage.register')}</Link>
+              <Link to="/forgot-password">{t("loginPage.forgotPassword")}</Link>
+              <Link to="/register">{t("loginPage.register")}</Link>
             </div>
           </section>
-          <StyledInput id="login-submit" value={t('loginPage.login')} type="submit" />
+          <StyledInput
+            extraStyle="rounded py-2"
+            id="login-submit"
+            value={t("loginPage.login")}
+            type="submit"
+          />
         </form>
       </div>
     </div>

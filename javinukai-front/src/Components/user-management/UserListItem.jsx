@@ -18,7 +18,9 @@ export function UserListItem({ userInfo }) {
         <p className="xl:block hidden break-all text-wrap col-span-3">
           {userInfo.email}
         </p>
-        <p className="xl:flex items-center justify-left col-span-2" >{t(`roles.${userInfo.role}`) || userInfo.role}</p>
+        <p className="xl:flex items-center justify-left col-span-2">
+          {t(`roles.${userInfo.role}`) || userInfo.role}
+        </p>
         <p className="hidden xl:flex items-center justify-left">
           {userInfo.maxTotal}/{userInfo.maxSinglePhotos}/
           {userInfo.maxCollections}
