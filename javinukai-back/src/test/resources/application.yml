@@ -24,10 +24,11 @@ logging:
         security: TRACE
         jpa: INFO
 app:
-  scheme: http
-  host: localhost:8080
-  client: localhost:5173
+  scheme: https
+  host: javinukai-api.rhoopoe.com
+  client: javinukai.rhoopoe.com
   email:
+    contact-address: jdoe@mail.com
     sender-address: notrealuser23@gmail.com
     smtp-server:
       host: sandbox.smtp.mailtrap.io
