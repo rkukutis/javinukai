@@ -38,7 +38,7 @@ public class PhotoController {
             throw new NoImagesException("No jpg images were provided with request");
         }
         return ResponseEntity.ok()
-                .body(photoService.createPhoto(images, title, description, contestId, categoryId, participant));
+                .body(photoService.createPhoto(images,description,title, contestId, categoryId, participant));
     }
 
     @GetMapping("{image}")
@@ -47,6 +47,13 @@ public class PhotoController {
         UUID imageId = UUID.fromString(image.split("\\.")[0]);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
                 .body(photoService.getImageById(imageId, ImageSize.valueOf(size.toUpperCase())));
+    }
+
+    @DeleteMapping("{photoCollectionId}")
+    public ResponseEntity<String> deletePhotoCollection(@PathVariable UUID photoCollectionId,
+                                                        @AuthenticationPrincipal User user) {
+        photoService.deleteCollectionById(photoCollectionId, user);
+        return ResponseEntity.noContent().build();
     }
 
 }

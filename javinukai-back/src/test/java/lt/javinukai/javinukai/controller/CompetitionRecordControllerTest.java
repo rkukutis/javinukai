@@ -187,7 +187,6 @@ class CompetitionRecordControllerTest {
 
         CompetitionRecord updatedCompetitionRecord = CompetitionRecord.builder()
                 .maxPhotos(15)
-                .photos(List.of("url1", "url2"))
                 .build();
 
         when(competitionRecordService.updateCompetitionRecord(any(UUID.class), any(CompetitionRecordDTO.class)))

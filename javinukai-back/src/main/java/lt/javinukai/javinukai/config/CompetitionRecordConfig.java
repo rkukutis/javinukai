@@ -16,10 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -82,8 +80,6 @@ public class CompetitionRecordConfig {
                     .build();
             final CompetitionRecord savedCompetitionRecord = competitionRecordRepository
                     .save(competitionRecordToCreate);
-
-            savedCompetitionRecord.addPhotos(Arrays.asList("url1", "url2", "url3"), savedCompetitionRecord.getMaxPhotos());
 
             competitionRecordRepository.save(savedCompetitionRecord);
             competitionRecordList.add(savedCompetitionRecord);
