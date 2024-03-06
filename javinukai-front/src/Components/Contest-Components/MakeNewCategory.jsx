@@ -13,7 +13,8 @@ function MakeNewCategory({ onClose }) {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND}/api/v1/categories`,
-        data
+        data,
+        { withCredentials: true }
       );
       console.log("Category created successfully:", response.data);
       onClose(); // Close the modal after successful creation

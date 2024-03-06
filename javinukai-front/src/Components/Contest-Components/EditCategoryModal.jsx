@@ -13,7 +13,8 @@ function EditCategoryModal({ category, onClose }) {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND}/api/v1/categories/${category.id}`,
-        data
+        data,
+        { withCredentials: true }
       );
       console.log("Category updated successfully:", response.data);
       onClose();

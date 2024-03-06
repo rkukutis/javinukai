@@ -81,7 +81,8 @@ function CreateContest({ contestDTO }) {
 
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND}/api/v1/contests`,
-        contestData
+        contestData,
+        { withCredentials: true }
       );
       console.log("Contest created successfully:", response.data);
     } catch (error) {
