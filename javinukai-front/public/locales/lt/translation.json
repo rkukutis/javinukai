@@ -2,7 +2,8 @@
   "dropdownMenu": {
     "accountSettings": "Vartotojo nustatymai",
     "logout": "Atsijungti",
-    "manageUsers": "Valdyti vartotojus"
+    "manageUsers": "Valdyti vartotojus",
+    "createContest": "Sukurti konkursą"
   },
 
   "navbar": {
@@ -60,30 +61,27 @@
     "photoUploading": "Nuotraukos keliamos...",
     "collectionTitle": "Pavadinimas:",
     "collectionDescription": "Aprašymas:",
-    "collectionCreatedAt": "Sukurta:"
+    "collectionCreatedAt": "Sukurta:",
+    "PhotoNumberError": "Į šia kategoriją galite pateikti tik pavienes nuotraukas",
+    "entryLimitError": "Pateikimas atmestas. Jūs jau pasiekėte savo pateikimų limitą šiai kategorijai"
+  },
+
+  "uploadImages": {
+    "photoValidationError": "Nuotrauka {{photoName}} neatitinka reikalavimų",
+    "photoProcessingError": "Įvyko sistemos klaida talpinant nuotraukas",
+    "photoGeneralError:": "Įvyko klaida įkeliant nuotraukas"
   },
 
   "PaginationSettings": {
+    "perPage": "puslapyje",
     "previousPage": "Ankstesnis",
     "nextPage": "Sekantis",
-    "usersTitle": "Vartotojai per puslapį",
-    "users": "vartotojų",
     "fieldTitle": "Rūšiuoti pagal lauką",
-    "fieldName": "Vardas",
-    "fieldSurname": "Pavardė",
-    "fieldEmail": "El. paštas",
-    "fieldRole": "Rolė",
-    "fieldMaxTotalEntries": "Maksimalus pateikimų skaičius",
-    "fieldMaxSingles": "Maksimalus pavienių pateikimų skaičius per kategoriją",
-    "fieldMaxCollections": "Maksimalus serijų pateikimų skaičius per kategoriją",
-    "fieldLimits": "Limitai",
-    "fieldIsEnabled": "Patvirtinta(s)",
-    "fieldIsNonLocked": "Blokuota(s)",
     "sortTitle": "Rūšiavimo tvarka",
     "sortDescending": "Mažėjanti",
     "sortAscending": "Didėjanti",
-    "searchTitle": "Ieškoti pagal pavardę",
-    "searchPlaceholder": "Pavardė",
+    "placeholderField": "įveskite",
+    "searchTitle": "Ieškoti pagal",
     "searchButton": "Ieškoti",
     "fieldIsEnabledYes": "Taip",
     "fieldIsEnabledNo": "Ne"
@@ -103,23 +101,13 @@
     "resetSuccess": "Slaptažodžio atstatymo el.laiškas sėkmingai išsiųstas "
   },
 
-
   "RegisterPage": {
     "registrationSuccess": "Sėkmingai užsiregistravote. Prašau patvirtinkite savo el. paštą. ",
     "name": "Vardas",
     "nameRequired": "Vardas yra būtinas",
     "nameContains": "Varde turi būti tik abėcėlės simboliai",
     "nameLength": "Vardas neturi viršyti 20 simbolių",
-    "registrationSuccess": "Sėkmingai užsiregistravote. Prašau patvirtinkite savo el. paštą. ",
-    "name": "Vardas",
-    "nameRequired": "Vardas yra būtinas",
-    "nameContains": "Varde turi būti tik abėcėlės simboliai",
-    "nameLength": "Vardas neturi viršyti 20 simbolių",
 
-    "surname": "Pavardė",
-    "surnameRequired": "Pavardė yra būtina",
-    "surnameContains": "Pavardėje turi būti tik abėcėlės simboliai",
-    "surnameLength": "Pavardė neturi viršyti 20 simbolių",
     "surname": "Pavardė",
     "surnameRequired": "Pavardė yra būtina",
     "surnameContains": "Pavardėje turi būti tik abėcėlės simboliai",
@@ -130,16 +118,7 @@
     "birthYearValid": "Data turi būti validi. Validus pavyzdys: '1984' ",
     "birthYearMax": "Gimimo metai negali būti vėliau nei",
     "birthYearMin": "Gimimo metai negali būti anksčiau nei 1900m.",
-    "birthYear": "Gimimo metai",
-    "birthYearRequired": "Gimimo metai yra būtini",
-    "birthYearValid": "Data turi būti validi. Validus pavyzdys: '1984' ",
-    "birthYearMax": "Gimimo metai negali būti vėliau nei",
-    "birthYearMin": "Gimimo metai negali būti anksčiau nei 1900m.",
 
-    "phoneNumber": "Telefono numeris",
-    "phoneNumberRequired": "Telefono numeris yra būtinas",
-    "phoneNumberValid": "Telefono numeris turi būti validus",
-    "phoneNumberLength": "Telefono numeris neturi viršyti 15 simbolių",
     "phoneNumber": "Telefono numeris",
     "phoneNumberRequired": "Telefono numeris yra būtinas",
     "phoneNumberValid": "Telefono numeris turi būti validus",
@@ -149,17 +128,7 @@
     "emailRequired": "El. paštas yra būtinas",
     "emailValid": "El. pašto adresas turi būti tinkamo formato",
     "emailLength": "El. pašto adresas neturi viršyti 200 simbolių",
-    "email": "El. paštas",
-    "emailRequired": "El. paštas yra būtinas",
-    "emailValid": "El. pašto adresas turi būti tinkamo formato",
-    "emailLength": "El. pašto adresas neturi viršyti 200 simbolių",
 
-    "password": "Slaptažodis",
-    "passwordRequired": "Slaptažodis yra būtinas",
-    "passwordValid": "Slaptažodis turi būti bent 8 simbolių ilgio",
-    "passwordConfirm": "Patvirtinti slaptažodį",
-    "passwordConfirmRequired": "Būtinas slaptažodžio patvirtinimas",
-    "passwordConfirmMustMatch": "Slaptažodžiai turi sutapti",
     "password": "Slaptažodis",
     "passwordRequired": "Slaptažodis yra būtinas",
     "passwordValid": "Slaptažodis turi būti bent 8 simbolių ilgio",
@@ -174,30 +143,10 @@
     "affiliationInstitutionNameLength": "Įstaigos pavadinimas neturi viršyti 50 simbolių",
     "registerSubmit": "Registruotis"
   },
-    "affiliationFreelance": "Laisvai samdomas",
-    "affiliationInstitution": "Atstovaujama žiniasklaidos priemonė",
-    "affiliationInstitutionName": "Atstovaujamos įstaigos pavadinimas",
-    "affiliationInstitutionRequired": "Įstaigos pavadinimas yra būtinas",
-    "affiliationInstitutionNameLength": "Įstaigos pavadinimas neturi viršyti 50 simbolių",
-    "registerSubmit": "Registruotis"
-  },
 
   "services": {
     "uploadImagesError": "Nepavyko įkelti nuotraukų",
     "resetPasswordError": "Bandant iš naujo nustatyti slaptažodį įvyko klaida",
-    "changePasswordError": "Bandant pakeisti slaptažodį įvyko klaida, darkart patikrinkite dabartinį",
-    "resetPasswordOldPasswordError": "Naujas slaptažodis negali būti toks pat kaip senas",
-    "resetPasswordResetLinkInvalid": "Slaptažodžio nustatymo iš naujo nuoroda neteisinga arba nebegalioja",
-    "forgotPasswordError": "Patikrinkite el. paštą, ar nėra slaptažodžio nustatymo iš naujo nuorodos",
-    "loginUserError": "Neteisinga kredencialai",
-    "logoutUserError": "Atsijungiant įvyko klaida",
-    "registerUserExistsError": "Naudotojas, turintis šį el. pašto adresą, jau egzistuoja",
-    "registerUserError": "Registracija nepavyko, bandykite vėliau"
-  },
-  "services": {
-    "uploadImagesError": "Nepavyko įkelti nuotraukų",
-    "resetPasswordError": "Bandant iš naujo nustatyti slaptažodį įvyko klaida",
-    "changePasswordError": "Bandant pakeisti slaptažodį įvyko klaida, darkart patikrinkite dabartinį",
     "resetPasswordOldPasswordError": "Naujas slaptažodis negali būti toks pat kaip senas",
     "resetPasswordResetLinkInvalid": "Slaptažodžio nustatymo iš naujo nuoroda neteisinga arba nebegalioja",
     "forgotPasswordError": "Patikrinkite el. paštą, ar nėra slaptažodžio nustatymo iš naujo nuorodos",
@@ -218,41 +167,7 @@
     "passMustMatch": "Slaptažodžiai turi sutapti",
     "passSubmit": "Pateikti"
   },
-  "ResetPassPage": {
-    "passChangeSuccess": "Slaptažodis sėkmingai pakeistas",
-    "passChangeError": "Klaida: patikrinkite, ar slaptažodžio nustatymo iš naujo nuoroda teisinga",
-    "passTitle": "Naujas slaptažodis",
-    "passRequired": "Slaptažodis yra būtinas",
-    "passLength": "Slaptažodis turi būti bent 8 simbolių ilgio",
-    "passTitleConfirm": "Patvirtinkite naują slaptažodį",
-    "passConfirmRequired": "Slaptažodžio patvirtinimas yra būtinas",
-    "passMustMatch": "Slaptažodžiai turi sutapti",
-    "passSubmit": "Pateikti"
-  },
 
-  "UserDetailsPage": {
-    "personalTitle": "Asmeninė informacija",
-    "personalName": "Vardas",
-    "personalSurname": "Pavardė",
-    "personalEmail": "El. paštas",
-    "personalBirthYear": "Gimimo metai",
-    "personalPhoneNumber": "Telefono numeris",
-    "personalFreelance": "Laisvai samdomas",
-    "personalInstitution": "Institucija",
-    "accountTitle": "Paskyros informacija",
-    "accountID": "Paskyros ID",
-    "accountCreationDate": "Sukūrimo data",
-    "accountLastModifiedDate": "Paskutinių keitimų data",
-    "accountEmailConfirmed": "Paskyros el paštas patvirtintas",
-    "accountIsLocked": "Paskyra užrakinta",
-    "accountRole": "Rolė",
-    "accountMaxPhotosContest": "Maksimalus nuotraukų pateikimų skaičius",
-    "accountMaxSinglesCategories": "Maksimalus pavienių pateikimų skaičius per kategoriją",
-    "accountMaxCollectionCategories": "Maksimalus serijų pateikimų skaičius per kategoriją",
-    "backButton": "Atgal",
-    "isTrue": "Taip",
-    "isFalse": "Ne"
-  },
   "UserDetailsPage": {
     "personalTitle": "Asmeninė informacija",
     "personalName": "Vardas",
@@ -278,26 +193,58 @@
     "changePasswordButton": "Pakeisti slaptažodį"
   },
 
-  "DangerZone": {
-    "title": "Pavojinga zona",
-    "permissionsChangedSuccess": "Vartotojo leidimai pakeisti sėkmingai",
-    "deletedSuccess": "Vartotojas {{username}} sėkmingai ištrintas",
-    "newRoleSame": "Naujoji rolė yra tokia pati kaip ir senoji",
-    "changeRole": "Ketinate pakeisti šio vartotojo rolę į {{newRole}}. Ar jūs tuo tikri?",
-    "userBlock": "Ketinate {{action}}blokuoti šią paskyrą. Ar jūs tuo tikri?",
-    "unTranslation": "at",
-    "userDelete": "Ketinate ištrinti šio vartotojo paskyrą, šis veiksmas yra negrįžtamas, ar jūs tuo tikri? ",
-    "changeUserTitle": "Keisti rolę",
-    "admin": "Administratorius",
-    "moderator": "Moderatorius",
-    "jury": "Žiuri",
-    "user": "Vartotojas",
-    "roleUpdateTitle": "Atnaujinti rolę",
-    "accountActionsTitle": "Paskyros veiksmai",
-    "blockAccount": "Blokuoti",
-    "unblockAccount": "Atblokuoti",
-    "deleteAccountButton": "Ištrinti"
+  "ContestsPage": {
+    "contestsLimitObject": "Konkursų",
+    "contestNameOption": "Pavadinimas",
+    "contestDescriptionOption": "Aprašymas",
+    "contestStartDateOption": "Pradžios data",
+    "contestEndDateOption": "Pabaigos data",
+    "contestTotalEntriesOption": "Pateikimų skaičius",
+    "contestSeachFieldName": "pavadinimą"
   },
+
+  "ContestCard": {
+    "detailsButton": "Plačiau"
+  },
+
+  "ContestDetailsPage": {
+    "contest": "Konkursas",
+    "startDate": "Pradžia",
+    "endDate": "Pabaiga",
+    "description": "Aprašymas",
+    "categories": "Kategorijos"
+  },
+
+  "CategoryItem": {
+    "juryViewEntries": "Peržiūrėti dalyvių pateiktis"
+  },
+
+  "UserSubmissionView": {
+    "yourEntries": "Jūsų pateiktys",
+    "addNewEntry": "Pridėti naują pateiktį",
+    "cancel": "Atšaukti"
+  },
+
+  "ContestEntry": {
+    "photos": "nuotraukos",
+    "deletionConfirmation": "Ar tikrau norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas"
+  },
+
+  "UserManagementPage": {
+    "userLimitObject": "Vartotojų",
+    "userNameOption": "Vardas",
+    "userSurnameIption": "Pavardė",
+    "userEmailOption": "El. paštas",
+    "userRoleOption": "Rolė",
+    "userMaxTotalOption": "Maksimalus pateikimų skaičius",
+    "userMaxSingleOption": "Pateikimų pavienų pateikimų skaičius kategorijai",
+    "userMaxCollectionsOption": "Maksimalus serijų pateikimų skaičius kategorijai",
+    "userIsEnabledOption": "Patvirtinta(s)",
+    "userisNonLockedOption": "Blokuota(s)",
+    "userSeachFieldName": "pavardę",
+    "limits": "Limitai"
+  },
+
   "DangerZone": {
     "title": "Pavojinga zona",
     "permissionsChangedSuccess": "Vartotojo leidimai pakeisti sėkmingai",
@@ -326,32 +273,8 @@
     "MODERATOR": "Moderatorius"
   },
 
-  "ChangeUsersPasswordForm": {
-    "oldPassword": "Dabartinis slaptažodis",
-    "newPassword": "Naujas slaptažodis",
-    "newPasswordConfirmation": "Patvirtinti naują slaptažodį",
-    "confirmChangePasswordButton": "Atlikti pakeitimus",
-    "discardChangePasswordButton": "Atšaukti pakeitimus",
-    "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
-    "changePasswordFailWrongCurrent": "Įvestas blogas dabartinis slaptažodis",
-    "changePasswordFailAsCurrent": "Slaptažodis sutampa su dabartiniu",
-    "changePasswordFailDoNotMatch": "Pakeičiant nauji slaptažodžiai turi sutapti"
-  }
-  "roles": {
-    "ADMIN": "Administratorius",
-    "USER": "Vartotojas",
-    "JURY": "Žiuri",
-    "MODERATOR": "Moderatorius"
-  },
-
-  "ChangeUsersPasswordForm": {
-    "oldPassword": "Dabartinis slaptažodis",
-    "newPassword": "Naujas slaptažodis",
-    "newPasswordConfirmation": "Patvirtinti naują slaptažodį",
-    "confirmChangePasswordButton": "Atlikti pakeitimus",
-    "discardChangePasswordButton": "Atšaukti pakeitimus",
-    "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
-    "changePasswordFailAsCurrent": "Slaptažodis sutampa su dabartiniu",
-    "changePasswordFailDoNotMatch": "Pakeičiant nauji slaptažodžiai turi sutapti"
+  "categoryTypes": {
+    "SINGLE": "Pavienės nuotraukos",
+    "COLLECTION": "Nuotraukų serijos"
   }
 }

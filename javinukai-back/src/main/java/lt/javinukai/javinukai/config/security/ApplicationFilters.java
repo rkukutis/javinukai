@@ -43,6 +43,10 @@ public class ApplicationFilters {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        //
+                        .requestMatchers(HttpMethod.GET,"/api/v1/contests/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/categories/**").permitAll()
+                        //
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers // for dev - needed for h2 console page

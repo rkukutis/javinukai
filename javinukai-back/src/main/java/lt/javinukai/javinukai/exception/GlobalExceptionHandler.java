@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,6 +21,16 @@ public class GlobalExceptionHandler {
         log.warn(exception.getMessage());
         ProblemDetail res = ProblemDetail.forStatus(400);
         res.setTitle("USER_NOT_FOUND_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    // This works as a generic "x not found" error handler
+    @ExceptionHandler({EntityNotFoundException.class})
+    public ProblemDetail handleEntityNotFoundException(EntityNotFoundException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("ENTITY_NOT_FOUND_ERROR");
         res.setDetail(exception.getMessage());
         return res;
     }
@@ -76,4 +87,33 @@ public class GlobalExceptionHandler {
         res.setDetail(exception.getMessage());
         return res;
     }
+
+    @ExceptionHandler({ImageDeleteException.class})
+    public ProblemDetail handlePhotoDeletionError(ImageDeleteException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(500);
+        res.setTitle("PHOTO_DELETION_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler({ImageProcessingException.class})
+    public ProblemDetail handleImageProcessingError(ImageProcessingException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("PHOTO_PROCESSING_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler({ImageValidationException.class})
+    public ProblemDetail handleImageValidationError(ImageValidationException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("PHOTO_VALIDATION_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+
 }

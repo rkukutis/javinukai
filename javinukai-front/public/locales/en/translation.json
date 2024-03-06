@@ -2,7 +2,8 @@
   "dropdownMenu": {
     "accountSettings": "Account settings",
     "logout": "Log out",
-    "manageUsers": "Manage users"
+    "manageUsers": "Manage users",
+    "createContest": "Create contest"
   },
 
   "navbar": {
@@ -58,34 +59,28 @@
     "photoSelectorActive": "Drop here",
     "photoSelector": "Select or drop photos here",
     "photoUploading": "Uploading...",
-    "collectionTitle": "Title:",
-    "collectionDescription": "Description:",
-    "collectionCreatedAt": "Created:"
+    "PhotoNumberError": "This category accepts only single photos",
+    "entryLimitError": "Entry not submitted. You have already reached your entry limit for this category"
+  },
+
+  "uploadImages": {
+    "photoValidationError": "Photos {{photoName}} does not meet requirements",
+    "photoProcessingError": "An system error has occured while processing your photos",
+    "photoGeneralError:": "An error has occured while uploading your photos"
   },
 
   "PaginationSettings": {
+    "perPage": "per page",
     "previousPage": "Previous",
     "nextPage": "Next",
-    "usersTitle": "Users per page",
-    "users": "users",
     "fieldTitle": "Sort by field",
-    "fieldName": "Name",
-    "fieldSurname": "Surname",
-    "fieldEmail": "Email",
-    "fieldRole": "Role",
-    "fieldMaxTotalEntries": "Max entries per contest",
-    "fieldMaxSingles": "Max singles per category",
-    "fieldMaxCollections": "Max collections per category",
-    "fieldLimits": "Limits",
-    "fieldIsEnabled": "Confirmed",
-    "fieldIsNonLocked": "Blocked",
     "sortTitle": "Sort direction",
     "sortDescending": "Descending",
     "sortAscending": "Ascending",
-    "searchTitle": "Search by surname",
-    "searchPlaceholder": "Surname",
+    "searchTitle": "Search by",
     "searchButton": "Search",
     "fieldIsEnabledYes": "Yes",
+    "placeholderField": "",
     "fieldIsEnabledNo": "No"
   },
 
@@ -196,6 +191,58 @@
     "changePasswordButton": "Change password"
   },
 
+  "ContestsPage": {
+    "contestsLimitObject": "Contests",
+    "contestNameOption": "Name",
+    "contestDescriptionOption": "Description",
+    "contestStartDateOption": "Start date",
+    "contestEndDateOption": "End date",
+    "contestTotalEntriesOption": "Entry number",
+    "contestSeachFieldName": "name"
+  },
+
+  "ContestCard": {
+    "detailsButton": "Details"
+  },
+
+  "ContestDetailsPage": {
+    "contest": "Contest",
+    "startDate": "Start Date",
+    "endDate": "End date",
+    "description": "Description",
+    "categories": "Categories"
+  },
+
+  "CategoryItem": {
+    "juryViewEntries": "View contestant entries"
+  },
+
+  "UserSubmissionView": {
+    "yourEntries": "Your entries",
+    "addNewEntry": "Add new entry",
+    "cancel": "Cancel"
+  },
+
+  "ContestEntry": {
+    "photos": "photos",
+    "deletionConfirmation": "Are you sure you want to delete this entry? This action is irreversible"
+  },
+
+  "UserManagementPage": {
+    "userLimitObject": "Users",
+    "userNameOption": "Name",
+    "userSurnameIption": "Surname",
+    "userEmailOption": "Email",
+    "userRoleOption": "Role",
+    "userMaxTotalOption": "Max entries per contest",
+    "userMaxSingleOption": "Max singles per category",
+    "userMaxCollectionsOption": "Max collections per category",
+    "userIsEnabledOption": "Enabled",
+    "userisNonLockedOption": "Blocked",
+    "userSeachFieldName": "surname",
+    "limits": "Limits"
+  },
+
   "DangerZone": {
     "title": "Danger zone",
     "permissionsChangedSuccess": "User permissions changed",
@@ -234,5 +281,10 @@
     "changePasswordFailWrongCurrent": "Current password is wrong",
     "changePasswordFailAsCurrent": "Password is the same as current one",
     "changePasswordFailDoNotMatch": "Password and password confimation do not match"
+  },
+
+  "categoryTypes": {
+    "SINGLE": "Single photos",
+    "COLLECTION": "Photo collections"
   }
 }

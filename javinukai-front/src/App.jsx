@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./Components/Layout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -8,7 +8,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ForgotPassPage from "./pages/ForgotPassPage";
 import ResetPassPage from "./pages/ResetPassPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
-import HomePage from "./pages/HomePage";
 import ImageUpload from "./Components/ImageUpload";
 import UserManagementPage from "./pages/UserManagementPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
@@ -52,8 +51,8 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route index element={<Navigate to="/contests" />} />
               <Route path="/contests" element={<ContestsPage />} />
-              <Route index element={<HomePage />} />
               <Route
                 path="/contest/:contestId"
                 element={<ContestDetailsPage />}

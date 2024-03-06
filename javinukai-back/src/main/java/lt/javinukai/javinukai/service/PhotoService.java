@@ -1,20 +1,25 @@
 package lt.javinukai.javinukai.service;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.config.security.UserRole;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
+import lt.javinukai.javinukai.exception.ImageDeleteException;
 import lt.javinukai.javinukai.exception.ImageProcessingException;
+import lt.javinukai.javinukai.exception.ImageValidationException;
 import lt.javinukai.javinukai.exception.NoImagesException;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -31,7 +36,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PhotoService {
     private final CompetitionRecordService recordService;
-    private final PhotoCollectionRepository contestantImageCollectionRepository;
+    private final PhotoCollectionRepository photoCollectionRepository;
 
     @Value("${app.scheme}")
     private String scheme;
@@ -42,13 +47,13 @@ public class PhotoService {
     public PhotoCollection createPhoto(MultipartFile[] images, String description, String title, UUID contestId,
                                        UUID categoryId, User participant) throws IOException {
         // we have to check image validity before working with them because we cant roll back file IO
-        // checkImageSizes(images); temp disabled
+         checkImageSizes(images);
 
         log.info("Received {} photos(s) from user {} for contest {} category {}",
                 images.length, participant.getEmail(), contestId, categoryId);
         CompetitionRecord competitionRecord = recordService
                 .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
-        PhotoCollection collection = contestantImageCollectionRepository.save(PhotoCollection.builder()
+        PhotoCollection collection = photoCollectionRepository.save(PhotoCollection.builder()
                 .name(title)
                 .description(description)
                 .author(participant)
@@ -78,7 +83,7 @@ public class PhotoService {
                     .build();
             collection.getImages().add(contestantImage);
         }
-        return contestantImageCollectionRepository.save(collection);
+        return photoCollectionRepository.save(collection);
     }
 
     private Map<ImageSize, List<String>> getImagePathsAndUrls(MultipartFile image, String name) throws IOException {
@@ -121,15 +126,16 @@ public class PhotoService {
 
     private void checkImageSizes(MultipartFile[] images) {
         for (MultipartFile image : images) {
+            image.getContentType();
             try (InputStream is = new ByteArrayInputStream(image.getBytes())){
             BufferedImage img = ImageIO.read(is);
                 if (img.getHeight() > img.getWidth()) { // image is a portrait
                     if (img.getHeight() < 2500 || img.getHeight() > 4000) {
-                        throw new ImageProcessingException("Incorrect image size: " + image.getOriginalFilename());
+                        throw new ImageValidationException(image.getOriginalFilename());
                     }
                 } else {
                     if (img.getWidth() < 2500 || img.getWidth() > 4000) {
-                        throw new ImageProcessingException("Incorrect image size: " + image.getOriginalFilename());
+                        throw new ImageValidationException(image.getOriginalFilename());
                     }
                 }
             } catch (IOException exception) {
@@ -138,5 +144,37 @@ public class PhotoService {
             }
         }
     }
+
+    @Transactional
+    public void deleteCollectionById(UUID photoCollectionId, User requestingUser) {
+        PhotoCollection collection = photoCollectionRepository.findById(photoCollectionId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Photo collection with id:" + photoCollectionId + " not found")
+                );
+
+        if (!collection.getAuthor().getId().equals(requestingUser.getId()) &&
+                requestingUser.getRole() != UserRole.ADMIN
+                ) {
+            throw new BadCredentialsException("Only the author and admin can delete an photo collection/entry");
+        }
+            collection.getImages().forEach(photo -> {
+                try {
+                    deleteLocalPhotoById(photo.getId());
+                } catch (IOException e) {
+                    throw new ImageDeleteException("Could not delete local photo copy");
+                }
+            });
+        photoCollectionRepository.deleteById(photoCollectionId);
+    }
+
+    private void deleteLocalPhotoById(UUID photoId) throws IOException {
+        for (ImageSize imageSize : ImageSize.values()) {
+            Path imagePath = Path.of(
+                    "src/main/resources/images",imageSize.localStoragePath, photoId + ".jpg"
+            );
+            Files.delete(imagePath);
+        }
+    }
+
 
 }

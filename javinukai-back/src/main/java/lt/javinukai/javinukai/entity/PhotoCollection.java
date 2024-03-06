@@ -22,8 +22,11 @@ public class PhotoCollection {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
+
+    @Column(name = "name", columnDefinition = "TEXT")
     private String name;
-    @Column(columnDefinition = "TEXT")
+
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @JsonIgnore
@@ -31,7 +34,8 @@ public class PhotoCollection {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection",
+            cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     private List<Photo> images;
 
     @ManyToOne(fetch = FetchType.EAGER)
