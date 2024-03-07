@@ -6,7 +6,7 @@ import CreateContest from '../Components/Contest-Components/CreateContest';
 function ContestPage() {
   return (
   <div>
-<CreateCategory/>
+{/* <CreateCategory/> */}
 <CreateContest/>
   </div>
   );
