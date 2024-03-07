@@ -83,21 +83,21 @@ public class ContestService {
 
         final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
-        contestToUpdate.setName(contestDTO.getContestName());
+        contestToUpdate.setName(contestDTO.getName());
         contestToUpdate.setDescription(contestDTO.getDescription());
         contestToUpdate.setTotalSubmissions(contestDTO.getTotalSubmissions());
         contestToUpdate.setStartDate(contestDTO.getStartDate());
         contestToUpdate.setEndDate(contestDTO.getEndDate());
 
-        final List<Category> updatedCategoryList = new ArrayList<>();
-
-        for (Category category : contestDTO.getCategories()) {
-            final Category categoryIn = categoryRepository.findById(category.getId()).orElseThrow(
-                    () -> new EntityNotFoundException("Category was not found with ID: " + category.getId()));
-            updatedCategoryList.add(categoryIn);
-        }
-
-        contestToUpdate.setCategories(updatedCategoryList);
+//        final List<Category> updatedCategoryList = new ArrayList<>();
+//
+//        for (Category category : contestDTO.getCategories()) {
+//            final Category categoryIn = categoryRepository.findById(category.getId()).orElseThrow(
+//                    () -> new EntityNotFoundException("Category was not found with ID: " + category.getId()));
+//            updatedCategoryList.add(categoryIn);
+//        }
+//
+//        contestToUpdate.setCategories(updatedCategoryList);
         log.info("{}: Updating contest", this.getClass().getName());
         return contestRepository.save(contestToUpdate);
     }
