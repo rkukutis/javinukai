@@ -100,22 +100,18 @@ public class CompetitionRecordController {
     @PatchMapping(path = "/records/{recordID}")
     public ResponseEntity<CompetitionRecord> updateRecord(@PathVariable @NotNull UUID recordID,
                                                           @RequestBody @Valid CompetitionRecordDTO recordDTO) {
+        log.info(recordDTO.toString());
         log.info("Request for updating competition record with ID: {}", recordID);
         final CompetitionRecord updatedRecord = competitionRecordService
                 .updateCompetitionRecord(recordID, recordDTO);
         return new ResponseEntity<>(updatedRecord, HttpStatus.OK);
     }
 
-    /*
-    v1 - ištrina atskirą įrašą, nemanau, kad taip galima daryti
-    nežinau ar DELETE išvis reikalingas, gal užteks, kad pašalinus user, category, contest
-    jis bus pašalintas per kaskadą
-//     */
-//    @DeleteMapping(path = "/records/{recordID}")
-//    public ResponseEntity<?> deleteRecord(@PathVariable @NotNull UUID recordID) {
-//        log.info("Request for deleting record with ID: {}", recordID);
-//        competitionRecordService.deleteRecord(recordID);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
+    @DeleteMapping(path = "/records/{recordID}")
+    public ResponseEntity<?> deleteRecord(@PathVariable @NotNull UUID recordID) {
+        log.info("Request for deleting record with ID: {}", recordID);
+        competitionRecordService.deleteRecord(recordID);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }
