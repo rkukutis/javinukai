@@ -1,16 +1,8 @@
 package lt.javinukai.javinukai.dto.request.contest;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import lt.javinukai.javinukai.entity.Category;
-import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.User;
-import org.hibernate.validator.constraints.Length;
-
-import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -20,6 +12,10 @@ import java.util.UUID;
 @Getter
 @ToString
 public class CompetitionRecordDTO {
+
+    private UUID userID;
+    private UUID categoryID;
+    private UUID contestID;
 
     @Min(value = 1, message = "AT_LEAST_ONE")
     @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")

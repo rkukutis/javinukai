@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,7 @@ public class CompetitionRecordController {
 
     // this endpoint is for the participant to check his own options
     @GetMapping(path = "/records")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Page<CompetitionRecord>> retrieveUserCompetitionRecords(@AuthenticationPrincipal User participant,
                                                                                   @RequestParam(defaultValue = "0") int pageNumber,
                                                                                   @RequestParam(defaultValue = "25") int pageSize,
@@ -66,6 +68,7 @@ public class CompetitionRecordController {
     }
 
     @GetMapping(path = "records/contest/{contestId}/category/{categoryId}/my-record")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<CompetitionRecord> retrieveSpecificUserRecord(@PathVariable UUID contestId,
                                                                         @PathVariable UUID categoryId,
                                                                         @AuthenticationPrincipal User participant) {
@@ -77,6 +80,7 @@ public class CompetitionRecordController {
 
     // this one is for the jury
     @GetMapping(path = "/records/contest/{contestId}/category/{categoryId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Page<CompetitionRecord>> retrieveRecords(@PathVariable UUID contestId,
                                                                       @PathVariable UUID categoryId,
                                                                       @RequestParam(defaultValue = "1") int pageNumber,
@@ -98,24 +102,21 @@ public class CompetitionRecordController {
     }
 
     @PatchMapping(path = "/records/{recordID}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<CompetitionRecord> updateRecord(@PathVariable @NotNull UUID recordID,
                                                           @RequestBody @Valid CompetitionRecordDTO recordDTO) {
+        log.info(recordDTO.toString());
         log.info("Request for updating competition record with ID: {}", recordID);
         final CompetitionRecord updatedRecord = competitionRecordService
                 .updateCompetitionRecord(recordID, recordDTO);
         return new ResponseEntity<>(updatedRecord, HttpStatus.OK);
     }
 
-    /*
-    v1 - ištrina atskirą įrašą, nemanau, kad taip galima daryti
-    nežinau ar DELETE išvis reikalingas, gal užteks, kad pašalinus user, category, contest
-    jis bus pašalintas per kaskadą
-//     */
-//    @DeleteMapping(path = "/records/{recordID}")
-//    public ResponseEntity<?> deleteRecord(@PathVariable @NotNull UUID recordID) {
-//        log.info("Request for deleting record with ID: {}", recordID);
-//        competitionRecordService.deleteRecord(recordID);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
+    @DeleteMapping(path = "/records/{recordID}")
+    public ResponseEntity<?> deleteRecord(@PathVariable @NotNull UUID recordID) {
+        log.info("Request for deleting record with ID: {}", recordID);
+        competitionRecordService.deleteRecord(recordID);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }
