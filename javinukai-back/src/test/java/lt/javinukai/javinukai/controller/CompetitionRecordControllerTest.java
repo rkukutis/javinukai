@@ -182,7 +182,6 @@ class CompetitionRecordControllerTest {
 
         CompetitionRecordDTO competitionRecordDTO = CompetitionRecordDTO.builder()
                 .maxPhotos(10)
-                .photos(Collections.singletonList(""))
                 .build();
 
         CompetitionRecord updatedCompetitionRecord = CompetitionRecord.builder()

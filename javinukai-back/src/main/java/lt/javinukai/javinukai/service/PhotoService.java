@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.UserRole;
+import lt.javinukai.javinukai.dto.request.collection.CollectionUpdateRequest;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
@@ -177,4 +178,12 @@ public class PhotoService {
     }
 
 
+    public PhotoCollection updateCollectionInfo(UUID photoCollectionId, CollectionUpdateRequest updatedInfo) {
+        PhotoCollection collection = photoCollectionRepository.findById(photoCollectionId)
+                .orElseThrow(()-> new EntityNotFoundException("Photo collection with id " +
+                        photoCollectionId + " not found"));
+        collection.setName(updatedInfo.getNewName());
+        collection.setDescription(updatedInfo.getNewDescription());
+        return photoCollectionRepository.save(collection);
+    }
 }

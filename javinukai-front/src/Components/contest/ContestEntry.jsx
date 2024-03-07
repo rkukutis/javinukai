@@ -9,14 +9,88 @@ import EnlargedPhotoCarousel from "../photo/EnlargedPhotoCarousel";
 import deleteIcon from "../../assets/icons/delete_FILL0_wght400_GRAD0_opsz24.svg";
 import detailsIcon from "../../assets/icons/description_FILL0_wght400_GRAD0_opsz24.svg";
 import { useTranslation } from "react-i18next";
+import Modal from "../Modal";
+import updateEntry from "../../services/entries/updateEntry";
+import { useForm } from "react-hook-form";
+import FormFieldError from "../FormFieldError";
+import StyledInput from "../StyledInput";
+
+function EditEntrySection({ onClose, entry }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      newName: entry.name,
+      newDescription: entry.description,
+    },
+  });
+
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: (newData) => updateEntry(newData),
+    onSuccess: () => {
+      toast.success("Entry updated successfully");
+      onClose();
+      queryClient.invalidateQueries(["contestCategories"]);
+    },
+    onError: () =>
+      toast.error("An error has occured while updating entry information"),
+  });
+
+  function onSubmit(newData) {
+    mutate({ entryId: entry.id, newData });
+  }
+
+  return (
+    <div className="flex flex-col space-y-3 p-6 h-fit md:w-[40vw]">
+      <Button onClick={onClose} extraStyle="bg-red-500 hover:bg-red-400">
+        Cancel
+      </Button>
+      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <section className="form-field">
+            <label>New name</label>
+            <input
+              id="surname"
+              className="form-field__input"
+              {...register("newName")}
+            />
+            {errors.surname && (
+              <FormFieldError>{errors.newName.message}</FormFieldError>
+            )}
+          </section>
+          <section className="form-field">
+            <label>New Description</label>
+            <textarea
+              id="newDescription"
+              className="h-80 border-2 rounded p-3 my-2"
+              {...register("newDescription")}
+            />
+            {errors.surname && (
+              <FormFieldError>{errors.newDescription.message}</FormFieldError>
+            )}
+          </section>
+          <StyledInput
+            extraStyle="rounded p-3 py-2 w-full"
+            type="submit"
+            id="submit-entry-edit"
+          />
+        </div>
+      </form>
+    </div>
+  );
+}
 
 export default function ContestEntry({ entry, index, categoryType }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [fullScreenPhoto, setFullScreenPhoto] = useState(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const { t } = useTranslation();
 
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (entryId) => deleteEntry(entryId),
     onSuccess: () => {
       toast.success("Entry deleted successfuly");
@@ -61,6 +135,13 @@ export default function ContestEntry({ entry, index, categoryType }) {
       </div>
       {isExpanded && (
         <div>
+          <Button onClick={() => setEditModalOpen(true)}>Edit details</Button>
+          <Modal isOpen={editModalOpen} setIsOpen={setEditModalOpen}>
+            <EditEntrySection
+              entry={entry}
+              onClose={() => setEditModalOpen(false)}
+            />
+          </Modal>
           <p className="text whitespace-pre-wrap mt-4">{entry.description}</p>
           <div className="flex flex-col xl:grid xl:grid-cols-3 w-full gap-6 my-4">
             {entry.images.map((image) => (
