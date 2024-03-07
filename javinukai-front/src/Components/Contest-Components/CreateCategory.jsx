@@ -8,32 +8,30 @@ function CreateCategory() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
+    clearErrors
   } = useForm();
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const onSubmit = async (data) => {
-    console.log(data);
-    if (Object.keys(errors).length === 0) {
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACKEND}/api/v1/categories`,
-          data
-        );
-        console.log("Category created successfully:", response.data);
-
-        setShowErrorMessage(false);
-      } catch (error) {
-        console.error("Error creating category:", error);
-      }
-    } else {
+    try {
+      const response = await axios.post( `${import.meta.env.VITE_BACKEND}/api/v1/categories`, data, { withCredentials: true });
+      console.log("Category created successfully:", response.data);
+      setShowErrorMessage(false);
+    } catch (error) {
+      console.error("Error creating category:", error);
       setShowErrorMessage(true);
+      setError("submit", {
+        type: "manual",
+        message: "Error creating category"
+      });
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Create Category</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
         <div className="mb-4">
           <label htmlFor="categoryName" className="block text-gray-700">
             Category Name:
@@ -41,13 +39,13 @@ function CreateCategory() {
           <input
             type="text"
             id="categoryName"
-            {...register("categoryName", { required: true })}
+            {...register("categoryName", { required: "Required" })}
             className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${
               errors.categoryName ? "border-red-500" : ""
             }`}
           />
           {errors.categoryName && (
-            <FormFieldError message="This field is required" />
+            <FormFieldError>{errors.categoryName.message}</FormFieldError>
           )}
         </div>
         <div className="mb-4">
@@ -57,10 +55,11 @@ function CreateCategory() {
           <textarea
             id="description"
             {...register("description")}
-            className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${
-              errors.description ? "border-red-500" : ""
-            }`}
+            className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500 `}
           />
+          {errors.description && (
+            <FormFieldError>{errors.description.message}</FormFieldError>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="totalSubmissions" className="block text-gray-700">
@@ -69,13 +68,11 @@ function CreateCategory() {
           <input
             type="number"
             id="totalSubmissions"
-            {...register("totalSubmissions", { required: true, min: 1 })}
-            className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${
-              errors.totalSubmissions ? "border-red-500" : ""
-            }`}
+            {...register("totalSubmissions", { required: "Required", min: 1 })}
+            className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500`}
           />
           {errors.totalSubmissions && (
-            <FormFieldError message="Total submissions must be greater than 0" />
+            <FormFieldError>{errors.totalSubmissions.message}</FormFieldError>
           )}
         </div>
         <div className="mb-4">
@@ -84,7 +81,7 @@ function CreateCategory() {
           </label>
           <select
             id="type"
-            {...register("type", { required: true })}
+            {...register("type", { required: "Pleae Select a type" })}
             className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${
               errors.type ? "border-red-500" : ""
             }`}
@@ -93,28 +90,29 @@ function CreateCategory() {
             <option value="SINGLE">Single</option>
             <option value="COLLECTION">Collection</option>
           </select>
+          
           {errors.type && (
-            <FormFieldError message="Please select the category type" />
+            <FormFieldError>{errors.type.message} </FormFieldError>
           )}
         </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 relative"
-        >
-          {isSubmitting && (
-            <span className="absolute inset-0 flex items-center justify-center">
-              <div className="loader"></div>
-            </span>
-          )}
-          Create Category
+        <div className="mb-4">
+          <button
+            onClick={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 relative"
+          >
+            {isSubmitting && (
+              <span className="absolute inset-0 flex items-center justify-center">
+                <div className="loader"></div>
+              </span>
+            )}
+            Create Category
+          </button>
           {showErrorMessage && (
-            <p className="text-red-500 absolute bottom-0 left-0">
-              Please fill all the fields
-            </p>
+            <p className="text-red-500">Error creating category</p>
           )}
-        </button>
-      </form>
+        </div>
+      </div>
     </div>
   );
 }
