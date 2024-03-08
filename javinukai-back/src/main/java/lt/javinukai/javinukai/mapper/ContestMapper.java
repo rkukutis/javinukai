@@ -7,7 +7,7 @@ public class ContestMapper {
 
     public static Contest contestDTOToContest(ContestDTO contestDTO) {
         return Contest.builder()
-                .name(contestDTO.getContestName())
+                .name(contestDTO.getName())
                 .description(contestDTO.getDescription())
 //                .categories(contestDTO.getCategories())
                 .totalSubmissions(contestDTO.getTotalSubmissions())
@@ -19,7 +19,7 @@ public class ContestMapper {
     public static ContestDTO contestToContestDTO(Contest contest) {
         return ContestDTO.builder()
                 .id(contest.getId())
-                .contestName(contest.getName())
+                .name(contest.getName())
 //                .categories(contest.getCategories())
                 .description(contest.getDescription())
                 .totalSubmissions(contest.getTotalSubmissions())
@@ -31,7 +31,7 @@ public class ContestMapper {
     public static ContestDTO contestToContestDTOTest(Contest contest) {
         return ContestDTO.builder()
                 .id(contest.getId())
-                .contestName(contest.getName())
+                .name(contest.getName())
                 .categories(contest.getCategories())
                 .description(contest.getDescription())
                 .totalSubmissions(contest.getTotalSubmissions())
