@@ -6,6 +6,8 @@ import { UserListItem } from "../Components/user-management/UserListItem";
 import { BarLoader } from "react-spinners";
 import { useTranslation } from "react-i18next";
 import ChangePage from "../Components/user-management/ChangePage";
+import Button from "../Components/Button";
+import { useNavigate } from "react-router-dom";
 
 const defaultPagination = {
   page: 0,
@@ -16,6 +18,7 @@ const defaultPagination = {
 };
 
 export default function UserManagementPage() {
+  const navigate = useNavigate();
   const [paginationSettings, setPaginationSettings] =
     useState(defaultPagination);
   const { data, isFetching } = useQuery({
@@ -82,6 +85,14 @@ export default function UserManagementPage() {
           firstPage={data?.firs}
           lastPage={data?.last}
         />
+        <div>
+          <Button
+            onClick={() => navigate("/create-user")}
+            extraStyle="bg-red-400 hover:bg-red-300 mb-2"
+          >
+            {t("UserManagementPage.addNewUserButton")}
+          </Button>
+        </div>
         <div className="hidden xl:grid xl:grid-cols-10 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
           <p>{t("UserManagementPage.userNameOption")}</p>
           <p>{t("UserManagementPage.userSurnameIption")}</p>

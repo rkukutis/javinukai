@@ -73,7 +73,6 @@ public class CategoryController {
         return ResponseEntity.ok().body(retrievedCategories);
     }
 
-
     @GetMapping(path = "/categories/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Category> retrieveCategory(@PathVariable @NotNull UUID id) {
