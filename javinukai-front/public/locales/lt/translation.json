@@ -1,6 +1,6 @@
 {
   "dropdownMenu": {
-    "accountSettings": "Vartotojo nustatymai",
+    "accountSettings": "Asmeninė informacija",
     "logout": "Atsijungti",
     "manageUsers": "Valdyti vartotojus",
     "createContest": "Sukurti konkursą"
@@ -273,8 +273,28 @@
     "MODERATOR": "Moderatorius"
   },
 
+  "ChangeUsersPasswordForm": {
+    "oldPassword": "Dabartinis slaptažodis",
+    "newPassword": "Naujas slaptažodis",
+    "newPasswordConfirmation": "Patvirtinkite naująjį slaptažodį",
+    "confirmChangePasswordButton": "Patvirtinkite pakeitimą",
+    "discardChangePasswordButton": "Atsisakytį pakeitimo",
+    "changePasswordSuccess": "Slaptažodis buvo sėkmingai pakeistas",
+    "changePasswordFailWrongCurrent": "Dabartinis slaptažodis yra neteisingas",
+    "changePasswordFailAsCurrent": "Naujasis slaptažodis toks pat kaip buvęs",
+    "changePasswordFailDoNotMatch": "Slaptažodžiai nevienodi"
+  },
+
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
     "COLLECTION": "Nuotraukų serijos"
+  },
+
+  "PersonalInformation": {
+    "editButton": "Keisti",
+    "cancelButton": "Atšaukti",
+    "saveButton": "Išsaugoti",
+    "isFreelanceTrue": "Taip",
+    "isFreelanceFalse": "Ne"
   }
 }

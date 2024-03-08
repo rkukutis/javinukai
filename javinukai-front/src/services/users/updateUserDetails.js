@@ -1,8 +1,9 @@
 export default async function (updatedUser) {
+  console.log(updatedUser)
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND}/api/v1/users/${updatedUser.id}`,
+    `${import.meta.env.VITE_BACKEND}/api/v1/users`,
     {
-      method: "PATCH",
+      method: "PUT",
       mode: "cors",
       cache: "no-cache",
       credentials: "include",

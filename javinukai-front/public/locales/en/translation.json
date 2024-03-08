@@ -1,6 +1,6 @@
 {
   "dropdownMenu": {
-    "accountSettings": "Account settings",
+    "accountSettings": "Personal information",
     "logout": "Log out",
     "manageUsers": "Manage users",
     "createContest": "Create contest"
@@ -286,5 +286,15 @@
   "categoryTypes": {
     "SINGLE": "Single photos",
     "COLLECTION": "Photo collections"
+  },
+
+  "PersonalInformation": {
+    "editButton": "Edit",
+    "cancelButton": "Cancel",
+    "saveButton": "Save",
+    "isFreelanceTrue": "Taip",
+    "isFreelanceFalse": "Ne"
   }
+
+  
 }

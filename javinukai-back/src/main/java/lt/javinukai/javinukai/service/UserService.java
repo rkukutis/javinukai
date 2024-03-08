@@ -52,9 +52,6 @@ public class UserService {
         user.setIsFreelance(updatedUser.getIsFreelance());
         user.setInstitution(updatedUser.getInstitution());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
-        //user.setMaxTotal(updatedUser.getMaxTotal());
-        //user.setMaxSinglePhotos(updatedUser.getMaxSinglePhotos());
-        //user.setMaxCollections(updatedUser.getMaxCollections());
         return userRepository.save(user);
     }
 
