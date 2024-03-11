@@ -24,7 +24,7 @@ public class CategoryDTO {
 
     @NotBlank
     @Length(max = 100, message = "CATEGORY_NAME_LENGTH_EXCEEDED")
-    private String categoryName;
+    private String name;
 
     @Length(max = 1000, message = "CATEGORY_DESCRIPTION_LENGTH_EXCEEDED")
     private String description;

@@ -1,5 +1,5 @@
-async function resetPassword({data, t}) {
-  console.log(data, t)
+async function resetPassword({ data, t }) {
+  console.log(data, t);
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND}/api/v1/auth/reset-password`,
     {
@@ -21,13 +21,11 @@ async function resetPassword({data, t}) {
     const err = await res.json();
     switch (err.title) {
       case "INVALID_TOKEN_ERROR":
-        throw new Error(t('services.resetPasswordResetLinkInvalid'));
+        throw new Error(t("services.resetPasswordResetLinkInvalid"));
       case "PASSWORD_RESET_ERROR":
-        throw new Error(t('services.resetPasswordOldPasswordError'));
+        throw new Error(t("services.resetPasswordOldPasswordError"));
       default:
-        throw new Error(
-          t('services.resetPasswordError')
-        );
+        throw new Error(t("services.resetPasswordError"));
     }
   }
 }

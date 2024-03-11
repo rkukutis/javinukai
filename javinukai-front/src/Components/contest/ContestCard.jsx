@@ -3,9 +3,11 @@ import contestPhoto from "../../assets/contest-photo.jpg";
 import calendarIcon from "../../assets/icons/date_range_FILL0_wght400_GRAD0_opsz24.svg";
 import formatTimestap from "../../utils/formatTimestap";
 import Button from "../Button";
+import { useTranslation } from "react-i18next";
 
 export default function ContestCard({ contestInfo }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="bg-white rounded-md xl:grid xl:grid-cols-12">
@@ -25,7 +27,7 @@ export default function ContestCard({ contestInfo }) {
             onClick={() => navigate(`/contest/${contestInfo.id}`)}
             extraStyle="w-full xl:w-fit"
           >
-            Contest Details
+            {t("ContestCard.detailsButton")}
           </Button>
           <div className="flex items-center space-x-2">
             <img className="inline" src={calendarIcon} />

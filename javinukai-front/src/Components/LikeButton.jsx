@@ -1,18 +1,16 @@
-function LikeButton() {
+import whiteHeart from "../assets/icons/favorite_white_FILL0_wght400_GRAD0_opsz24.svg";
+import redHeart from "../assets/icons/favorite_red_FILL0_wght400_GRAD0_opsz24.svg";
+
+function LikeButton({ extraStyle, isLiked, setIsLiked }) {
   return (
-    <div>
-      <button className="bg-blue-400 hover:bg-blue-500 py-2 px-4 rounded-full inline-flex items-center">
-        <svg
-          width="25px"
-          height="22px"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#000000"
-        >
-          <path d="M15.9 4.5C15.9 3 14.418 2 13.26 2c-.806 0-.869.612-.993 1.82-.055.53-.121 1.174-.267 1.93-.386 2.002-1.72 4.56-2.996 5.325V17C9 19.25 9.75 20 13 20h3.773c2.176 0 2.703-1.433 2.899-1.964l.013-.036c.114-.306.358-.547.638-.82.31-.306.664-.653.927-1.18.311-.623.27-1.177.233-1.67-.023-.299-.044-.575.017-.83.064-.27.146-.475.225-.671.143-.356.275-.686.275-1.329 0-1.5-.748-2.498-2.315-2.498H15.5S15.9 6 15.9 4.5zM5.5 10A1.5 1.5 0 0 0 4 11.5v7a1.5 1.5 0 0 0 3 0v-7A1.5 1.5 0 0 0 5.5 10z"></path>
-        </svg>
-      </button>
-    </div>
+    <button
+      className={`text bg-yellow-200 ${
+        isLiked ? "" : ""
+      } p-3 rounded transition ${extraStyle}`}
+      onClick={() => setIsLiked(!isLiked)}
+    >
+      <img src={isLiked ? redHeart : whiteHeart} />
+    </button>
   );
 }
 

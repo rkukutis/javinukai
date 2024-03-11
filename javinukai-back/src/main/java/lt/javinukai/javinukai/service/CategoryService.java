@@ -31,7 +31,7 @@ public class CategoryService {
     public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
 
         Category categoryInRepo = categoryRepository.findByNameAndDescriptionAndTotalSubmissions(
-                categoryDTO.getCategoryName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
+                categoryDTO.getName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
 
         HttpStatus httpStatus;
         String message;
@@ -73,7 +73,7 @@ public class CategoryService {
     public Category updateCategory(UUID id, CategoryDTO categoryDTO) {
         final Category categoryToUpdate = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category was not found with ID: " + id));
-        categoryToUpdate.setName(categoryDTO.getCategoryName());
+        categoryToUpdate.setName(categoryDTO.getName());
         categoryToUpdate.setDescription(categoryDTO.getDescription());
         categoryToUpdate.setTotalSubmissions(categoryDTO.getTotalSubmissions());
         categoryToUpdate.setType(categoryDTO.getType());

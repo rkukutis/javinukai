@@ -9,7 +9,7 @@ public class CategoryMapper {
 
     public static Category categoryDTOToCategory(CategoryDTO categoryDTO) {
         return Category.builder()
-                .name(categoryDTO.getCategoryName())
+                .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
                 .totalSubmissions(categoryDTO.getTotalSubmissions())
                 .uploadedPhotos(categoryDTO.getUploadedPhotos())
@@ -20,7 +20,7 @@ public class CategoryMapper {
     public static CategoryDTO categoryToCategoryDTO(Category category) {
         return CategoryDTO.builder()
                 .id(category.getId())
-                .categoryName(category.getName())
+                .name(category.getName())
                 .description(category.getDescription())
                 .totalSubmissions(category.getTotalSubmissions())
                 .type(category.getType())

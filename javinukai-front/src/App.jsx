@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./Components/Layout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -8,7 +8,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ForgotPassPage from "./pages/ForgotPassPage";
 import ResetPassPage from "./pages/ResetPassPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
-import HomePage from "./pages/HomePage";
 import ImageUpload from "./Components/ImageUpload";
 import UserManagementPage from "./pages/UserManagementPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
@@ -19,6 +18,8 @@ import JurySubmissionView from "./Components/JurySubmissionView";
 import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
 import PreviewPage from "./pages/PreviewPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,12 +46,13 @@ export default function App() {
               padding: "16px 24px",
             },
           }}
+          ord
         />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route index element={<Navigate to="/contests" />} />
               <Route path="/contests" element={<ContestsPage />} />
-              <Route index element={<HomePage />} />
               <Route
                 path="/contest/:contestId"
                 element={<ContestDetailsPage />}
@@ -74,6 +76,7 @@ export default function App() {
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
+              <Route path="/change-password" element={<ChangePasswordPage />} />
               <Route
                 path="/manage-users/:userId"
                 element={<UserDetailsPage />}

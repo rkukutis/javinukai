@@ -1,15 +1,11 @@
 package lt.javinukai.javinukai.entity;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import lt.javinukai.javinukai.repository.CategoryRepository;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.stereotype.Component;
-
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,43 +22,30 @@ public class CompetitionRecord {
     @Column(name = "id")
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contest_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //    @JsonIgnore
     private Contest contest;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //    @JsonIgnore
     private Category category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //    @JsonIgnore
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "competitionRecord", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "competitionRecord", cascade = CascadeType.MERGE)
     private List<PhotoCollection> entries;
 
     @Setter
     @Column(name = "max_photos")
     private long maxPhotos;
-
-    @Setter
-    @Column
-    private List<String> photos;
-
-    public void addPhotos(List<String> photosToAdd, long limit) {
-        if (photos == null) {
-            photos = new ArrayList<>();
-        }
-
-        for (int i = 0; i < photosToAdd.size(); i++) {
-            if (i < limit) {
-                photos.add(photosToAdd.get(i));
-            }
-        }
-    }
 
     @CreatedDate
     @Column(name = "created_at")
