@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.JwtService;
 import lt.javinukai.javinukai.config.security.UserRole;
+import lt.javinukai.javinukai.dto.request.user.CreateNewUserRequest;
 import lt.javinukai.javinukai.dto.response.AuthenticationResponse;
 import lt.javinukai.javinukai.dto.request.auth.LoginRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
@@ -70,6 +71,32 @@ public class AuthenticationService {
         User createdUser = userRepository.save(user);
         sendEmailWithToken(createdUser, TokenType.EMAIL_CONFIRM);
         return createdUser;
+    }
+
+    public User createUser(CreateNewUserRequest creationRequest, boolean isRegisteredByAdmin) {
+        if (userRepository.findByEmail(creationRequest.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException("USER_ALREADY_EXISTS_ERROR");
+        }
+        log.info("Manual user creation done by admin, enabling user on creation");
+        log.info("Creating new user: {}", creationRequest);
+        User createdUser = User.builder()
+                .name(creationRequest.getName())
+                .surname(creationRequest.getSurname())
+                .email(creationRequest.getEmail())
+                .phoneNumber(creationRequest.getPhoneNumber())
+                .birthYear(creationRequest.getBirthYear())
+                .password(passwordEncoder.encode(creationRequest.getPassword()))
+//                .role(UserRole.USER)
+                .role(creationRequest.getRole())
+                .maxTotal(defaultMaxTotal)
+                .maxSinglePhotos(defaultMaxSinglePhotos)
+                .maxCollections(defaultMaxCollections)
+                .isNonLocked(true)
+                .isEnabled(isRegisteredByAdmin)
+                .institution(creationRequest.getInstitution())
+                .isFreelance(creationRequest.getInstitution() == null)
+                .build();
+        return userRepository.save(createdUser);
     }
 
     public AuthenticationResponse login(LoginRequest loginRequest) {
