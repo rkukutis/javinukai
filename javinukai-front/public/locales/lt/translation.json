@@ -276,5 +276,22 @@
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
     "COLLECTION": "Nuotraukų serijos"
+  },
+
+  "ParticipationRequest":{
+    "fieldName": "Vardas",
+    "fieldSurname": "Paverdė",
+    "fieldEmail": "El. paštas",
+    "fieldBirthYear": "Gimimo metai",
+    "fieldPhoneNumber": "Telefono numeris",
+    "fieldContestName": "Konkursas",
+    "fieldContestStart": "Pradžia",
+    "fieldContestEnd": "Pabaiga",
+    "fieldAccept": "Priimti",
+    "fieldDecline": "Atmesti",
+    "requestDateOption": "Užklausos data",
+    "contestNameOption": "Konkurso pavadinimas",
+    "contestsLimitObject": "Užklausos",
+    "requestStatusOption": "Užklausos būsena"    
   }
 }

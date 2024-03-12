@@ -286,5 +286,24 @@
   "categoryTypes": {
     "SINGLE": "Single photos",
     "COLLECTION": "Photo collections"
+  },
+
+  "ParticipationRequest":{
+    "fieldName": "Name",
+    "fieldSurname": "Surname",
+    "fieldEmail": "Email",
+    "fieldBirthYear": "Birth year",
+    "fieldPhoneNumber": "Phone number",
+    "fieldContestName": "Contest name",
+    "fieldContestStart": "Contest start",
+    "fieldContestEnd": "Contest end",
+    "fieldAccept": "Accept",
+    "fieldDecline": "Decline",
+    "requestDateOption": "Request date",
+    "contestNameOption": "Contest name",
+    "contestsLimitObject": "Requests",
+    "requestStatusOption": "Request status"    
   }
+
+
 }

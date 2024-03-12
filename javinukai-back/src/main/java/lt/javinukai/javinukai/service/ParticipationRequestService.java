@@ -27,9 +27,12 @@ public class ParticipationRequestService {
     private final ContestRepository contestRepository;
     private final CompetitionRecordService competitionRecordService;
 
-    public Page<ParticipationRequest> getAllRequests(PageRequest pageRequest) {
-
-        return participationRequestRepository.findAll(pageRequest);
+    public Page<ParticipationRequest> getAllRequests(PageRequest pageRequest, String contains) {
+        if (contains == null) {
+            return participationRequestRepository.findAll(pageRequest);
+        } else {
+            return participationRequestRepository.findByUserSurnameContainingIgnoreCase(pageRequest, contains);
+        }
     }
 
     public ParticipationRequest createParticipationRequest(UUID contestId, UUID userId) {
@@ -51,10 +54,8 @@ public class ParticipationRequestService {
         return checkList.get(0);
     }
 
-    public List<ParticipationRequest> getRequestByConIdandUId(UUID userId, UUID contestId) {
-        List<ParticipationRequest> newList = participationRequestRepository.findByUserIdAndContestId(userId, contestId);
-        return newList;
-
+    public List<ParticipationRequest> getRequestByUserIdAndContestId(UUID userId, UUID contestId) {
+        return participationRequestRepository.findByUserIdAndContestId(userId, contestId);
     }
 
     public ParticipationRequest getRequestById(UUID requestId) {
@@ -69,11 +70,11 @@ public class ParticipationRequestService {
         final ParticipationRequest tempRequest = participationRequestRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Participation request was not found with ID: " + requestId));
         ParticipationRequestStatus currentStatus = tempRequest.getRequestStatus();
-        if (currentStatus==ParticipationRequestStatus.ACCEPTED) {
+        if (currentStatus == ParticipationRequestStatus.ACCEPTED) {
             return participationRequestRepository.save(tempRequest);
         }
         tempRequest.setRequestStatus(status);
-        if (status==ParticipationRequestStatus.ACCEPTED) {
+        if (status == ParticipationRequestStatus.ACCEPTED) {
             UUID userId = tempRequest.getUser().getId();
             UUID contestId = tempRequest.getContest().getId();
             competitionRecordService.createUsersCompetitionRecords(contestId, userId);

@@ -19,6 +19,7 @@ import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
 import PreviewPage from "./pages/PreviewPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
+import ParticipationRequests from "./Components/participation-request-components/ParticipationRequests";
 
 
 const queryClient = new QueryClient({
@@ -84,6 +85,7 @@ export default function App() {
               <Route path="/contest-page" element={<ContestPage />} />
               <Route path="/category-page" element={<CategoryPage />} />
               <Route path="Preview-page" element={<PreviewPage />} />
+              <Route path="/requests" element={<ParticipationRequests />} />
             </Route>
           </Routes>
         </BrowserRouter>
