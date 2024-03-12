@@ -37,7 +37,7 @@ function CreateUserPage() {
   });
 
   function onSubmit(formData) {
-    const updatedFormData = {...formData, role: role};
+    const updatedFormData = { ...formData, role: role };
     mutate({ userCreationInfo: updatedFormData, t });
   }
 
@@ -48,6 +48,14 @@ function CreateUserPage() {
 
   function handleChangeRole(newRole) {
     setNewtRole(newRole);
+    if (newRole === "JURY") {
+      setValue("birthYear", new Date().getFullYear());
+      setValue("phoneNumber", "+37066677777");
+    }
+    if (newRole !== "JURY") {
+      setValue("birthYear", "");
+      setValue("phoneNumber", "");
+    }
   }
 
   return (
