@@ -100,9 +100,9 @@ public class CompetitionRecordConfig {
                 .isNonLocked(true)
                 .role(UserRole.USER)
                 .password(passwordEncoder.encode("password"))
-                .maxTotal(10)
-                .maxSinglePhotos(10)
-                .maxCollections(10)
+                .maxTotal(5)
+                .maxSinglePhotos(3)
+                .maxCollections(1)
                 .build();
         final User savedUser = userRepository.save(userToCreate);
 
