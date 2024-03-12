@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.auth.ChangePasswordRequest;
+import lt.javinukai.javinukai.dto.request.user.CreateNewUserRequest;
 import lt.javinukai.javinukai.dto.response.ChangePasswordOnDemandResponse;
 import lt.javinukai.javinukai.service.AuthenticationService;
 import lt.javinukai.javinukai.dto.request.auth.ForgotPasswordRequest;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,6 +45,14 @@ public class AuthorizationController {
         log.info("Received registration request: {}", registration.toString());
         authenticationService.register(registration, false);
         return ResponseEntity.created(URI.create("/users")).build();
+    }
+
+    @PostMapping("/create-user")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<User> createUserAsAdmin(@RequestBody @Valid CreateNewUserRequest creationRequest) {
+        log.info("Creating user manually as admin: {}", creationRequest);
+        final User createdUser = authenticationService.createUser(creationRequest, true);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

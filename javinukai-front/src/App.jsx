@@ -19,6 +19,7 @@ import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
 import PreviewPage from "./pages/PreviewPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
+import CreateUserPage from "./pages/CreateUserPage";
 
 
 const queryClient = new QueryClient({
@@ -72,6 +73,7 @@ export default function App() {
               />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/create-user" element={<CreateUserPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />

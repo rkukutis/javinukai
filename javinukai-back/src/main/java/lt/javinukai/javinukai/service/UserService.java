@@ -3,6 +3,7 @@ package lt.javinukai.javinukai.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.UserRole;
+import lt.javinukai.javinukai.dto.request.user.CreateNewUserRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
@@ -41,6 +42,7 @@ public class UserService {
             return userRepository.findBySurnameContainingIgnoreCase(surname, pageRequest);
         }
     }
+
     public User updateUser(User updatedUser, UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
@@ -74,7 +76,6 @@ public class UserService {
         }
         return userRepository.save(user);
     }
-
 
     public List<User> deleteUser(UUID userId) {
         if (userRepository.existsById(userId)) {
