@@ -21,9 +21,13 @@ import java.util.UUID;
 @ToString
 public class CompetitionRecordDTO {
 
+    private UUID userID;
+    private UUID categoryID;
+    private UUID contestID;
+
     @Min(value = 1, message = "AT_LEAST_ONE")
     @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
     private long maxPhotos;
 
-    private List<String> photos;
+//    private List<String> photos;
 }

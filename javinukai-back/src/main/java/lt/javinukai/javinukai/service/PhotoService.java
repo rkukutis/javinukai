@@ -9,6 +9,7 @@ import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.exception.ImageDeleteException;
 import lt.javinukai.javinukai.exception.ImageProcessingException;
 import lt.javinukai.javinukai.exception.ImageValidationException;
@@ -37,6 +38,7 @@ import java.util.*;
 public class PhotoService {
     private final CompetitionRecordService recordService;
     private final PhotoCollectionRepository photoCollectionRepository;
+    private final LimitCheckingService limitCheckingService;
 
     @Value("${app.scheme}")
     private String scheme;
@@ -46,13 +48,23 @@ public class PhotoService {
 
     public PhotoCollection createPhoto(MultipartFile[] images, String description, String title, UUID contestId,
                                        UUID categoryId, User participant) throws IOException {
-        // we have to check image validity before working with them because we cant roll back file IO
-         checkImageSizes(images);
-
         log.info("Received {} photos(s) from user {} for contest {} category {}",
                 images.length, participant.getEmail(), contestId, categoryId);
         CompetitionRecord competitionRecord = recordService
                 .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
+
+        // check if user's total entry number does not exceed user maxTotal limit
+        if (!limitCheckingService.checkUserContestLimit(competitionRecord)) {
+            throw new RuntimeException("Competition entry limit reached");
+        }
+        // check if user does not exceed hos own category limit
+        if(!limitCheckingService.checkUserCategoryLimit(competitionRecord)) {
+            throw new RuntimeException("Category entry limit reached");
+        }
+
+        // we have to check image validity before working with them because we cant roll back file IO
+         checkImageSizes(images);
+
         PhotoCollection collection = photoCollectionRepository.save(PhotoCollection.builder()
                 .name(title)
                 .description(description)

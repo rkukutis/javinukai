@@ -25,7 +25,7 @@ public class ContestDTO {
     @NonNull
     @NotBlank
     @Length(max = 100, message = "CONTEST_NAME_LENGTH_EXCEEDED")
-    private String contestName;
+    private String name;
 
     @NonNull
     @NotBlank

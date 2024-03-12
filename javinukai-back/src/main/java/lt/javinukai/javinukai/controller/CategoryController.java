@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class CategoryController {
     }
 
     @PostMapping(path = "/categories")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
 
         final CategoryCreationResponse categoryCreationResponse = categoryService.createCategory(categoryDTO);
@@ -46,6 +48,7 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/categories")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Page<Category>> retrieveAllCategories(@RequestParam(defaultValue = "1") int pageNumber,
                                                                 @RequestParam(defaultValue = "25") int pageSize,
                                                                 @RequestParam(required = false) String keyword,
@@ -62,6 +65,7 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/categories/contest/{contestId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<List<Category>> retrieveContestCategories(@PathVariable UUID contestId) {
         log.info("Request for retrieving all categories for contest {}", contestId);
         List<Category> retrievedCategories = categoryService.retrieveContestCategories(contestId);
@@ -69,8 +73,8 @@ public class CategoryController {
         return ResponseEntity.ok().body(retrievedCategories);
     }
 
-
     @GetMapping(path = "/categories/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Category> retrieveCategory(@PathVariable @NotNull UUID id) {
         log.info("Request for retrieving category with ID: {}", id);
         final Category category = categoryService.retrieveCategory(id);
@@ -78,6 +82,7 @@ public class CategoryController {
     }
 
     @PutMapping(path = "/categories/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Category> updateCategory(@PathVariable @NotNull UUID id, @RequestBody @Valid CategoryDTO categoryDTO) {
         log.info("Request for updating category with ID: {}", id);
         final Category categoryToUpdate = categoryService.updateCategory(id, categoryDTO);
@@ -85,6 +90,7 @@ public class CategoryController {
     }
 
     @DeleteMapping(path = "/categories/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteCategory(@PathVariable @NotNull UUID id) {
         log.info("Request for deleting category with ID: {}", id);
         categoryService.deleteCategory(id);

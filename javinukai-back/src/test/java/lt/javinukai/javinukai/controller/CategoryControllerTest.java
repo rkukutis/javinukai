@@ -74,7 +74,7 @@ class CategoryControllerTest {
     public void init() {
         categoryDTO = CategoryDTO.builder()
                 .id(UUID.randomUUID())
-                .categoryName("test category name")
+                .name("test category name")
                 .description("testCategory description")
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.SINGLE)
@@ -82,7 +82,7 @@ class CategoryControllerTest {
 //        category = CategoryMapper.categoryDTOToCategory(categoryDTO);
         category = Category.builder()
                 .id(categoryDTO.getId())
-                .name(categoryDTO.getCategoryName())
+                .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
                 .totalSubmissions(categoryDTO.getTotalSubmissions())
                 .type(categoryDTO.getType())

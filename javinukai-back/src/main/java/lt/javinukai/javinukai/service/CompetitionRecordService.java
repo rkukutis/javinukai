@@ -10,6 +10,7 @@ import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
+import lt.javinukai.javinukai.mapper.CompetitionRecordMapper;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
@@ -99,15 +100,12 @@ public class CompetitionRecordService {
         return competitionRecordRepository.findByUserId(pageable, userId);
     }
 
-
-
     @Transactional
     public CompetitionRecord updateCompetitionRecord(UUID recordID, CompetitionRecordDTO competitionRecordDTO) {
-
+        final CompetitionRecord record = CompetitionRecordMapper.recordDTOToRecord(competitionRecordDTO);
         CompetitionRecord competitionRecordToUpdate = competitionRecordRepository.findById(recordID).orElseThrow(
                 () -> new EntityNotFoundException("Competition record was not found with ID: " + recordID));
-
-        competitionRecordToUpdate.setMaxPhotos(competitionRecordDTO.getMaxPhotos());
+        competitionRecordToUpdate.setMaxPhotos(record.getMaxPhotos());
         return competitionRecordRepository.save(competitionRecordToUpdate);
     }
 
