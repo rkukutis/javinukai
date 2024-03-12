@@ -39,14 +39,14 @@ public class ParticipationRequestController {
         Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sort = Sort.by(direction, sortBy);
         PageRequest pageRequest = PageRequest.of(page, listSize, sort);
-        return ResponseEntity.ok().body(participationRequestService.getAllRequests(pageRequest));
+        return ResponseEntity.ok().body(participationRequestService.getAllRequests(pageRequest, contains));
     }
 
-    @GetMapping("/request/{requestId}")
-    public ResponseEntity<ParticipationRequest> getRequestById(@PathVariable UUID requestId) {
-        log.info("Data for participation request {} requested", requestId);
-        return ResponseEntity.ok().body(participationRequestService.getRequestById(requestId));
-    }
+//    @GetMapping("/request/{requestId}")
+//    public ResponseEntity<ParticipationRequest> getRequestById(@PathVariable UUID requestId) {
+//        log.info("Data for participation request {} requested", requestId);
+//        return ResponseEntity.ok().body(participationRequestService.getRequestById(requestId));
+//    }
 
     @PostMapping("/request")
     public ParticipationRequest createParticipationRequest(@AuthenticationPrincipal User user,
@@ -73,9 +73,13 @@ public class ParticipationRequestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(path = "/get")
-    public List<ParticipationRequest> gettt(@RequestParam UUID userId,
-                                            @RequestParam UUID contestId) {
-        return participationRequestService.getRequestByConIdandUId(userId, contestId);
+    @GetMapping(path = "/request")
+    public ParticipationRequest getRequest(@AuthenticationPrincipal User user,
+                                           @RequestParam UUID contestId) {
+        List<ParticipationRequest> participationList = participationRequestService.getRequestByUserIdAndContestId(user.getId(), contestId);
+        if (participationList.isEmpty()) {
+            return null;
+        }
+        return participationList.get(0);
     }
 }

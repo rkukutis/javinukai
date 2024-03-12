@@ -3,13 +3,15 @@ import getContest from "../services/contests/getContest";
 import { useQuery } from "@tanstack/react-query";
 import contestPhoto from "../assets/contest-photo.jpg";
 import formatTimestap from "../utils/formatTimestap";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import getCategories from "../services/categories/getCategories";
 import { CategoryItem } from "../Components/category/CategoryItem";
 import { useTranslation } from "react-i18next";
+import CreateParticipationRequest from "../Components/participation-request-components/CreateParticipationRequest";
+import axios from "axios";
 
-function ContestDetailsPage() {
+function ContestDetailsPage() {  
+  const [requestStatus, setRequestStatus] = useState();
   const { contestId } = useParams();
   const { t } = useTranslation();
   const [expandedCategory, setExpandedCategory] = useState("");
@@ -21,6 +23,28 @@ function ContestDetailsPage() {
     queryKey: ["contestCategories", contestId],
     queryFn: () => getCategories(contestId),
   });
+
+  useEffect(() => {
+    axios
+      .get(
+        `${import.meta.env.VITE_BACKEND}/api/v1/request?contestId=${contestId}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((data) => {
+        console.log("data from request1", data);
+        {
+          data.data == ""
+            ? setRequestStatus("NOT_EXISTS")
+            : setRequestStatus(data.data.requestStatus);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setRequestStatus("ww");
+      });
+  }, [contestId, requestStatus]);
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
@@ -76,6 +100,20 @@ function ContestDetailsPage() {
             </div>
           </section>
         </div>
+        <div>
+          {requestStatus === "NOT_EXISTS" && (
+            <button
+              type="button"
+              className="bg-green-500 hover:bg-green-300"
+              onClick={() =>
+                CreateParticipationRequest(contestId, setRequestStatus)
+              }
+            >
+              PARTICIPATE
+            </button>
+          )}
+        </div>
+        <div>Request status: {requestStatus}</div>
       </div>
     </div>
   );
