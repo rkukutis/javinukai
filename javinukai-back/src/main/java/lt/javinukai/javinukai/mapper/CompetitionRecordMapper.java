@@ -25,7 +25,7 @@ public class CompetitionRecordMapper {
                 .contestEndDate(record.getContest().getEndDate())
                 .categoryName(record.getCategory().getName())
                 .categoryDescription(record.getCategory().getDescription())
-                .totalSubmissions(record.getCategory().getTotalSubmissions())
+                .totalSubmissions(record.getCategory().getMaxSubmissions())
                 .build();
     }
 }

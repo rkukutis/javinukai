@@ -63,7 +63,7 @@ function RegisterPage() {
                   message: t("RegisterPage.nameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
                   message: t("RegisterPage.nameContains"),
                 },
                 maxLength: {
@@ -87,7 +87,7 @@ function RegisterPage() {
                   message: t("RegisterPage.surnameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
                   message: t("RegisterPage.surnameContains"),
                 },
                 maxLength: {

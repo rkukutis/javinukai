@@ -4,16 +4,14 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.UserRole;
+import lt.javinukai.javinukai.dto.request.collection.CollectionUpdateRequest;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
-import lt.javinukai.javinukai.exception.ImageDeleteException;
-import lt.javinukai.javinukai.exception.ImageProcessingException;
-import lt.javinukai.javinukai.exception.ImageValidationException;
-import lt.javinukai.javinukai.exception.NoImagesException;
+import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
 import org.apache.http.client.utils.URIBuilder;
@@ -48,22 +46,32 @@ public class PhotoService {
 
     public PhotoCollection createPhoto(MultipartFile[] images, String description, String title, UUID contestId,
                                        UUID categoryId, User participant) throws IOException {
+
         log.info("Received {} photos(s) from user {} for contest {} category {}",
                 images.length, participant.getEmail(), contestId, categoryId);
         CompetitionRecord competitionRecord = recordService
                 .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
 
+
+        // CONTEST AND CATEGORY LIMITS
+        if (!limitCheckingService.checkContestLimit(competitionRecord)) {
+            throw new UploadLimitException("Competition entry limit reached");
+        }
+        if(!limitCheckingService.checkCategoryLimit(competitionRecord)) {
+            throw new UploadLimitException("Category entry limit reached");
+        }
+        // ACCOUNT LIMITS
         // check if user's total entry number does not exceed user maxTotal limit
         if (!limitCheckingService.checkUserContestLimit(competitionRecord)) {
-            throw new RuntimeException("Competition entry limit reached");
+            throw new UploadLimitException("Account competition entry limit reached");
         }
-        // check if user does not exceed hos own category limit
+        // check if user does not exceed his own category limit
         if(!limitCheckingService.checkUserCategoryLimit(competitionRecord)) {
-            throw new RuntimeException("Category entry limit reached");
+            throw new UploadLimitException("Account category entry limit reached");
         }
 
         // we have to check image validity before working with them because we cant roll back file IO
-         checkImageSizes(images);
+         validateImages(images);
 
         PhotoCollection collection = photoCollectionRepository.save(PhotoCollection.builder()
                 .name(title)
@@ -115,7 +123,7 @@ public class PhotoService {
     }
 
 
-    public byte[] getImageById(UUID imageId, ImageSize size) throws IOException {
+    public byte[] getImageById(UUID imageId, ImageSize size) {
         try {
         Path imagePath = Path.of("src/main/resources/images",size.localStoragePath, imageId + ".jpg");
         return Files.readAllBytes(imagePath);
@@ -136,9 +144,11 @@ public class PhotoService {
     }
 
 
-    private void checkImageSizes(MultipartFile[] images) {
+    private void validateImages(MultipartFile[] images) {
         for (MultipartFile image : images) {
-            image.getContentType();
+            if (!image.getContentType().equals("image/jpeg")) {
+                throw new ImageValidationException(image.getOriginalFilename());
+            }
             try (InputStream is = new ByteArrayInputStream(image.getBytes())){
             BufferedImage img = ImageIO.read(is);
                 if (img.getHeight() > img.getWidth()) { // image is a portrait
@@ -189,4 +199,12 @@ public class PhotoService {
     }
 
 
+    public PhotoCollection updateCollectionInfo(UUID photoCollectionId, CollectionUpdateRequest updatedInfo) {
+        PhotoCollection collection = photoCollectionRepository.findById(photoCollectionId)
+                .orElseThrow(()-> new EntityNotFoundException("Photo collection with id " +
+                        photoCollectionId + " not found"));
+        collection.setName(updatedInfo.getNewName());
+        collection.setDescription(updatedInfo.getNewDescription());
+        return photoCollectionRepository.save(collection);
+    }
 }

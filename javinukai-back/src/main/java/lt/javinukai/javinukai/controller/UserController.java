@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -22,7 +23,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/users")
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @Validated
 @RequiredArgsConstructor
 public class UserController {
@@ -56,6 +56,12 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable UUID userId, @RequestBody @Valid UserUpdateRequest updateDTO) {
         return ResponseEntity.ok().body(userService.updateUser(UserMapper.mapToUser(updateDTO), userId));
     }
+
+    @PutMapping
+    public ResponseEntity<User> updateUser(@AuthenticationPrincipal User user, @RequestBody @Valid UserUpdateRequest updateDTO) {
+        return ResponseEntity.ok().body(userService.updateUser(UserMapper.mapToUser(updateDTO), user.getId()));
+    }
+
 
     @PatchMapping("/{userId}")
     public ResponseEntity<User> updateUserRole(@PathVariable UUID userId, @RequestBody User newUser) {

@@ -1,5 +1,4 @@
 export default async function (updatedUser) {
-  console.log(updatedUser);
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND}/api/v1/users/${updatedUser.id}`,
     {

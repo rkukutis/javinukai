@@ -1,22 +1,18 @@
 package lt.javinukai.javinukai.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class LimitCheckingService {
     private final CompetitionRecordRepository recordRepository;
-
 
     // return boolean if user total limit per contest not reached
     public boolean checkUserContestLimit (CompetitionRecord competitionRecord) {
@@ -31,11 +27,28 @@ public class LimitCheckingService {
 
     public boolean checkUserCategoryLimit(CompetitionRecord competitionRecord) {
         int categoryEntryNumber = competitionRecord.getEntries().size();
-        boolean result = false;
-        switch (competitionRecord.getCategory().getType()) {
-            case SINGLE -> result = (competitionRecord.getUser().getMaxSinglePhotos() - categoryEntryNumber) > 0;
-            case COLLECTION -> result = (competitionRecord.getUser().getMaxCollections() - categoryEntryNumber) > 0;
-        }
-        return result;
+        return (competitionRecord.getMaxPhotos() - categoryEntryNumber) > 0;
+    }
+
+    // each contest has a number of total allowed submissions, return false if adding one more goes over the limit
+    public boolean checkContestLimit(CompetitionRecord record) {
+        List<CompetitionRecord> totalRecords = recordRepository.findByContestId(record.getContest().getId());
+        long totalEntryNumber = totalRecords.stream()
+                .map(r -> r.getEntries().size())
+                .reduce(Integer::sum).orElse(0);
+        return totalEntryNumber + 1 <= record.getContest().getMaxSubmissions();
+    }
+
+    // the same for the category limit
+    public boolean checkCategoryLimit(CompetitionRecord record) {
+        Contest contest = record.getContest();
+        Category category = record.getCategory();
+        List<CompetitionRecord> totalRecords = recordRepository.findByContestIdAndCategoryId(
+                contest.getId(), category.getId()
+        );
+        long totalEntryNumber = totalRecords.stream()
+                .map(r -> r.getEntries().size())
+                .reduce(Integer::sum).orElse(0);
+        return totalEntryNumber + 1 <= category.getMaxSubmissions();
     }
 }

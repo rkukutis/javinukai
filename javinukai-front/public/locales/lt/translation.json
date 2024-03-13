@@ -1,9 +1,10 @@
 {
   "dropdownMenu": {
-    "accountSettings": "Vartotojo nustatymai",
+    "accountSettings": "Asmeninė informacija",
     "logout": "Atsijungti",
     "manageUsers": "Valdyti vartotojus",
-    "createContest": "Sukurti konkursą"
+    "createContest": "Sukurti konkursą",
+    "participationRequests": "Patvirtinti dalyvius"
   },
 
   "navbar": {
@@ -54,6 +55,7 @@
     "photoDescriptionRequired": "Aprašymas yra būtinas",
     "photoRequirements": "Reikalavimai nuotraukai:",
     "photoDimensions": "Ilgasis nuotraukos kraštas turi būti ilgesnis nei 2500 pikselių ir trumpesnis nei 4000 pikselių",
+    "fileTypeRequirement": "Nuotrauka turi būti JPEG formato",
     "photoSize": "Kiekviena nuotrauka turi būti mažesnė nei 10 MB",
     "photoAllSize": "Visos nuotraukos kartu turi būti mažesnės nei 50 MB",
     "photoSelectorActive": "Dėkite nuotraukas čia",
@@ -67,8 +69,9 @@
   },
 
   "uploadImages": {
-    "photoValidationError": "Nuotrauka {{photoName}} neatitinka reikalavimų",
+    "photoValidationError": "Failas {{photoName}} neatitinka reikalavimų",
     "photoProcessingError": "Įvyko sistemos klaida talpinant nuotraukas",
+    "photoUploadLimitError": "Pateikimų limitas pasiektas. Daugiau pateikimų įkelti nebegalite",
     "photoGeneralError:": "Įvyko klaida įkeliant nuotraukas"
   },
 
@@ -122,7 +125,7 @@
     "phoneNumber": "Telefono numeris",
     "phoneNumberRequired": "Telefono numeris yra būtinas",
     "phoneNumberValid": "Telefono numeris turi būti validus",
-    "phoneNumberLength": "Telefono numeris neturi viršyti 15 simbolių",
+    "phoneNumberLength": "Telefono numeris neturi viršyti 16 simbolių",
 
     "email": "El. paštas",
     "emailRequired": "El. paštas yra būtinas",
@@ -261,7 +264,11 @@
     "startDate": "Pradžia",
     "endDate": "Pabaiga",
     "description": "Aprašymas",
-    "categories": "Kategorijos"
+    "categories": "Kategorijos",
+    "participate": "Dalyvauti konkurse",
+    "participationSuccess": "Dalyvavimo prašymas išsiųstas",
+    "participationError": "Įvyko klaida siunčiant dalyvavimo prašymą",
+    "entries": "Pateikimai"
   },
 
   "CategoryItem": {
@@ -276,7 +283,8 @@
 
   "ContestEntry": {
     "photos": "nuotraukos",
-    "deletionConfirmation": "Ar tikrau norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas"
+    "deletionConfirmation": "Ar tikrau norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas",
+    "editDetailsButton": "Pakeisti pateikties informaciją"
   },
 
   "UserManagementPage": {
@@ -323,12 +331,33 @@
     "MODERATOR": "Moderatorius"
   },
 
+  "ChangeUsersPasswordForm": {
+    "oldPassword": "Darbartinis slaptažodis",
+    "newPassword": "Naujas slaptažodis",
+    "newPasswordConfirmation": "Pakartokite slaptažodį",
+    "confirmChangePasswordButton": "Patvirtinti pakeitimą",
+    "discardChangePasswordButton": "Atšaukti pakeitimą",
+    "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
+    "changePasswordFailWrongCurrent": "Esamas slaptažodis įvestas neteisingai",
+    "changePasswordFailAsCurrent": "Naujas slaptažodis toks pats kaip esamas",
+  },
+
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
     "COLLECTION": "Nuotraukų serijos"
   },
+  
+  "PersonalInformation": {
+    "editButton": "Keisti asmeninę informaciją",
+    "cancelButton": "Atšaukti pakeitimus",
+    "saveButton": "Išsaugoti pakeitimus",
+    "isFreelanceTrue": "Taip",
+    "isFreelanceFalse": "Ne",
+    "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
+    "changeError": "Keičiant asmeninę informaciją įvyko klaida"
+},
 
-  "ParticipationRequest":{
+  "ParticipationRequest": {
     "fieldName": "Vardas",
     "fieldSurname": "Paverdė",
     "fieldEmail": "El. paštas",
@@ -342,6 +371,21 @@
     "requestDateOption": "Užklausos data",
     "contestNameOption": "Konkurso pavadinimas",
     "contestsLimitObject": "Užklausos",
-    "requestStatusOption": "Užklausos būsena"    
+    "requestStatusOption": "Užklausos būsena"
+  },
+
+  "ParticipationStatus": {
+    "PENDING": "Laukiama dalyvavimo patvirtinimo",
+    "ACCEPTED": "Dalyvavimo prašymas patvirtintas",
+    "DECLINED": "Dalyvavimo prašymas atmestas"
+  },
+
+  "EditEntrySection": {
+    "cancel": "Atšaukti",
+    "submitEdit": "Atnaujinti pateiktį",
+    "editSuccess": "Pateiktis atnaujinta",
+    "editError": "Atnaujinant pateiktį įvyko klaida",
+    "newName": "Naujas pavadinimas",
+    "newDescription": "Naujas aprašymas"
   }
 }
