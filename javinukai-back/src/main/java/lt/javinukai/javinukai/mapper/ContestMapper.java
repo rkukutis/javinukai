@@ -10,7 +10,7 @@ public class ContestMapper {
                 .name(contestDTO.getName())
                 .description(contestDTO.getDescription())
 //                .categories(contestDTO.getCategories())
-                .totalSubmissions(contestDTO.getTotalSubmissions())
+                .maxSubmissions(contestDTO.getTotalSubmissions())
                 .startDate(contestDTO.getStartDate())
                 .endDate(contestDTO.getEndDate())
                 .build();
@@ -22,7 +22,7 @@ public class ContestMapper {
                 .name(contest.getName())
 //                .categories(contest.getCategories())
                 .description(contest.getDescription())
-                .totalSubmissions(contest.getTotalSubmissions())
+                .totalSubmissions(contest.getMaxSubmissions())
                 .startDate(contest.getStartDate())
                 .endDate(contest.getEndDate())
                 .build();
@@ -34,7 +34,7 @@ public class ContestMapper {
                 .name(contest.getName())
                 .categories(contest.getCategories())
                 .description(contest.getDescription())
-                .totalSubmissions(contest.getTotalSubmissions())
+                .totalSubmissions(contest.getMaxSubmissions())
                 .startDate(contest.getStartDate())
                 .endDate(contest.getEndDate())
                 .build();

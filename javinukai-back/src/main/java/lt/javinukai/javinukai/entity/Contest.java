@@ -55,8 +55,8 @@ public class Contest {
     private List<ParticipationRequest> participationRequests;
 
     @Setter
-    @Column(name = "total_submissions")
-    private long totalSubmissions;
+    @Column(name = "max_submissions")
+    private long maxSubmissions;
 
     @Setter
     @Column(name = "start_date")
@@ -73,10 +73,6 @@ public class Contest {
     @LastModifiedDate
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
-
-    @Setter
-    @Column(name = "created_by")
-    private User createdBy;
 
     public void addCategory(Category category) {
         if (categories == null) {

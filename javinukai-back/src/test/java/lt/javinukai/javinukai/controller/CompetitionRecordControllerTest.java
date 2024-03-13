@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.JwtService;
 import lt.javinukai.javinukai.config.security.UserRole;
-import lt.javinukai.javinukai.dto.request.contest.CompetitionRecordDTO;
 import lt.javinukai.javinukai.dto.response.UserParticipationResponse;
 import lt.javinukai.javinukai.entity.Category;
-import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
@@ -17,36 +15,24 @@ import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
 import lt.javinukai.javinukai.service.CompetitionRecordService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.data.domain.Page;
 
 import java.time.ZonedDateTime;
 import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = CompetitionRecordController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -114,7 +100,7 @@ class CompetitionRecordControllerTest {
                 .id(UUID.randomUUID())
                 .name("įvykiai")
                 .description("pokyčiai, patraukę akį")
-                .totalSubmissions(40)
+                .maxSubmissions(40)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
@@ -124,7 +110,7 @@ class CompetitionRecordControllerTest {
                 .description("gražiauisios 2023-ųjų akimirkos")
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
-                .totalSubmissions(20)
+                .maxSubmissions(20)
                 .build();
 
         this.userParticipationResponse = UserParticipationResponse.builder()

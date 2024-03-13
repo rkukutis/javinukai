@@ -1,50 +1,61 @@
 import { useParams } from "react-router-dom";
 import getContest from "../services/contests/getContest";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import contestPhoto from "../assets/contest-photo.jpg";
 import formatTimestap from "../utils/formatTimestap";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import getCategories from "../services/categories/getCategories";
 import { CategoryItem } from "../Components/category/CategoryItem";
 import { useTranslation } from "react-i18next";
-import CreateParticipationRequest from "../Components/participation-request-components/CreateParticipationRequest";
-import axios from "axios";
+import Button from "../Components/Button";
+import toast from "react-hot-toast";
+import sendParticipationRequest from "../services/participation-requests/sendParticipationRequest";
+import useUserStore from "../stores/userStore";
 
-function ContestDetailsPage() {  
-  const [requestStatus, setRequestStatus] = useState();
+function ParticipationStatus({ status }) {
+  const { t } = useTranslation();
+  const styles = {
+    PENDING: ["bg-yellow-500", t(`ParticipationStatus.PENDING`)],
+    ACCEPTED: ["bg-green-500", t(`ParticipationStatus.ACCEPTED`)],
+    DECLINED: ["bg-red-500", t(`ParticipationStatus.DECLINED`)],
+  };
+
+  return (
+    <>
+      {status && (
+        <span className={`p-2 text-white rounded ${styles[status][0]}`}>
+          {styles[status][1]}
+        </span>
+      )}
+    </>
+  );
+}
+
+function ContestDetailsPage() {
+  const { user } = useUserStore((state) => state);
   const { contestId } = useParams();
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const [expandedCategory, setExpandedCategory] = useState("");
-  const { data: contest, isFetching: isFetchingContest } = useQuery({
+  const { data } = useQuery({
     queryKey: ["contest", contestId],
     queryFn: () => getContest(contestId),
   });
-  const { data: categories, isFetching: isFetchingCategories } = useQuery({
+  const { data: categories } = useQuery({
     queryKey: ["contestCategories", contestId],
     queryFn: () => getCategories(contestId),
   });
 
-  useEffect(() => {
-    axios
-      .get(
-        `${import.meta.env.VITE_BACKEND}/api/v1/request?contestId=${contestId}`,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((data) => {
-        console.log("data from request1", data);
-        {
-          data.data == ""
-            ? setRequestStatus("NOT_EXISTS")
-            : setRequestStatus(data.data.requestStatus);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setRequestStatus("ww");
-      });
-  }, [contestId, requestStatus]);
+  const { mutate: requestMutation } = useMutation({
+    mutationFn: () => sendParticipationRequest({ contestId, t }),
+    onSuccess: () => {
+      toast.success(t("ContestDetailsPage.participationSuccess"));
+      queryClient.invalidateQueries(["contest"]);
+    },
+    onError: () => {
+      toast.error(t("ContestDetailsPage.participationError"));
+    },
+  });
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
@@ -62,18 +73,25 @@ function ContestDetailsPage() {
                   {t("ContestDetailsPage.contest")}
                 </h2>
                 <h1 className="text text-xl xl:text-5xl text-white font-semibold">
-                  {contest?.name}
+                  {data?.contest.name}
                 </h1>
                 <div className="flex flex-col lg:flex-row lg:space-x-5 text-white text-xl">
                   <span>
                     {t("ContestDetailsPage.startDate")}:{" "}
-                    {formatTimestap(contest?.startDate)}
+                    {formatTimestap(data?.contest.startDate)}
                   </span>
                   <span>
                     {t("ContestDetailsPage.endDate")}:{" "}
-                    {formatTimestap(contest?.endDate)}
+                    {formatTimestap(data?.contest.endDate)}
                   </span>
                 </div>
+                <div>
+                  <ParticipationStatus status={data?.status} />
+                </div>
+                <h2 className="text-white text-xl">
+                  {t("ContestDetailsPage.entries")}: {data?.totalEntries} /{" "}
+                  {data?.contest.maxSubmissions}
+                </h2>
               </div>
             </div>
           </section>
@@ -81,7 +99,7 @@ function ContestDetailsPage() {
             <h1 className="text-2xl text-teal-500 font-bold py-2">
               {t("ContestDetailsPage.description")}
             </h1>
-            <p>{contest?.description}</p>
+            <p>{data?.contest.description}</p>
           </section>
           <section>
             <h1 className="text-2xl text-teal-500 font-bold py-2">
@@ -92,7 +110,7 @@ function ContestDetailsPage() {
                 <CategoryItem
                   key={category.id}
                   categoryInfo={category}
-                  contestInfo={contest}
+                  contestInfo={data?.contest}
                   expandedCategory={expandedCategory}
                   onSetExpandedCategory={setExpandedCategory}
                 />
@@ -100,20 +118,11 @@ function ContestDetailsPage() {
             </div>
           </section>
         </div>
-        <div>
-          {requestStatus === "NOT_EXISTS" && (
-            <button
-              type="button"
-              className="bg-green-500 hover:bg-green-300"
-              onClick={() =>
-                CreateParticipationRequest(contestId, setRequestStatus)
-              }
-            >
-              PARTICIPATE
-            </button>
-          )}
-        </div>
-        <div>Request status: {requestStatus}</div>
+        {!data?.status && user && (
+          <Button onClick={requestMutation}>
+            {t("ContestDetailsPage.participate")}
+          </Button>
+        )}
       </div>
     </div>
   );

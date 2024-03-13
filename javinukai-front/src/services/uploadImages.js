@@ -1,5 +1,4 @@
 export default async function ({ data, t }) {
-  console.log(data.get("image"));
   const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/v1/images`, {
     method: "POST",
     mode: "cors",
@@ -17,6 +16,8 @@ export default async function ({ data, t }) {
         );
       case "PHOTO_PROCESSING_ERROR":
         throw new Error(t("uploadImages.photoProcessingError"));
+      case "UPLOAD_LIMIT_ERROR":
+        throw new Error(t("uploadImages.photoUploadLimitError"));
       default:
         throw new Error(t("uploadImages.photoGeneralError"));
     }

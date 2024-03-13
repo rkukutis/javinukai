@@ -2,13 +2,9 @@ package lt.javinukai.javinukai.service;
 
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.Cookie;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
-import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import org.assertj.core.api.Assertions;
@@ -16,13 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -120,14 +110,14 @@ class ContestServiceTest {
         Category category01 = Category.builder()
                 .name("gamta")
                 .description("ir taip aišku ")
-                .totalSubmissions(100)
+                .maxSubmissions(100)
                 .build();
 
         Contest expectedContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabegusi")
                 .categories(Collections.singletonList(category01))
-                .totalSubmissions(666)
+                .maxSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
                 .build();

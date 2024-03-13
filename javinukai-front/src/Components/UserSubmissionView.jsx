@@ -17,7 +17,7 @@ function UserSubmissionView({ contest, category }) {
   function handleAddEntryClick() {
     setEntryFormOpen(!entryFormOpen);
   }
-
+  console.log(userRecord);
   return (
     <>
       {userRecord && (
