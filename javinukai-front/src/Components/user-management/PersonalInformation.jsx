@@ -15,8 +15,8 @@ import FormFieldError from "../../Components/FormFieldError";
 function PersonalInformation() {
   const { t } = useTranslation();
   const { user } = useUserStore((state) => state);
-  const [data, setData] = useState();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [data, setData] = useState({});
+  const { register, formState: { errors }, handleSubmit } = useForm();
   const { data: userData, isFetching, refetch } = useQuery({
     queryKey: ["user", user.id],
     queryFn: () => getUser(user.id),
@@ -27,7 +27,9 @@ function PersonalInformation() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    setData(userData);
+    if (userData) {
+      setData({ ...userData });
+    }
   }, [userData]);
 
   const updateUserMutation = useMutation({
@@ -42,7 +44,7 @@ function PersonalInformation() {
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditedData({ ...data });
+    setEditedData({...data});
   };
 
   const handleCancel = () => {
@@ -68,27 +70,19 @@ function PersonalInformation() {
 
   const onSubmit = async () => {
     try {
-      if (!editedData.isFreelance && !editedData.institution) {
-        toast.error("Please enter the institution name.");
-        return;
-      }
-
-      if (!editedData.name.trim()) {
-        toast.error("Fields cannot be empty.");
-        return;
-      }
-
       const updatedData = { ...editedData, uuid: data.uuid };
       await updateUserMutation.mutateAsync(updatedData);
       await refetch();
       setIsEditing(false);
       setData(updatedData);
-      toast.success("Changes saved successfully.");
+      toast.success(t('PersonalInformation.changeSuccess'));
     } catch (error) {
-      console.error(error);
-      toast.error("An error occurred while saving changes.");
+      toast.error(t('PersonalInformation.changeError'));
     }
-  };
+};
+
+const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
+
   return (
     <>
       {isFetching ? (
@@ -97,169 +91,324 @@ function PersonalInformation() {
         <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-100">
           <div className="lg:w-3/4 w-full h-fit bg-white shadow-md lg:my-4 p-8 rounded-md">
             <article className="lg:grid flex flex-col space-y-4 lg:space-y-0 pb-4">
+              <h1 className="text-2xl mb-4">
+                {t("dropdownMenu.accountSettings")}
+              </h1>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <section>
+                <section className="mb-4">
                   <label className="text-lg text-slate-900">
                     {t("UserDetailsPage.personalName")}
                   </label>
                   <span>: </span>
-                  {isEditing ? (
-                    <>
-                      <input
-                        id="name"
-                        className="text-lg text-wrap text-teal-600 border-b border-teal-600"
-                        value={editedData.name || ""}
-                        onChange={(e) => handleChange("name", e.target.value)}
-                        {...register("name", {
-                          required: 
-                          t("UserDetailsPage.nameRequired"),
-                        })}
-                      />
-                      {errors.name && (
-                        <FormFieldError>{errors.name.message}</FormFieldError>
-                      )}
-                    </>
-                  ) : (
+                  <div>
+                    {isEditing ? (
+                      <>
+                        <input
+                          {...register("name", {
+                            required: {
+                              value: true,
+                              message: t("RegisterPage.nameRequired"),
+                            },
+                            pattern: {
+                              value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
+                              message: t("RegisterPage.nameContains"),
+                            },
+                            maxLength: {
+                              value: 20,
+                              message: t("RegisterPage.nameLength"),
+                            },
+                          })}
+                          className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
+                          value={editedData.name || ''}
+                          onChange={(e) => handleChange("name", e.target.value)}
+                        />
+                        {errors.name && (
+                          <FormFieldError>{errors.name.message}</FormFieldError>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-lg text-wrap text-teal-600">
+                        {data.name}
+                      </span>
+                    )}
+                  </div>
+                </section>
+
+                <section className="mb-4">
+                  <label className="text-lg text-slate-900">
+                    {t("UserDetailsPage.personalSurname")}
+                  </label>
+                  <span>: </span>
+                  <div>
+                    {isEditing ? (
+                      <>
+                        <input
+                          {...register("surname", {
+                            required: {
+                              value: true,
+                              message: t("RegisterPage.surnameRequired"),
+                            },
+                            pattern: {
+                              value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
+                              message: t("RegisterPage.surnameContains"),
+                            },
+                            maxLength: {
+                              value: 20,
+                              message: t("RegisterPage.surnameLength"),
+                            },
+                          })}
+                          className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
+                          value={editedData.surname}
+                          onChange={(e) =>
+                            handleChange("surname", e.target.value)
+                          }
+                        />
+                        {errors.surname && (
+                          <FormFieldError>
+                            {errors.surname.message}
+                          </FormFieldError>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-lg text-wrap text-teal-600">
+                        {data?.surname}
+                      </span>
+                    )}
+                  </div>
+                </section>
+
+                <section className="mb-4">
+                  <label className="text-lg text-slate-900">
+                    {t("UserDetailsPage.personalBirthYear")}
+                  </label>
+                  <span>: </span>
+                  <div>
+                    {isEditing ? (
+                      <>
+                        <input
+                          {...register("birthYear", {
+                            required: {
+                              value: true,
+                              message: t("RegisterPage.birthYearRequired"),
+                            },
+                            pattern: {
+                              value: /^\d{4}$/,
+                              message: t("RegisterPage.birthYearValid"),
+                            },
+                            max: {
+                              value: new Date().getFullYear(),
+                              message:
+                                t("RegisterPage.birthYearMax") +
+                                " " +
+                                new Date().getFullYear(),
+                            },
+                            min: {
+                              value: 1900,
+                              message: t("RegisterPage.birthYearMin"),
+                            },
+                          })}
+                          className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
+                          value={editedData.birthYear}
+                          onChange={(e) =>
+                            handleChange("birthYear", e.target.value)
+                          }
+                        />
+                        {errors.birthYear && (
+                          <FormFieldError>
+                            {errors.birthYear.message}
+                          </FormFieldError>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-lg text-wrap text-teal-600">
+                        {data?.birthYear}
+                      </span>
+                    )}
+                  </div>
+                </section>
+
+                <section className="mb-4">
+                  <label className="text-lg text-slate-900">
+                    {t("UserDetailsPage.personalPhoneNumber")}
+                  </label>
+                  <span>: </span>
+                  <div>
+                    {isEditing ? (
+                      <>
+                        <input
+                          {...register("phoneNumber", {
+                            required: {
+                              value: true,
+                              message: t("RegisterPage.phoneNumberRequired"),
+                            },
+                            pattern: {
+                              value: /^\+?\d{9,11}$/,
+                              message: t("RegisterPage.phoneNumberValid"),
+                            },
+                            maxLength: {
+                              value: 16,
+                              message: t("RegisterPage.phoneNumberLength"),
+                            },
+                          })}
+                          className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
+                          value={editedData.phoneNumber}
+                          onChange={(e) =>
+                            handleChange("phoneNumber", e.target.value)
+                          }
+                        />
+                        {errors.phoneNumber && (
+                          <FormFieldError>
+                            {errors.phoneNumber.message}
+                          </FormFieldError>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-lg text-wrap text-teal-600">
+                        {data?.phoneNumber}
+                      </span>
+                    )}
+                  </div>
+                </section>
+
+                <section className="mb-4">
+                  <label className="text-lg text-slate-900">
+                    {t("UserDetailsPage.personalEmail")}
+                  </label>
+                  <span>: </span>
+                  <div>
                     <span className="text-lg text-wrap text-teal-600">
-                      {isEditing ? editedData.name : data?.name}
+                      {data?.email}
                     </span>
-                  )}
+                  </div>
                 </section>
+
+                <section>
+                  <label className="text-lg text-slate-900">
+                    {t("UserDetailsPage.accountRole")}
+                  </label>
+                  <span>: </span>
+                  <div>
+                    <span className="text-lg text-wrap text-teal-600">
+                    {t(`roles.${data?.role}`)}
+                    </span>
+                  </div>
+                </section>
+
+                <section className="text py-3">
+                  <label className="text-lg text-slate-900">
+                    {t("UserDetailsPage.personalFreelance")}
+                  </label>
+                  <span>: </span>
+                  <div>
+                    {isEditing ? (
+                      <select
+                        className="text-lg text-wrap text-teal-600 border-teal-600 form-field__input"
+                        value={editedData.isFreelance}
+                        onChange={(e) =>
+                          handleChange("isFreelance", e.target.value)
+                        }
+                        required
+                      >
+                        <option value={true}>{t('PersonalInformation.isFreelanceTrue')}</option>
+                        <option value={false}>{t('PersonalInformation.isFreelanceFalse')}</option>
+                      </select>
+                    ) : (
+                      <span className="text-lg text-wrap text-teal-600">
+                        {data?.isFreelance ? t('PersonalInformation.isFreelanceTrue') : t('PersonalInformation.isFreelanceFalse')}
+                      </span>
+                    )}
+                  </div>
+                </section>
+
+                {!isEditing && data?.isFreelance === false && (
+                  <section>
+                    <label className="text-lg text-slate-900">
+                      {t("UserDetailsPage.personalInstitution")}
+                    </label>
+                    <span>: </span>
+                    <div>
+                      <span className="text-lg text-wrap text-teal-600">
+                        {data?.institution}
+                      </span>
+                    </div>
+                  </section>
+                )}
+
+                {isEditing && editedData.isFreelance === false && (
+                  <section>
+                    <label className="text-lg text-slate-900">
+                      {t("UserDetailsPage.personalInstitution")}
+                    </label>
+                    <span>: </span>
+                    <div>
+                      {isEditing ? (
+                        <>
+                          <input
+                            {...register("institution", {
+                              required: {
+                                value: true,
+                                message: t(
+                                  "RegisterPage.affiliationInstitutionRequired"
+                                ),
+                              },
+                              maxLength: {
+                                value: 50,
+                                message: t(
+                                  "RegisterPage.affiliationInstitutionNameLength"
+                                ),
+                              },
+                            })}
+                            className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
+                            value={editedData.institution || ''}
+                            onChange={(e) =>
+                              handleChange("institution", e.target.value)
+                            }
+                          />
+                          {errors.institution && (
+                            <FormFieldError>
+                              {errors.institution.message}
+                            </FormFieldError>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-lg text-wrap text-teal-600">
+                          {data?.institution}
+                        </span>
+                      )}
+                    </div>
+                  </section>
+                )}
               </form>
-              <section>
-                <label className="text-lg text-slate-900">
-                  {t("UserDetailsPage.personalSurname")}
-                </label>
-                <span>: </span>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    className="text-lg text-wrap text-teal-600 border-b border-teal-600"
-                    value={isEditing ? editedData.surname : data?.surname}
-                    onChange={(e) => handleChange("surname", e.target.value)}
-                  />
-                ) : (
-                  <span className="text-lg text-wrap text-teal-600">
-                    {isEditing ? editedData.surname : data?.surname}
-                  </span>
-                )}
-              </section>
-              <section>
-                <label className="text-lg text-slate-900">
-                  {t("UserDetailsPage.personalBirthYear")}
-                </label>
-                <span>: </span>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    className="text-lg text-wrap text-teal-600 border-b border-teal-600"
-                    value={isEditing ? editedData.birthYear : data?.birthYear}
-                    onChange={(e) => handleChange("birthYear", e.target.value)}
-                  />
-                ) : (
-                  <span className="text-lg text-wrap text-teal-600">
-                    {isEditing ? editedData.birthYear : data?.birthYear}
-                  </span>
-                )}
-              </section>
-              <section>
-                <label className="text-lg text-slate-900">
-                  {t("UserDetailsPage.personalPhoneNumber")}
-                </label>
-                <span>: </span>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    className="text-lg text-wrap text-teal-600 border-b border-teal-600"
-                    value={
-                      isEditing ? editedData.phoneNumber : data?.phoneNumber
-                    }
-                    onChange={(e) =>
-                      handleChange("phoneNumber", e.target.value)
-                    }
-                  />
-                ) : (
-                  <span className="text-lg text-wrap text-teal-600">
-                    {isEditing ? editedData.phoneNumber : data?.phoneNumber}
-                  </span>
-                )}
-              </section>
-              <section>
-                <label className="text-lg text-slate-900">
-                  {t("UserDetailsPage.personalEmail")}
-                </label>
-                <span>: </span>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    className="text-lg text-wrap text-teal-600 border-b border-teal-600"
-                    value={isEditing ? editedData.email : data?.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                  />
-                ) : (
-                  <span className="text-lg text-wrap text-teal-600">
-                    {isEditing ? editedData.email : data?.email}
-                  </span>
-                )}
-              </section>
-              <section className="text py-3">
-                <label className="text-lg text-slate-900">
-                  {t("UserDetailsPage.personalFreelance")}
-                </label>
-                <span>: </span>
-                {isEditing ? (
-                  <select
-                    className="text-lg text-wrap text-teal-600 border-b border-teal-600"
-                    value={editedData.isFreelance}
-                    onChange={(e) =>
-                      handleChange("isFreelance", e.target.value)
-                    }
-                    required
-                  >
-                    <option value={true}>True</option>
-                    <option value={false}>False</option>
-                  </select>
-                ) : (
-                  <span className="text-lg text-wrap text-teal-600">
-                    {data?.isFreelance ? "True" : "False"}
-                  </span>
-                )}
-              </section>
-              {!isEditing && data?.isFreelance === false && (
-                <section>
-                  <label className="text-lg text-slate-900">
-                    {t("UserDetailsPage.personalInstitution")}
-                  </label>
-                  <span>: </span>
-                  <span className="text-lg text-wrap text-teal-600">
-                    {data?.institution}
-                  </span>
-                </section>
-              )}
-              {isEditing && editedData.isFreelance === false && (
-                <section>
-                  <label className="text-lg text-slate-900">
-                    {t("UserDetailsPage.personalInstitution")}
-                  </label>
-                  <span>: </span>
-                  <input
-                    type="text"
-                    className="text-lg text-wrap text-teal-600 border-b border-teal-600"
-                    value={editedData.institution}
-                    onChange={(e) =>
-                      handleChange("institution", e.target.value)
-                    }
-                  />
-                </section>
-              )}
             </article>
 
-            <Button onClick={isEditing ? handleSubmit(onSubmit) : handleEdit}>
-              {isEditing ? "Save" : "Edit"}
-            </Button>
-            {isEditing && <Button onClick={handleCancel}>Cancel</Button>}
 
-            <ChangePassword />
+            <div className="flex gap-4 py-3">
+              <Button onClick={isEditing ? handleSubmit(onSubmit) : handleEdit}>
+                {isEditing
+                  ? t("PersonalInformation.saveButton")
+                  : t("PersonalInformation.editButton")}
+              </Button>
+              {isEditing && (
+                <Button onClick={handleCancel}>
+                  {t("PersonalInformation.cancelButton")}
+                </Button>
+              )}
+            </div>
+
+
+            <div className="py-3">
+              <Button
+                  onClick={() =>
+                    setIsShowPasswordVisible(!isShowPasswordVisible)
+                  }
+                  extraStyle="text-lg mt-2 w-full lg:w-fit"
+                >
+                  {t("UserDetailsPage.changePasswordButton")}
+                </Button>
+                {isShowPasswordVisible && <ChangePassword />}
+            </div>
+
+            
           </div>
         </div>
       )}

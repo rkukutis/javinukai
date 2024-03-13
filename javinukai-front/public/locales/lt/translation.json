@@ -122,7 +122,7 @@
     "phoneNumber": "Telefono numeris",
     "phoneNumberRequired": "Telefono numeris yra būtinas",
     "phoneNumberValid": "Telefono numeris turi būti validus",
-    "phoneNumberLength": "Telefono numeris neturi viršyti 15 simbolių",
+    "phoneNumberLength": "Telefono numeris neturi viršyti 16 simbolių",
 
     "email": "El. paštas",
     "emailRequired": "El. paštas yra būtinas",
@@ -291,10 +291,12 @@
   },
 
   "PersonalInformation": {
-    "editButton": "Keisti",
-    "cancelButton": "Atšaukti",
-    "saveButton": "Išsaugoti",
+    "editButton": "Keisti asmeninę informaciją",
+    "cancelButton": "Atšaukti pakeitimus",
+    "saveButton": "Išsaugoti pakeitimus",
     "isFreelanceTrue": "Taip",
-    "isFreelanceFalse": "Ne"
+    "isFreelanceFalse": "Ne",
+    "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
+    "changeError": "Keičiant asmeninę informaciją įvyko klaida"
   }
 }

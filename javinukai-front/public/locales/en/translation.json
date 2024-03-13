@@ -119,7 +119,7 @@
     "phoneNumber": "Phone number",
     "phoneNumberRequired": "Phone number is required",
     "phoneNumberValid": "Phone number must be valid",
-    "phoneNumberLength": "Phone number must not exceed 15 characters",
+    "phoneNumberLength": "Phone number must not exceed 16 characters",
 
     "email": "Email",
     "emailRequired": "Email is required",
@@ -289,11 +289,13 @@
   },
 
   "PersonalInformation": {
-    "editButton": "Edit",
-    "cancelButton": "Cancel",
-    "saveButton": "Save",
-    "isFreelanceTrue": "Taip",
-    "isFreelanceFalse": "Ne"
+    "editButton": "Edit personal information",
+    "cancelButton": "Cancel changes",
+    "saveButton": "Save changes",
+    "isFreelanceTrue": "Yes",
+    "isFreelanceFalse": "No",
+    "changeSuccess": "Personal information changed successfully",
+    "changeError": "An error occurred while saving personal information"
   }
 
   
