@@ -1,5 +1,4 @@
 export default async function ({ userCreationInfo, t }) {
-  console.log("reg info in .js -->", userCreationInfo);
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND}/api/v1/auth/create-user`,
     {

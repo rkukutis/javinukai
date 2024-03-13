@@ -115,5 +115,12 @@ public class GlobalExceptionHandler {
         return res;
     }
 
-
+    @ExceptionHandler({UploadLimitException.class})
+    public ProblemDetail handleLimitError(UploadLimitException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("UPLOAD_LIMIT_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
 }

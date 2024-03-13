@@ -1,6 +1,6 @@
 export default async function (contestId) {
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND}/api/v1/contests/${contestId}`,
+    `${import.meta.env.VITE_BACKEND}/api/v1/contests/${contestId}/info`,
     {
       method: "GET",
       mode: "cors",

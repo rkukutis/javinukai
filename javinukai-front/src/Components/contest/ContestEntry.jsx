@@ -26,17 +26,17 @@ function EditEntrySection({ onClose, entry }) {
       newDescription: entry.description,
     },
   });
+  const { t } = useTranslation();
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: (newData) => updateEntry(newData),
     onSuccess: () => {
-      toast.success("Entry updated successfully");
+      toast.success(t("EditEntrySection.editSuccess"));
       onClose();
       queryClient.invalidateQueries(["contestCategories"]);
     },
-    onError: () =>
-      toast.error("An error has occured while updating entry information"),
+    onError: () => toast.error(t("EditEntrySection.editError")),
   });
 
   function onSubmit(newData) {
@@ -46,12 +46,12 @@ function EditEntrySection({ onClose, entry }) {
   return (
     <div className="flex flex-col space-y-3 p-6 h-fit md:w-[40vw]">
       <Button onClick={onClose} extraStyle="bg-red-500 hover:bg-red-400">
-        Cancel
+        {t("EditEntrySection.cancel")}
       </Button>
       <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <section className="form-field">
-            <label>New name</label>
+            <label>{t("EditEntrySection.newName")}</label>
             <input
               id="surname"
               className="form-field__input"
@@ -62,7 +62,7 @@ function EditEntrySection({ onClose, entry }) {
             )}
           </section>
           <section className="form-field">
-            <label>New Description</label>
+            <label>{t("EditEntrySection.newDescription")}</label>
             <textarea
               id="newDescription"
               className="h-80 border-2 rounded p-3 my-2"
@@ -73,6 +73,7 @@ function EditEntrySection({ onClose, entry }) {
             )}
           </section>
           <StyledInput
+            value={t("EditEntrySection.submitEdit")}
             extraStyle="rounded p-3 py-2 w-full"
             type="submit"
             id="submit-entry-edit"
@@ -135,7 +136,9 @@ export default function ContestEntry({ entry, index, categoryType }) {
       </div>
       {isExpanded && (
         <div>
-          <Button onClick={() => setEditModalOpen(true)}>Edit details</Button>
+          <Button onClick={() => setEditModalOpen(true)}>
+            {t("ContestEntry.editDetailsButton")}
+          </Button>
           <Modal isOpen={editModalOpen} setIsOpen={setEditModalOpen}>
             <EditEntrySection
               entry={entry}
