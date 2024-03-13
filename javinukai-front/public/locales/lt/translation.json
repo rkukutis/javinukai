@@ -323,6 +323,18 @@
     "MODERATOR": "Moderatorius"
   },
 
+  "ChangeUsersPasswordForm": {
+    "oldPassword": "Darbartinis slaptažodis",
+    "newPassword": "Naujas slaptažodis",
+    "newPasswordConfirmation": "Pakartokite slaptažodį",
+    "confirmChangePasswordButton": "Patvirtinti pakeitimą",
+    "discardChangePasswordButton": "Atšaukti pakeitimą",
+    "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
+    "changePasswordFailWrongCurrent": "Esamas slaptažodis įvestas neteisingai",
+    "changePasswordFailAsCurrent": "Naujas slaptažodis toks pats kaip esamas",
+    "changePasswordFailDoNotMatch": "Slaptažodis nesutampa su slaptažodžiop patvirtinimu"
+  },
+
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
     "COLLECTION": "Nuotraukų serijos"
