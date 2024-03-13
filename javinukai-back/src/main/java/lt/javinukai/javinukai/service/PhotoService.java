@@ -139,7 +139,9 @@ public class PhotoService {
 
     private void validateImages(MultipartFile[] images) {
         for (MultipartFile image : images) {
-            if (!image.getContentType().equals("image/jpg")) {
+            System.out.println("CONTENT TYPE //////////////////");
+            System.out.println(image.getContentType());
+            if (!image.getContentType().equals("image/jpeg")) {
                 throw new ImageValidationException(image.getOriginalFilename());
             }
             try (InputStream is = new ByteArrayInputStream(image.getBytes())){
