@@ -53,6 +53,7 @@
     "photoDescription": "Description",
     "photoDescriptionRequired": "Description is required",
     "photoRequirements": "Photo requirements:",
+    "fileTypeRequirement": "Photo file format must JPEG",
     "photoDimensions": "Long edge of photo must be longer than 2500px and shorter than 4000px",
     "photoSize": "Each photo must be less than 10 MB in size",
     "photoAllSize": "All photos combined must be less than 50 MB",
@@ -64,7 +65,7 @@
   },
 
   "uploadImages": {
-    "photoValidationError": "Photos {{photoName}} does not meet requirements",
+    "photoValidationError": "File {{photoName}} does not meet requirements",
     "photoProcessingError": "An system error has occured while processing your photos",
     "photoGeneralError:": "An error has occured while uploading your photos"
   },
@@ -338,7 +339,7 @@
     "COLLECTION": "Photo collections"
   },
 
-  "ParticipationRequest":{
+  "ParticipationRequest": {
     "fieldName": "Name",
     "fieldSurname": "Surname",
     "fieldEmail": "Email",
@@ -352,8 +353,6 @@
     "requestDateOption": "Request date",
     "contestNameOption": "Contest name",
     "contestsLimitObject": "Requests",
-    "requestStatusOption": "Request status"    
+    "requestStatusOption": "Request status"
   }
-
-
 }

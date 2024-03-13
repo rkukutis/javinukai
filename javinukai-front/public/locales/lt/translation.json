@@ -54,6 +54,7 @@
     "photoDescriptionRequired": "Aprašymas yra būtinas",
     "photoRequirements": "Reikalavimai nuotraukai:",
     "photoDimensions": "Ilgasis nuotraukos kraštas turi būti ilgesnis nei 2500 pikselių ir trumpesnis nei 4000 pikselių",
+    "fileTypeRequirement": "Nuotrauka turi būti JPEG formato",
     "photoSize": "Kiekviena nuotrauka turi būti mažesnė nei 10 MB",
     "photoAllSize": "Visos nuotraukos kartu turi būti mažesnės nei 50 MB",
     "photoSelectorActive": "Dėkite nuotraukas čia",
@@ -67,7 +68,7 @@
   },
 
   "uploadImages": {
-    "photoValidationError": "Nuotrauka {{photoName}} neatitinka reikalavimų",
+    "photoValidationError": "Failas {{photoName}} neatitinka reikalavimų",
     "photoProcessingError": "Įvyko sistemos klaida talpinant nuotraukas",
     "photoGeneralError:": "Įvyko klaida įkeliant nuotraukas"
   },
@@ -328,7 +329,7 @@
     "COLLECTION": "Nuotraukų serijos"
   },
 
-  "ParticipationRequest":{
+  "ParticipationRequest": {
     "fieldName": "Vardas",
     "fieldSurname": "Paverdė",
     "fieldEmail": "El. paštas",
@@ -342,6 +343,6 @@
     "requestDateOption": "Užklausos data",
     "contestNameOption": "Konkurso pavadinimas",
     "contestsLimitObject": "Užklausos",
-    "requestStatusOption": "Užklausos būsena"    
+    "requestStatusOption": "Užklausos būsena"
   }
 }
