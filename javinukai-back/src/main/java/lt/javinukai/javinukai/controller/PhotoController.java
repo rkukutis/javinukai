@@ -13,6 +13,7 @@ import lt.javinukai.javinukai.exception.NoImagesException;
 import lt.javinukai.javinukai.service.PhotoService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class PhotoController {
     private final PhotoService photoService;
 
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
     public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
                                                         @RequestParam("title") @NotBlank String title,
