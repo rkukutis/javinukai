@@ -26,13 +26,12 @@ async function changePassword({ formData, t }) {
         );
       case 406:
         throw new Error(
-          t("ChangeUsersPasswordForm.changePasswordFailWrongCurrent")
+          t("ChangeUsersPasswordForm.changePasswordFailAsCurrent")
         );
 
       default:
         new Error(t("services.changePasswordError"));
     }
   }
-  
 }
 export default changePassword;
