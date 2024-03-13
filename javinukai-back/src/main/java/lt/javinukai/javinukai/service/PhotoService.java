@@ -11,10 +11,7 @@ import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
-import lt.javinukai.javinukai.exception.ImageDeleteException;
-import lt.javinukai.javinukai.exception.ImageProcessingException;
-import lt.javinukai.javinukai.exception.ImageValidationException;
-import lt.javinukai.javinukai.exception.NoImagesException;
+import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
 import org.apache.http.client.utils.URIBuilder;
@@ -55,13 +52,22 @@ public class PhotoService {
         CompetitionRecord competitionRecord = recordService
                 .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
 
+
+        // CONTEST AND CATEGORY LIMITS
+        if (!limitCheckingService.checkContestLimit(competitionRecord)) {
+            throw new UploadLimitException("Competition entry limit reached");
+        }
+        if(!limitCheckingService.checkCategoryLimit(competitionRecord)) {
+            throw new UploadLimitException("Category entry limit reached");
+        }
+        // ACCOUNT LIMITS
         // check if user's total entry number does not exceed user maxTotal limit
         if (!limitCheckingService.checkUserContestLimit(competitionRecord)) {
-            throw new RuntimeException("Competition entry limit reached");
+            throw new UploadLimitException("Account competition entry limit reached");
         }
-        // check if user does not exceed hos own category limit
+        // check if user does not exceed his own category limit
         if(!limitCheckingService.checkUserCategoryLimit(competitionRecord)) {
-            throw new RuntimeException("Category entry limit reached");
+            throw new UploadLimitException("Account category entry limit reached");
         }
 
         // we have to check image validity before working with them because we cant roll back file IO

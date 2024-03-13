@@ -2,21 +2,16 @@ package lt.javinukai.javinukai.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
-import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
-import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
-import org.springframework.http.HttpStatus;
 
 import java.util.*;
 
@@ -81,7 +76,7 @@ class CategoryServiceTest {
                 .id(id1)
                 .name("test category name 1")
                 .description("test category description 1")
-                .totalSubmissions(66)
+                .maxSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
@@ -90,7 +85,7 @@ class CategoryServiceTest {
                 .id(id2)
                 .name("test category name 2")
                 .description("test category description 2")
-                .totalSubmissions(66)
+                .maxSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
@@ -117,7 +112,7 @@ class CategoryServiceTest {
                 .id(id1)
                 .name("test category name 1")
                 .description("test category description 1")
-                .totalSubmissions(66)
+                .maxSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
@@ -199,7 +194,7 @@ class CategoryServiceTest {
                 .id(id)
                 .name("test category name")
                 .description("test category description")
-                .totalSubmissions(66)
+                .maxSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 
@@ -216,7 +211,7 @@ class CategoryServiceTest {
                 .id(id)
                 .name("test category name")
                 .description("test category description")
-                .totalSubmissions(66)
+                .maxSubmissions(66)
                 .type(PhotoSubmissionType.COLLECTION)
                 .build();
 

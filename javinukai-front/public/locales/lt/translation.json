@@ -3,7 +3,8 @@
     "accountSettings": "Vartotojo nustatymai",
     "logout": "Atsijungti",
     "manageUsers": "Valdyti vartotojus",
-    "createContest": "Sukurti konkursą"
+    "createContest": "Sukurti konkursą",
+    "participationRequests": "Patvirtinti dalyvius"
   },
 
   "navbar": {
@@ -70,6 +71,7 @@
   "uploadImages": {
     "photoValidationError": "Failas {{photoName}} neatitinka reikalavimų",
     "photoProcessingError": "Įvyko sistemos klaida talpinant nuotraukas",
+    "photoUploadLimitError": "Pateikimų limitas pasiektas. Daugiau pateikimų įkelti nebegalite",
     "photoGeneralError:": "Įvyko klaida įkeliant nuotraukas"
   },
 
@@ -262,7 +264,11 @@
     "startDate": "Pradžia",
     "endDate": "Pabaiga",
     "description": "Aprašymas",
-    "categories": "Kategorijos"
+    "categories": "Kategorijos",
+    "participate": "Dalyvauti konkurse",
+    "participationSuccess": "Dalyvavimo prašymas išsiųstas",
+    "participationError": "Įvyko klaida siunčiant dalyvavimo prašymą",
+    "entries": "Pateikimai"
   },
 
   "CategoryItem": {
@@ -277,7 +283,8 @@
 
   "ContestEntry": {
     "photos": "nuotraukos",
-    "deletionConfirmation": "Ar tikrau norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas"
+    "deletionConfirmation": "Ar tikrau norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas",
+    "editDetailsButton": "Pakeisti pateikties informaciją"
   },
 
   "UserManagementPage": {
@@ -356,5 +363,20 @@
     "contestNameOption": "Konkurso pavadinimas",
     "contestsLimitObject": "Užklausos",
     "requestStatusOption": "Užklausos būsena"
+  },
+
+  "ParticipationStatus": {
+    "PENDING": "Laukiama dalyvavimo patvirtinimo",
+    "ACCEPTED": "Dalyvavimo prašymas patvirtintas",
+    "DECLINED": "Dalyvavimo prašymas atmestas"
+  },
+
+  "EditEntrySection": {
+    "cancel": "Atšaukti",
+    "submitEdit": "Atnaujinti pateiktį",
+    "editSuccess": "Pateiktis atnaujinta",
+    "editError": "Atnaujinant pateiktį įvyko klaida",
+    "newName": "Naujas pavadinimas",
+    "newDescription": "Naujas aprašymas"
   }
 }

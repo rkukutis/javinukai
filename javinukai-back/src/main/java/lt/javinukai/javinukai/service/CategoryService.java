@@ -8,7 +8,6 @@ import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.mapper.CategoryMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class CategoryService {
     @Transactional
     public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
 
-        Category categoryInRepo = categoryRepository.findByNameAndDescriptionAndTotalSubmissions(
+        Category categoryInRepo = categoryRepository.findByNameAndDescriptionAndMaxSubmissions(
                 categoryDTO.getName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
 
         HttpStatus httpStatus;
@@ -75,7 +74,7 @@ public class CategoryService {
                 () -> new EntityNotFoundException("Category was not found with ID: " + id));
         categoryToUpdate.setName(categoryDTO.getName());
         categoryToUpdate.setDescription(categoryDTO.getDescription());
-        categoryToUpdate.setTotalSubmissions(categoryDTO.getTotalSubmissions());
+        categoryToUpdate.setMaxSubmissions(categoryDTO.getTotalSubmissions());
         categoryToUpdate.setType(categoryDTO.getType());
         log.info("{}: Updating category", this.getClass().getName());
         return categoryRepository.save(categoryToUpdate);

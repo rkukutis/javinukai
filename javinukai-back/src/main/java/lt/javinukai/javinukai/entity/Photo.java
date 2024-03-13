@@ -32,7 +32,7 @@ public class Photo {
     private String urlThumbnail;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "collection_id")
     private PhotoCollection collection;
 

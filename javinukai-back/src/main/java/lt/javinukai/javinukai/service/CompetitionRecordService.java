@@ -9,6 +9,7 @@ import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
 import lt.javinukai.javinukai.mapper.CompetitionRecordMapper;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
@@ -66,7 +67,9 @@ public class CompetitionRecordService {
                     .contest(contestToParticipateIn)
                     .user(participantUser)
                     .category(category)
-                    .maxPhotos(category.getTotalSubmissions()) //ateity reiks keisti į kintamąjį su logika
+                    .maxPhotos(category.getType() == PhotoSubmissionType.SINGLE ?
+                            participantUser.getMaxSinglePhotos() :
+                            participantUser.getMaxCollections())
                     .build();
             final CompetitionRecord savedRecord = competitionRecordRepository.save(record);
             usersCompetitionRecords.add(savedRecord);

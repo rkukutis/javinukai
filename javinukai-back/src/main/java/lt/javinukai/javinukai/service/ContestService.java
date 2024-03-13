@@ -1,14 +1,19 @@
 package lt.javinukai.javinukai.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.entity.ParticipationRequest;
+import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
+import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lt.javinukai.javinukai.repository.ParticipationRequestRepository;
+import lt.javinukai.javinukai.wrapper.ContestWrapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,35 +21,32 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class ContestService {
 
     private final CategoryRepository categoryRepository;
     private final ContestRepository contestRepository;
+    private final ParticipationRequestRepository participationRequestRepository;
+    private final CompetitionRecordRepository recordRepository;
 
-    @Autowired
-    public ContestService(ContestRepository contestRepository, CategoryRepository categoryRepository) {
-        this.contestRepository = contestRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
     @Transactional
     public Contest createContest(ContestDTO contestDTO) {
-//        public Contest createContest(ContestDTO contestDTO, User user) {
-
         final Contest contest = ContestMapper.contestDTOToContest(contestDTO);
         final Contest createdContest = contestRepository.save(contest);
 
         final List<Category> categoryList = new ArrayList<>();
         for (Category category : contestDTO.getCategories()) {
             final Category categoryIn = categoryRepository
-                    .findByNameAndDescriptionAndTotalSubmissions(
+                    .findByNameAndDescriptionAndMaxSubmissions(
                             category.getName(),
                             category.getDescription(),
-                            category.getTotalSubmissions());
+                            category.getMaxSubmissions());
 
                 if (categoryIn == null) {
                     throw new EntityNotFoundException("category was not found with ID: " + category.getId());
@@ -53,7 +55,6 @@ public class ContestService {
         }
 
         createdContest.setCategories(categoryList);
-//        createdContest.setCreatedBy(user);
         contestRepository.save(contest);
 
         log.info("{}: Created and added new contest to database", this.getClass().getName());
@@ -78,6 +79,36 @@ public class ContestService {
         return contestToShow;
     }
 
+    public ContestWrapper retrieveContest(UUID contestId, User requestingUser) {
+        final Contest contestToShow = contestRepository.findById(contestId).orElseThrow(
+                () -> new EntityNotFoundException("Contest was not found with ID: " + contestId));
+        log.info("Retrieving contest from database, name - {}", contestId);
+
+        long totalContestEntries = recordRepository.findByContestId(contestId).stream()
+                .map(record -> record.getEntries().size())
+                .reduce(Integer::sum).orElse(0);
+
+        ContestWrapper.ContestWrapperBuilder wrapperBuilder = ContestWrapper.builder()
+                .contest(contestToShow)
+                .totalEntries(totalContestEntries);
+
+        if (requestingUser != null) {
+            List<ParticipationRequest> userRequests = participationRequestRepository
+                    .findByUserIdAndContestId(requestingUser.getId(), contestId);
+            System.out.println(userRequests.size());
+
+            long totalUserEntries = recordRepository.findByContestIdAndUserId(contestId, requestingUser.getId()).stream()
+                    .map(record -> record.getEntries().size())
+                    .reduce(Integer::sum).orElse(0);
+            System.out.println(totalUserEntries);
+
+            wrapperBuilder
+                    .userEntries(totalUserEntries)
+                    .status(userRequests.isEmpty() ? null : userRequests.get(0).getRequestStatus());
+        }
+        return wrapperBuilder.build();
+    }
+
     @Transactional
     public Contest updateContest(UUID id, ContestDTO contestDTO) {
 
@@ -85,19 +116,10 @@ public class ContestService {
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
         contestToUpdate.setName(contestDTO.getName());
         contestToUpdate.setDescription(contestDTO.getDescription());
-        contestToUpdate.setTotalSubmissions(contestDTO.getTotalSubmissions());
+        contestToUpdate.setMaxSubmissions(contestDTO.getTotalSubmissions());
         contestToUpdate.setStartDate(contestDTO.getStartDate());
         contestToUpdate.setEndDate(contestDTO.getEndDate());
 
-//        final List<Category> updatedCategoryList = new ArrayList<>();
-//
-//        for (Category category : contestDTO.getCategories()) {
-//            final Category categoryIn = categoryRepository.findById(category.getId()).orElseThrow(
-//                    () -> new EntityNotFoundException("Category was not found with ID: " + category.getId()));
-//            updatedCategoryList.add(categoryIn);
-//        }
-//
-//        contestToUpdate.setCategories(updatedCategoryList);
         log.info("{}: Updating contest", this.getClass().getName());
         return contestRepository.save(contestToUpdate);
     }
