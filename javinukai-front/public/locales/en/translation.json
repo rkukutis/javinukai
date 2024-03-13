@@ -329,7 +329,7 @@
     "discardChangePasswordButton": "Discard change",
     "changePasswordSuccess": "Password was successfully changed",
     "changePasswordFailWrongCurrent": "Current password is wrong",
-    "changePasswordFailAsCurrent": "Password is the same as current one",
+    "changePasswordFailAsCurrent": "New password is the same as current one",
     "changePasswordFailDoNotMatch": "Password and password confimation do not match"
   },
 

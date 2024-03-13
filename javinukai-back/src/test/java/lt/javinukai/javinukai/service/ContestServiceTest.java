@@ -47,7 +47,7 @@ class ContestServiceTest {
 //        final UUID categoryID = UUID.randomUUID();
 //        final Category category01 = Category.builder()
 //                .id(categoryID)
-//                .categoryName("test category name")
+//                .name("test category name")
 //                .description("test category description")
 //                .totalSubmissions(66)
 //                .build();
@@ -55,7 +55,7 @@ class ContestServiceTest {
 //        final UUID contestID = UUID.randomUUID();
 //        final Contest contest01 = Contest.builder()
 //                .id(contestID)
-//                .contestName("test contest name")
+//                .name("test contest name")
 //                .description("test contest description")
 //                .totalSubmissions(666)
 //                .categories(Collections.singletonList(category01))
@@ -80,7 +80,7 @@ class ContestServiceTest {
 //        public void retrieveAllContestsReturnsPageOfContests() {
 //
 //            final Contest contest01 = Contest.builder()
-//                    .contestName("test contest name")
+//                    .name("test contest name")
 //                    .description("test contest description")
 //                    .totalSubmissions(666)
 //                    .startDate(ZonedDateTime.now())
