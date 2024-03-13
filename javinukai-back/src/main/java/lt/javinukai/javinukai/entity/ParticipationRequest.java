@@ -3,6 +3,7 @@ package lt.javinukai.javinukai.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lt.javinukai.javinukai.enums.ParticipationRequestStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -33,8 +34,9 @@ public class ParticipationRequest {
     private Contest contest;
 
     @Setter
-    @Column(name = "can_participate")
-    private Boolean canParticipate;
+    @Column(name = "request_status")
+    @Enumerated(EnumType.STRING)
+    private ParticipationRequestStatus requestStatus;
 
     @CreatedDate
     @Column(name = "created_at")

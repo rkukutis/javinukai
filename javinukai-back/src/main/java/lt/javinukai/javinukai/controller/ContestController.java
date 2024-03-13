@@ -42,7 +42,6 @@ public class ContestController {
     }
 
     @GetMapping(path = "/contests")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Page<Contest>> retrieveAllContests(
                                                              @RequestParam(defaultValue = "1") int pageNumber,
                                                              @RequestParam(defaultValue = "25") int pageSize,
@@ -61,7 +60,6 @@ public class ContestController {
     }
 
     @GetMapping(path = "/contests/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Contest> retrieveContest(@PathVariable @NotNull UUID id) {
         log.info("Request for retrieving contest with ID: {}", id);
         final Contest foundContest = contestService.retrieveContest(id);
