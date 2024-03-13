@@ -1,6 +1,6 @@
 {
   "dropdownMenu": {
-    "accountSettings": "Vartotojo nustatymai",
+    "accountSettings": "Asmeninė informacija",
     "logout": "Atsijungti",
     "manageUsers": "Valdyti vartotojus",
     "createContest": "Sukurti konkursą"
@@ -123,7 +123,7 @@
     "phoneNumber": "Telefono numeris",
     "phoneNumberRequired": "Telefono numeris yra būtinas",
     "phoneNumberValid": "Telefono numeris turi būti validus",
-    "phoneNumberLength": "Telefono numeris neturi viršyti 15 simbolių",
+    "phoneNumberLength": "Telefono numeris neturi viršyti 16 simbolių",
 
     "email": "El. paštas",
     "emailRequired": "El. paštas yra būtinas",
@@ -333,13 +333,22 @@
     "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
     "changePasswordFailWrongCurrent": "Esamas slaptažodis įvestas neteisingai",
     "changePasswordFailAsCurrent": "Naujas slaptažodis toks pats kaip esamas",
-    "changePasswordFailDoNotMatch": "Slaptažodis nesutampa su slaptažodžiop patvirtinimu"
   },
 
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
     "COLLECTION": "Nuotraukų serijos"
   },
+  
+  "PersonalInformation": {
+    "editButton": "Keisti asmeninę informaciją",
+    "cancelButton": "Atšaukti pakeitimus",
+    "saveButton": "Išsaugoti pakeitimus",
+    "isFreelanceTrue": "Taip",
+    "isFreelanceFalse": "Ne",
+    "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
+    "changeError": "Keičiant asmeninę informaciją įvyko klaida"
+},
 
   "ParticipationRequest": {
     "fieldName": "Vardas",
