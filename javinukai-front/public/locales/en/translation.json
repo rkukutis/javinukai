@@ -1,6 +1,6 @@
 {
   "dropdownMenu": {
-    "accountSettings": "Account settings",
+    "accountSettings": "Personal information",
     "logout": "Log out",
     "manageUsers": "Manage users",
     "createContest": "Create contest",
@@ -122,7 +122,7 @@
     "phoneNumber": "Phone number",
     "phoneNumberRequired": "Phone number is required",
     "phoneNumberValid": "Phone number must be valid",
-    "phoneNumberLength": "Phone number must not exceed 15 characters",
+    "phoneNumberLength": "Phone number must not exceed 16 characters",
 
     "email": "Email",
     "emailRequired": "Email is required",
@@ -346,6 +346,16 @@
     "COLLECTION": "Photo collections"
   },
 
+  "PersonalInformation": {
+    "editButton": "Edit personal information",
+    "cancelButton": "Cancel changes",
+    "saveButton": "Save changes",
+    "isFreelanceTrue": "Yes",
+    "isFreelanceFalse": "No",
+    "changeSuccess": "Personal information changed successfully",
+    "changeError": "An error occurred while saving personal information"
+  },
+  
   "ParticipationRequest": {
     "fieldName": "Name",
     "fieldSurname": "Surname",
@@ -377,4 +387,6 @@
     "newName": "New name",
     "newDescription": "New description"
   }
+
+  
 }
