@@ -108,6 +108,7 @@ function ContestDetailsPage() {
             <div className="flex-col space-y-1 mt-4">
               {categories?.map((category) => (
                 <CategoryItem
+                  canParticipate={data?.state == "ACCEPTED"}
                   key={category.id}
                   categoryInfo={category}
                   contestInfo={data?.contest}

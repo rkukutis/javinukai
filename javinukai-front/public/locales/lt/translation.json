@@ -339,14 +339,14 @@
     "discardChangePasswordButton": "Atšaukti pakeitimą",
     "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
     "changePasswordFailWrongCurrent": "Esamas slaptažodis įvestas neteisingai",
-    "changePasswordFailAsCurrent": "Naujas slaptažodis toks pats kaip esamas",
+    "changePasswordFailAsCurrent": "Naujas slaptažodis toks pats kaip esamas"
   },
 
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
     "COLLECTION": "Nuotraukų serijos"
   },
-  
+
   "PersonalInformation": {
     "editButton": "Keisti asmeninę informaciją",
     "cancelButton": "Atšaukti pakeitimus",
@@ -355,7 +355,7 @@
     "isFreelanceFalse": "Ne",
     "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
     "changeError": "Keičiant asmeninę informaciją įvyko klaida"
-},
+  },
 
   "ParticipationRequest": {
     "fieldName": "Vardas",
