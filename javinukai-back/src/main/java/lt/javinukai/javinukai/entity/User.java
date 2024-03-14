@@ -66,23 +66,18 @@ public class User implements UserDetails {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "author",
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Photo> images;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author",
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private List<PhotoCollection> photoCollections;
-
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JsonIgnore
     private List<CompetitionRecord> competitionRecords;
 
     @Setter
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     private List<ParticipationRequest> participationRequests;
 
     @CreatedDate
