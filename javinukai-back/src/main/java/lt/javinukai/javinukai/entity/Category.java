@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
-import lt.javinukai.javinukai.enums.TokenType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -35,8 +34,8 @@ public class Category {
     private String description;
 
     @Setter
-    @Column(name = "total_submissions")
-    private long totalSubmissions;
+    @Column(name = "max_submissions")
+    private long maxSubmissions;
 
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,

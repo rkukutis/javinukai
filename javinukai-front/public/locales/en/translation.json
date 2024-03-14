@@ -1,9 +1,10 @@
 {
   "dropdownMenu": {
-    "accountSettings": "Account settings",
+    "accountSettings": "Personal information",
     "logout": "Log out",
     "manageUsers": "Manage users",
-    "createContest": "Create contest"
+    "createContest": "Create contest",
+    "participationRequests": "Approve requests"
   },
 
   "navbar": {
@@ -53,6 +54,7 @@
     "photoDescription": "Description",
     "photoDescriptionRequired": "Description is required",
     "photoRequirements": "Photo requirements:",
+    "fileTypeRequirement": "Photo file format must JPEG",
     "photoDimensions": "Long edge of photo must be longer than 2500px and shorter than 4000px",
     "photoSize": "Each photo must be less than 10 MB in size",
     "photoAllSize": "All photos combined must be less than 50 MB",
@@ -64,8 +66,9 @@
   },
 
   "uploadImages": {
-    "photoValidationError": "Photos {{photoName}} does not meet requirements",
+    "photoValidationError": "File {{photoName}} does not meet requirements",
     "photoProcessingError": "An system error has occured while processing your photos",
+    "photoUploadLimitError": "Entry limit reached. You can not add any more entries",
     "photoGeneralError:": "An error has occured while uploading your photos"
   },
 
@@ -119,7 +122,7 @@
     "phoneNumber": "Phone number",
     "phoneNumberRequired": "Phone number is required",
     "phoneNumberValid": "Phone number must be valid",
-    "phoneNumberLength": "Phone number must not exceed 15 characters",
+    "phoneNumberLength": "Phone number must not exceed 16 characters",
 
     "email": "Email",
     "emailRequired": "Email is required",
@@ -139,6 +142,55 @@
     "affiliationInstitutionRequired": "Institution name is required",
     "affiliationInstitutionNameLength": "Institution name must not exceed 50 characters",
     "registerSubmit": "Register"
+  },
+
+  "CreateUserPage": {
+    "creationSuccess": "Account created successfully",
+    "name": "Name",
+    "nameRequired": "Name is required",
+    "nameContains": "Name must contain only alphabetic characters",
+    "nameLength": "Name must not exceed 20 characters",
+
+    "userTitle": "Role",
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "jury": "Jury",
+    "user": "User",
+
+    "surname": "Surname",
+    "surnameRequired": "Surname is required",
+    "surnameContains": "Surname must contain only alphabetic characters",
+    "surnameLength": "Surname must not exceed 20 characters",
+
+    "birthYear": "Birth year",
+    "birthYearRequired": "Birth year is required",
+    "birthYearValid": "Date must be valid. A valid example: '1984'",
+    "birthYearMax": "Birth year can not be later than",
+    "birthYearMin": "Birth year can not be earlier than 1900",
+
+    "phoneNumber": "Phone number",
+    "phoneNumberRequired": "Phone number is required",
+    "phoneNumberValid": "Phone number must be valid",
+    "phoneNumberLength": "Phone number must not exceed 15 characters",
+
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "emailValid": "Email must be of a valid format",
+    "emailLength": "Email must not exceed 200 characters",
+
+    "password": "Password",
+    "passwordRequired": "Password is required",
+    "passwordValid": "Password must be at least 8 symbols long",
+    "passwordConfirm": "Confirm Password",
+    "passwordConfirmRequired": "Password confirmation is required",
+    "passwordConfirmMustMatch": "Passwords must match",
+
+    "affiliationFreelance": "Freelance",
+    "affiliationInstitution": "Represented media",
+    "affiliationInstitutionName": "Name of representative institution",
+    "affiliationInstitutionRequired": "Institution name is required",
+    "affiliationInstitutionNameLength": "Institution name must not exceed 50 characters",
+    "creationSubmit": "Add new user"
   },
 
   "services": {
@@ -210,7 +262,11 @@
     "startDate": "Start Date",
     "endDate": "End date",
     "description": "Description",
-    "categories": "Categories"
+    "categories": "Categories",
+    "participate": "Participate",
+    "participationSuccess": "Participations request sent successfully",
+    "participationError": "An error has occured while sending a participation",
+    "entries": "Entries"
   },
 
   "CategoryItem": {
@@ -225,7 +281,8 @@
 
   "ContestEntry": {
     "photos": "photos",
-    "deletionConfirmation": "Are you sure you want to delete this entry? This action is irreversible"
+    "deletionConfirmation": "Are you sure you want to delete this entry? This action is irreversible",
+    "editDetailsButton": "Edit entry details"
   },
 
   "UserManagementPage": {
@@ -240,7 +297,8 @@
     "userIsEnabledOption": "Enabled",
     "userisNonLockedOption": "Blocked",
     "userSeachFieldName": "surname",
-    "limits": "Limits"
+    "limits": "Limits",
+    "addNewUserButton": "Add new user"
   },
 
   "DangerZone": {
@@ -279,7 +337,7 @@
     "discardChangePasswordButton": "Discard change",
     "changePasswordSuccess": "Password was successfully changed",
     "changePasswordFailWrongCurrent": "Current password is wrong",
-    "changePasswordFailAsCurrent": "Password is the same as current one",
+    "changePasswordFailAsCurrent": "New password is the same as current one",
     "changePasswordFailDoNotMatch": "Password and password confimation do not match"
   },
 
@@ -288,9 +346,55 @@
     "COLLECTION": "Photo collections"
   },
 
+<<<<<<< HEAD
 "CreateContest":{
   "contestTitle":"Create Contest"
 
 }
 
+=======
+  "PersonalInformation": {
+    "editButton": "Edit personal information",
+    "cancelButton": "Cancel changes",
+    "saveButton": "Save changes",
+    "isFreelanceTrue": "Yes",
+    "isFreelanceFalse": "No",
+    "changeSuccess": "Personal information changed successfully",
+    "changeError": "An error occurred while saving personal information"
+  },
+  
+  "ParticipationRequest": {
+    "fieldName": "Name",
+    "fieldSurname": "Surname",
+    "fieldEmail": "Email",
+    "fieldBirthYear": "Birth year",
+    "fieldPhoneNumber": "Phone number",
+    "fieldContestName": "Contest name",
+    "fieldContestStart": "Contest start",
+    "fieldContestEnd": "Contest end",
+    "fieldAccept": "Accept",
+    "fieldDecline": "Decline",
+    "requestDateOption": "Request date",
+    "contestNameOption": "Contest name",
+    "contestsLimitObject": "Requests",
+    "requestStatusOption": "Request status"
+  },
+
+  "ParticipationStatus": {
+    "PENDING": "Participation request pending",
+    "ACCEPTED": "Participation request accepted",
+    "DECLINED": "Participation request rejected"
+  },
+
+  "EditEntrySection": {
+    "cancel": "Cancel",
+    "submitEdit": "Update entry",
+    "editSuccess": "Entry updated successfully",
+    "editError": "An error has occured while updating entry information",
+    "newName": "New name",
+    "newDescription": "New description"
+  }
+
+  
+>>>>>>> f76cadd44dbf05640ebf359bd0472623f67bc868
 }

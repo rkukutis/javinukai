@@ -1,16 +1,21 @@
 package lt.javinukai.javinukai.dto.request.user;
 
 import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+import lt.javinukai.javinukai.config.security.UserRole;
 import org.hibernate.validator.constraints.Length;
+
+@Getter
 @Builder
 @ToString
-@Getter
-public class UserRegistrationRequest {
+public class CreateNewUserRequest {
 
     @NotBlank
     @Length(max = 100, message = "FIRST_NAME_LENGTH_EXCEEDED")
     private String name;
+    @NotBlank
     @Length(max = 100, message = "LAST_NAME_LENGTH_EXCEEDED")
     private String surname;
     @NotNull
@@ -27,8 +32,8 @@ public class UserRegistrationRequest {
     private String email;
     @NotBlank
     private String password;
-
-    // this can be null
+    @NotNull
+    private UserRole role;
     @Length(max = 100, message = "INSTITUTION_NAME_LENGTH_EXCEEDED")
     private String institution;
 }

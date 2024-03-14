@@ -2,10 +2,7 @@ package lt.javinukai.javinukai.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -23,9 +20,11 @@ public class PhotoCollection {
     @Column(name = "id")
     private UUID id;
 
+    @Setter
     @Column(name = "name", columnDefinition = "TEXT")
     private String name;
 
+    @Setter
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
@@ -35,7 +34,7 @@ public class PhotoCollection {
     private User author;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection",
-            cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Photo> images;
 
     @ManyToOne(fetch = FetchType.EAGER)

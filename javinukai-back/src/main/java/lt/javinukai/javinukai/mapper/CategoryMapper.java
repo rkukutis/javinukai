@@ -11,7 +11,7 @@ public class CategoryMapper {
         return Category.builder()
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
-                .totalSubmissions(categoryDTO.getTotalSubmissions())
+                .maxSubmissions(categoryDTO.getTotalSubmissions())
                 .uploadedPhotos(categoryDTO.getUploadedPhotos())
                 .type(categoryDTO.getType())
                 .build();
@@ -22,7 +22,7 @@ public class CategoryMapper {
                 .id(category.getId())
                 .name(category.getName())
                 .description(category.getDescription())
-                .totalSubmissions(category.getTotalSubmissions())
+                .totalSubmissions(category.getMaxSubmissions())
                 .type(category.getType())
                 .build();
     }

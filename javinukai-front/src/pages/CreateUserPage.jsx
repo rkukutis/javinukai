@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import registerUser from "../services/auth/registerUser";
 import FormFieldError from "../Components/FormFieldError";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
@@ -8,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 import StyledInput from "../Components/StyledInput";
 import validateEmail from "../utils/validateEmail";
 import { useTranslation } from "react-i18next";
+import createUser from "../services/auth/createUser";
 
-function RegisterPage() {
+function CreateUserPage() {
   const { t } = useTranslation();
+  const [role, setNewtRole] = useState("USER");
   const [affiliation, setAffiliation] = useState("freelance");
   const navigate = useNavigate();
   const {
@@ -23,11 +24,11 @@ function RegisterPage() {
   } = useForm({ mode: "onBlur" });
 
   const { mutate } = useMutation({
-    mutationFn: (data) => registerUser(data),
+    mutationFn: (data) => createUser(data),
     onSuccess: () => {
-      toast.success(t("RegisterPage.registrationSuccess"));
+      toast.success(t("CreateUserPage.creationSuccess"));
       reset();
-      navigate("/");
+      navigate("/manage-users");
     },
     onError: (err) => {
       toast.error(err.message);
@@ -36,12 +37,25 @@ function RegisterPage() {
   });
 
   function onSubmit(formData) {
-    mutate({ registrationInfo: formData, t });
+    const updatedFormData = { ...formData, role: role };
+    mutate({ userCreationInfo: updatedFormData, t });
   }
 
   function onAffiliationChange(newAffiliation) {
     setAffiliation(newAffiliation);
     setValue("institution", undefined);
+  }
+
+  function handleChangeRole(newRole) {
+    setNewtRole(newRole);
+    if (newRole === "JURY") {
+      setValue("birthYear", new Date().getFullYear());
+      setValue("phoneNumber", "+37066677777");
+    }
+    if (newRole !== "JURY") {
+      setValue("birthYear", "");
+      setValue("phoneNumber", "");
+    }
   }
 
   return (
@@ -52,23 +66,37 @@ function RegisterPage() {
           className="flex flex-col space-y-2 bg-slate-50 p-2 rounded-sm"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <section className="form-field space-y-2">
+            <label>{t("CreateUserPage.userTitle")}</label>
+            <select
+              className="py-2 rounded-sm border-2 border-slate-100"
+              id="initial-role-select"
+              onChange={(e) => handleChangeRole(e.target.value)}
+            >
+              <option value="USER">{t("CreateUserPage.user")}</option>
+              <option value="JURY">{t("CreateUserPage.jury")}</option>
+              <option value="MODERATOR">{t("CreateUserPage.moderator")}</option>
+              <option value="ADMIN">{t("CreateUserPage.admin")}</option>
+            </select>
+          </section>
+
           <section className="form-field">
-            <label>{t("RegisterPage.name")}</label>
+            <label>{t("CreateUserPage.name")}</label>
             <input
               id="name"
               className="form-field__input"
               {...register("name", {
                 required: {
                   value: true,
-                  message: t("RegisterPage.nameRequired"),
+                  message: t("CreateUserPage.nameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
-                  message: t("RegisterPage.nameContains"),
+                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  message: t("CreateUserPage.nameContains"),
                 },
                 maxLength: {
                   value: 20,
-                  message: t("RegisterPage.nameLength"),
+                  message: t("CreateUserPage.nameLength"),
                 },
               })}
             />
@@ -77,22 +105,22 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>{t("RegisterPage.surname")}</label>
+            <label>{t("CreateUserPage.surname")}</label>
             <input
               id="surname"
               className="form-field__input"
               {...register("surname", {
                 required: {
                   value: true,
-                  message: t("RegisterPage.surnameRequired"),
+                  message: t("CreateUserPage.surnameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
-                  message: t("RegisterPage.surnameContains"),
+                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  message: t("CreateUserPage.surnameContains"),
                 },
                 maxLength: {
                   value: 20,
-                  message: t("RegisterPage.surnameLength"),
+                  message: t("CreateUserPage.surnameLength"),
                 },
               })}
             />
@@ -101,29 +129,29 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>{t("RegisterPage.birthYear")}</label>
+            <label>{t("CreateUserPage.birthYear")}</label>
             <input
               id="birth-year"
               className="form-field__input"
               {...register("birthYear", {
                 required: {
                   value: true,
-                  message: t("RegisterPage.birthYearRequired"),
+                  message: t("CreateUserPage.birthYearRequired"),
                 },
                 pattern: {
                   value: /^\d{4}$/,
-                  message: t("RegisterPage.birthYearValid"),
+                  message: t("CreateUserPage.birthYearValid"),
                 },
                 max: {
                   value: new Date().getFullYear(),
                   message:
-                    t("RegisterPage.birthYearMax") +
+                    t("CreateUserPage.birthYearMax") +
                     " " +
                     new Date().getFullYear(),
                 },
                 min: {
                   value: 1900,
-                  message: t("RegisterPage.birthYearMin"),
+                  message: t("CreateUserPage.birthYearMin"),
                 },
               })}
             />
@@ -132,22 +160,22 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>{t("RegisterPage.phoneNumber")}</label>
+            <label>{t("CreateUserPage.phoneNumber")}</label>
             <input
               id="phone-number"
               className="form-field__input"
               {...register("phoneNumber", {
                 required: {
                   value: true,
-                  message: t("RegisterPage.phoneNumberRequired"),
+                  message: t("CreateUserPage.phoneNumberRequired"),
                 },
                 pattern: {
                   value: /^\+?\d{9,11}$/,
-                  message: t("RegisterPage.phoneNumberValid"),
+                  message: t("CreateUserPage.phoneNumberValid"),
                 },
                 maxLength: {
                   value: 16,
-                  message: t("RegisterPage.phoneNumberLength"),
+                  message: t("CreateUserPage.phoneNumberLength"),
                 },
               })}
             />
@@ -156,19 +184,19 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>{t("RegisterPage.email")}</label>
+            <label>{t("CreateUserPage.email")}</label>
             <input
               className="form-field__input"
               {...register("email", {
                 required: {
                   value: true,
-                  message: t("RegisterPage.emailRequired"),
+                  message: t("CreateUserPage.emailRequired"),
                 },
                 validate: (val) =>
-                  validateEmail(val) || t("RegisterPage.emailValid"),
+                  validateEmail(val) || t("CreateUserPage.emailValid"),
                 maxLength: {
                   value: 200,
-                  message: t("RegisterPage.emailLength"),
+                  message: t("CreateUserPage.emailLength"),
                 },
               })}
             />
@@ -177,7 +205,7 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>{t("RegisterPage.password")}</label>
+            <label>{t("CreateUserPage.password")}</label>
             <input
               type="password"
               id="password"
@@ -185,11 +213,11 @@ function RegisterPage() {
               {...register("password", {
                 required: {
                   value: true,
-                  message: t("RegisterPage.passwordRequired"),
+                  message: t("CreateUserPage.passwordRequired"),
                 },
                 minLength: {
                   value: 8,
-                  message: t("RegisterPage.passwordValid"),
+                  message: t("CreateUserPage.passwordValid"),
                 },
               })}
             />
@@ -198,16 +226,16 @@ function RegisterPage() {
             )}
           </section>
           <section className="form-field">
-            <label>{t("RegisterPage.passwordConfirm")}</label>
+            <label>{t("CreateUserPage.passwordConfirm")}</label>
             <input
               type="password"
               id="password-confirm"
               className="form-field__input"
               {...register("passwordConfirm", {
-                required: t("RegisterPage.passwordConfirmRequired"),
+                required: t("CreateUserPage.passwordConfirmRequired"),
                 validate: (value) => {
                   if (watch("password") != value) {
-                    return t("RegisterPage.passwordConfirmMustMatch");
+                    return t("CreateUserPage.passwordConfirmMustMatch");
                   }
                 },
               })}
@@ -224,23 +252,25 @@ function RegisterPage() {
               onChange={(e) => onAffiliationChange(e.target.value)}
             >
               <option value="freelance">
-                {t("RegisterPage.affiliationFreelance")}
+                {t("CreateUserPage.affiliationFreelance")}
               </option>
               <option value="institution">
-                {t("RegisterPage.affiliationInstitution")}
+                {t("CreateUserPage.affiliationInstitution")}
               </option>
             </select>
             {affiliation === "institution" && (
               <div className="form-field">
-                <label>{t("RegisterPage.affiliationInstitutionName")}</label>
+                <label>{t("CreateUserPage.affiliationInstitutionName")}</label>
                 <input
                   id="institution"
                   className="form-field__input"
                   {...register("institution", {
-                    required: t("RegisterPage.affiliationInstitutionRequired"),
+                    required: t(
+                      "CreateUserPage.affiliationInstitutionRequired"
+                    ),
                     maxLength: {
                       value: 50,
-                      message: t("RegisterPage.affiliationInstitutionLength"),
+                      message: t("CreateUserPage.affiliationInstitutionLength"),
                     },
                   })}
                 />
@@ -252,7 +282,7 @@ function RegisterPage() {
           </section>
           <StyledInput
             id="registration-submit"
-            value={t("RegisterPage.registerSubmit")}
+            value={t("CreateUserPage.creationSubmit")}
             type="submit"
           />
         </form>
@@ -261,4 +291,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default CreateUserPage;

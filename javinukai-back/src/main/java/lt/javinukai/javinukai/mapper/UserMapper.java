@@ -13,7 +13,7 @@ public class UserMapper {
                 .surname(updateDTO.getSurname())
                 .email(updateDTO.getEmail())
                 .institution(updateDTO.getInstitution())
-                .isFreelance(updateDTO.getInstitution() == null)
+                .isFreelance(updateDTO.getInstitution() == null || updateDTO.getInstitution().isBlank())
                 .birthYear(updateDTO.getBirthYear())
                 .maxTotal(updateDTO.getMaxTotal())
                 .maxSinglePhotos(updateDTO.getMaxSinglePhotos())

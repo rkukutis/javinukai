@@ -4,48 +4,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.JwtService;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
-import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
-import lt.javinukai.javinukai.mapper.CategoryMapper;
-import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.service.CategoryService;
 import lt.javinukai.javinukai.service.ContestService;
-import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(controllers = CategoryController.class)
@@ -74,7 +51,7 @@ class CategoryControllerTest {
     public void init() {
         categoryDTO = CategoryDTO.builder()
                 .id(UUID.randomUUID())
-                .categoryName("test category name")
+                .name("test category name")
                 .description("testCategory description")
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.SINGLE)
@@ -82,9 +59,9 @@ class CategoryControllerTest {
 //        category = CategoryMapper.categoryDTOToCategory(categoryDTO);
         category = Category.builder()
                 .id(categoryDTO.getId())
-                .name(categoryDTO.getCategoryName())
+                .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
-                .totalSubmissions(categoryDTO.getTotalSubmissions())
+                .maxSubmissions(categoryDTO.getTotalSubmissions())
                 .type(categoryDTO.getType())
                 .build();
     }
