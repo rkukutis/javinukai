@@ -29,7 +29,6 @@ public class PhotoController {
     private final PhotoService photoService;
 
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
     public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
                                                         @RequestParam("title") @NotBlank String title,
