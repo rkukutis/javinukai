@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function EditContest({ contestDTO }) {
-  const [contestName, setContestName] = useState(contestDTO?.contestName || "");
+  const [contestName, setContestName] = useState(contestDTO?.name || "");
   const [error, setError] = useState("");
 
   const handleContestNameChange = (e) => {
