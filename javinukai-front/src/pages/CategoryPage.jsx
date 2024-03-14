@@ -9,9 +9,9 @@ function CategoryPage() {
     async function fetchCategories() {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND}/api/v1/categories`
-        ); // Adjust endpoint as needed
-        console.log("Categories from API:", response.data); // Log categories to inspect their structure
+          `${import.meta.env.VITE_BACKEND}/api/v1/categories`, { withCredentials: true }
+        ); 
+        console.log("Categories from API:", response.data);
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -24,7 +24,7 @@ function CategoryPage() {
   return (
     <div className="category-page">
       <h1>Category Page</h1>
-      {/* Check if categories is an array before calling map */}
+      
       {Array.isArray(categories) &&
         categories.map((category) => (
           <CategoryPreview key={category.id} category={category} />

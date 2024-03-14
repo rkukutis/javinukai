@@ -9,7 +9,7 @@ function ContestPreview() {
     const fetchContests = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND}/api/v1/contests`
+          `${import.meta.env.VITE_BACKEND}/api/v1/contests` , { withCredentials: true }
         );
         setContests(response.data.content);
         setLoading(false);
@@ -31,7 +31,7 @@ function ContestPreview() {
           {contests.map((contest) => (
             <li key={contest.id} className="border rounded-md p-4 mb-4">
               <h3 className="text-lg font-semibold mb-2">
-                {contest.contestName}
+                {contest.name}
               </h3>
               <p className="text-gray-600 mb-2">{contest.description}</p>
               <p className="text-gray-700 mb-2">

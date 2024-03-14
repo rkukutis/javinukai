@@ -46,6 +46,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers(pageRequest, contains));
     }
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> createUser(@RequestBody @Valid UserRegistrationRequest registration) {
         log.info("Creating user manually: {}", registration);
         return ResponseEntity.ok().body(userService.createUser(registration));
@@ -64,12 +65,14 @@ public class UserController {
 
 
     @PatchMapping("/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> updateUserRole(@PathVariable UUID userId, @RequestBody User newUser) {
         return ResponseEntity.ok().body(userService.updateUserForAdmin(userId, newUser));
     }
 
 
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<User>> deleteUser(@PathVariable UUID userId) {
         return ResponseEntity.ok().body(userService.deleteUser(userId));
     }

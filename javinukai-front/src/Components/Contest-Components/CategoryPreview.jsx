@@ -1,11 +1,11 @@
 import React from 'react';
 
 function CategoryPreview({ category, clickRemoveCategory }) {
-  const { categoryName, description, totalSubmissions } = category;
+  const { name, description, totalSubmissions } = category;
 
   return (
     <div className="category-preview">
-      <h2>{categoryName}</h2>
+      <h2>{name}</h2>
       <p>Description: {description}</p>
       <p>Total Submissions: {totalSubmissions}</p>
       <button

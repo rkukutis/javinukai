@@ -347,6 +347,42 @@
     "COLLECTION": "Nuotraukų serijos"
   },
 
+  "CreateContest":{
+    "contestTitle":"Sukurti konkursa",
+    "contestName": "Pavidinmas",
+    "description": "Aprašymas",
+    "startDate": "Pradžios Data",
+  "endDate": "Pabaigos Data",
+  "totalSubmissions": "Maksimalus pateikimų skaičius",
+  "createNewCategory": "Sukurti nauja kategorija",
+  "close": "Uždaryti",
+  "categoryDescription": "aprašymas",
+  "editCategory": "Redaguoti",
+  "deleteCategory": "ištrinti kategorija",
+  "removeCategory": "pašalinti kategorija",
+  "addCategory": "prideti",
+  "contestCreated": "konkursas sukurtas!",
+  "createContestButton": "sukurti konkursa",
+  "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategorija?",
+  "categoryDeleteYes": "taip",
+  "categoryDeleteNo": "ne",
+  "searchCategories": "ieškoti kategoriju",
+  "searchPlaceholder": "ieškoti kategoriju pagal pavadinima"
+  
+  },
+
+  "CreateCategory":{
+  "categoryScreen": "sukurti kategorija",
+  "categoryName": "Pavadinimas",
+  "categoryDescription": "Aprašymas",
+  "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
+  "categoryType": "kategorijos tipas",
+  "categorySelectType": "pasirinkiti kategorijos tipa",
+  "categoryCreateButton": "sukurti kategorija"
+    
+
+  },
+
   "PersonalInformation": {
     "editButton": "Keisti asmeninę informaciją",
     "cancelButton": "Atšaukti pakeitimus",
@@ -355,6 +391,7 @@
     "isFreelanceFalse": "Ne",
     "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
     "changeError": "Keičiant asmeninę informaciją įvyko klaida"
+    
   },
 
   "ParticipationRequest": {
@@ -388,4 +425,5 @@
     "newName": "Naujas pavadinimas",
     "newDescription": "Naujas aprašymas"
   }
+  
 }
