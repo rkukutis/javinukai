@@ -5,6 +5,7 @@ import axios from "axios";
 import FormFieldError from "../FormFieldError";
 import EditCategoryModal from "./EditCategoryModal";
 import CreateCategory from "./CreateCategory";
+import { useTranslation } from "react-i18next";
 
 
 function CreateContest({ contestDTO }) {
@@ -13,9 +14,12 @@ function CreateContest({ contestDTO }) {
   const [categoriesList, setCategoriesList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [confirmDeleteCategory, setConfirmDeleteCategory] = useState(null);
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showCreateCategory, setShowCreateCategory] = useState(false);
   const [contestCreated, setContestCreated] = useState(false);
+  const { t } = useTranslation();
   
 
   useEffect(() => {
@@ -29,6 +33,25 @@ function CreateContest({ contestDTO }) {
       setCategoriesList(response.data.content);
     } catch (error) {
       console.error('Error fetching categories:', error);
+    }
+  };
+
+  const handleConfirmDelete = (categoryId) => {
+    setConfirmDeleteCategory(categoryId);
+    setShowConfirmationPopup(true);
+  };
+
+  const handleDeleteConfirmation = async () => {
+    if (confirmDeleteCategory) {
+      try {
+        await axios.delete(`${import.meta.env.VITE_BACKEND}/api/v1/categories/${confirmDeleteCategory}`, { withCredentials: true });
+        
+        setCategoriesList(categoriesList.filter(category => category.id !== confirmDeleteCategory));
+        
+        setShowConfirmationPopup(false);
+      } catch (error) {
+        console.error('Error deleting category:', error);
+      }
     }
   };
 
@@ -77,6 +100,7 @@ function CreateContest({ contestDTO }) {
         const contestData = {
           ...data,
           totalSubmissions,
+          name: data.contestName,
           startDate,
           endDate,
           categories: categoriesList.filter(category => category.added)
@@ -90,6 +114,8 @@ function CreateContest({ contestDTO }) {
       }
     }
   };
+
+  
 
   const handleTotalSubmissionsChange = (e) => {
     const newValue = e.target.value;
@@ -105,12 +131,20 @@ function CreateContest({ contestDTO }) {
     setShowCreateCategory(false);
   };
 
-
+  const handleDeleteCategory = async (categoryId) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BACKEND}/api/v1/categories/${categoryId}`, { withCredentials: true });
+      
+      setCategoriesList(categoriesList.filter(category => category.id !== categoryId));
+    } catch (error) {
+      console.error('Error deleting category:', error);
+    }
+  };
 
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Create Contest</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t('CreateContest.contestTitle')}</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         
         <div className="mb-4">
@@ -222,6 +256,8 @@ function CreateContest({ contestDTO }) {
         </div>
         <div>
           <button type="button" onClick={() => handleEditCategory(category)} className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">Edit Category</button>
+          <button type="button" onClick={() => handleConfirmDelete(category.id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Delete Category</button>
+                  
           {category.added ? (
             <button type="button" onClick={() => handleRemoveCategory(category.id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Remove</button>
           ) : (
@@ -250,6 +286,18 @@ function CreateContest({ contestDTO }) {
               category={selectedCategory}
               onClose={() => setShowModal(false)}
             /> 
+          </div>
+        </div>
+      )}
+
+{showConfirmationPopup && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow-lg">
+            <p className="mb-4">Are you sure you want to delete this category?</p>
+            <div className="flex justify-end">
+              <button onClick={handleDeleteConfirmation} className="bg-red-500 text-white px-4 py-2 rounded-md mr-2">Yes</button>
+              <button onClick={() => setShowConfirmationPopup(false)} className="bg-gray-500 text-white px-4 py-2 rounded-md">No</button>
+            </div>
           </div>
         </div>
       )}

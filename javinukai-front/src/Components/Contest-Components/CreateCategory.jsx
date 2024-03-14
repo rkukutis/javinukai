@@ -33,19 +33,19 @@ function CreateCategory() {
       <h2 className="text-2xl font-semibold mb-4">Create Category</h2>
       <div>
         <div className="mb-4">
-          <label htmlFor="categoryName" className="block text-gray-700">
+          <label htmlFor="name" className="block text-gray-700">
             Category Name:
           </label>
           <input
             type="text"
-            id="categoryName"
-            {...register("categoryName", { required: "Required" })}
+            id="name"
+            {...register("name", { required: "Required" })}
             className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${
               errors.categoryName ? "border-red-500" : ""
             }`}
           />
           {errors.categoryName && (
-            <FormFieldError>{errors.categoryName.message}</FormFieldError>
+            <FormFieldError>{errors.name.message}</FormFieldError>
           )}
         </div>
         <div className="mb-4">

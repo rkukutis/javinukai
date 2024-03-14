@@ -286,5 +286,11 @@
   "categoryTypes": {
     "SINGLE": "Single photos",
     "COLLECTION": "Photo collections"
-  }
+  },
+
+"CreateContest":{
+  "contestTitle":"Create Contest"
+
+}
+
 }

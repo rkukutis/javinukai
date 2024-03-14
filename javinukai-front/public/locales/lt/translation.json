@@ -276,5 +276,11 @@
   "categoryTypes": {
     "SINGLE": "Pavienės nuotraukos",
     "COLLECTION": "Nuotraukų serijos"
+  },
+
+  "CreateContest":{
+    "contestTitle":"Sukurti konkursa"
+  
   }
+  
 }
