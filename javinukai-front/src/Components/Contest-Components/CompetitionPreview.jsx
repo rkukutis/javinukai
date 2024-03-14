@@ -9,7 +9,7 @@ function CompetitionRecordPreview() {
     const fetchCompetitionRecords = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND}/api/v1/competition-records`
+          `${import.meta.env.VITE_BACKEND}/api/v1/competition-records` , { withCredentials: true }
         );
         console.log("Response:", response);
         setCompetitionRecords(response.data);

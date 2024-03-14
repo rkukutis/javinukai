@@ -89,6 +89,7 @@ export default function App() {
               <Route path="/contest-page" element={<ContestPage />} />
               <Route path="/category-page" element={<CategoryPage />} />
               <Route path="Preview-page" element={<PreviewPage />} />
+              
               <Route path="/requests" element={<ParticipationRequests />} />
             </Route>
           </Routes>
