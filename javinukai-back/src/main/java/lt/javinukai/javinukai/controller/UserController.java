@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -22,7 +23,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/users")
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @Validated
 @RequiredArgsConstructor
 public class UserController {
@@ -46,6 +46,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers(pageRequest, contains));
     }
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> createUser(@RequestBody @Valid UserRegistrationRequest registration) {
         log.info("Creating user manually: {}", registration);
         return ResponseEntity.ok().body(userService.createUser(registration));
@@ -57,13 +58,21 @@ public class UserController {
         return ResponseEntity.ok().body(userService.updateUser(UserMapper.mapToUser(updateDTO), userId));
     }
 
+    @PutMapping
+    public ResponseEntity<User> updateUser(@AuthenticationPrincipal User user, @RequestBody @Valid UserUpdateRequest updateDTO) {
+        return ResponseEntity.ok().body(userService.updateUser(UserMapper.mapToUser(updateDTO), user.getId()));
+    }
+
+
     @PatchMapping("/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> updateUserRole(@PathVariable UUID userId, @RequestBody User newUser) {
         return ResponseEntity.ok().body(userService.updateUserForAdmin(userId, newUser));
     }
 
 
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<User>> deleteUser(@PathVariable UUID userId) {
         return ResponseEntity.ok().body(userService.deleteUser(userId));
     }

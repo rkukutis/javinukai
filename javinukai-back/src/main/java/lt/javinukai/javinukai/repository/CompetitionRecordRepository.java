@@ -20,4 +20,7 @@ public interface CompetitionRecordRepository extends JpaRepository<CompetitionRe
     List<CompetitionRecord> findByUserAndContest(User user, Contest contest);
     Page<CompetitionRecord> findByCategoryIdAndContestId(Pageable pageable, UUID categoryId, UUID contestId);
     Optional<CompetitionRecord> findByCategoryIdAndContestIdAndUserId(UUID categoryId, UUID contestId, UUID userId);
+    List<CompetitionRecord> findByContestIdAndUserId(UUID contestId, UUID userId);
+    List<CompetitionRecord> findByContestId(UUID id);
+    List<CompetitionRecord> findByContestIdAndCategoryId(UUID id, UUID id1);
 }

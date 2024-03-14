@@ -35,7 +35,6 @@ function ImageUpload({
       reset();
     },
     onError: (error) => {
-      console.log(error);
       toast.error(error.message);
     },
   });
@@ -112,6 +111,7 @@ function ImageUpload({
           <ul className="list-disc">
             <p>{t("imageUpload.photoRequirements")}</p>
             <div className="pl-5">
+              <li>{t("imageUpload.fileTypeRequirement")}</li>
               <li>{t("imageUpload.photoDimensions")}</li>
               <li>{t("imageUpload.photoSize")}</li>
               <li>{t("imageUpload.photoAllSize")}</li>

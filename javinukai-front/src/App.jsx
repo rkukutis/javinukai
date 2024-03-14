@@ -19,6 +19,9 @@ import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
 import PreviewPage from "./pages/PreviewPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
+import PersonalInformation from "./Components/user-management/PersonalInformation";
+import CreateUserPage from "./pages/CreateUserPage";
+import ParticipationRequests from "./Components/participation-request-components/ParticipationRequests";
 
 
 const queryClient = new QueryClient({
@@ -72,9 +75,11 @@ export default function App() {
               />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/create-user" element={<CreateUserPage />} />
               <Route path="/forgot-password" element={<ForgotPassPage />} />
               <Route path="/reset-password" element={<ResetPassPage />} />
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
+              <Route path="personal-info/" element={<PersonalInformation/>} />
               <Route path="/manage-users" element={<UserManagementPage />} />
               <Route path="/change-password" element={<ChangePasswordPage />} />
               <Route
@@ -84,6 +89,8 @@ export default function App() {
               <Route path="/contest-page" element={<ContestPage />} />
               <Route path="/category-page" element={<CategoryPage />} />
               <Route path="Preview-page" element={<PreviewPage />} />
+              
+              <Route path="/requests" element={<ParticipationRequests />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -4,6 +4,7 @@ import getContests from "../services/contests/getContests";
 import PaginationSettings from "../Components/PaginationSettings";
 import ContestCard from "../Components/contest/ContestCard";
 import { useTranslation } from "react-i18next";
+import SpinnerPage from "./SpinnerPage";
 
 const defaultPagination = {
   page: 0,
@@ -38,41 +39,45 @@ function ContestsPage() {
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
-      <div className="w-3/4 pb-4">
-        <PaginationSettings
-          limitObjectName={t("ContestsPage.contestsLimitObject")}
-          sortFieldOptions={
-            <>
-              <option value="name">
-                {t("ContestsPage.contestNameOption")}
-              </option>
-              <option value="description">
-                {t("ContestsPage.contestDescriptionOption")}
-              </option>
-              <option value="startDate">
-                {t("ContestsPage.contestStartDateOption")}
-              </option>
-              <option value="endDate">
-                {t("ContestsPage.contestEndDateOption")}
-              </option>
-              <option value="totalSubmissions">
-                {t("ContestsPage.contestTotalEntriesOption")}
-              </option>
-            </>
-          }
-          lastPage={data?.last}
-          firstPage={data?.first}
-          searchByFieldName={t("ContestsPage.contestSeachFieldName")}
-          pagination={paginationSettings}
-          setPagination={setPaginationSettings}
-          availablePageNumber={data?.totalPages}
-        />
-        <div className="space-y-4">
-          {data?.content.map((contest) => (
-            <ContestCard key={contest.id} contestInfo={contest} />
-          ))}
+      {isFetching ? (
+        <SpinnerPage />
+      ) : (
+        <div className="w-3/4 pb-4">
+          <PaginationSettings
+            limitObjectName={t("ContestsPage.contestsLimitObject")}
+            sortFieldOptions={
+              <>
+                <option value="name">
+                  {t("ContestsPage.contestNameOption")}
+                </option>
+                <option value="description">
+                  {t("ContestsPage.contestDescriptionOption")}
+                </option>
+                <option value="startDate">
+                  {t("ContestsPage.contestStartDateOption")}
+                </option>
+                <option value="endDate">
+                  {t("ContestsPage.contestEndDateOption")}
+                </option>
+                <option value="totalSubmissions">
+                  {t("ContestsPage.contestTotalEntriesOption")}
+                </option>
+              </>
+            }
+            lastPage={data?.last}
+            firstPage={data?.first}
+            searchByFieldName={t("ContestsPage.contestSeachFieldName")}
+            pagination={paginationSettings}
+            setPagination={setPaginationSettings}
+            availablePageNumber={data?.totalPages}
+          />
+          <div className="space-y-4">
+            {data?.content.map((contest) => (
+              <ContestCard key={contest.id} contestInfo={contest} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

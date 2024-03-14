@@ -13,11 +13,9 @@ import org.hibernate.validator.constraints.Length;
 public class UserUpdateRequest {
 
     @NotBlank
-    @Pattern(regexp = "[a-zA-Z]+")
     @Length(max = 100, message = "FIRST_NAME_LENGTH_EXCEEDED")
     private String name;
     @NotBlank
-    @Pattern(regexp = "[a-zA-Z]+")
     @Length(max = 100, message = "LAST_NAME_LENGTH_EXCEEDED")
     private String surname;
     @NotNull

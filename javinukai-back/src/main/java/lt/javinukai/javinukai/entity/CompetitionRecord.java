@@ -40,7 +40,8 @@ public class CompetitionRecord {
 //    @JsonIgnore
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "competitionRecord", cascade = CascadeType.MERGE)
+    @Getter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "competitionRecord", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<PhotoCollection> entries;
 
     @Setter

@@ -48,7 +48,6 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/categories")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Page<Category>> retrieveAllCategories(@RequestParam(defaultValue = "1") int pageNumber,
                                                                 @RequestParam(defaultValue = "25") int pageSize,
                                                                 @RequestParam(required = false) String keyword,
@@ -65,7 +64,6 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/categories/contest/{contestId}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<List<Category>> retrieveContestCategories(@PathVariable UUID contestId) {
         log.info("Request for retrieving all categories for contest {}", contestId);
         List<Category> retrievedCategories = categoryService.retrieveContestCategories(contestId);
@@ -73,9 +71,7 @@ public class CategoryController {
         return ResponseEntity.ok().body(retrievedCategories);
     }
 
-
     @GetMapping(path = "/categories/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
     public ResponseEntity<Category> retrieveCategory(@PathVariable @NotNull UUID id) {
         log.info("Request for retrieving category with ID: {}", id);
         final Category category = categoryService.retrieveCategory(id);
