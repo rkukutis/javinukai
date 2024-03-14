@@ -33,8 +33,7 @@ public class PhotoCollection {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection",
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Photo> images;
 
     @ManyToOne(fetch = FetchType.EAGER)
