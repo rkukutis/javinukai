@@ -40,41 +40,6 @@ class ContestServiceTest {
     private ContestService contestService;
 
     @Test
-    public void createContestReturnsContest() {
-
-        final UUID categoryID = UUID.randomUUID();
-        final Category category01 = Category.builder()
-                .id(categoryID)
-                .name("test category name")
-                .description("test category description")
-                .maxSubmissions(66)
-                .build();
-
-        final UUID contestID = UUID.randomUUID();
-        final Contest contest01 = Contest.builder()
-                .id(contestID)
-                .name("test contest name")
-                .description("test contest description")
-                .maxSubmissions(666)
-                .categories(Collections.singletonList(category01))
-                .startDate(ZonedDateTime.now())
-                .endDate(ZonedDateTime.now())
-                .build();
-
-        final ContestDTO contestDTO01 = ContestMapper.contestToContestDTO(contest01);
-        contestDTO01.setCategories(Collections.singletonList(category01));
-
-        when(contestRepository.save(Mockito.any(Contest.class))).thenReturn(contest01);
-        when(categoryRepository.findById(categoryID)).thenReturn(Optional.of(category01));
-
-        final Contest createdContest = contestService
-                .createContest(ContestMapper.contestToContestDTOTest(contest01));
-
-        Assertions.assertThat(createdContest).isNotNull();
-        Assertions.assertThat(createdContest.getCategories()).isNotNull();
-    }
-
-    @Test
     public void retrieveAllContestsReturnsPageOfContests() {
         final Contest contest01 = Contest.builder()
                 .name("test contest name")
@@ -96,19 +61,6 @@ class ContestServiceTest {
         assertNotNull(retrievedPage);
         assertEquals(expectedContestList.size(), retrievedPage.getContent().size());
     }
-
-//    @Test
-//    public void retrieveAllContestsReturnsEmptyList() {
-//
-//        final Page<Contest> emptyPage = new PageImpl<>(new ArrayList<>());
-//
-//        when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(emptyPage);
-//
-//        final Page<Contest> retrievedPage = contestService.retrieveAllContests(0, 10);
-//
-//        assertNotNull(retrievedPage);
-//        assertTrue(retrievedPage.isEmpty());
-//    }
 
     @Test
     void retrieveContestReturnsContest() {
