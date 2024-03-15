@@ -12,6 +12,7 @@ import StyledInput from "../StyledInput";
 import FormFieldError from "../FormFieldError";
 
 function UserLimitEdit({ currentLimits, onLimitChange }) {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -28,11 +29,11 @@ function UserLimitEdit({ currentLimits, onLimitChange }) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <section className="flex flex-col">
-        <label className="text-lg">Max entries per contest</label>
+        <label className="text-lg">{t("DangerZone.maxPerContest")}</label>
         <input
           className="rounded py-1 px-2"
           {...register("maxTotal", {
-            min: { value: 0, message: "Limit can not be a negative number" },
+            min: { value: 0, message: t("DangerZone.limitNegativeError") },
           })}
         />
         {errors.maxTotal && (
@@ -40,11 +41,11 @@ function UserLimitEdit({ currentLimits, onLimitChange }) {
         )}
       </section>
       <section className="flex flex-col">
-        <label className="text-lg">Max entries per singles category</label>
+        <label className="text-lg">{t("DangerZone.maxSingles")}</label>
         <input
           className="rounded py-1 px-2"
           {...register("maxSinglePhotos", {
-            min: { value: 0, message: "Limit can not be a negative number" },
+            min: { value: 0, message: t("DangerZone.limitNegativeError") },
           })}
         />
         {errors.maxSinglePhotos && (
@@ -52,11 +53,11 @@ function UserLimitEdit({ currentLimits, onLimitChange }) {
         )}
       </section>
       <section className="flex flex-col">
-        <label className="text-lg">Max entries per series category</label>
+        <label className="text-lg">{t("DangerZone.maxCollections")}</label>
         <input
           className="rounded py-1 px-2"
           {...register("maxCollections", {
-            min: { value: 0, message: "Limit can not be a negative number" },
+            min: { value: 0, message: t("DangerZone.limitNegativeError") },
           })}
         />
         {errors.maxCollections && (
@@ -66,7 +67,7 @@ function UserLimitEdit({ currentLimits, onLimitChange }) {
       <StyledInput
         extraStyle="bg-red-400"
         type="submit"
-        value="Change limits"
+        value={t("DangerZone.changeLimits")}
       />
     </form>
   );

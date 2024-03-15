@@ -60,12 +60,13 @@ export function CategoryItem({
               )}
             </div>
           )}
-          {user && canParticipate (
+          {user && canParticipate && (
             <UserSubmissionView
               contest={contestInfo}
               category={categoryInfo}
               contestLimitReached={contestLimitReached}
             />
+          )}
         </div>
       )}
     </div>

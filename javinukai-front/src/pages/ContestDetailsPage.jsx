@@ -90,7 +90,8 @@ function ContestDetailsPage() {
                 </div>
                 {data?.status == "ACCEPTED" && (
                   <h1 className="text-xl text-white">
-                    User entries: {data?.userEntries} / {data?.maxUserEntries}
+                    {t("ContestDetailsPage.userEntries")}: {data?.userEntries} /{" "}
+                    {data?.maxUserEntries}
                   </h1>
                 )}
 

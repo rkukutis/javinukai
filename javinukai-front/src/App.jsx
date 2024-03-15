@@ -17,7 +17,6 @@ import UserSubmissionView from "./Components/UserSubmissionView";
 import JurySubmissionView from "./Components/JurySubmissionView";
 import ContestPage from "./pages/ContestPage";
 import CategoryPage from "./pages/CategoryPage";
-import ChangePasswordPage from "./pages/ChangePasswordPage";
 import PersonalInformation from "./Components/user-management/PersonalInformation";
 import CreateUserPage from "./pages/CreateUserPage";
 import ParticipationRequests from "./Components/participation-request-components/ParticipationRequests";
