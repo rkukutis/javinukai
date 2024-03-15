@@ -12,6 +12,7 @@ export function CategoryItem({
   expandedCategory,
   onSetExpandedCategory,
   contestLimitReached,
+  canParticipate,
 }) {
   const { t } = useTranslation();
   const { user } = useUserStore((state) => state);
@@ -59,13 +60,12 @@ export function CategoryItem({
               )}
             </div>
           )}
-          {user && (
+          {user && canParticipate (
             <UserSubmissionView
               contest={contestInfo}
               category={categoryInfo}
               contestLimitReached={contestLimitReached}
             />
-          )}
         </div>
       )}
     </div>

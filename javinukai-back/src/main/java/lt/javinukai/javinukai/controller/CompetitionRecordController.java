@@ -37,7 +37,6 @@ public class CompetitionRecordController {
         this.competitionRecordService = competitionRecordService;
     }
 
-    // manau, kad nauji record'ai bus kuriami automatiškai, taigi post kontrolerio nereikės
     @PostMapping(path = "/records")
     public ResponseEntity<List<CompetitionRecord>> addUserToContest(@RequestParam UUID contestID,
                                               @AuthenticationPrincipal User participant) {
@@ -80,7 +79,7 @@ public class CompetitionRecordController {
 
     // this one is for the jury
     @GetMapping(path = "/records/contest/{contestId}/category/{categoryId}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER', 'ROLE_JURY')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_JURY')")
     public ResponseEntity<Page<CompetitionRecord>> retrieveRecords(@PathVariable UUID contestId,
                                                                       @PathVariable UUID categoryId,
                                                                       @RequestParam(defaultValue = "1") int pageNumber,

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormFieldError from "../FormFieldError";
-
+import { useTranslation } from "react-i18next";
 function CreateCategory() {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -30,27 +31,27 @@ function CreateCategory() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Create Category</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t('CreateCategory.categoryScreen')}</h2>
       <div>
         <div className="mb-4">
-          <label htmlFor="categoryName" className="block text-gray-700">
-            Category Name:
+          <label htmlFor="name" className="block text-gray-700">
+          {t('CreateCategory.categoryName')}
           </label>
           <input
             type="text"
-            id="categoryName"
-            {...register("categoryName", { required: "Required" })}
+            id="name"
+            {...register("name", { required: "Required" })}
             className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${
               errors.categoryName ? "border-red-500" : ""
             }`}
           />
           {errors.categoryName && (
-            <FormFieldError>{errors.categoryName.message}</FormFieldError>
+            <FormFieldError>{errors.name.message}</FormFieldError>
           )}
         </div>
         <div className="mb-4">
           <label htmlFor="description" className="block text-gray-700">
-            Description:
+          {t('CreateCategory.categoryDescription')}
           </label>
           <textarea
             id="description"
@@ -63,7 +64,7 @@ function CreateCategory() {
         </div>
         <div className="mb-4">
           <label htmlFor="totalSubmissions" className="block text-gray-700">
-            Total Submissions:
+          {t('CreateCategory.categoryTotalSubmissions')}
           </label>
           <input
             type="number"
@@ -77,7 +78,7 @@ function CreateCategory() {
         </div>
         <div className="mb-4">
           <label htmlFor="type" className="block text-gray-700">
-            Type:
+          {t('CreateContest.category')}
           </label>
           <select
             id="type"
@@ -86,9 +87,9 @@ function CreateCategory() {
               errors.type ? "border-red-500" : ""
             }`}
           >
-            <option value="">Select Type</option>
-            <option value="SINGLE">Single</option>
-            <option value="COLLECTION">Collection</option>
+            <option value="">{t('CreateCategory.categorySelectType')}</option>
+            <option value="SINGLE">{t('categoryTypes.SINGLE')}</option>
+            <option value="COLLECTION">{t('categoryTypes.COLLECTION')}</option>
           </select>
           
           {errors.type && (
@@ -106,7 +107,7 @@ function CreateCategory() {
                 <div className="loader"></div>
               </span>
             )}
-            Create Category
+            {t('CreateCategory.categoryCreateButton')}
           </button>
           {showErrorMessage && (
             <p className="text-red-500">Error creating category</p>

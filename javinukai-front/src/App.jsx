@@ -21,6 +21,7 @@ import ChangePasswordPage from "./pages/ChangePasswordPage";
 import PersonalInformation from "./Components/user-management/PersonalInformation";
 import CreateUserPage from "./pages/CreateUserPage";
 import ParticipationRequests from "./Components/participation-request-components/ParticipationRequests";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -79,7 +80,6 @@ export default function App() {
               <Route path="/confirm-email" element={<ConfirmEmailPage />} />
               <Route path="personal-info/" element={<PersonalInformation />} />
               <Route path="/manage-users" element={<UserManagementPage />} />
-              <Route path="/change-password" element={<ChangePasswordPage />} />
               <Route
                 path="/manage-users/:userId"
                 element={<UserDetailsPage />}
@@ -87,6 +87,7 @@ export default function App() {
               <Route path="/contest-page" element={<ContestPage />} />
               <Route path="/category-page" element={<CategoryPage />} />
               <Route path="/requests" element={<ParticipationRequests />} />
+              <Route path="/*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

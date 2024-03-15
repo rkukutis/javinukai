@@ -3,7 +3,6 @@ import { Photo } from "../photo/Photo";
 import LikeButton from "../LikeButton";
 
 export default function ContestEntryAnon({ entry }) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
   return (

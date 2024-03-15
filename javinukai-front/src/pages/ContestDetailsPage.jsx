@@ -57,8 +57,6 @@ function ContestDetailsPage() {
     },
   });
 
-  console.log(data);
-
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
       <div className="w-full xl:w-3/4 pb-4 px-6 bg-white shadow-md">
@@ -116,6 +114,7 @@ function ContestDetailsPage() {
             <div className="flex-col space-y-1 mt-4">
               {categories?.map((category) => (
                 <CategoryItem
+                  canParticipate={data?.status == "ACCEPTED"}
                   contestLimitReached={
                     data?.maxUserEntries == data?.userEntries ||
                     data?.contest.maxTotalSubmissions == data?.totalEntries

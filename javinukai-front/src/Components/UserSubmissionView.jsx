@@ -17,7 +17,6 @@ function UserSubmissionView({ contest, category, contestLimitReached }) {
   function handleAddEntryClick() {
     setEntryFormOpen(!entryFormOpen);
   }
-  console.log(userRecord);
   return (
     <>
       {userRecord && (

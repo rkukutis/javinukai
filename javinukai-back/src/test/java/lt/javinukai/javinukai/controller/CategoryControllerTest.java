@@ -56,7 +56,6 @@ class CategoryControllerTest {
                 .totalSubmissions(66)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
-//        category = CategoryMapper.categoryDTOToCategory(categoryDTO);
         category = Category.builder()
                 .id(categoryDTO.getId())
                 .name(categoryDTO.getName())
@@ -65,90 +64,7 @@ class CategoryControllerTest {
                 .type(categoryDTO.getType())
                 .build();
     }
-/*
-    @Test
-    public void createCategoryReturnsCreated() throws Exception {
 
-        CategoryRepository categoryRepository = mock(CategoryRepository.class);
-        when(categoryRepository.save(any())).thenReturn(category);
-        CategoryService categoryService = new CategoryService(categoryRepository);
-
-        CategoryCreationResponse response = categoryService.createCategory(categoryDTO);
-
-        Assertions.assertNotNull(response);
-        Assertions.assertEquals(HttpStatus.CREATED, response.getHttpStatus());
-        Assertions.assertEquals("Request for category creation completed, given ID: " + response.getCategory().getId(), response.getMessage());
-    }
-
-    @Test
-    void createCategory_CategoryAlreadyExists_ReturnsExistingCategory() {
-
-        CategoryRepository categoryRepository = mock(CategoryRepository.class);
-        when(categoryRepository.findByCategoryNameAndDescriptionAndTotalSubmissions(
-                anyString(), anyString(), anyInt())).thenReturn(category);
-
-
-
-        CategoryService categoryService = new CategoryService(categoryRepository);
-
-        CategoryCreationResponse response = categoryService.createCategory(categoryDTO);
-
-        log.info("----------->" + response);
-
-        Assertions.assertEquals(HttpStatus.OK, response.getHttpStatus());
-        Assertions.assertEquals("Request for category creation completed, already in repo", response.getMessage());
-        Assertions.assertEquals(category, response.getCategory());
-    }
-
-    @Test
-    public void retrieveAllCategoriesReturnsPage() throws Exception {
-
-        final Page<Category> page = new PageImpl<>(Collections.singletonList(category));
-        final ResponseEntity<Page<Category>> responseEntity = new ResponseEntity<>(page, HttpStatus.OK);
-
-        given(categoryService.retrieveAllCategories(Mockito.any(Pageable.class), Mockito.anyString()))
-                .willReturn(page);
-
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories")
-                .param("pageNumber", String.valueOf(1))
-                .param("pageSize", String.valueOf(10))
-                .contentType(MediaType.APPLICATION_JSON));
-
-        resultActions.andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content.length()").value(page.getContent().size()))
-                .andExpect(jsonPath("$.content[0].categoryName").value(page.getContent().get(0).getCategoryName()));
-    }
-
-    @Test
-    public void retrieveCategoryReturnsCategory() throws Exception{
-
-        final UUID id = UUID.randomUUID();
-        when(categoryService.retrieveCategory(id)).thenReturn(category);
-
-        ResultActions response = mockMvc.perform(get("/api/v1/categories/" + id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryDTO)));
-
-        response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
-    }
-
-    @Test
-    public void updateCategoryReturnsOK() throws Exception {
-
-        UUID categoryID = categoryDTO.getId();
-        given(categoryService.updateCategory(ArgumentMatchers.eq(categoryID), ArgumentMatchers.any()))
-                .willReturn(category);
-
-        ResultActions response = mockMvc.perform(put("/api/v1/categories/{id}", categoryID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(categoryDTO)));
-
-        response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.categoryName", CoreMatchers.is(categoryDTO.getCategoryName())));
-    }
-*/
 }
 
 
