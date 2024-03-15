@@ -100,7 +100,7 @@ class CompetitionRecordControllerTest {
                 .id(UUID.randomUUID())
                 .name("įvykiai")
                 .description("pokyčiai, patraukę akį")
-                .maxSubmissions(40)
+                .maxTotalSubmissions(40)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
@@ -110,7 +110,7 @@ class CompetitionRecordControllerTest {
                 .description("gražiauisios 2023-ųjų akimirkos")
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
-                .maxSubmissions(20)
+                .maxTotalSubmissions(20)
                 .build();
 
         this.userParticipationResponse = UserParticipationResponse.builder()
