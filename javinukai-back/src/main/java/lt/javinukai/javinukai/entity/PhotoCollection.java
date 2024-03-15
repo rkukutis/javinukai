@@ -1,10 +1,12 @@
 package lt.javinukai.javinukai.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +42,31 @@ public class PhotoCollection {
     @JsonIgnore
     @JoinColumn(name = "competition_record_id", referencedColumnName = "id")
     private CompetitionRecord competitionRecord;
+
+    @Setter
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
+    @JoinTable(
+            name = "collection_jury",
+            joinColumns = @JoinColumn(name = "collection_id"),
+            inverseJoinColumns = @JoinColumn(name = "jury_id")
+    )
+    private List<User> juryList;
+
+    public void addJury(User jury) {
+        if (juryList == null) {
+            juryList = new ArrayList<>();
+        }
+        juryList.add(jury);
+    }
+
+    public void removeJury(User jury) {
+        if (juryList == null) {
+            return;
+        }
+        juryList.remove(jury);
+    }
 
     private ZonedDateTime createdAt;
     private ZonedDateTime modifiedAt;
