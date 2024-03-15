@@ -41,7 +41,7 @@ public class CompetitionRecord {
     private User user;
 
     @Getter
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "competitionRecord", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "competitionRecord", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<PhotoCollection> entries;
 
     @Setter
