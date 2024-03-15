@@ -353,7 +353,8 @@
     "isFreelanceTrue": "Yes",
     "isFreelanceFalse": "No",
     "changeSuccess": "Personal information changed successfully",
-    "changeError": "An error occurred while saving personal information"
+    "changeError": "An error occurred while saving personal information",
+    "emailLogoutMessage": "Changing your email requires re-logging in with the new email"
   },
   
   "ParticipationRequest": {
@@ -370,7 +371,9 @@
     "requestDateOption": "Request date",
     "contestNameOption": "Contest name",
     "contestsLimitObject": "Requests",
-    "requestStatusOption": "Request status"
+    "requestStatusOption": "Request status",
+    "fieldAcceptSuccess": "Participation has been accepted",
+    "fieldDeclinedSuccess": "Participation has been declined"
   },
 
   "ParticipationStatus": {
