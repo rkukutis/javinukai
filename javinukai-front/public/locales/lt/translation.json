@@ -391,7 +391,6 @@
     "isFreelanceFalse": "Ne",
     "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
     "changeError": "Keičiant asmeninę informaciją įvyko klaida"
-    
   },
 
   "ParticipationRequest": {
@@ -403,12 +402,14 @@
     "fieldContestName": "Konkursas",
     "fieldContestStart": "Pradžia",
     "fieldContestEnd": "Pabaiga",
-    "fieldAccept": "Priimti",
+    "fieldAccept": "Patvirtinti",
     "fieldDecline": "Atmesti",
     "requestDateOption": "Užklausos data",
     "contestNameOption": "Konkurso pavadinimas",
     "contestsLimitObject": "Užklausos",
-    "requestStatusOption": "Užklausos būsena"
+    "requestStatusOption": "Užklausos būsena",
+    "fieldAcceptSuccess": "Užklausa patvirtinta",
+    "fieldDeclinedSuccess": "Užklausa atmesta"
   },
 
   "ParticipationStatus": {

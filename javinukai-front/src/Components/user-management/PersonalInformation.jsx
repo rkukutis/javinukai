@@ -10,14 +10,21 @@ import updateUserDetails from "../../services/users/updateUserDetails";
 import ChangePassword from "/src/Components/user-management/ChangePassword"
 import { useForm } from "react-hook-form";
 import FormFieldError from "../../Components/FormFieldError";
+import validateEmail from "../../utils/validateEmail";
+import { useNavigate } from "react-router-dom";
+import logoutUser from "../../services/auth/logoutUser";
+
+
 
 
 function PersonalInformation() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { user } = useUserStore((state) => state);
+  const [showLogoutMessage, setShowLogoutMessage] = useState();
+  const { user, removeUser } = useUserStore((state) => state);
   const [data, setData] = useState({});
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const { data: userData, isFetching, refetch } = useQuery({
+  const { data: userData, isFetching} = useQuery({
     queryKey: ["user", user.id],
     queryFn: () => getUser(user.id),
   });
@@ -25,6 +32,8 @@ function PersonalInformation() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
   const queryClient = useQueryClient();
+
+
 
   useEffect(() => {
     if (userData) {
@@ -71,15 +80,23 @@ function PersonalInformation() {
   const onSubmit = async () => {
     try {
       const updatedData = { ...editedData, uuid: data.uuid };
-      await updateUserMutation.mutateAsync(updatedData);
-      await refetch();
-      setIsEditing(false);
-      setData(updatedData);
-      toast.success(t('PersonalInformation.changeSuccess'));
+      await updateUserMutation.mutateAsync(updatedData, {
+        onSuccess: () => {
+          toast.success(t("PersonalInformation.changeSuccess"));
+          setIsEditing(false);
+          setData(updatedData);
+          if (data?.email !== updatedData.email) {
+            logoutUser();
+            removeUser();
+            navigate("/login");
+          }
+        },
+      });
     } catch (error) {
-      toast.error(t('PersonalInformation.changeError'));
+      toast.error(t("PersonalInformation.changeError"));
+      console.error("An unexpected error occurred:", error);
     }
-};
+  };
 
 const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
 
@@ -119,7 +136,7 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
                             },
                           })}
                           className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
-                          value={editedData.name || ''}
+                          value={editedData.name || ""}
                           onChange={(e) => handleChange("name", e.target.value)}
                         />
                         {errors.name && (
@@ -275,10 +292,47 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
                     {t("UserDetailsPage.personalEmail")}
                   </label>
                   <span>: </span>
-                  <div>
-                    <span className="text-lg text-wrap text-teal-600">
-                      {data?.email}
-                    </span>
+                  <div
+                    onFocus={() => setShowLogoutMessage(true)}
+                    onBlur={() => setShowLogoutMessage(false)}
+                  >
+                    {isEditing ? (
+                      <>
+                        <input
+                          {...register("email", {
+                            required: {
+                              value: true,
+                              message: t("RegisterPage.emailRequired"),
+                            },
+                            validate: (val) =>
+                              validateEmail(val) ||
+                              t("RegisterPage.emailValid"),
+                            maxLength: {
+                              value: 200,
+                              message: t("RegisterPage.emailLength"),
+                            },
+                          })}
+                          className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
+                          value={editedData.email}
+                          onChange={(e) => handleChange("email", e.target.value)
+                          }
+                        />
+                        {showLogoutMessage && (
+                          <p className="text-sm text-red-600">
+                            {t('PersonalInformation.emailLogoutMessage')}
+                          </p>
+                        )}
+                        {errors.email && (
+                          <FormFieldError>
+                            {errors.email.message}
+                          </FormFieldError>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-lg text-wrap text-teal-600">
+                        {data?.email}
+                      </span>
+                    )}
                   </div>
                 </section>
 
@@ -289,7 +343,7 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
                   <span>: </span>
                   <div>
                     <span className="text-lg text-wrap text-teal-600">
-                    {t(`roles.${data?.role}`)}
+                      {t(`roles.${data?.role}`)}
                     </span>
                   </div>
                 </section>
@@ -309,12 +363,18 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
                         }
                         required
                       >
-                        <option value={true}>{t('PersonalInformation.isFreelanceTrue')}</option>
-                        <option value={false}>{t('PersonalInformation.isFreelanceFalse')}</option>
+                        <option value={true}>
+                          {t("PersonalInformation.isFreelanceTrue")}
+                        </option>
+                        <option value={false}>
+                          {t("PersonalInformation.isFreelanceFalse")}
+                        </option>
                       </select>
                     ) : (
                       <span className="text-lg text-wrap text-teal-600">
-                        {data?.isFreelance ? t('PersonalInformation.isFreelanceTrue') : t('PersonalInformation.isFreelanceFalse')}
+                        {data?.isFreelance
+                          ? t("PersonalInformation.isFreelanceTrue")
+                          : t("PersonalInformation.isFreelanceFalse")}
                       </span>
                     )}
                   </div>
@@ -359,7 +419,7 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
                               },
                             })}
                             className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
-                            value={editedData.institution || ''}
+                            value={editedData.institution || ""}
                             onChange={(e) =>
                               handleChange("institution", e.target.value)
                             }
@@ -381,7 +441,6 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
               </form>
             </article>
 
-
             <div className="flex gap-4 py-3">
               <Button onClick={isEditing ? handleSubmit(onSubmit) : handleEdit}>
                 {isEditing
@@ -395,20 +454,15 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
               )}
             </div>
 
-
             <div className="py-3">
               <Button
-                  onClick={() =>
-                    setIsShowPasswordVisible(!isShowPasswordVisible)
-                  }
-                  extraStyle="text-lg mt-2 w-full lg:w-fit"
-                >
-                  {t("UserDetailsPage.changePasswordButton")}
-                </Button>
-                {isShowPasswordVisible && <ChangePassword />}
+                onClick={() => setIsShowPasswordVisible(!isShowPasswordVisible)}
+                extraStyle="text-lg mt-2 w-full lg:w-fit"
+              >
+                {t("UserDetailsPage.changePasswordButton")}
+              </Button>
+              {isShowPasswordVisible && <ChangePassword />}
             </div>
-
-            
           </div>
         </div>
       )}
