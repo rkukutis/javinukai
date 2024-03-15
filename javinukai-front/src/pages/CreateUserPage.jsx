@@ -91,7 +91,7 @@ function CreateUserPage() {
                   message: t("CreateUserPage.nameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
                   message: t("CreateUserPage.nameContains"),
                 },
                 maxLength: {
@@ -115,7 +115,7 @@ function CreateUserPage() {
                   message: t("CreateUserPage.surnameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
                   message: t("CreateUserPage.surnameContains"),
                 },
                 maxLength: {

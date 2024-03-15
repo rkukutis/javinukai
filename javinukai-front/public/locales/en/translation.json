@@ -355,7 +355,7 @@
     "changeSuccess": "Personal information changed successfully",
     "changeError": "An error occurred while saving personal information"
   },
-  
+
   "ParticipationRequest": {
     "fieldName": "Name",
     "fieldSurname": "Surname",
@@ -386,7 +386,12 @@
     "editError": "An error has occured while updating entry information",
     "newName": "New name",
     "newDescription": "New description"
-  }
+  },
 
-  
+  "NotFoundPage": {
+    "notFoundInfoTitle": "Page not found",
+    "notFoundInfoMessage": "Page that you are seeking was not found",
+    "error": "error",
+    "backToHomepage": "Return to homepage"
+  }
 }
