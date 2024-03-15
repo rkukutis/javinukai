@@ -37,8 +37,13 @@ public class ContestDTO {
 
     @NonNull
     @Min(value = 1, message = "AT_LEAST_ONE")
-    @Max(value = 9999999 ,message = "TOO_MANY_SUBMISSIONS")
-    private long totalSubmissions;
+    @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
+    private long maxTotalSubmissions;
+
+    @NonNull
+    @Min(value = 1, message = "AT_LEAST_ONE")
+    @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
+    private long maxUserSubmissions;
 
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;

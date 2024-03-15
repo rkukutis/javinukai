@@ -8,6 +8,6 @@
   }
 
   .form-field__input {
-    @apply rounded-sm px-2 py-1 border-2 border-slate-100;
+    @apply rounded px-2 py-1 border-2 border-slate-100;
   }
 }

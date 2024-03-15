@@ -45,6 +45,8 @@ public class User implements UserDetails {
     @Setter
     private String institution;
     @Setter
+    private boolean customLimits;
+    @Setter
     private Integer maxTotal;
     @Setter
     private Integer maxSinglePhotos;

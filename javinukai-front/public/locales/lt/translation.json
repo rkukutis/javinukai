@@ -15,9 +15,10 @@
   },
 
   "layout": {
-    "name": "Javinukai",
+    "name": "Lietuvos spaudos fotografija",
     "login": "Prisijungimas",
-    "loggedOutSuccess": "Sėkmingai atsijungėte!"
+    "loggedOutSuccess": "Sėkmingai atsijungėte!",
+    "adminContact": "Administracija"
   },
 
   "homepage": {
@@ -268,7 +269,8 @@
     "participate": "Dalyvauti konkurse",
     "participationSuccess": "Dalyvavimo prašymas išsiųstas",
     "participationError": "Įvyko klaida siunčiant dalyvavimo prašymą",
-    "entries": "Pateikimai"
+    "userEntries": "Jūsų pateikimai",
+    "entries": "Visi pateikimai"
   },
 
   "CategoryItem": {
@@ -321,7 +323,12 @@
     "accountActionsTitle": "Paskyros veiksmai",
     "blockAccount": "Blokuoti",
     "unblockAccount": "Atblokuoti",
-    "deleteAccountButton": "Ištrinti"
+    "deleteAccountButton": "Ištrinti",
+    "maxPerContest": "Max pateikimų konkursui",
+    "maxSingles": "Max pateikimų pavienių nuotraukų kategorijai",
+    "maxCollections": "Max pateikimų nuotraukų serijų kategorijai",
+    "changeLimits": "Pakeisti limitus",
+    "limitNegativeError": "Limitu negali būti neigiamas skaičius"
   },
 
   "roles": {
@@ -347,40 +354,37 @@
     "COLLECTION": "Nuotraukų serijos"
   },
 
-  "CreateContest":{
-    "contestTitle":"Sukurti konkursa",
+  "CreateContest": {
+    "contestTitle": "Sukurti konkursa",
     "contestName": "Pavidinmas",
     "description": "Aprašymas",
     "startDate": "Pradžios Data",
-  "endDate": "Pabaigos Data",
-  "totalSubmissions": "Maksimalus pateikimų skaičius",
-  "createNewCategory": "Sukurti nauja kategorija",
-  "close": "Uždaryti",
-  "categoryDescription": "aprašymas",
-  "editCategory": "Redaguoti",
-  "deleteCategory": "ištrinti kategorija",
-  "removeCategory": "pašalinti kategorija",
-  "addCategory": "prideti",
-  "contestCreated": "konkursas sukurtas!",
-  "createContestButton": "sukurti konkursa",
-  "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategorija?",
-  "categoryDeleteYes": "taip",
-  "categoryDeleteNo": "ne",
-  "searchCategories": "ieškoti kategoriju",
-  "searchPlaceholder": "ieškoti kategoriju pagal pavadinima"
-  
+    "endDate": "Pabaigos Data",
+    "totalSubmissions": "Maksimalus pateikimų skaičius",
+    "createNewCategory": "Sukurti nauja kategorija",
+    "close": "Uždaryti",
+    "categoryDescription": "aprašymas",
+    "editCategory": "Redaguoti",
+    "deleteCategory": "ištrinti kategorija",
+    "removeCategory": "pašalinti kategorija",
+    "addCategory": "prideti",
+    "contestCreated": "konkursas sukurtas!",
+    "createContestButton": "sukurti konkursa",
+    "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategorija?",
+    "categoryDeleteYes": "taip",
+    "categoryDeleteNo": "ne",
+    "searchCategories": "ieškoti kategoriju",
+    "searchPlaceholder": "ieškoti kategoriju pagal pavadinima"
   },
 
-  "CreateCategory":{
-  "categoryScreen": "sukurti kategorija",
-  "categoryName": "Pavadinimas",
-  "categoryDescription": "Aprašymas",
-  "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
-  "categoryType": "kategorijos tipas",
-  "categorySelectType": "pasirinkiti kategorijos tipa",
-  "categoryCreateButton": "sukurti kategorija"
-    
-
+  "CreateCategory": {
+    "categoryScreen": "sukurti kategorija",
+    "categoryName": "Pavadinimas",
+    "categoryDescription": "Aprašymas",
+    "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
+    "categoryType": "kategorijos tipas",
+    "categorySelectType": "pasirinkiti kategorijos tipa",
+    "categoryCreateButton": "sukurti kategorija"
   },
 
   "PersonalInformation": {
@@ -391,7 +395,6 @@
     "isFreelanceFalse": "Ne",
     "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
     "changeError": "Keičiant asmeninę informaciją įvyko klaida"
-    
   },
 
   "ParticipationRequest": {
@@ -403,12 +406,14 @@
     "fieldContestName": "Konkursas",
     "fieldContestStart": "Pradžia",
     "fieldContestEnd": "Pabaiga",
-    "fieldAccept": "Priimti",
+    "fieldAccept": "Patvirtinti",
     "fieldDecline": "Atmesti",
     "requestDateOption": "Užklausos data",
     "contestNameOption": "Konkurso pavadinimas",
     "contestsLimitObject": "Užklausos",
-    "requestStatusOption": "Užklausos būsena"
+    "requestStatusOption": "Užklausos būsena",
+    "fieldAcceptSuccess": "Užklausa patvirtinta",
+    "fieldDeclinedSuccess": "Užklausa atmesta"
   },
 
   "ParticipationStatus": {
@@ -424,6 +429,12 @@
     "editError": "Atnaujinant pateiktį įvyko klaida",
     "newName": "Naujas pavadinimas",
     "newDescription": "Naujas aprašymas"
+  },
+
+  "NotFoundPage": {
+    "notFoundInfoTitle": "Puslapis nerastas",
+    "notFoundInfoMessage": "Puslapis, kurio ieškote nebuvo rastas",
+    "error": "klaida",
+    "backToHomepage": "Grižti į pradinį puslapį"
   }
-  
 }

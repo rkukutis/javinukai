@@ -15,6 +15,7 @@ import lt.javinukai.javinukai.mapper.CompetitionRecordMapper;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,11 @@ public class CompetitionRecordService {
     private final ContestRepository contestRepository;
     private final CompetitionRecordRepository competitionRecordRepository;
     private final UserRepository userRepository;
+
+    @Value("${app.constants.user-defaults.max-photos.single}")
+    private int defaultMaxSinglePhotos;
+    @Value("${app.constants.user-defaults.max-photos.collection}")
+    private int defaultMaxCollections;
 
     @Transactional
     public UserParticipationResponse createUsersCompetitionRecords(UUID contestID, UUID userID) {
@@ -60,16 +66,23 @@ public class CompetitionRecordService {
                     .build();
         }
 
-        // čia matau sukuria record'us visoms kategorijoms, reikia tikėtis, kad kategorijų nebus daug
         final List<CompetitionRecord> usersCompetitionRecords = new ArrayList<>();
         for (Category category : contestToParticipateIn.getCategories()) {
+            int limit = 0;
+            if (participantUser.isCustomLimits()) {
+                limit = category.getType() == PhotoSubmissionType.SINGLE ?
+                        participantUser.getMaxSinglePhotos() :
+                        participantUser.getMaxCollections();
+            } else {
+                limit = category.getType() == PhotoSubmissionType.SINGLE ?
+                        defaultMaxSinglePhotos :
+                        defaultMaxCollections;
+            }
             final CompetitionRecord record = CompetitionRecord.builder()
                     .contest(contestToParticipateIn)
                     .user(participantUser)
                     .category(category)
-                    .maxPhotos(category.getType() == PhotoSubmissionType.SINGLE ?
-                            participantUser.getMaxSinglePhotos() :
-                            participantUser.getMaxCollections())
+                    .maxPhotos(limit)
                     .build();
             final CompetitionRecord savedRecord = competitionRecordRepository.save(record);
             usersCompetitionRecords.add(savedRecord);

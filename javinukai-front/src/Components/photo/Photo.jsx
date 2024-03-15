@@ -4,7 +4,7 @@ export function Photo({ photo, onClick }) {
       onClick={onClick}
       className="rounded hover:scale-105 hover:cursor-pointer"
       key={photo.id}
-      src={photo.urlMiddle}
+      src={photo.urlSmall}
     />
   );
 }

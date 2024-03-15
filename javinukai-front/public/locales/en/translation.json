@@ -15,9 +15,10 @@
   },
 
   "layout": {
-    "name": "Website name",
+    "name": "Lithuanian Press Photography",
     "login": "Log in",
-    "loggedOutSuccess": "Logged out successfully!"
+    "loggedOutSuccess": "Logged out successfully!",
+    "adminContact": "Administrator"
   },
 
   "homepage": {
@@ -266,7 +267,8 @@
     "participate": "Participate",
     "participationSuccess": "Participations request sent successfully",
     "participationError": "An error has occured while sending a participation",
-    "entries": "Entries"
+    "userEntries": "Your entries",
+    "entries": "Total entries"
   },
 
   "CategoryItem": {
@@ -319,7 +321,12 @@
     "accountActionsTitle": "Account actions",
     "blockAccount": "Block account",
     "unblockAccount": "Unblock account",
-    "deleteAccountButton": "Delete account"
+    "deleteAccountButton": "Delete account",
+    "maxPerContest": "Max entries per contest",
+    "maxSingles": "Max entries per singles category",
+    "maxCollections": "Max entries per series category",
+    "changeLimits": "Change limits",
+    "limitNegativeError": "Limit must be a positive number"
   },
 
   "roles": {
@@ -346,40 +353,38 @@
     "COLLECTION": "Photo collections"
   },
 
-"CreateContest":{
-  "contestTitle":"Create Contest",
-  "contestName": "Contest Name",
-  "description": "Description",
-  "startDate": "Start Date",
-  "endDate": "End Date",
-  "totalSubmissions": "Total Submissions",
-  "createNewCategory": "Create New Category",
-  "close": "close",
-  "categoryDescription": "Description",
-  "editCategory": "Edit Category",
-  "deleteCategory": "Delete Category",
-  "removeCategory": "remove",
-  "addCategory": "add",
-  "contestCreated": "Contest created!",
-  "createContestButton": "Create contest",
-  "categoryDeleteConfirmation": "Are you sure you want to delete this Category?",
-  "categoryDeleteYes": "yes",
-  "categoryDeleteNo": "no",
-  "searchCategories": "Search Categories",
-  "searchPlaceholder": "Search Categories by name"
-},
+  "CreateContest": {
+    "contestTitle": "Create Contest",
+    "contestName": "Contest Name",
+    "description": "Description",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "totalSubmissions": "Total Submissions",
+    "createNewCategory": "Create New Category",
+    "close": "close",
+    "categoryDescription": "Description",
+    "editCategory": "Edit Category",
+    "deleteCategory": "Delete Category",
+    "removeCategory": "remove",
+    "addCategory": "add",
+    "contestCreated": "Contest created!",
+    "createContestButton": "Create contest",
+    "categoryDeleteConfirmation": "Are you sure you want to delete this Category?",
+    "categoryDeleteYes": "yes",
+    "categoryDeleteNo": "no",
+    "searchCategories": "Search Categories",
+    "searchPlaceholder": "Search Categories by name"
+  },
 
-"CreateCategory":{
-  "categoryScreen": "Create Category",
-  "categoryName": "Name",
-  "categoryDescription": "Description",
-  "categoryTotalSubmissions": "Total submissions",
-  "categoryType": "Category Type",
-  "categorySelectType": "Select Category Type",
-  "categoryCreateButton": "Create category"
-},
-
-
+  "CreateCategory": {
+    "categoryScreen": "Create Category",
+    "categoryName": "Name",
+    "categoryDescription": "Description",
+    "categoryTotalSubmissions": "Total submissions",
+    "categoryType": "Category Type",
+    "categorySelectType": "Select Category Type",
+    "categoryCreateButton": "Create category"
+  },
 
   "PersonalInformation": {
     "editButton": "Edit personal information",
@@ -388,9 +393,10 @@
     "isFreelanceTrue": "Yes",
     "isFreelanceFalse": "No",
     "changeSuccess": "Personal information changed successfully",
-    "changeError": "An error occurred while saving personal information"
+    "changeError": "An error occurred while saving personal information",
+    "emailLogoutMessage": "Changing your email requires re-logging in with the new email"
   },
-  
+
   "ParticipationRequest": {
     "fieldName": "Name",
     "fieldSurname": "Surname",
@@ -405,7 +411,9 @@
     "requestDateOption": "Request date",
     "contestNameOption": "Contest name",
     "contestsLimitObject": "Requests",
-    "requestStatusOption": "Request status"
+    "requestStatusOption": "Request status",
+    "fieldAcceptSuccess": "Participation has been accepted",
+    "fieldDeclinedSuccess": "Participation has been declined"
   },
 
   "ParticipationStatus": {
@@ -421,7 +429,12 @@
     "editError": "An error has occured while updating entry information",
     "newName": "New name",
     "newDescription": "New description"
-  }
+  },
 
-  
+  "NotFoundPage": {
+    "notFoundInfoTitle": "Page not found",
+    "notFoundInfoMessage": "Page that you are seeking was not found",
+    "error": "error",
+    "backToHomepage": "Return to homepage"
+  }
 }

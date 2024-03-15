@@ -34,7 +34,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="w-full bg-slate-50 h-[82vh] flex flex-col justify-center items-center">
+    <div className="w-full h-[82vh] flex justify-center items-center">
       <div className="bg-white shadow rounded p-6 w-5/6 lg:w-2/5 md:w-1/2">
         <form
           id="login-form"
