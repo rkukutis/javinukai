@@ -57,6 +57,8 @@ function ContestDetailsPage() {
     },
   });
 
+  console.log(data);
+
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
       <div className="w-full xl:w-3/4 pb-4 px-6 bg-white shadow-md">
@@ -88,9 +90,15 @@ function ContestDetailsPage() {
                 <div>
                   <ParticipationStatus status={data?.status} />
                 </div>
+                {data?.status == "ACCEPTED" && (
+                  <h1 className="text-xl text-white">
+                    User entries: {data?.userEntries} / {data?.maxUserEntries}
+                  </h1>
+                )}
+
                 <h2 className="text-white text-xl">
                   {t("ContestDetailsPage.entries")}: {data?.totalEntries} /{" "}
-                  {data?.contest.maxSubmissions}
+                  {data?.contest.maxTotalSubmissions}
                 </h2>
               </div>
             </div>
@@ -108,6 +116,10 @@ function ContestDetailsPage() {
             <div className="flex-col space-y-1 mt-4">
               {categories?.map((category) => (
                 <CategoryItem
+                  contestLimitReached={
+                    data?.maxUserEntries == data?.userEntries ||
+                    data?.contest.maxTotalSubmissions == data?.totalEntries
+                  }
                   key={category.id}
                   categoryInfo={category}
                   contestInfo={data?.contest}

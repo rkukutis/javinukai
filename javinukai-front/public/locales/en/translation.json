@@ -15,9 +15,10 @@
   },
 
   "layout": {
-    "name": "Website name",
+    "name": "Lithuanian Press Photography",
     "login": "Log in",
-    "loggedOutSuccess": "Logged out successfully!"
+    "loggedOutSuccess": "Logged out successfully!",
+    "adminContact": "Administrator"
   },
 
   "homepage": {
@@ -266,7 +267,7 @@
     "participate": "Participate",
     "participationSuccess": "Participations request sent successfully",
     "participationError": "An error has occured while sending a participation",
-    "entries": "Entries"
+    "entries": "Total entries"
   },
 
   "CategoryItem": {
@@ -355,7 +356,7 @@
     "changeSuccess": "Personal information changed successfully",
     "changeError": "An error occurred while saving personal information"
   },
-  
+
   "ParticipationRequest": {
     "fieldName": "Name",
     "fieldSurname": "Surname",
@@ -387,6 +388,4 @@
     "newName": "New name",
     "newDescription": "New description"
   }
-
-  
 }

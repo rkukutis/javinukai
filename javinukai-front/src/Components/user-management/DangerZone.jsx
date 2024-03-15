@@ -7,6 +7,70 @@ import useUserStore from "../../stores/userStore";
 import { useNavigate } from "react-router-dom";
 import deleteUser from "../../services/users/deleteUser";
 import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import StyledInput from "../StyledInput";
+import FormFieldError from "../FormFieldError";
+
+function UserLimitEdit({ currentLimits, onLimitChange }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: currentLimits });
+
+  function onSubmit(data) {
+    onLimitChange(data);
+  }
+
+  return (
+    <form
+      className="flex flex-col space-y-2 xl:space-y-0 xl:space-x-3 xl:grid xl:grid-cols-4"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <section className="flex flex-col">
+        <label className="text-lg">Max entries per contest</label>
+        <input
+          className="rounded py-1 px-2"
+          {...register("maxTotal", {
+            min: { value: 0, message: "Limit can not be a negative number" },
+          })}
+        />
+        {errors.maxTotal && (
+          <FormFieldError>{errors.maxTotal.message}</FormFieldError>
+        )}
+      </section>
+      <section className="flex flex-col">
+        <label className="text-lg">Max entries per singles category</label>
+        <input
+          className="rounded py-1 px-2"
+          {...register("maxSinglePhotos", {
+            min: { value: 0, message: "Limit can not be a negative number" },
+          })}
+        />
+        {errors.maxSinglePhotos && (
+          <FormFieldError>{errors.maxSinglePhotos.message}</FormFieldError>
+        )}
+      </section>
+      <section className="flex flex-col">
+        <label className="text-lg">Max entries per series category</label>
+        <input
+          className="rounded py-1 px-2"
+          {...register("maxCollections", {
+            min: { value: 0, message: "Limit can not be a negative number" },
+          })}
+        />
+        {errors.maxCollections && (
+          <FormFieldError>{errors.maxCollections.message}</FormFieldError>
+        )}
+      </section>
+      <StyledInput
+        extraStyle="bg-red-400"
+        type="submit"
+        value="Change limits"
+      />
+    </form>
+  );
+}
 
 export function DangerZone({ userData }) {
   console.log(userData);
@@ -67,6 +131,16 @@ export function DangerZone({ userData }) {
     deleteUserMutation.mutate(userData.id);
   }
 
+  function handleLimitChange(newLimits) {
+    console.log(newLimits);
+    updateUserMutation.mutate({
+      ...userData,
+      maxTotal: newLimits.maxTotal,
+      maxSinglePhotos: newLimits.maxSinglePhotos,
+      maxCollections: newLimits.maxCollections,
+    });
+  }
+
   return (
     <>
       {user.id === userData.id ? null : (
@@ -90,7 +164,7 @@ export function DangerZone({ userData }) {
                 <option value="USER">{t("DangerZone.user")}</option>
               </select>
               <Button
-                extraStyle="bg-red-400 hover:bg-red-300"
+                extraStyle="bg-red-500 hover:bg-red-400"
                 onClick={handleChangeRole}
               >
                 {t("DangerZone.changeUserTitle")}
@@ -102,7 +176,7 @@ export function DangerZone({ userData }) {
               </label>
               <Button
                 onClick={handleToggleLockAccount}
-                extraStyle="bg-red-400 hover:bg-red-300"
+                extraStyle="bg-red-500 hover:bg-red-400"
               >
                 {userData?.isNonLocked
                   ? t("DangerZone.blockAccount")
@@ -110,12 +184,20 @@ export function DangerZone({ userData }) {
               </Button>
               <Button
                 onClick={handleDeleteAccount}
-                extraStyle="bg-red-400 hover:bg-red-300"
+                extraStyle="bg-red-500 hover:bg-red-400"
               >
                 {t("DangerZone.deleteAccountButton")}
               </Button>
             </div>
           </div>
+          <UserLimitEdit
+            currentLimits={{
+              maxTotal: userData.maxTotal,
+              maxSinglePhotos: userData.maxSinglePhotos,
+              maxCollections: userData.maxCollections,
+            }}
+            onLimitChange={handleLimitChange}
+          />
         </div>
       )}
     </>

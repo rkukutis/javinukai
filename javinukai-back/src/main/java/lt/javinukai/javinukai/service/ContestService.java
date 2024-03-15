@@ -43,10 +43,10 @@ public class ContestService {
         final List<Category> categoryList = new ArrayList<>();
         for (Category category : contestDTO.getCategories()) {
             final Category categoryIn = categoryRepository
-                    .findByNameAndDescriptionAndMaxSubmissions(
+                    .findByNameAndDescriptionAndMaxTotalSubmissions(
                             category.getName(),
                             category.getDescription(),
-                            category.getMaxSubmissions());
+                            category.getMaxTotalSubmissions());
 
                 if (categoryIn == null) {
                     throw new EntityNotFoundException("category was not found with ID: " + category.getId());
@@ -103,6 +103,7 @@ public class ContestService {
             System.out.println(totalUserEntries);
 
             wrapperBuilder
+                    .maxUserEntries(requestingUser.getMaxTotal())
                     .userEntries(totalUserEntries)
                     .status(userRequests.isEmpty() ? null : userRequests.get(0).getRequestStatus());
         }
@@ -116,7 +117,8 @@ public class ContestService {
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
         contestToUpdate.setName(contestDTO.getName());
         contestToUpdate.setDescription(contestDTO.getDescription());
-        contestToUpdate.setMaxSubmissions(contestDTO.getTotalSubmissions());
+        contestToUpdate.setMaxTotalSubmissions(contestDTO.getMaxTotalSubmissions());
+        contestToUpdate.setMaxUserSubmissions(contestDTO.getMaxUserSubmissions());
         contestToUpdate.setStartDate(contestDTO.getStartDate());
         contestToUpdate.setEndDate(contestDTO.getEndDate());
 

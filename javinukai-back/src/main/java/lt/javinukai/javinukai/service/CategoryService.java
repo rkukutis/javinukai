@@ -29,8 +29,8 @@ public class CategoryService {
     @Transactional
     public CategoryCreationResponse createCategory(CategoryDTO categoryDTO) {
 
-        Category categoryInRepo = categoryRepository.findByNameAndDescriptionAndMaxSubmissions(
-                categoryDTO.getName(), categoryDTO.getDescription(), categoryDTO.getTotalSubmissions());
+        Category categoryInRepo = categoryRepository.findByNameAndDescriptionAndMaxTotalSubmissions(
+                categoryDTO.getName(), categoryDTO.getDescription(), categoryDTO.getMaxTotalSubmissions());
 
         HttpStatus httpStatus;
         String message;
@@ -74,7 +74,8 @@ public class CategoryService {
                 () -> new EntityNotFoundException("Category was not found with ID: " + id));
         categoryToUpdate.setName(categoryDTO.getName());
         categoryToUpdate.setDescription(categoryDTO.getDescription());
-        categoryToUpdate.setMaxSubmissions(categoryDTO.getTotalSubmissions());
+        categoryToUpdate.setMaxTotalSubmissions(categoryDTO.getMaxTotalSubmissions());
+        categoryToUpdate.setMaxUserSubmissions(categoryDTO.getMaxUserSubmissions());
         categoryToUpdate.setType(categoryDTO.getType());
         log.info("{}: Updating category", this.getClass().getName());
         return categoryRepository.save(categoryToUpdate);

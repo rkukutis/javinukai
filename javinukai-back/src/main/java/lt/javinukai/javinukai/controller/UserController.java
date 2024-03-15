@@ -62,13 +62,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.updateUser(UserMapper.mapToUser(updateDTO), user.getId()));
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PatchMapping("/{userId}")
-    public ResponseEntity<User> updateUserRole(@PathVariable UUID userId, @RequestBody User newUser) {
+    public ResponseEntity<User> updateUserPermissions(@PathVariable UUID userId, @RequestBody User newUser) {
         return ResponseEntity.ok().body(userService.updateUserForAdmin(userId, newUser));
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<List<User>> deleteUser(@PathVariable UUID userId) {
         return ResponseEntity.ok().body(userService.deleteUser(userId));

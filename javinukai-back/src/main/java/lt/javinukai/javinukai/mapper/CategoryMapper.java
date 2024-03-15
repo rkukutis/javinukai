@@ -11,19 +11,10 @@ public class CategoryMapper {
         return Category.builder()
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
-                .maxSubmissions(categoryDTO.getTotalSubmissions())
+                .maxTotalSubmissions(categoryDTO.getMaxTotalSubmissions())
+                .maxUserSubmissions(categoryDTO.getMaxUserSubmissions())
                 .uploadedPhotos(categoryDTO.getUploadedPhotos())
                 .type(categoryDTO.getType())
-                .build();
-    }
-
-    public static CategoryDTO categoryToCategoryDTO(Category category) {
-        return CategoryDTO.builder()
-                .id(category.getId())
-                .name(category.getName())
-                .description(category.getDescription())
-                .totalSubmissions(category.getMaxSubmissions())
-                .type(category.getType())
                 .build();
     }
 }
