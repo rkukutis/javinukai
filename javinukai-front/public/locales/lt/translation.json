@@ -424,6 +424,13 @@
     "editError": "Atnaujinant pateiktį įvyko klaida",
     "newName": "Naujas pavadinimas",
     "newDescription": "Naujas aprašymas"
+  },
+
+  "NotFoundPage": {
+    "notFoundInfoTitle": "Puslapis nerastas",
+    "notFoundInfoMessage": "Puslapis, kurio ieškote nebuvo rastas",
+    "error": "klaida",
+    "backToHomepage": "Grižti į pradinį puslapį"
   }
   
 }
