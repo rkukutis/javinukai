@@ -91,7 +91,7 @@ function CreateUserPage() {
                   message: t("CreateUserPage.nameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
                   message: t("CreateUserPage.nameContains"),
                 },
                 maxLength: {
@@ -115,7 +115,7 @@ function CreateUserPage() {
                   message: t("CreateUserPage.surnameRequired"),
                 },
                 pattern: {
-                  value: /^[a-zA-ZąčęėįšųūĄČĘĖĮŠŲŪ]*$/,
+                  value: /^[a-zA-ZąčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/,
                   message: t("CreateUserPage.surnameContains"),
                 },
                 maxLength: {
@@ -128,61 +128,67 @@ function CreateUserPage() {
               <FormFieldError>{errors.surname.message}</FormFieldError>
             )}
           </section>
-          <section className="form-field">
-            <label>{t("CreateUserPage.birthYear")}</label>
-            <input
-              id="birth-year"
-              className="form-field__input"
-              {...register("birthYear", {
-                required: {
-                  value: true,
-                  message: t("CreateUserPage.birthYearRequired"),
-                },
-                pattern: {
-                  value: /^\d{4}$/,
-                  message: t("CreateUserPage.birthYearValid"),
-                },
-                max: {
-                  value: new Date().getFullYear(),
-                  message:
-                    t("CreateUserPage.birthYearMax") +
-                    " " +
-                    new Date().getFullYear(),
-                },
-                min: {
-                  value: 1900,
-                  message: t("CreateUserPage.birthYearMin"),
-                },
-              })}
-            />
-            {errors.birthYear && (
-              <FormFieldError>{errors.birthYear.message}</FormFieldError>
-            )}
-          </section>
-          <section className="form-field">
-            <label>{t("CreateUserPage.phoneNumber")}</label>
-            <input
-              id="phone-number"
-              className="form-field__input"
-              {...register("phoneNumber", {
-                required: {
-                  value: true,
-                  message: t("CreateUserPage.phoneNumberRequired"),
-                },
-                pattern: {
-                  value: /^\+?\d{9,11}$/,
-                  message: t("CreateUserPage.phoneNumberValid"),
-                },
-                maxLength: {
-                  value: 16,
-                  message: t("CreateUserPage.phoneNumberLength"),
-                },
-              })}
-            />
-            {errors.phoneNumber && (
-              <FormFieldError>{errors.phoneNumber.message}</FormFieldError>
-            )}
-          </section>
+
+          {role !== "JURY" && (
+            <section className="form-field">
+              <label>{t("CreateUserPage.birthYear")}</label>
+              <input
+                id="birth-year"
+                className="form-field__input"
+                {...register("birthYear", {
+                  required: {
+                    value: true,
+                    message: t("CreateUserPage.birthYearRequired"),
+                  },
+                  pattern: {
+                    value: /^\d{4}$/,
+                    message: t("CreateUserPage.birthYearValid"),
+                  },
+                  max: {
+                    value: new Date().getFullYear(),
+                    message:
+                      t("CreateUserPage.birthYearMax") +
+                      " " +
+                      new Date().getFullYear(),
+                  },
+                  min: {
+                    value: 1900,
+                    message: t("CreateUserPage.birthYearMin"),
+                  },
+                })}
+              />
+              {errors.birthYear && (
+                <FormFieldError>{errors.birthYear.message}</FormFieldError>
+              )}
+            </section>
+          )}
+          {role !== "JURY" && (
+            <section className="form-field">
+              <label>{t("CreateUserPage.phoneNumber")}</label>
+              <input
+                id="phone-number"
+                className="form-field__input"
+                {...register("phoneNumber", {
+                  required: {
+                    value: true,
+                    message: t("CreateUserPage.phoneNumberRequired"),
+                  },
+                  pattern: {
+                    value: /^\+?\d{9,11}$/,
+                    message: t("CreateUserPage.phoneNumberValid"),
+                  },
+                  maxLength: {
+                    value: 16,
+                    message: t("CreateUserPage.phoneNumberLength"),
+                  },
+                })}
+              />
+              {errors.phoneNumber && (
+                <FormFieldError>{errors.phoneNumber.message}</FormFieldError>
+              )}
+            </section>
+          )}
+
           <section className="form-field">
             <label>{t("CreateUserPage.email")}</label>
             <input
@@ -244,42 +250,52 @@ function CreateUserPage() {
               <FormFieldError>{errors.passwordConfirm.message}</FormFieldError>
             )}
           </section>
-          <section className="form-field space-y-2">
-            <select
-              className="py-2 rounded-sm border-2 border-slate-100"
-              id="affiliation-select"
-              value={affiliation}
-              onChange={(e) => onAffiliationChange(e.target.value)}
-            >
-              <option value="freelance">
-                {t("CreateUserPage.affiliationFreelance")}
-              </option>
-              <option value="institution">
-                {t("CreateUserPage.affiliationInstitution")}
-              </option>
-            </select>
-            {affiliation === "institution" && (
-              <div className="form-field">
-                <label>{t("CreateUserPage.affiliationInstitutionName")}</label>
-                <input
-                  id="institution"
-                  className="form-field__input"
-                  {...register("institution", {
-                    required: t(
-                      "CreateUserPage.affiliationInstitutionRequired"
-                    ),
-                    maxLength: {
-                      value: 50,
-                      message: t("CreateUserPage.affiliationInstitutionLength"),
-                    },
-                  })}
-                />
-                {errors.institution && (
-                  <FormFieldError>{errors.institution.message}</FormFieldError>
-                )}
-              </div>
-            )}
-          </section>
+
+          {role !== "JURY" && (
+            <section className="form-field space-y-2">
+              <select
+                className="py-2 rounded-sm border-2 border-slate-100"
+                id="affiliation-select"
+                value={affiliation}
+                onChange={(e) => onAffiliationChange(e.target.value)}
+              >
+                <option value="freelance">
+                  {t("CreateUserPage.affiliationFreelance")}
+                </option>
+                <option value="institution">
+                  {t("CreateUserPage.affiliationInstitution")}
+                </option>
+              </select>
+              {affiliation === "institution" && (
+                <div className="form-field">
+                  <label>
+                    {t("CreateUserPage.affiliationInstitutionName")}
+                  </label>
+                  <input
+                    id="institution"
+                    className="form-field__input"
+                    {...register("institution", {
+                      required: t(
+                        "CreateUserPage.affiliationInstitutionRequired"
+                      ),
+                      maxLength: {
+                        value: 50,
+                        message: t(
+                          "CreateUserPage.affiliationInstitutionLength"
+                        ),
+                      },
+                    })}
+                  />
+                  {errors.institution && (
+                    <FormFieldError>
+                      {errors.institution.message}
+                    </FormFieldError>
+                  )}
+                </div>
+              )}
+            </section>
+          )}
+
           <StyledInput
             id="registration-submit"
             value={t("CreateUserPage.creationSubmit")}

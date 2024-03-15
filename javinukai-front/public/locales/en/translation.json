@@ -391,7 +391,7 @@
     "changeError": "An error occurred while saving personal information",
     "emailLogoutMessage": "Changing your email requires re-logging in with the new email"
   },
-  
+
   "ParticipationRequest": {
     "fieldName": "Name",
     "fieldSurname": "Surname",
@@ -424,7 +424,12 @@
     "editError": "An error has occured while updating entry information",
     "newName": "New name",
     "newDescription": "New description"
-  }
+  },
 
-  
+  "NotFoundPage": {
+    "notFoundInfoTitle": "Page not found",
+    "notFoundInfoMessage": "Page that you are seeking was not found",
+    "error": "error",
+    "backToHomepage": "Return to homepage"
+  }
 }
