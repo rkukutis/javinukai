@@ -140,9 +140,8 @@ public class User implements UserDetails {
     @Setter
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonIgnore
     @JoinTable(
-            name = "collection_jury",
+            name = "likes",
             joinColumns = @JoinColumn(name = "jury_id"),
             inverseJoinColumns = @JoinColumn(name = "collection_id")
     )

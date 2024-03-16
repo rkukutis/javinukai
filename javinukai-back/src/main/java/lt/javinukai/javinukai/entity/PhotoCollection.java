@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -50,11 +51,15 @@ public class PhotoCollection {
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonIgnore
     @JoinTable(
-            name = "collection_jury",
+            name = "likes",
             joinColumns = @JoinColumn(name = "collection_id"),
             inverseJoinColumns = @JoinColumn(name = "jury_id")
     )
     private List<User> likes;
+
+    @Setter
+    @Column(name = "likes_count")
+    private int likesCount;
 
     public void addLike(User jury) {
         if (likes == null) {

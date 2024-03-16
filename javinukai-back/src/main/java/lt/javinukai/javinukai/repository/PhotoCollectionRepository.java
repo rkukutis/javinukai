@@ -24,4 +24,7 @@ public interface PhotoCollectionRepository extends JpaRepository<PhotoCollection
     @Query("SELECT p FROM PhotoCollection p JOIN p.likes l WHERE l.id = ?1 AND p.id = ?2")
     PhotoCollection findByUserIdAndPhotoCollectionId(UUID juryId, UUID photoCollectionId);
 
+    @Query("SELECT COUNT(l) FROM PhotoCollection p JOIN p.likes l WHERE p.id = ?1")
+    int countLikes(UUID photoCollectionId);
+
 }

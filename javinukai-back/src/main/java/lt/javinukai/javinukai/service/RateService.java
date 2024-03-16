@@ -64,4 +64,8 @@ public class RateService {
         allLikedCollections.forEach(PhotoCollection::removeLikesFromCollection);
         photoCollectionRepository.saveAll(allLikedCollections);
         }
+
+        public int countLikes(UUID collectionId){
+        return photoCollectionRepository.countLikes(collectionId);
+        }
 }

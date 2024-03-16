@@ -61,4 +61,9 @@ public class RateController {
     public List<User> findAll() {
         return rateService.findAllWhoLiked();
     }
+
+    @GetMapping("/likesCount")
+    public int countLikes(@RequestParam UUID collectionId){
+        return rateService.countLikes(collectionId);
+    }
 }
