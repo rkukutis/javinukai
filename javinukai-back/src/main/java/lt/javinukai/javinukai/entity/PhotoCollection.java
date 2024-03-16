@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class PhotoCollection {
 
     @Id
@@ -52,20 +54,26 @@ public class PhotoCollection {
             joinColumns = @JoinColumn(name = "collection_id"),
             inverseJoinColumns = @JoinColumn(name = "jury_id")
     )
-    private List<User> juryList;
+    private List<User> likes;
 
-    public void addJury(User jury) {
-        if (juryList == null) {
-            juryList = new ArrayList<>();
+    public void addLike(User jury) {
+        if (likes == null) {
+            likes = new ArrayList<>();
         }
-        juryList.add(jury);
+        likes.add(jury);
     }
 
-    public void removeJury(User jury) {
-        if (juryList == null) {
+    public void removeLike(User jury) {
+        if (likes == null) {
             return;
         }
-        juryList.remove(jury);
+        likes.remove(jury);
+    }
+    public void removeLikesFromCollection(){
+        if (likes == null) {
+            return;
+        }
+        likes.clear();
     }
 
     private ZonedDateTime createdAt;

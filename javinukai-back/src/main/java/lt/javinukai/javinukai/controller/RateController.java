@@ -22,18 +22,43 @@ public class RateController {
 
 
     @PatchMapping("/addLike")
-    public ResponseEntity<?> giveLike (@AuthenticationPrincipal User jury,
-                                       @RequestParam UUID collectionId){
+    public ResponseEntity<?> giveLike(@AuthenticationPrincipal User jury,
+                                      @RequestParam UUID collectionId) {
         rateService.rateLike(jury.getId(), collectionId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/removeLike")
-    public ResponseEntity<?> removeLike (@AuthenticationPrincipal User jury,
-                                       @RequestParam UUID collectionId){
+    public ResponseEntity<?> removeLike(@AuthenticationPrincipal User jury,
+                                        @RequestParam UUID collectionId) {
         rateService.undoLike(jury.getId(), collectionId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/findcollections")
+    public List<PhotoCollection> finddd(@RequestParam UUID collectionId) {
+        return rateService.findCollections(collectionId);
+    }
 
+    @GetMapping("/findjurys")
+    public List<User> fi(@RequestParam UUID collectionId) {
+        return rateService.findJurys(collectionId);
+    }
+
+    @GetMapping("/exists")
+    public boolean isPairExists(@RequestParam UUID juryId,
+                                @RequestParam UUID collectionId) {
+        return rateService.pairExists(juryId, collectionId);
+    }
+
+    @DeleteMapping("/del")
+    public ResponseEntity<?> deleteAllLikes (){
+        rateService.deleteAllLikes();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/getall")
+    public List<User> findAll() {
+        return rateService.findAllWhoLiked();
+    }
 }

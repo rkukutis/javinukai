@@ -146,9 +146,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "jury_id"),
             inverseJoinColumns = @JoinColumn(name = "collection_id")
     )
-
-    private List<PhotoCollection> photoCollections;
-
+    private List<PhotoCollection> likedCollections;
 
     @PrePersist
     protected void onCreate() {
