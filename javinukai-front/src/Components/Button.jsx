@@ -1,6 +1,7 @@
-function Button({ children, onClick, id, extraStyle, disabled }) {
+function Button({ children, onClick, id, extraStyle, disabled, type }) {
   return (
     <button
+      type={type ? type : "button"}
       disabled={disabled}
       id={id}
       onClick={onClick}

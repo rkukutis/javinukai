@@ -46,8 +46,8 @@ public class ContestController {
 
     @GetMapping(path = "/contests")
     public ResponseEntity<Page<Contest>> retrieveAllContests(
-                                                             @RequestParam(defaultValue = "1") int pageNumber,
-                                                             @RequestParam(defaultValue = "25") int pageSize,
+                                                             @RequestParam(defaultValue = "1") int page,
+                                                             @RequestParam(defaultValue = "25") int limit,
                                                              @RequestParam(required = false) String name,
                                                              @RequestParam(defaultValue = "name") String sortBy,
                                                              @RequestParam(defaultValue = "false") boolean sortDesc) {
@@ -56,10 +56,10 @@ public class ContestController {
         Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sort = Sort.by(direction, sortBy);
 
-        final Pageable pageable = PageRequest.of(--pageNumber, pageSize, sort);
-        final Page<Contest> page = contestService.retrieveAllContests(pageable, name);
-        log.info("Request for retrieving all contests, {} record(s) found", page.getTotalElements());
-        return new ResponseEntity<>(page, HttpStatus.OK);
+        final Pageable pageable = PageRequest.of(page, limit, sort);
+        final Page<Contest> retrievedContests = contestService.retrieveAllContests(pageable, name);
+        log.info("Request for retrieving all contests, {} record(s) found", retrievedContests.getTotalElements());
+        return new ResponseEntity<>(retrievedContests, HttpStatus.OK);
     }
 
     @GetMapping(path = "/contests/{id}")

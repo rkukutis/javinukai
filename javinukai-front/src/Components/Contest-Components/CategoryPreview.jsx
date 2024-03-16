@@ -1,19 +1,20 @@
-import React from 'react';
+import Button from "../Button";
 
-function CategoryPreview({ category, clickRemoveCategory }) {
-  const { name, description, totalSubmissions } = category;
+import deleteIcon from "../../assets/icons/delete_FILL0_wght400_GRAD0_opsz24.svg";
+import addIcon from "../../assets/icons/add_circle_FILL0_wght400_GRAD0_opsz24.svg";
 
+function CategoryPreview({ category, onAddCategory }) {
   return (
-    <div className="category-preview">
-      <h2>{name}</h2>
-      <p>Description: {description}</p>
-      <p>Total Submissions: {totalSubmissions}</p>
-      <button
-        className="categoryPreviewContainerDeleteButton"
-        onClick={() => clickRemoveCategory(category)}
-      >
-        -
-      </button>
+    <div className="xl:grid xl:grid-cols-12 bg-white shadow py-2 px-3 place-items-left rounded">
+      <h2 className="col-span-4 pr-3">{category.name}</h2>
+      <p className="col-span-2">{category.type}</p>
+      <p className="col-span-2">{category.maxTotalSubmissions}</p>
+      <p className="col-span-2">{category.maxUserSubmissions}</p>
+      <div className="col-span-1 place-self-center">
+        <Button onClick={() => onAddCategory(category)}>
+          <img src={addIcon} />
+        </Button>
+      </div>
     </div>
   );
 }

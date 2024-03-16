@@ -11,5 +11,5 @@ import java.util.UUID;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     Category findByNameAndDescriptionAndMaxTotalSubmissions(String categoryName, String description, long totalSubmissions);
-    Page<Category> findByName(String categoryName, Pageable pageable);
+    Page<Category> findByNameContainingIgnoreCase(String categoryName, Pageable pageable);
 }
