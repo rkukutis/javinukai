@@ -21,6 +21,7 @@ import ParticipationRequests from "./Components/participation-request-components
 import NotFoundPage from "./pages/NotFoundPage";
 import CreateContest from "./Components/Contest-Components/CreateContest";
 import CreateContestPage from "./pages/CreateContestPage";
+import LandingPage from "./pages/LandingPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,7 +53,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/contests" />} />
+              <Route index element={<LandingPage />} />
               <Route path="/contests" element={<ContestsPage />} />
               <Route
                 path="/contest/:contestId"

@@ -32,7 +32,7 @@ function EditCategoryModal({ category, onClose, onUpdateCategory }) {
   return (
     <div className="p-6 rounded w-[50vw] h-fit">
       <h2>Edit Category</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form id="category-edit-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700">
             Category Name:
@@ -108,6 +108,7 @@ function EditCategoryModal({ category, onClose, onUpdateCategory }) {
           </div>
         </section>
         <StyledInput
+          form="category-edit-form"
           extraStyle="w-full"
           type="submit"
           value="Update category"

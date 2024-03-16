@@ -14,15 +14,16 @@ import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.ParticipationRequestRepository;
 import lt.javinukai.javinukai.wrapper.ContestWrapper;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +34,11 @@ public class ContestService {
     private final ContestRepository contestRepository;
     private final ParticipationRequestRepository participationRequestRepository;
     private final CompetitionRecordRepository recordRepository;
+    private final PhotoService photoService;
 
 
     @Transactional
-    public Contest createContest(ContestDTO contestDTO) {
+    public Contest createContest(ContestDTO contestDTO, MultipartFile thumbnailFile) {
         final Contest contest = ContestMapper.contestDTOToContest(contestDTO);
         final Contest createdContest = contestRepository.save(contest);
 
@@ -55,7 +57,8 @@ public class ContestService {
         }
 
         createdContest.setCategories(categoryList);
-        contestRepository.save(contest);
+        createdContest.setThumbnailURL(photoService.generatedContestThumbnail(createdContest.getId(), thumbnailFile));
+        contestRepository.save(createdContest);
 
         log.info("{}: Created and added new contest to database", this.getClass().getName());
         return createdContest;
@@ -154,4 +157,13 @@ public class ContestService {
         }
     }
 
+    public byte[] retrieveContestThumbnail(UUID id) {
+        return photoService.getThumbnailBytes(id);
+    }
+
+    public List<String> retrieveLatestContestURLs(int limit) {
+        Pageable pageable = Pageable.ofSize(limit);
+        List<Contest> latestContests = contestRepository.findByOrderByCreatedAtDesc(Limit.of(limit));
+        return latestContests.stream().map(Contest::getThumbnailURL).filter(Objects::nonNull).toList();
+    }
 }

@@ -11,33 +11,29 @@ export default function ContestCard({ contestInfo }) {
   const { t } = useTranslation();
 
   const handleEditCompetition = (contestId) => {
-   
     navigate(`/api/v1/contests/${contestId}`);
   };
 
   const handleSaveChanges = async (formData) => {
     try {
-      
-        await axios.patch(`/api/v1/contests/${contestId}`, formData);
+      await axios.patch(`/api/v1/contests/${contestId}`, formData);
 
-        
-        console.log('Changes saved successfully!');
+      console.log("Changes saved successfully!");
     } catch (error) {
-        
-        console.error('Error saving changes:', error);
+      console.error("Error saving changes:", error);
     }
-};
+  };
 
-const handleSubmit = (event) => {
-  event.preventDefault();  
-  handleSaveChanges(formData); 
-};
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleSaveChanges(formData);
+  };
 
   return (
     <div className="bg-white rounded-md xl:grid xl:grid-cols-12">
       <img
         className="h-[15rem] w-full object-cover shadow-md xl:col-span-2 lg:rounded-l-md rounded-t-md"
-        src={contestPhoto}
+        src={contestInfo.thumbnailURL ?? contestPhoto}
       />
       <div className="text xl:col-span-10 p-6 space-y-3">
         <h1 className="text-2xl font-semibold text-teal-500 over">
@@ -48,7 +44,9 @@ const handleSubmit = (event) => {
         </p>
         <div className="flex flex-col xl:flex-row space-y-2 lg:space-y-0 items-center xl:space-x-2 w-">
           <Button
-            onClick={() => navigate(`/contest/${contestInfo.id}`, { withCredentials: true })}
+            onClick={() =>
+              navigate(`/contest/${contestInfo.id}`, { withCredentials: true })
+            }
             extraStyle="w-full xl:w-fit"
           >
             {t("ContestCard.detailsButton")}
@@ -58,13 +56,11 @@ const handleSubmit = (event) => {
             <p className="text-slate-600 font-semibold">
               {formatTimestap(contestInfo.startDate)} -{" "}
               {formatTimestap(contestInfo.endDate)}
-              
             </p>
           </div>
           {/* <ContestEdit contestId={contestInfo.id} onEdit={handleEditCompetition} /> */}
         </div>
       </div>
-      
     </div>
   );
 }

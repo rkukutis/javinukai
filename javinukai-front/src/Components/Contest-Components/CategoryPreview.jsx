@@ -1,6 +1,5 @@
 import Button from "../Button";
 
-import deleteIcon from "../../assets/icons/delete_FILL0_wght400_GRAD0_opsz24.svg";
 import addIcon from "../../assets/icons/add_circle_FILL0_wght400_GRAD0_opsz24.svg";
 
 function CategoryPreview({ category, onAddCategory }) {

@@ -1,5 +1,6 @@
 package lt.javinukai.javinukai.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ProblemDetail;
@@ -120,6 +121,15 @@ public class GlobalExceptionHandler {
         log.warn(exception.getMessage());
         ProblemDetail res = ProblemDetail.forStatus(400);
         res.setTitle("UPLOAD_LIMIT_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler({JsonProcessingException.class})
+    public ProblemDetail handleJSONParseError(JsonProcessingException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("JSON_DESERIALIZATION_ERROR");
         res.setDetail(exception.getMessage());
         return res;
     }

@@ -1,6 +1,7 @@
-function StyledInput({ value, type, id, extraStyle, disabled }) {
+function StyledInput({ value, type, id, extraStyle, disabled, form }) {
   return (
     <input
+      form={form}
       id={id}
       disabled={disabled}
       className={

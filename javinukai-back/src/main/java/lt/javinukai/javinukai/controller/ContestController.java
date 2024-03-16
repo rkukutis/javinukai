@@ -1,6 +1,10 @@
 package lt.javinukai.javinukai.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
@@ -15,10 +19,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,15 +40,34 @@ public class ContestController {
         this.contestService = contestService;
     }
 
-    @PostMapping(path = "/contests")
-//    public ResponseEntity<Contest> createContest(@RequestBody @Valid ContestDTO contestDTO,
-//                                                 @AuthenticationPrincipal UserDetails userDetails) {
+    @PostMapping(path = "/contests", headers = "content-type=multipart/form-data", consumes = "multipart/form-data")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Contest> createContest(@RequestBody @Valid ContestDTO contestDTO) {
-        final Contest createdContest = contestService.createContest(contestDTO);
+    public ResponseEntity<Contest> createContest(@RequestParam("data") @NotBlank String dataJSON,
+                                                 @RequestParam(name = "thumbnail", required = false) MultipartFile file)
+            throws JsonProcessingException
+    {
+        ContestDTO contestDTO = new ObjectMapper().findAndRegisterModules().readValue(dataJSON, ContestDTO.class);
+        final Contest createdContest = contestService.createContest(contestDTO, file);
         log.info("Request for contest creation completed, given ID: {}", createdContest.getId());
         return new ResponseEntity<>(createdContest, HttpStatus.CREATED);
     }
+
+    /*
+        @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
+    public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
+                                                        @RequestParam("title") @NotBlank String title,
+                                                        @RequestParam("description") @NotBlank String description,
+                                                        @RequestParam("contestId") @NotNull UUID contestId,
+                                                        @RequestParam("categoryId") @NotNull UUID categoryId,
+                                                        @AuthenticationPrincipal User participant
+    ) throws IOException {
+        if (images.length < 1 ) {
+            throw new NoImagesException("No jpg images were provided with request");
+        }
+        return ResponseEntity.ok()
+                .body(photoService.createPhoto(images,description,title, contestId, categoryId, participant));
+    }
+     */
 
     @GetMapping(path = "/contests")
     public ResponseEntity<Page<Contest>> retrieveAllContests(
@@ -67,6 +92,18 @@ public class ContestController {
         log.info("Request for retrieving contest with ID: {}", id);
         final Contest foundContest = contestService.retrieveContest(id);
         return new ResponseEntity<>(foundContest, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/contests/latest-contest-thumbnails")
+    public List<String> retrieveLatestContestThumbnails(@RequestParam(name = "limit", defaultValue = "10") int limit) {
+        return contestService.retrieveLatestContestURLs(limit);
+    }
+
+    @GetMapping(path = "/contests/{id}/thumbnail")
+    public ResponseEntity<byte[]> retrieveContestThumbnail(@PathVariable @NotNull UUID id) {
+        log.info("Request for retrieving contest thumbnail with ID: {}", id);
+        byte[] thumbnailBytes = contestService.retrieveContestThumbnail(id);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(thumbnailBytes);
     }
 
 
@@ -102,4 +139,5 @@ public class ContestController {
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }

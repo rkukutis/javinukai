@@ -12,8 +12,9 @@ import Button from "../Button";
 import deleteIcon from "../../assets/icons/delete_FILL0_wght400_GRAD0_opsz24.svg";
 import editIcon from "../../assets/icons/edit_FILL0_wght400_GRAD0_opsz24.svg";
 import EditCategoryModal from "./EditCategoryModal";
+import { getContestCreationMultipart } from "../../utils/getMultipartForm";
 
-function CategoryItemReadOnly({
+function SelectedCategoryItem({
   category,
   onRemoveCategory,
   onUpdateCategory,
@@ -94,7 +95,7 @@ function CategorySelection({ selectedCategories, setSelectedCategories }) {
           </div>
           <div className="space-y-2 mt-2">
             {selectedCategories.map((category) => (
-              <CategoryItemReadOnly
+              <SelectedCategoryItem
                 key={category.id}
                 category={category}
                 onUpdateCategory={handleCategoryUpdate}
@@ -147,6 +148,7 @@ export default function CreateContest({ contestDTO }) {
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { t } = useTranslation();
+  const [thumbnailFile, setThumbnailFile] = useState();
 
   const onSubmit = async (data) => {
     const startDate = new Date(data.startDate).toISOString();
@@ -156,7 +158,6 @@ export default function CreateContest({ contestDTO }) {
       toast.error("Invalid date values");
       return;
     }
-    console.log(data);
     const contestData = {
       ...data,
       startDate,
@@ -165,19 +166,32 @@ export default function CreateContest({ contestDTO }) {
     };
 
     await axios
-      .post(`${import.meta.env.VITE_BACKEND}/api/v1/contests`, contestData, {
-        withCredentials: true,
-      })
+      .post(
+        `${import.meta.env.VITE_BACKEND}/api/v1/contests`,
+        getContestCreationMultipart(contestData, thumbnailFile),
+        {
+          withCredentials: true,
+        }
+      )
       .then(() => toast.success("Contest created successfully"))
       .catch(() => toast.error("Ann error has occured"));
   };
+
+  function handleThumbnailFileAdd(e) {
+    e.preventDefault();
+    if (e.target.files.length != 1) {
+      toast.error("Only one thumbnail can be added");
+      return;
+    }
+    setThumbnailFile(e.target.files[0]);
+  }
 
   return (
     <div className="w-3/5 mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-semibold mb-4">
         {t("CreateContest.contestTitle")}
       </h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form id="contest-create-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label
             htmlFor="name"
@@ -195,6 +209,20 @@ export default function CreateContest({ contestDTO }) {
           {errors.name && (
             <FormFieldError>{errors.name.message}</FormFieldError>
           )}
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="thumbnailFile"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Thumbnail
+          </label>
+          <input
+            onChange={handleThumbnailFileAdd}
+            type="file"
+            id="thumbnailFile"
+            className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
+          />
         </div>
         <div className="mb-4">
           <label
@@ -300,18 +328,19 @@ export default function CreateContest({ contestDTO }) {
             )}
           </div>
         </section>
-        <CategorySelection
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-        />
-        <div className="flex justify-end">
-          <StyledInput
-            extraStyle="px-2 text-lg font-bold"
-            value="Create contest"
-            type="submit"
-          />
-        </div>
       </form>
+      <CategorySelection
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+      />
+      <div className="flex justify-end">
+        <StyledInput
+          form="contest-create-form"
+          extraStyle="px-2 text-lg font-bold"
+          value="Create contest"
+          type="submit"
+        />
+      </div>
     </div>
   );
 }

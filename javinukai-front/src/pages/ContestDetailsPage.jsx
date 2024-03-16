@@ -56,6 +56,7 @@ function ContestDetailsPage() {
       toast.error(t("ContestDetailsPage.participationError"));
     },
   });
+  console.log(data);
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
@@ -64,10 +65,10 @@ function ContestDetailsPage() {
           <section className="relative">
             <img
               className="w-full h-[30rem] object-cover"
-              src={contestPhoto}
+              src={data?.contest.thumbnailURL ?? contestPhoto}
               alt="contest-thumbnail"
             />
-            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm backdrop-brightness-90 pr-6 back">
+            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm backdrop-brightness-50 pr-6 back">
               <div className="ml-12 mt-12 flex-col space-y-6">
                 <h2 className="text text-lg top-4 text text-white xl:text-3xl">
                   {t("ContestDetailsPage.contest")}
