@@ -21,8 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 @Service
@@ -34,6 +32,7 @@ public class ContestService {
     private final ContestRepository contestRepository;
     private final ParticipationRequestRepository participationRequestRepository;
     private final CompetitionRecordRepository recordRepository;
+    private final CompetitionRecordService competitionRecordService;
     private final PhotoService photoService;
 
 
@@ -114,11 +113,16 @@ public class ContestService {
     }
 
     @Transactional
-    public Contest updateContest(UUID id, ContestDTO contestDTO) {
-
+    public Contest updateContest(UUID id, ContestDTO contestDTO, MultipartFile file) {
         final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
         contestToUpdate.setName(contestDTO.getName());
+
+        if (file != null && file.getContentType().startsWith("image")) {
+            String thumbnailURL = photoService.generatedContestThumbnail(id, file);
+            contestToUpdate.setThumbnailURL(thumbnailURL);
+        }
+
         contestToUpdate.setDescription(contestDTO.getDescription());
         contestToUpdate.setMaxTotalSubmissions(contestDTO.getMaxTotalSubmissions());
         contestToUpdate.setMaxUserSubmissions(contestDTO.getMaxUserSubmissions());
@@ -130,20 +134,43 @@ public class ContestService {
     }
 
     @Transactional
+    // if some categories are deleted, corresponding records must also be deleted
+    // if categories are added, new records must be created for approved users
     public Contest updateCategoriesOfContest(UUID id, List<Category> categories) {
 
         final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
 
-        final List<Category> updatedCategoryList = new ArrayList<>();
+        List<Category> newCategories = new ArrayList<>();
 
         for (Category category : categories) {
             final Category categoryIn = categoryRepository.findById(category.getId()).orElseThrow(
                     () -> new EntityNotFoundException("Category was not found with ID: " + category.getId()));
-            updatedCategoryList.add(categoryIn);
+            newCategories.add(categoryIn);
+        }
+        List<Category> extraCategories = new ArrayList<>();
+        List<Category> removedCategories = new ArrayList<>();
+        List<Category> oldCategories = contestToUpdate.getCategories();
+        for (Category oldCategory : oldCategories) {
+            if (!newCategories.contains(oldCategory)) {
+                removedCategories.add(oldCategory);
+            }
+        }
+        for (Category newCategory : newCategories) {
+            if (!oldCategories.contains(newCategory)) {
+                extraCategories.add(newCategory);
+            }
         }
 
-        contestToUpdate.setCategories(updatedCategoryList);
+        if (!extraCategories.isEmpty()) {
+           competitionRecordService.createRecordsForApprovedUsers(extraCategories, contestToUpdate.getId());
+        }
+        if (!removedCategories.isEmpty()) {
+            competitionRecordService.deleteRecordsForCategories(removedCategories, contestToUpdate.getId());
+        }
+
+
+        contestToUpdate.setCategories(newCategories);
         return contestRepository.save(contestToUpdate);
     }
 

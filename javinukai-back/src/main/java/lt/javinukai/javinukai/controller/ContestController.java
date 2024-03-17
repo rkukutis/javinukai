@@ -52,23 +52,6 @@ public class ContestController {
         return new ResponseEntity<>(createdContest, HttpStatus.CREATED);
     }
 
-    /*
-        @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
-    public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
-                                                        @RequestParam("title") @NotBlank String title,
-                                                        @RequestParam("description") @NotBlank String description,
-                                                        @RequestParam("contestId") @NotNull UUID contestId,
-                                                        @RequestParam("categoryId") @NotNull UUID categoryId,
-                                                        @AuthenticationPrincipal User participant
-    ) throws IOException {
-        if (images.length < 1 ) {
-            throw new NoImagesException("No jpg images were provided with request");
-        }
-        return ResponseEntity.ok()
-                .body(photoService.createPhoto(images,description,title, contestId, categoryId, participant));
-    }
-     */
-
     @GetMapping(path = "/contests")
     public ResponseEntity<Page<Contest>> retrieveAllContests(
                                                              @RequestParam(defaultValue = "1") int page,
@@ -114,12 +97,30 @@ public class ContestController {
         return new ResponseEntity<>(contestWrapper, HttpStatus.OK);
     }
 
-    @PutMapping(path = "/contests/{id}")
+    /*
+    @PostMapping(path = "/contests", headers = "content-type=multipart/form-data", consumes = "multipart/form-data")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Contest> createContest(@RequestParam("data") @NotBlank String dataJSON,
+                                                 @RequestParam(name = "thumbnail", required = false) MultipartFile file)
+            throws JsonProcessingException
+    {
+        ContestDTO contestDTO = new ObjectMapper().findAndRegisterModules().readValue(dataJSON, ContestDTO.class);
+        final Contest createdContest = contestService.createContest(contestDTO, file);
+        log.info("Request for contest creation completed, given ID: {}", createdContest.getId());
+        return new ResponseEntity<>(createdContest, HttpStatus.CREATED);
+    }
+     */
+
+    @PutMapping(path = "/contests/{id}", headers = "content-type=multipart/form-data", consumes = "multipart/form-data")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Contest> updateContest(@PathVariable @NotNull UUID id,
-                                                 @RequestBody @Valid ContestDTO contestDTO) {
+                                                 @RequestParam("data") @NotBlank String dataJSON,
+                                                 @RequestParam(name = "thumbnail", required = false) MultipartFile file)
+            throws JsonProcessingException
+    {
+        ContestDTO contestDTO = new ObjectMapper().findAndRegisterModules().readValue(dataJSON, ContestDTO.class);
         log.info("Request for updating contest with ID: {}", id);
-        final Contest updatedContest = contestService.updateContest(id, contestDTO);
+        final Contest updatedContest = contestService.updateContest(id, contestDTO, file);
         return new ResponseEntity<>(updatedContest, HttpStatus.OK);
     }
 

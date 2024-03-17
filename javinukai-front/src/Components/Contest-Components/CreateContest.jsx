@@ -2,155 +2,42 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormFieldError from "../FormFieldError";
-import CreateCategory from "./CreateCategory";
 import { useTranslation } from "react-i18next";
-import Modal from "../Modal";
 import toast from "react-hot-toast";
-import CategoryList from "./CategoryList";
 import StyledInput from "../StyledInput";
-import Button from "../Button";
-import deleteIcon from "../../assets/icons/delete_FILL0_wght400_GRAD0_opsz24.svg";
-import editIcon from "../../assets/icons/edit_FILL0_wght400_GRAD0_opsz24.svg";
-import EditCategoryModal from "./EditCategoryModal";
 import { getContestCreationMultipart } from "../../utils/getMultipartForm";
+import { CategorySelection } from "./CategorySelection";
+import { useQueryClient } from "@tanstack/react-query";
 
-function SelectedCategoryItem({
-  category,
-  onRemoveCategory,
-  onUpdateCategory,
+export default function CreateContest({
+  initialContestInfo,
+  initialCategories,
 }) {
-  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
-
-  return (
-    <div className="xl:grid xl:grid-cols-12 bg-white p-2 rounded shadow">
-      <h2 className="col-span-4 self-center">{category.name}</h2>
-      <h2 className="col-span-2 self-center">{category.type}</h2>
-      <h2 className="col-span-2 self-center">{category.maxTotalSubmissions}</h2>
-      <h2 className="col-span-2 self-center">{category.maxUserSubmissions}</h2>
-      <div className="col-span-2 space-x-2 self-center flex justify-end">
-        <Button
-          type="button"
-          onClick={() => setEditModalIsOpen(true)}
-          extraStyle="bg-yellow-500 hover:bg-yellow-400"
-        >
-          <img src={editIcon} />
-        </Button>
-        <Button
-          type="button"
-          extraStyle="bg-red-500 hover:bg-red-400"
-          onClick={() => onRemoveCategory(category)}
-        >
-          <img src={deleteIcon} />
-        </Button>
-      </div>
-      <Modal isOpen={editModalIsOpen} setIsOpen={setEditModalIsOpen}>
-        <EditCategoryModal
-          onUpdateCategory={onUpdateCategory}
-          category={category}
-          onClose={() => setEditModalIsOpen(false)}
-        />
-      </Modal>
-    </div>
-  );
-}
-
-function CategorySelection({ selectedCategories, setSelectedCategories }) {
-  const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
-  const [createCategoryModalIsOpen, setCreateCategoryModalIsOpen] =
-    useState(false);
-
-  function handleAddSelectedCategory(selectedCategory) {
-    if (selectedCategories.includes(selectedCategory)) return;
-    setSelectedCategories([...selectedCategories, selectedCategory]);
-  }
-
-  function handleCategoryUpdate(updatedCategory) {
-    const filtered = selectedCategories.filter(
-      (c) => c.id != updatedCategory.id
-    );
-    setSelectedCategories([...filtered, updatedCategory]);
-  }
-
-  function handleRemoveSelectedCategory(category) {
-    const filtered = selectedCategories.filter(
-      (selectedCategory) => selectedCategory.id != category.id
-    );
-    setSelectedCategories(filtered);
-  }
-
-  return (
-    <section className="bg-slate-50 p-3 my-2 rounded">
-      <h1 className="text-xl mb-2">Categories</h1>
-      {selectedCategories.length == 0 ? (
-        <p className="text-center py-4 bg-red-100 rounded">
-          No categories added yet!
-        </p>
-      ) : (
-        <>
-          <div className="xl:grid-cols-12 xl:grid bg-white p-2 rounded shadow">
-            <h2 className="col-span-4">Name</h2>
-            <h2 className="col-span-2">Type</h2>
-            <h2 className="col-span-2">Max total</h2>
-            <h2 className="col-span-2">Max user</h2>
-          </div>
-          <div className="space-y-2 mt-2">
-            {selectedCategories.map((category) => (
-              <SelectedCategoryItem
-                key={category.id}
-                category={category}
-                onUpdateCategory={handleCategoryUpdate}
-                onRemoveCategory={handleRemoveSelectedCategory}
-              />
-            ))}
-          </div>
-        </>
-      )}
-      <div className="mt-2 xl:grid-cols-2 xl:grid xl:gap-4">
-        <Button type="button" onClick={() => setAddCategoryModalOpen(true)}>
-          Add categories from database
-        </Button>
-        <Button
-          type="button"
-          onClick={() => setCreateCategoryModalIsOpen(true)}
-        >
-          Create and add new category
-        </Button>
-      </div>
-      <Modal
-        isOpen={createCategoryModalIsOpen}
-        setIsOpen={setCreateCategoryModalIsOpen}
-      >
-        <CreateCategory
-          closeModal={() => setCreateCategoryModalIsOpen(false)}
-          onCreateCategory={handleAddSelectedCategory}
-        />
-      </Modal>
-      <Modal
-        backroundColor="bg-slate-50"
-        isOpen={addCategoryModalOpen}
-        setIsOpen={setAddCategoryModalOpen}
-      >
-        <CategoryList
-          onAddCategory={handleAddSelectedCategory}
-          selectedCategories={selectedCategories}
-        />
-      </Modal>
-    </section>
-  );
-}
-
-export default function CreateContest({ contestDTO }) {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      ...initialContestInfo,
+      ...(initialContestInfo && {
+        startDate: initialContestInfo.startDate.split("T")[0],
+      }),
+      ...(initialContestInfo && {
+        endDate: initialContestInfo.endDate.split("T")[0],
+      }),
+    },
+  });
 
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(
+    initialCategories ?? []
+  );
   const { t } = useTranslation();
   const [thumbnailFile, setThumbnailFile] = useState();
 
   const onSubmit = async (data) => {
+    console.log(data);
     const startDate = new Date(data.startDate).toISOString();
     const endDate = new Date(data.endDate).toISOString();
 
@@ -165,16 +52,52 @@ export default function CreateContest({ contestDTO }) {
       categories: selectedCategories,
     };
 
-    await axios
-      .post(
-        `${import.meta.env.VITE_BACKEND}/api/v1/contests`,
-        getContestCreationMultipart(contestData, thumbnailFile),
-        {
-          withCredentials: true,
-        }
-      )
-      .then(() => toast.success("Contest created successfully"))
-      .catch(() => toast.error("Ann error has occured"));
+    if (initialContestInfo) {
+      await axios
+        .put(
+          `${import.meta.env.VITE_BACKEND}/api/v1/contests/${
+            initialContestInfo.id
+          }`,
+          getContestCreationMultipart(contestData, thumbnailFile),
+          {
+            withCredentials: true,
+          }
+        )
+        .then(() => {
+          toast.success("Contest details updated successfully");
+          queryClient.invalidateQueries(["contest", "contestCategories"]);
+        })
+        .catch(() => toast.error("An error has occured"));
+      // update categories separately
+      if (initialCategories != selectedCategories) {
+        await axios
+          .patch(
+            `${import.meta.env.VITE_BACKEND}/api/v1/contests/${
+              initialContestInfo.id
+            }`,
+            selectedCategories,
+            {
+              withCredentials: true,
+            }
+          )
+          .then(() => {
+            toast.success("Contest category list updated successfully");
+            queryClient.invalidateQueries(["contest", "contestCategories"]);
+          })
+          .catch(() => toast.error("An error has occured"));
+      }
+    } else {
+      await axios
+        .post(
+          `${import.meta.env.VITE_BACKEND}/api/v1/contests`,
+          getContestCreationMultipart(contestData, thumbnailFile),
+          {
+            withCredentials: true,
+          }
+        )
+        .then(() => toast.success("Contest created successfully"))
+        .catch(() => toast.error("Ann error has occured"));
+    }
   };
 
   function handleThumbnailFileAdd(e) {
@@ -187,7 +110,11 @@ export default function CreateContest({ contestDTO }) {
   }
 
   return (
-    <div className="w-3/5 mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+    <div
+      className={`${
+        initialContestInfo ? "w-full" : "w-3/5 my-5"
+      } mx-auto p-6 bg-white rounded-md shadow-md`}
+    >
       <h2 className="text-2xl font-semibold mb-4">
         {t("CreateContest.contestTitle")}
       </h2>
@@ -203,7 +130,6 @@ export default function CreateContest({ contestDTO }) {
             type="text"
             id="name"
             {...register("name", { required: "Required" })}
-            defaultValue={contestDTO && contestDTO.name}
             className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
           />
           {errors.name && (
@@ -234,7 +160,6 @@ export default function CreateContest({ contestDTO }) {
           <textarea
             id="description"
             {...register("description", { required: "Required" })}
-            defaultValue={contestDTO && contestDTO.description}
             className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
           />
           {errors.description && (

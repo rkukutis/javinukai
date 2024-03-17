@@ -11,23 +11,22 @@ import Button from "../Components/Button";
 import toast from "react-hot-toast";
 import sendParticipationRequest from "../services/participation-requests/sendParticipationRequest";
 import useUserStore from "../stores/userStore";
+import { ParticipationStatus } from "../Components/contest/ParticipationStatus";
+import Modal from "../Components/Modal";
+import CreateContest from "../Components/Contest-Components/CreateContest";
 
-function ParticipationStatus({ status }) {
-  const { t } = useTranslation();
-  const styles = {
-    PENDING: ["bg-yellow-500", t(`ParticipationStatus.PENDING`)],
-    ACCEPTED: ["bg-green-500", t(`ParticipationStatus.ACCEPTED`)],
-    DECLINED: ["bg-red-500", t(`ParticipationStatus.DECLINED`)],
-  };
-
+function EditContestSection({ contestInfo, categoriesInfo }) {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
-    <>
-      {status && (
-        <span className={`p-2 text-white rounded ${styles[status][0]}`}>
-          {styles[status][1]}
-        </span>
-      )}
-    </>
+    <div>
+      <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
+      <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
+        <CreateContest
+          initialContestInfo={contestInfo?.contest}
+          initialCategories={categoriesInfo}
+        />
+      </Modal>
+    </div>
   );
 }
 
@@ -56,11 +55,10 @@ function ContestDetailsPage() {
       toast.error(t("ContestDetailsPage.participationError"));
     },
   });
-  console.log(data);
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
-      <div className="w-full xl:w-3/4 pb-4 px-6 bg-white shadow-md">
+      <div className={`w-full xl:w-3/4 pb-4 px-6 bg-white shadow-md`}>
         <div className="flex flex-col space-y-4">
           <section className="relative">
             <img
@@ -103,6 +101,7 @@ function ContestDetailsPage() {
               </div>
             </div>
           </section>
+          <EditContestSection contestInfo={data} categoriesInfo={categories} />
           <section className="text text-slate-700 leading-loose text-lg">
             <h1 className="text-2xl text-teal-500 font-bold py-2">
               {t("ContestDetailsPage.description")}

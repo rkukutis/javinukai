@@ -4,30 +4,10 @@ import calendarIcon from "../../assets/icons/date_range_FILL0_wght400_GRAD0_opsz
 import formatTimestap from "../../utils/formatTimestap";
 import Button from "../Button";
 import { useTranslation } from "react-i18next";
-import ContestEdit from "../Contest-Components/ContestEdit";
 
 export default function ContestCard({ contestInfo }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
-
-  const handleEditCompetition = (contestId) => {
-    navigate(`/api/v1/contests/${contestId}`);
-  };
-
-  const handleSaveChanges = async (formData) => {
-    try {
-      await axios.patch(`/api/v1/contests/${contestId}`, formData);
-
-      console.log("Changes saved successfully!");
-    } catch (error) {
-      console.error("Error saving changes:", error);
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    handleSaveChanges(formData);
-  };
 
   return (
     <div className="bg-white rounded-md xl:grid xl:grid-cols-12">
@@ -58,7 +38,6 @@ export default function ContestCard({ contestInfo }) {
               {formatTimestap(contestInfo.endDate)}
             </p>
           </div>
-          {/* <ContestEdit contestId={contestInfo.id} onEdit={handleEditCompetition} /> */}
         </div>
       </div>
     </div>

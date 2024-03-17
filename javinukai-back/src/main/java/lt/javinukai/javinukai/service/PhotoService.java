@@ -210,6 +210,7 @@ public class PhotoService {
             byte[] imageBytes = processedImage.getResizedImage(ImageSize.SMALL);
             String fileName = contestId + ".jpg";
             Path storagePath = Path.of("src/main/resources/thumbnails", fileName);
+            Files.deleteIfExists(storagePath);
             Files.write(storagePath, imageBytes);
             return new URIBuilder()
                     .setScheme(scheme)
