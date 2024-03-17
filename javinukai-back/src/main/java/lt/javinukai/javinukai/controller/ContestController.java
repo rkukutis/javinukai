@@ -102,4 +102,11 @@ public class ContestController {
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PatchMapping(path = "/newstage")
+    public ResponseEntity<?> startNewStage (@RequestParam UUID contestId){
+        contestService.startNewCompetitionStage(contestId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -55,30 +55,34 @@ public class PhotoCollection {
             joinColumns = @JoinColumn(name = "collection_id"),
             inverseJoinColumns = @JoinColumn(name = "jury_id")
     )
-    private List<User> likes;
+    private List<User> juryLikes;
+
+    @Setter
+    @Column(name = "hidden_from_jury")
+    private boolean hidden;
 
     @Setter
     @Column(name = "likes_count")
     private int likesCount;
 
     public void addLike(User jury) {
-        if (likes == null) {
-            likes = new ArrayList<>();
+        if (juryLikes == null) {
+            juryLikes = new ArrayList<>();
         }
-        likes.add(jury);
+        juryLikes.add(jury);
     }
 
     public void removeLike(User jury) {
-        if (likes == null) {
+        if (juryLikes == null) {
             return;
         }
-        likes.remove(jury);
+        juryLikes.remove(jury);
     }
-    public void removeLikesFromCollection(){
-        if (likes == null) {
+    public void removeAllLikesFromCollection(){
+        if (juryLikes == null) {
             return;
         }
-        likes.clear();
+        juryLikes.clear();
     }
 
     private ZonedDateTime createdAt;

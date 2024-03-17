@@ -4,10 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
-import lt.javinukai.javinukai.entity.Category;
-import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.ParticipationRequest;
-import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.entity.*;
 import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
@@ -33,6 +30,7 @@ public class ContestService {
     private final ContestRepository contestRepository;
     private final ParticipationRequestRepository participationRequestRepository;
     private final CompetitionRecordRepository recordRepository;
+    private final RateService rateService;
 
 
     @Transactional
@@ -48,9 +46,9 @@ public class ContestService {
                             category.getDescription(),
                             category.getMaxTotalSubmissions());
 
-                if (categoryIn == null) {
-                    throw new EntityNotFoundException("category was not found with ID: " + category.getId());
-                }
+            if (categoryIn == null) {
+                throw new EntityNotFoundException("category was not found with ID: " + category.getId());
+            }
             categoryList.add(categoryIn);
         }
 
@@ -153,5 +151,20 @@ public class ContestService {
             throw new EntityNotFoundException("Contest was not found with ID: " + id);
         }
     }
+
+    public void startNewCompetitionStage(UUID contestId) {
+        List<PhotoCollection> collections = rateService.findAllCollectionsInContest(contestId);
+        collections
+                .forEach(c -> {
+                    if (c.getLikesCount() == 0) {
+                        c.setHidden(true);
+                    } else {
+                        c.removeAllLikesFromCollection();
+                        c.setLikesCount(0);
+                    }
+                });
+        rateService.updateCollections(collections);
+    }
+
 
 }

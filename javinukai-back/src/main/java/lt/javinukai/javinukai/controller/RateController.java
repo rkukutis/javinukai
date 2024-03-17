@@ -37,33 +37,36 @@ public class RateController {
 
     @GetMapping("/findcollections")
     public List<PhotoCollection> finddd(@RequestParam UUID collectionId) {
-        return rateService.findCollections(collectionId);
+        return rateService.findCollectionsLikedByJury(collectionId);
     }
-
-    @GetMapping("/findjurys")
-    public List<User> fi(@RequestParam UUID collectionId) {
-        return rateService.findJurys(collectionId);
-    }
+//
+//    @GetMapping("/findjurys")
+//    public List<User> fi(@RequestParam UUID collectionId) {
+//        return rateService.juryWhoLikesCollection(collectionId);
+//    }
 
     @GetMapping("/exists")
     public boolean isPairExists(@RequestParam UUID juryId,
                                 @RequestParam UUID collectionId) {
-        return rateService.pairExists(juryId, collectionId);
+        return rateService.checkIfCollectionLikedByJury(juryId, collectionId);
+    }
+//
+//    @DeleteMapping("/del")
+//    public ResponseEntity<?> deleteAllLikes (){
+//        rateService.deleteAllLikes();
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+//
+    @GetMapping("/getzero")
+    public List<PhotoCollection> findZero() {
+        return rateService.findCollectionsWithZeroLikes();
     }
 
-    @DeleteMapping("/del")
-    public ResponseEntity<?> deleteAllLikes (){
-        rateService.deleteAllLikes();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("/getzeroin")
+
+    public List<PhotoCollection> findZero(@RequestParam UUID contestId) {
+        return rateService.findCollectionsWithZeroLikesInContest(contestId);
     }
 
-    @GetMapping("/getall")
-    public List<User> findAll() {
-        return rateService.findAllWhoLiked();
-    }
 
-    @GetMapping("/likesCount")
-    public int countLikes(@RequestParam UUID collectionId){
-        return rateService.countLikes(collectionId);
-    }
 }
