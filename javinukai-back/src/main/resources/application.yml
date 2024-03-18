@@ -17,7 +17,7 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
-        generate_statistics: true
+        generate_statistics: false
         jdbc.batch_size: 20
         order_inserts: true
 logging:

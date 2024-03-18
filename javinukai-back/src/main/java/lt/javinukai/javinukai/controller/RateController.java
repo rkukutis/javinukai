@@ -35,9 +35,15 @@ public class RateController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/getbycontest")
+    public List<PhotoCollection> getby (@RequestParam UUID contestId){
+
+        return rateService.findAllCollectionsInContest(contestId);
+    }
+
     @GetMapping("/findcollections")
-    public List<PhotoCollection> finddd(@RequestParam UUID collectionId) {
-        return rateService.findCollectionsLikedByJury(collectionId);
+    public List<PhotoCollection> finddd(@RequestParam UUID juryId) {
+        return rateService.findCollectionsLikedByJury(juryId);
     }
 //
 //    @GetMapping("/findjurys")
@@ -45,28 +51,14 @@ public class RateController {
 //        return rateService.juryWhoLikesCollection(collectionId);
 //    }
 
-    @GetMapping("/exists")
-    public boolean isPairExists(@RequestParam UUID juryId,
-                                @RequestParam UUID collectionId) {
-        return rateService.checkIfCollectionLikedByJury(juryId, collectionId);
-    }
+
 //
 //    @DeleteMapping("/del")
 //    public ResponseEntity<?> deleteAllLikes (){
 //        rateService.deleteAllLikes();
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
-//
-    @GetMapping("/getzero")
-    public List<PhotoCollection> findZero() {
-        return rateService.findCollectionsWithZeroLikes();
-    }
 
-    @GetMapping("/getzeroin")
-
-    public List<PhotoCollection> findZero(@RequestParam UUID contestId) {
-        return rateService.findCollectionsWithZeroLikesInContest(contestId);
-    }
 
 
 }

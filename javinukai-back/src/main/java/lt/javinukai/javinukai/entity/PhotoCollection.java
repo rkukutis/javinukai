@@ -49,7 +49,6 @@ public class PhotoCollection {
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonIgnore
     @JoinTable(
             name = "likes",
             joinColumns = @JoinColumn(name = "collection_id"),

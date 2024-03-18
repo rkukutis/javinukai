@@ -39,23 +39,7 @@ public class RateService {
         }
     }
 
-    public void updateLikesCount(PhotoCollection collectionToUpdate) {
-        collectionToUpdate.setLikesCount(collectionToUpdate.getJuryLikes().size());
-        photoCollectionRepository.save(collectionToUpdate);
-    }
-    public void updateCollections(List<PhotoCollection> collectionsToUpdate){
-        photoCollectionRepository.saveAll(collectionsToUpdate);
-    }
-
-        public List<User> juryWhoLikesCollection(UUID collectionId) {
-        return photoCollectionRepository.findAllJuryByCollectionId(collectionId);
-    }
-
-    public List<PhotoCollection> findCollectionsLikedByJury(UUID juryId) {
-        return photoCollectionRepository.findLikedCollectionsByJuryId(juryId);
-    }
-
-    public boolean checkIfCollectionLikedByJury(UUID juryId, UUID collectionId) {
+    private boolean checkIfCollectionLikedByJury(UUID juryId, UUID collectionId) {
         PhotoCollection collection = photoCollectionRepository.findByUserIdAndPhotoCollectionId(juryId, collectionId);
         if (collection == null) {
             return false;
@@ -63,31 +47,21 @@ public class RateService {
         return true;
     }
 
-    public List<PhotoCollection> findAllLikedCollections() {
-        return photoCollectionRepository.findAllLikedCollections();
+    private void updateLikesCount(PhotoCollection collectionToUpdate) {
+        collectionToUpdate.setLikesCount(collectionToUpdate.getJuryLikes().size());
+        photoCollectionRepository.save(collectionToUpdate);
     }
 
-    public List<PhotoCollection> findCollectionsWithZeroLikes() {
-        return photoCollectionRepository.findCollectionsWithNoLikes();
-    }
-    public List<PhotoCollection> findCollectionsWithZeroLikesInContest(UUID contestId){
-        Contest c = contestRepository.getReferenceById(contestId);
-        return photoCollectionRepository.findCollectionsWithNoLikesInContest(c);
+    public void updateCollections(List<PhotoCollection> collectionsToUpdate){
+        photoCollectionRepository.saveAll(collectionsToUpdate);
     }
 
-    public List<PhotoCollection> findCollectionsWithLikesInContest(UUID contestId){
-        Contest c = contestRepository.getReferenceById(contestId);
-        return photoCollectionRepository.findCollectionsWithLikesInContest(c);
+    public List<PhotoCollection> findCollectionsLikedByJury(UUID juryId) {
+        return photoCollectionRepository.findLikedCollectionsByJuryId(juryId);
     }
+
     public List<PhotoCollection> findAllCollectionsInContest(UUID contestId){
         Contest c = contestRepository.getReferenceById(contestId);
         return photoCollectionRepository.findCollectionsInContest(c);
     }
-
-    public void deleteAllLikes(List<PhotoCollection> collections) {
-        collections.forEach(PhotoCollection::removeAllLikesFromCollection);
-        photoCollectionRepository.saveAll(collections);
-    }
-
-
 }
