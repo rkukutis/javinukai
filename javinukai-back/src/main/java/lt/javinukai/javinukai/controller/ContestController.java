@@ -103,8 +103,8 @@ public class ContestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
-    @PatchMapping(path = "/contests/{id}/reset")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
+    @PatchMapping(path = "/contests/{contestId}/reset")
     public ResponseEntity<?> startNewStage (@PathVariable UUID contestId){
         contestService.startNewCompetitionStage(contestId);
         return new ResponseEntity<>(HttpStatus.OK);
