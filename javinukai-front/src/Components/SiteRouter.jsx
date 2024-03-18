@@ -23,72 +23,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 function SiteRouter({ user }) {
   const userRole = user?.role;
 
-  // const getRoute = (currentRole, path) => {
-  //   if (currentRole === undefined) {
-  //     return "/login";
-  //   }
-
-  //   if (
-  //     (path === "/personal-info") &
-  //     (currentRole === "ADMIN" ||
-  //       currentRole === "MODERATOR" ||
-  //       currentRole === "USER")
-  //   ) {
-  //     return path;
-  //   }
-
-  //   if (
-  //     (path === "category/:categoryId/upload") &
-  //     (currentRole === "ADMIN" ||
-  //       currentRole === "MODERATOR" ||
-  //       currentRole === "USER")
-  //   ) {
-  //     return path;
-  //   }
-
-  //   if (
-  //     (path === "category/:categoryId/my-entries") &
-  //     (currentRole === "ADMIN" ||
-  //       currentRole === "MODERATOR" ||
-  //       currentRole === "USER")
-  //   ) {
-  //     return path;
-  //   }
-
-  //   if ((path === "/create-user") & (currentRole === "ADMIN")) {
-  //     return path;
-  //   }
-  //   if ((path === "/requests") & (currentRole === "ADMIN")) {
-  //     return path;
-  //   }
-  //   if ((path === "/manage-users") & (currentRole === "ADMIN")) {
-  //     return path;
-  //   }
-  //   if ((path === "/manage-users/:userId") & (currentRole === "ADMIN")) {
-  //     return path;
-  //   }
-  //   if ((path === "/contest-page") & (currentRole === "ADMIN")) {
-  //     return path;
-  //   }
-  //   if ((path === "/category-page") & (currentRole === "ADMIN")) {
-  //     return path;
-  //   }
-  //   if ((path === "/preview-page") & (currentRole === "ADMIN")) {
-  //     return path;
-  //   }
-  //   if (
-  //     (path === "/contest/:contestId/category/:categoryId/contestant-entries") &
-  //     (currentRole === "JURY")
-  //   ) {
-  //     return path;
-  //   }
-  // };
-
   const getRoute = (currentRole, roles, path) => {
-    // if (currentRole === undefined) {
-    //   return "/login";
-    // }
-
     if (roles.includes(currentRole)) {
       return path;
     }
@@ -99,30 +34,61 @@ function SiteRouter({ user }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Navigate to="/contests" />} />
-            <Route path="/contests" element={<ContestsPage />} />
+            <Route
+              index
+              element={
+                <Navigate
+                  to={getRoute(
+                    userRole,
+                    ["ADMIN", "MODERATOR", "JURY", "USER", undefined],
+                    "/contests"
+                  )}
+                />
+              }
+            />
+
+            <Route path="/forgot-password" element={<ForgotPassPage />} />
+            <Route path="/reset-password" element={<ResetPassPage />} />
+            <Route path="/confirm-email" element={<ConfirmEmailPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+
+            <Route
+              path={getRoute(
+                userRole,
+                ["ADMIN", "MODERATOR", "JURY", "USER", undefined],
+                "/contests"
+              )}
+              element={<ContestsPage />}
+            />
+
             <Route path="/contest/:contestId" element={<ContestDetailsPage />}>
               <Route
+                path={getRoute(
+                  userRole,
+                  ["ADMIN", "MODERATOR", "JURY", "USER"],
+                  "category/:categoryId/upload"
+                )}
+                element={<ImageUpload />}
+              />
+              <Route
+                path={getRoute(
+                  userRole,
+                  ["ADMIN", "MODERATOR", "JURY", "USER"],
+                  "category/:categoryId/my-entries"
+                )}
+                element={<UserSubmissionView />}
+              />
+              {/* <Route
                 path="category/:categoryId/upload"
                 element={<ImageUpload />}
               />
               <Route
                 path="category/:categoryId/my-entries"
                 element={<UserSubmissionView />}
-              />
+              /> */}
             </Route>
 
-            {/* <Route
-              path="/contest/:contestId/category/:categoryId/contestant-entries"
-              element={<JurySubmissionView />}
-            /> */}
-            {/* <Route
-              path={getRoute(
-                userRole,
-                "/contest/:contestId/category/:categoryId/contestant-entries"
-              )}
-              element={<JurySubmissionView />}
-            /> */}
             <Route
               path={getRoute(
                 userRole,
@@ -132,37 +98,11 @@ function SiteRouter({ user }) {
               element={<JurySubmissionView />}
             />
 
-            <Route path="/login" element={<LoginPage />} />
-            {/* <Route
-              path={getRoute(
-                userRole,
-                ["JURY", "MODERATOR", "JURY", "USER"],
-                "/login"
-              )}
-              element={<LoginPage />}
-            /> */}
-
-            <Route path="/register" element={<RegisterPage />} />
-
-            {/* <Route path="/create-user" element={<CreateUserPage />} /> */}
-            {/* <Route
-              path={getRoute(userRole, "/create-use")}
-              element={<CreateUserPage />}
-            /> */}
             <Route
               path={getRoute(userRole, ["ADMIN"], "/create-user")}
               element={<CreateUserPage />}
             />
 
-            <Route path="/forgot-password" element={<ForgotPassPage />} />
-            <Route path="/reset-password" element={<ResetPassPage />} />
-            <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-
-            {/* <Route path="/personal-info" element={<PersonalInformation />} /> */}
-            {/* <Route
-              path={getRoute(userRole, "/personal-info")}
-              element={<PersonalInformation />}
-            /> */}
             <Route
               path={getRoute(
                 userRole,
@@ -172,60 +112,31 @@ function SiteRouter({ user }) {
               element={<PersonalInformation />}
             />
 
-            {/* <Route path="/manage-users" element={<UserManagementPage />} />
-            <Route path="/manage-users/:userId" element={<UserDetailsPage />} /> */}
             <Route
-              path={getRoute(userRole, "/manage-users")}
-              element={<UserManagementPage />}
-            />
-            {/* <Route
               path={getRoute(userRole, ["ADMIN"], "/manage-users")}
               element={<UserManagementPage />}
-            /> */}
-            {/* <Route
-              path={getRoute(userRole, "/manage-users/:userId")}
-              element={<UserDetailsPage />}
-            /> */}
+            />
+
             <Route
               path={getRoute(userRole, ["ADMIN"], "/manage-users/:userId")}
               element={<UserDetailsPage />}
             />
 
-            {/* <Route path="/contest-page" element={<ContestPage />} />
-            <Route path="/category-page" element={<CategoryPage />} />
-            <Route path="Preview-page" element={<PreviewPage />} /> */}
-            {/* <Route
-              path={getRoute(userRole, "/contest-page")}
-              element={<ContestPage />}
-            /> */}
             <Route
               path={getRoute(userRole, ["ADMIN"], "/contest-page")}
               element={<ContestPage />}
             />
-            {/* <Route
-              path={getRoute(userRole, "/category-page")}
-              element={<CategoryPage />}
-            /> */}
             <Route
               path={getRoute(userRole, ["ADMIN"], "/category-page")}
               element={<CategoryPage />}
             />
-            {/* <Route
-              path={getRoute(userRole, "/preview-page")}
-              element={<PreviewPage />}
-            /> */}
             <Route
               path={getRoute(userRole, ["ADMIN", "MODERATOR"], "/preview-page")}
               element={<PreviewPage />}
             />
 
-            {/* <Route path="/requests" element={<ParticipationRequests />} /> */}
-            {/* <Route
-              path={getRoute(userRole, "/requests")}
-              element={<ParticipationRequests />}
-            /> */}
             <Route
-              path={getRoute(userRole, ["ADMIN"], "/requests")}
+              path={getRoute(userRole, ["ADMIN", "MODERATOR"], "/requests")}
               element={<ParticipationRequests />}
             />
 
