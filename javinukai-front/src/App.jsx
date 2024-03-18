@@ -22,6 +22,8 @@ import PersonalInformation from "./Components/user-management/PersonalInformatio
 import CreateUserPage from "./pages/CreateUserPage";
 import ParticipationRequests from "./Components/participation-request-components/ParticipationRequests";
 import NotFoundPage from "./pages/NotFoundPage";
+import useUserStore from "./stores/userStore";
+import SiteRouter from "./Components/SiteRouter";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +34,7 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  const user = useUserStore((state) => state.user);
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -48,9 +51,10 @@ export default function App() {
               padding: "16px 24px",
             },
           }}
-          ord
         />
-        <BrowserRouter>
+
+        <SiteRouter user={user} />
+        {/* <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Navigate to="/contests" />} />
@@ -87,15 +91,17 @@ export default function App() {
               <Route path="/contest-page" element={<ContestPage />} />
               <Route path="/category-page" element={<CategoryPage />} />
               <Route path="Preview-page" element={<PreviewPage />} />
-              
+
               <Route path="/requests" element={<ParticipationRequests />} />
-              <Route path="/*" element={<NotFoundPage />} />
+              <Route
+                path={getRoute(userRole, "ADMIN", "/*")}
+                element={<NotFoundPage />}
+              />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </BrowserRouter> */}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );
 }
-``
