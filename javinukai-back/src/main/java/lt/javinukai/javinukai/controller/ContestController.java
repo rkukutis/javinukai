@@ -102,4 +102,12 @@ public class ContestController {
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
+    @PatchMapping(path = "/contests/{id}/reset")
+    public ResponseEntity<?> startNewStage (@PathVariable UUID contestId){
+        contestService.startNewCompetitionStage(contestId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
