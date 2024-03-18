@@ -40,7 +40,7 @@ public class ContestController {
         this.contestService = contestService;
     }
 
-    @PostMapping(path = "/contests", headers = "content-type=multipart/form-data", consumes = "multipart/form-data")
+    @PostMapping(path = "/contests")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Contest> createContest(@RequestParam("data") @NotBlank String dataJSON,
                                                  @RequestParam(name = "thumbnail", required = false) MultipartFile file)
@@ -97,21 +97,7 @@ public class ContestController {
         return new ResponseEntity<>(contestWrapper, HttpStatus.OK);
     }
 
-    /*
-    @PostMapping(path = "/contests", headers = "content-type=multipart/form-data", consumes = "multipart/form-data")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Contest> createContest(@RequestParam("data") @NotBlank String dataJSON,
-                                                 @RequestParam(name = "thumbnail", required = false) MultipartFile file)
-            throws JsonProcessingException
-    {
-        ContestDTO contestDTO = new ObjectMapper().findAndRegisterModules().readValue(dataJSON, ContestDTO.class);
-        final Contest createdContest = contestService.createContest(contestDTO, file);
-        log.info("Request for contest creation completed, given ID: {}", createdContest.getId());
-        return new ResponseEntity<>(createdContest, HttpStatus.CREATED);
-    }
-     */
-
-    @PutMapping(path = "/contests/{id}", headers = "content-type=multipart/form-data", consumes = "multipart/form-data")
+    @PutMapping(path = "/contests/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Contest> updateContest(@PathVariable @NotNull UUID id,
                                                  @RequestParam("data") @NotBlank String dataJSON,
@@ -139,6 +125,13 @@ public class ContestController {
         log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
+    @PatchMapping(path = "/contests/{id}/reset")
+    public ResponseEntity<?> startNewStage (@PathVariable UUID contestId){
+        contestService.startNewCompetitionStage(contestId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

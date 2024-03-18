@@ -9,7 +9,7 @@ export default function ContestEntryJury({ entry, index, categoryType }) {
   const [fullScreenPhoto, setFullScreenPhoto] = useState(null);
   const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(false);
-
+console.log("componentas", entry)
   return (
     <div
       className={`py-2 px-6 rounded-md bg-white shadow hover:cursor-pointer border-2 border-white hover:border-teal-500 ${
@@ -40,7 +40,7 @@ export default function ContestEntryJury({ entry, index, categoryType }) {
           <div className="flex flex-col xl:grid xl:grid-cols-3 w-full gap-6 my-4">
             {entry.images.map((image) => (
               <Photo
-                key={image.id}
+                key={image.id}                
                 photo={image}
                 onClick={() => setFullScreenPhoto(image.id)}
               />
