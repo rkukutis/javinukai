@@ -85,14 +85,12 @@ function SiteRouter({ user }) {
   // };
 
   const getRoute = (currentRole, roles, path) => {
-    if (!currentRole) {
-      return "/login";
-    }
+    // if (currentRole === undefined) {
+    //   return "/login";
+    // }
 
-    for (const role of roles) {
-      if (currentRole === role) {
-        return path;
-      }
+    if (roles.includes(currentRole)) {
+      return path;
     }
   };
 
@@ -135,6 +133,15 @@ function SiteRouter({ user }) {
             />
 
             <Route path="/login" element={<LoginPage />} />
+            {/* <Route
+              path={getRoute(
+                userRole,
+                ["JURY", "MODERATOR", "JURY", "USER"],
+                "/login"
+              )}
+              element={<LoginPage />}
+            /> */}
+
             <Route path="/register" element={<RegisterPage />} />
 
             {/* <Route path="/create-user" element={<CreateUserPage />} /> */}
