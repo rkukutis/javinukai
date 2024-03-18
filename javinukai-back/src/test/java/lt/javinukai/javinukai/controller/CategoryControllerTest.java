@@ -53,14 +53,14 @@ class CategoryControllerTest {
                 .id(UUID.randomUUID())
                 .name("test category name")
                 .description("testCategory description")
-                .totalSubmissions(66)
+                .maxTotalSubmissions(66)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
         category = Category.builder()
                 .id(categoryDTO.getId())
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
-                .maxSubmissions(categoryDTO.getTotalSubmissions())
+                .maxTotalSubmissions(categoryDTO.getMaxTotalSubmissions())
                 .type(categoryDTO.getType())
                 .build();
     }
