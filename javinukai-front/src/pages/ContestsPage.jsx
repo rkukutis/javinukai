@@ -38,7 +38,7 @@ function ContestsPage() {
   });
 
   return (
-    <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
+    <>
       {isFetching ? (
         <SpinnerPage />
       ) : (
@@ -78,7 +78,7 @@ function ContestsPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

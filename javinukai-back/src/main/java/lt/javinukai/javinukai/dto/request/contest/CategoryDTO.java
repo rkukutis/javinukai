@@ -33,7 +33,11 @@ public class CategoryDTO {
 
     @Min(value = 1, message = "AT_LEAST_ONE")
     @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
-    private long totalSubmissions;
+    private long maxTotalSubmissions;
+
+    @Min(value = 1, message = "AT_LEAST_ONE")
+    @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
+    private long maxUserSubmissions;
 
     @NotNull
     private PhotoSubmissionType type;

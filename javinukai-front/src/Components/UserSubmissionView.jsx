@@ -6,10 +6,10 @@ import { useState } from "react";
 import ImageUpload from "./ImageUpload";
 import { useTranslation } from "react-i18next";
 
-function UserSubmissionView({ contest, category }) {
+function UserSubmissionView({ contest, category, contestLimitReached }) {
   const [entryFormOpen, setEntryFormOpen] = useState(false);
   const { t } = useTranslation();
-  const { data: userRecord, isFetching } = useQuery({
+  const { data: userRecord } = useQuery({
     queryKey: ["contestRecord", contest.id, category.id],
     queryFn: () => getCompetitionRecord(contest.id, category.id),
   });
@@ -36,18 +36,19 @@ function UserSubmissionView({ contest, category }) {
                 index={i}
               />
             ))}
-            {userRecord?.entries.length < userRecord?.maxPhotos && (
-              <Button
-                extraStyle={`${
-                  entryFormOpen ? "bg-red-500 hover:bg-red-400" : ""
-                }`}
-                onClick={handleAddEntryClick}
-              >
-                {entryFormOpen
-                  ? t("UserSubmissionView.cancel")
-                  : t("UserSubmissionView.addNewEntry")}
-              </Button>
-            )}
+            {userRecord?.entries.length < userRecord?.maxPhotos &&
+              !contestLimitReached && (
+                <Button
+                  extraStyle={`${
+                    entryFormOpen ? "bg-red-500 hover:bg-red-400" : ""
+                  }`}
+                  onClick={handleAddEntryClick}
+                >
+                  {entryFormOpen
+                    ? t("UserSubmissionView.cancel")
+                    : t("UserSubmissionView.addNewEntry")}
+                </Button>
+              )}
             {entryFormOpen && (
               <ImageUpload
                 setEntryFormOpen={setEntryFormOpen}

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 
 function ForgotPassPage() {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -22,20 +23,21 @@ function ForgotPassPage() {
 
   function onSubmit(formData) {
     mutate(formData);
+    reset();
   }
 
   const { t } = useTranslation();
   return (
     <div className="w-full min-h-[82vh] flex flex-col justify-center items-center">
-      <div className="mx-2 px-2 py-4 border-2 rounded-sm border-slate-100 bg-slate-50 lg:w-1/3">
+      <div className="mx-2 px-6 py-10 rounded bg-white lg:w-1/3 shadow">
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text text-lg font-semibold">
             {t("ForgotPassPage.title")}
           </h2>
           <p>{t("ForgotPassPage.description")}</p>
-          <section className="flex flex-col space-y-2 mt-3">
+          <section className="flex flex-col space-y-4 mt-3">
             <input
-              className="px-2 py-1 rounded-sm"
+              className="px-2 py-1 rounded border-2 border-slate-100"
               id="recovery-email"
               placeholder={t("ForgotPassPage.emailPlaceholder")}
               {...register("email", {

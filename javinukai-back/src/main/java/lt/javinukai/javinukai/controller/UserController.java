@@ -66,7 +66,7 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<User> updateUserRole(@PathVariable UUID userId, @RequestBody User newUser) {
+    public ResponseEntity<User> updateUserPermissions(@PathVariable UUID userId, @RequestBody User newUser) {
         return ResponseEntity.ok().body(userService.updateUserForAdmin(userId, newUser));
     }
 

@@ -46,7 +46,7 @@ public class UserService {
     public User updateUser(User updatedUser, UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
-        log.debug("{}: Updating user {}", this.getClass().getName(), user.getId());
+        log.info("{}: Updating user {}", this.getClass().getName(), user.getId());
         user.setName(updatedUser.getName());
         user.setSurname(updatedUser.getSurname());
         user.setEmail(updatedUser.getEmail());
@@ -70,6 +70,15 @@ public class UserService {
             user.setIsNonLocked(updateUser.getIsNonLocked());
             log.info("Updating user {} isNonLocked state from {} to {}",
                     user.getId(), previousIsNonLocked, updateUser.getIsNonLocked());
+        } else if (!user.getMaxTotal().equals(updateUser.getMaxTotal()) ||
+                !user.getMaxSinglePhotos().equals(updateUser.getMaxSinglePhotos()) ||
+                !user.getMaxCollections().equals(updateUser.getMaxCollections())
+        ) {
+            user.setMaxTotal(updateUser.getMaxTotal());
+            user.setMaxSinglePhotos(updateUser.getMaxSinglePhotos());
+            user.setMaxCollections(updateUser.getMaxCollections());
+            user.setCustomLimits(true);
+            log.info("Updating user {} photo upload limits", user.getId());
         }
         return userRepository.save(user);
     }

@@ -11,6 +11,7 @@ export function CategoryItem({
   contestInfo,
   expandedCategory,
   onSetExpandedCategory,
+  contestLimitReached,
   canParticipate,
 }) {
   const { t } = useTranslation();
@@ -60,7 +61,11 @@ export function CategoryItem({
             </div>
           )}
           {user && canParticipate && (
-            <UserSubmissionView contest={contestInfo} category={categoryInfo} />
+            <UserSubmissionView
+              contest={contestInfo}
+              category={categoryInfo}
+              contestLimitReached={contestLimitReached}
+            />
           )}
         </div>
       )}

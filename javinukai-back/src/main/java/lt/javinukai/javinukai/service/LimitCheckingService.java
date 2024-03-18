@@ -19,10 +19,16 @@ public class LimitCheckingService {
         List<CompetitionRecord> allRecords = recordRepository.findByContestIdAndUserId(
                 competitionRecord.getContest().getId(), competitionRecord.getUser().getId()
         );
+
         long allEntriesNumber = allRecords.stream()
                 .map(r -> Long.valueOf(r.getEntries().size()))
                 .reduce(Long::sum).orElse(0L);
-        return (competitionRecord.getUser().getMaxTotal() - allEntriesNumber) > 0 ;
+
+        if (competitionRecord.getUser().isCustomLimits()) {
+            return (competitionRecord.getUser().getMaxTotal() - allEntriesNumber) > 0;
+        } else {
+            return (competitionRecord.getContest().getMaxUserSubmissions() - allEntriesNumber) > 0;
+        }
     }
 
     public boolean checkUserCategoryLimit(CompetitionRecord competitionRecord) {
@@ -36,7 +42,7 @@ public class LimitCheckingService {
         long totalEntryNumber = totalRecords.stream()
                 .map(r -> r.getEntries().size())
                 .reduce(Integer::sum).orElse(0);
-        return totalEntryNumber + 1 <= record.getContest().getMaxSubmissions();
+        return totalEntryNumber + 1 <= record.getContest().getMaxTotalSubmissions();
     }
 
     // the same for the category limit
@@ -49,6 +55,6 @@ public class LimitCheckingService {
         long totalEntryNumber = totalRecords.stream()
                 .map(r -> r.getEntries().size())
                 .reduce(Integer::sum).orElse(0);
-        return totalEntryNumber + 1 <= category.getMaxSubmissions();
+        return totalEntryNumber + 1 <= category.getMaxTotalSubmissions();
     }
 }

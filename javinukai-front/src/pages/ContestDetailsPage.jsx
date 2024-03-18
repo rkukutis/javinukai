@@ -88,9 +88,16 @@ function ContestDetailsPage() {
                 <div>
                   <ParticipationStatus status={data?.status} />
                 </div>
+                {data?.status == "ACCEPTED" && (
+                  <h1 className="text-xl text-white">
+                    {t("ContestDetailsPage.userEntries")}: {data?.userEntries} /{" "}
+                    {data?.maxUserEntries}
+                  </h1>
+                )}
+
                 <h2 className="text-white text-xl">
                   {t("ContestDetailsPage.entries")}: {data?.totalEntries} /{" "}
-                  {data?.contest.maxSubmissions}
+                  {data?.contest.maxTotalSubmissions}
                 </h2>
               </div>
             </div>
@@ -109,6 +116,10 @@ function ContestDetailsPage() {
               {categories?.map((category) => (
                 <CategoryItem
                   canParticipate={data?.status == "ACCEPTED"}
+                  contestLimitReached={
+                    data?.maxUserEntries == data?.userEntries ||
+                    data?.contest.maxTotalSubmissions == data?.totalEntries
+                  }
                   key={category.id}
                   categoryInfo={category}
                   contestInfo={data?.contest}
