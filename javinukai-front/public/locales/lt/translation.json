@@ -355,8 +355,8 @@
   },
 
   "CreateContest": {
-    "contestTitle": "Sukurti konkursa",
-    "contestName": "Pavidinmas",
+    "contestTitle": "Sukurti konkursą",
+    "contestName": "Pavadinimas",
     "description": "Aprašymas",
     "startDate": "Pradžios Data",
     "endDate": "Pabaigos Data",
@@ -365,16 +365,16 @@
     "close": "Uždaryti",
     "categoryDescription": "aprašymas",
     "editCategory": "Redaguoti",
-    "deleteCategory": "ištrinti kategorija",
-    "removeCategory": "pašalinti kategorija",
-    "addCategory": "prideti",
+    "deleteCategory": "ištrinti kategoriją",
+    "removeCategory": "pašalinti kategoriją",
+    "addCategory": "pridėti",
     "contestCreated": "konkursas sukurtas!",
-    "createContestButton": "sukurti konkursa",
-    "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategorija?",
+    "createContestButton": "sukurti konkursą",
+    "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategoriją?",
     "categoryDeleteYes": "taip",
     "categoryDeleteNo": "ne",
-    "searchCategories": "ieškoti kategoriju",
-    "searchPlaceholder": "ieškoti kategoriju pagal pavadinima"
+    "searchCategories": "ieškoti kategorijų",
+    "searchPlaceholder": "ieškoti kategorijų pagal pavadinimą"
   },
 
   "CreateCategory": {
@@ -394,7 +394,8 @@
     "isFreelanceTrue": "Taip",
     "isFreelanceFalse": "Ne",
     "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
-    "changeError": "Keičiant asmeninę informaciją įvyko klaida"
+    "changeError": "Keičiant asmeninę informaciją įvyko klaida",
+    "emailLogoutMessage": "Pakeitus el. paštą, reikės prisijungti su nauju el. paštu."
   },
 
   "ParticipationRequest": {

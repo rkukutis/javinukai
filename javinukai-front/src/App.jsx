@@ -15,12 +15,13 @@ import ContestsPage from "./pages/ContestsPage";
 import ContestDetailsPage from "./pages/ContestDetailsPage";
 import UserSubmissionView from "./Components/UserSubmissionView";
 import JurySubmissionView from "./Components/JurySubmissionView";
-import ContestPage from "./pages/ContestPage";
-import CategoryPage from "./pages/CategoryPage";
 import PersonalInformation from "./Components/user-management/PersonalInformation";
 import CreateUserPage from "./pages/CreateUserPage";
 import ParticipationRequests from "./Components/participation-request-components/ParticipationRequests";
 import NotFoundPage from "./pages/NotFoundPage";
+import CreateContest from "./Components/Contest-Components/CreateContest";
+import CreateContestPage from "./pages/CreateContestPage";
+import LandingPage from "./pages/LandingPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,7 +55,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/contests" />} />
+              <Route index element={<LandingPage />} />
               <Route path="/contests" element={<ContestsPage />} />
               <Route
                 path="/contest/:contestId"
@@ -85,8 +86,8 @@ export default function App() {
                 path="/manage-users/:userId"
                 element={<UserDetailsPage />}
               />
-              <Route path="/contest-page" element={<ContestPage />} />
-              <Route path="/category-page" element={<CategoryPage />} />
+              <Route path="/contest-page" element={<CreateContest />} />
+              <Route path="/contests/new" element={<CreateContestPage />} />
               <Route path="/requests" element={<ParticipationRequests />} />
               <Route path="/*" element={<NotFoundPage />} />
             </Route>

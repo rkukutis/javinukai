@@ -89,8 +89,7 @@ class ContestServiceTest {
 
         verify(contestRepository, times(1)).findById(eq(id));
     }
-
-    /*
+/*
     @Test
     void updateCategoriesOfContestReturnsContest() {
 
@@ -99,6 +98,7 @@ class ContestServiceTest {
                 "test category name",
                 "testCategory description",
                 66,
+                30,
                 null, null, null, null, null, PhotoSubmissionType.SINGLE);
         List<Category> categories = new ArrayList<>();
         categories.add(category);
@@ -112,7 +112,7 @@ class ContestServiceTest {
                 null,
                 null,
                 null,
-                666, null, null, null, null);
+                666, 50, null, null, null, null);
 
         when(contestRepository.findById(contestID)).thenReturn(Optional.ofNullable(initialContest));
         when(contestRepository.save(any(Contest.class))).thenReturn(initialContest);
@@ -122,7 +122,6 @@ class ContestServiceTest {
         Assertions.assertThat(updatedContest).isNotNull();
         Assertions.assertThat(updatedContest.getId()).isNotNull();
     }
-
 */
     @Test
     void deleteContestSuccess() {

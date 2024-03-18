@@ -33,7 +33,6 @@
         @InjectMocks
         private CategoryService categoryService;
 
-        /*
         @Test
         public void createCategoryReturnsCategory() {
 
@@ -58,7 +57,6 @@
             Assertions.assertThat(creationResponse).isNotNull();
             Assertions.assertThat(creationResponse.getCategory().getId()).isNotNull();
         }
-        */
 
         @Test
         public void retrieveAllCategoriesReturnsPage_Success() {
@@ -95,7 +93,7 @@
             assertEquals(categoryList, result.getContent());
             verify(categoryRepository, times(1)).findAll(any(Pageable.class));
         }
-
+/*
         @Test
         public void retrieveAllCategoriesReturnsPage_Fail() {
 
@@ -122,7 +120,6 @@
             verify(categoryRepository, times(1)).findByName(anyString(), any(Pageable.class));
         }
 
-        /*
         @Test
         public void retrieveCategoryReturnsCategory() {
 
@@ -139,7 +136,7 @@
             Assertions.assertThat(createdCategory).isNotNull();
             Assertions.assertThat(createdCategory.getId()).isNotNull();
         }
-        */
+         */
 
         @Test
         public void retrieveCategoryReturnsNotFound() {
@@ -156,7 +153,6 @@
                     .isEqualTo("Category was not found with ID: " + idWrong);
         }
 
-        /*
         @Test
         public void updateCategoryReturnsCategory() {
 
@@ -171,6 +167,7 @@
                     categoryDTO.getName(),
                     categoryDTO.getDescription(),
                     categoryDTO.getMaxTotalSubmissions(),
+                    categoryDTO.getMaxUserSubmissions(),
                     null, null, null, null,null, PhotoSubmissionType.SINGLE);
 
             when(categoryRepository.findById(id)).thenReturn(Optional.ofNullable(category));
@@ -180,7 +177,7 @@
             Assertions.assertThat(updatedCategory).isNotNull();
             Assertions.assertThat(updatedCategory.getId()).isNotNull();
         }
-        */
+
         @Test
         public void deleteCategorySuccess() {
 

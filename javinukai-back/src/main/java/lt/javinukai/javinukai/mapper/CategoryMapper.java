@@ -17,4 +17,16 @@ public class CategoryMapper {
                 .type(categoryDTO.getType())
                 .build();
     }
+
+    public static CategoryDTO categoryToCategoryDTO(Category category) {
+        return CategoryDTO.builder()
+                .id(category.getId())
+                .maxUserSubmissions(category.getMaxUserSubmissions())
+                .maxTotalSubmissions(category.getMaxTotalSubmissions())
+                .name(category.getName())
+                .description(category.getDescription())
+                .type(category.getType())
+                .uploadedPhotos(category.getUploadedPhotos())
+                .build();
+    }
 }

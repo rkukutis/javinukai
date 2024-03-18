@@ -23,4 +23,5 @@ public interface CompetitionRecordRepository extends JpaRepository<CompetitionRe
     List<CompetitionRecord> findByContestIdAndUserId(UUID contestId, UUID userId);
     List<CompetitionRecord> findByContestId(UUID id);
     List<CompetitionRecord> findByContestIdAndCategoryId(UUID id, UUID id1);
+    void deleteByCategoryIdAndContestId(UUID id, UUID contestId);
 }
