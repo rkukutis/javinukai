@@ -23,12 +23,12 @@ const ParticipationRequest = ({ request, onButtonClick }) => {
       <Link
         className="flex py-4 shadow bg-white xl:px-3 border-white border-4 transition ease-in-out hover:border-teal-400 hover:border-4 hover:cursor-pointer my-2 rounded-md"
       >
-        <div className="xl:grid xl:grid-cols-10  xl:px-0 w-full flex justify-between">
-  <p className="hidden xl:block text">{participantName}</p>{" "}
-  <p className="hidden xl:block text">{participantSurname}</p>
-  <p className="text col-span-3">{participantEmail}</p>
-  <p className="hidden xl:block text">{participantBirthYear}</p>
-  <p className="text col-span-2">{contestName}</p>
+        <div className="xl:grid xl:grid-cols-11 xl:px-0 w-full">
+  <p>{participantName}</p>{" "}
+  <p>{participantSurname}</p>
+  <p className="hidden xl:block px-6">{participantBirthYear}</p>
+  <p className="text col-span-3 hidden xl:block">{participantEmail}</p>
+  <p className="text col-span-3">{contestName}</p>
   <p className="text-center">
     <button
     type="button"
@@ -41,7 +41,7 @@ const ParticipationRequest = ({ request, onButtonClick }) => {
       requestStatus === "ACCEPTED"
         ? "bg-green-500 cursor-not-allowed"
         : "bg-gray-300 hover:bg-green-300"
-    } text-white py-2 px-3 rounded-md text-center transition ease-in-out`}
+    } text-white w-1/4 xl:w-20 xl:h-8 py-1 rounded-md transition ease-in-out`}
   >
     {t("ParticipationRequest.fieldAccept")}
   </button>
@@ -67,7 +67,7 @@ const ParticipationRequest = ({ request, onButtonClick }) => {
               ? "bg-gray-300 cursor-not-allowed"
               : "bg-red-500 cursor-not-allowed"
           }`
-    } text-white py-2 px-3 rounded-md text-center transition ease-in-out`}
+    } text-white w-1/4 xl:w-20 xl:h-8 py-1 rounded-md transition ease-in-out`}
   >
     {t("ParticipationRequest.fieldDecline")}
   </button>

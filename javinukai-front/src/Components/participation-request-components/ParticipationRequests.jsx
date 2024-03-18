@@ -109,14 +109,14 @@ const ParticipationRequests = () => {
           lastPage={lastPage}
         />
 
-<div className="hidden xl:grid xl:grid-cols-10 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
-          <p className="text">{t("ParticipationRequest.fieldName")}</p>
-          <p className="text">{t("ParticipationRequest.fieldSurname")}</p>
-          <p className="text col-span-3">{t("ParticipationRequest.fieldEmail")}</p>
-          <p className="text">{t("ParticipationRequest.fieldBirthYear")}</p>
-          <p className="text col-span-2">{t("ParticipationRequest.fieldContestName")}</p>
-          <p className="text-center ">{t("ParticipationRequest.fieldAccept")}</p>
-          <p className="text-center ">{t("ParticipationRequest.fieldDecline")}</p>
+<div className="hidden xl:grid xl:grid-cols-11 px-3 py-5 font-bold text-lg text-slate-700 bg-white mt-2 rounded-md shadow">
+          <p>{t("ParticipationRequest.fieldName")}</p>
+          <p>{t("ParticipationRequest.fieldSurname")}</p>
+          <p>{t("ParticipationRequest.fieldBirthYear")}</p>
+          <p className="col-span-3">{t("ParticipationRequest.fieldEmail")}</p>
+          <p className="col-span-3">{t("ParticipationRequest.fieldContestName")}</p>
+          <p className="text-center">{t("ParticipationRequest.fieldAccept")}</p>
+          <p className="text-center">{t("ParticipationRequest.fieldDecline")}</p>
         </div>
         {requestsArray.map((request) => {
           return (
