@@ -96,6 +96,7 @@ function SiteRouter({ user }) {
               path={getRoute(userRole, ["ADMIN"], "/manage-users/:userId")}
               element={<UserDetailsPage />}
             />
+
             <Route
               path={getRoute(userRole, ["ADMIN"], "/create-user")}
               element={<CreateUserPage />}
