@@ -1,7 +1,8 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import ContestsPage from "../pages/ContestsPage";
 import ContestDetailsPage from "../pages/ContestDetailsPage";
+import CreateContestPage from "../pages/CreateContestPage";
 import ImageUpload from "./ImageUpload";
 import UserSubmissionView from "./UserSubmissionView";
 import JurySubmissionView from "./JurySubmissionView";
@@ -14,10 +15,10 @@ import ConfirmEmailPage from "../pages/ConfirmEmailPage";
 import PersonalInformation from "./user-management/PersonalInformation";
 import UserManagementPage from "../pages/UserManagementPage";
 import UserDetailsPage from "../pages/UserDetailsPage";
-import ContestPage from "../pages/ContestPage";
-import CategoryPage from "../pages/CategoryPage";
 import ParticipationRequests from "./participation-request-components/ParticipationRequests";
 import NotFoundPage from "../pages/NotFoundPage";
+import LandingPage from "../pages/LandingPage";
+import CreateContest from "./Contest-Components/CreateContest";
 
 function SiteRouter({ user }) {
   const userRole = user?.role;
@@ -33,24 +34,13 @@ function SiteRouter({ user }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route
-              index
-              element={
-                <Navigate
-                  to={getRoute(
-                    userRole,
-                    ["ADMIN", "MODERATOR", "JURY", "USER", undefined],
-                    "/contests"
-                  )}
-                />
-              }
-            />
+            <Route index element={<LandingPage />} />
 
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPassPage />} />
             <Route path="/reset-password" element={<ResetPassPage />} />
             <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
 
             <Route
               path={getRoute(
@@ -78,14 +68,6 @@ function SiteRouter({ user }) {
                 )}
                 element={<UserSubmissionView />}
               />
-              {/* <Route
-                path="category/:categoryId/upload"
-                element={<ImageUpload />}
-              />
-              <Route
-                path="category/:categoryId/my-entries"
-                element={<UserSubmissionView />}
-              /> */}
             </Route>
 
             <Route
@@ -95,11 +77,6 @@ function SiteRouter({ user }) {
                 "/contest/:contestId/category/:categoryId/contestant-entries"
               )}
               element={<JurySubmissionView />}
-            />
-
-            <Route
-              path={getRoute(userRole, ["ADMIN"], "/create-user")}
-              element={<CreateUserPage />}
             />
 
             <Route
@@ -115,19 +92,22 @@ function SiteRouter({ user }) {
               path={getRoute(userRole, ["ADMIN"], "/manage-users")}
               element={<UserManagementPage />}
             />
-
             <Route
               path={getRoute(userRole, ["ADMIN"], "/manage-users/:userId")}
               element={<UserDetailsPage />}
             />
+            <Route
+              path={getRoute(userRole, ["ADMIN"], "/create-user")}
+              element={<CreateUserPage />}
+            />
 
             <Route
               path={getRoute(userRole, ["ADMIN"], "/contest-page")}
-              element={<ContestPage />}
+              element={<CreateContest />}
             />
             <Route
-              path={getRoute(userRole, ["ADMIN"], "/category-page")}
-              element={<CategoryPage />}
+              path={getRoute(userRole, ["ADMIN"], "/contests/new")}
+              element={<CreateContestPage />}
             />
 
             <Route
