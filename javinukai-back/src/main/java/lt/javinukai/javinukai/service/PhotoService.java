@@ -10,12 +10,14 @@ import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
-import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
+import lt.javinukai.javinukai.wrapper.PhotoCollectionWrapper;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -240,4 +242,23 @@ public class PhotoService {
         collection.setDescription(updatedInfo.getNewDescription());
         return photoCollectionRepository.save(collection);
     }
+
+    private PhotoCollectionWrapper wrapCollectionWithUserRating(PhotoCollection collection, User requestingUser) {
+        return PhotoCollectionWrapper.builder()
+                .collection(collection)
+                .isLiked(collection.getJuryLikes().contains(requestingUser))
+                .build();
+    }
+
+    public Page<PhotoCollectionWrapper> getContestCategoryCollections(Pageable pageable, User requestingUser,
+                                                                      String display, UUID contestId, UUID categoryId) {
+        Page<PhotoCollection> photoCollectionPage = photoCollectionRepository.findCollectionsByContestIdAndCategoryId(contestId, categoryId, pageable);
+        if (display.equals("liked")) {
+            photoCollectionPage = photoCollectionRepository.findByLikesCountGreaterThan(contestId, categoryId, 0, pageable);
+        } else if (display.equals("unliked")) {
+            photoCollectionPage = photoCollectionRepository.findByLikesCountEquals(contestId, categoryId, 0, pageable);
+        }
+        return photoCollectionPage.map(photoCollection -> wrapCollectionWithUserRating(photoCollection, requestingUser));
+    }
+
 }
