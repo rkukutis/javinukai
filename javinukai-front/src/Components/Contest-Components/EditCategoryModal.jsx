@@ -1,25 +1,28 @@
-import React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import StyledInput from "../StyledInput";
 
-function EditCategoryModal({ category, onClose }) {
+function EditCategoryModal({ category, onClose, onUpdateCategory }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: category });
 
   const onSubmit = async (data) => {
-    try {
-      const response = await axios.put(
+    await axios
+      .put(
         `${import.meta.env.VITE_BACKEND}/api/v1/categories/${category.id}`,
-        data
-      );
-      console.log("Category updated successfully:", response.data);
-      onClose();
-    } catch (error) {
-      console.error("Error updating category:", error);
-    }
+        data,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        toast.success("Category updated successfully");
+        onUpdateCategory(res.data);
+        onClose();
+      })
+      .catch(() => toast.error("An error occured while updating category"));
   };
 
   if (!category) {
@@ -27,46 +30,61 @@ function EditCategoryModal({ category, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-md shadow-md">
-        <h2>Edit Category</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="p-6 rounded w-[50vw] h-fit">
+      <h2>Edit Category</h2>
+      <form id="category-edit-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-gray-700">
+            Category Name:
+          </label>
+          <input
+            type="text"
+            id="name"
+            defaultValue={category.categoryName}
+            {...register("name", { required: true })}
+            className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
+          />
+          {errors.categoryName && (
+            <p className="text-red-500">This field is required</p>
+          )}
+        </div>
+        <div className="mb-8 h-[40vh]">
+          <label htmlFor="description" className="block text-gray-700">
+            Description:
+          </label>
+          <textarea
+            id="description"
+            defaultValue={category.description}
+            {...register("description")}
+            className="mt-1 p-2 w-full h-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <section className="xl:grid xl:grid-cols-3 xl:space-x-2">
           <div className="mb-4">
-            <label htmlFor="categoryName" className="block text-gray-700">
-              Category Name:
-            </label>
-            <input
-              type="text"
-              id="categoryName"
-              defaultValue={category.categoryName}
-              {...register("categoryName", { required: true })}
-              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            />
-            {errors.categoryName && (
-              <p className="text-red-500">This field is required</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-gray-700">
-              Description:
-            </label>
-            <textarea
-              id="description"
-              defaultValue={category.description}
-              {...register("description")}
-              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="totalSubmissions" className="block text-gray-700">
-              Total Submissions:
+            <label
+              htmlFor="maxTotalSubmissions"
+              className="block text-gray-700"
+            >
+              Max Total Submissions:
             </label>
             <input
               type="number"
-              id="totalSubmissions"
+              id="maxTotalSubmissions"
               defaultValue={category.totalSubmissions}
-              {...register("totalSubmissions")}
-              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+              {...register("maxTotalSubmissions")}
+              className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="maxUserSubmissions" className="block text-gray-700">
+              Max Submissions Per User:
+            </label>
+            <input
+              type="number"
+              id="maxUserSubmissions"
+              defaultValue={category.totalSubmissions}
+              {...register("maxUserSubmissions")}
+              className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
           <div className="mb-4">
@@ -88,20 +106,14 @@ function EditCategoryModal({ category, onClose }) {
               <p className="text-red-500">Please select a type</p>
             )}
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-          >
-            Update Category
-          </button>
-        </form>
-        <button
-          onClick={onClose}
-          className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 ml-2"
-        >
-          Cancel
-        </button>
-      </div>
+        </section>
+        <StyledInput
+          form="category-edit-form"
+          extraStyle="w-full"
+          type="submit"
+          value="Update category"
+        />
+      </form>
     </div>
   );
 }

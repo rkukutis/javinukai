@@ -3,10 +3,11 @@ package lt.javinukai.javinukai.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.UserRole;
-import lt.javinukai.javinukai.dto.request.user.CreateNewUserRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
+import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
+import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final AuthenticationService authenticationService;
+    private final PhotoCollectionRepository photoCollectionRepository;
 
     public User createUser(UserRegistrationRequest registrationRequest) {
        return authenticationService.register(registrationRequest, true);
@@ -85,8 +87,13 @@ public class UserService {
 
     public List<User> deleteUser(UUID userId) {
         if (userRepository.existsById(userId)) {
+            List<PhotoCollection> collectionsToUpdate = photoCollectionRepository.findLikedCollectionsByJuryId(userId);
             userRepository.deleteById(userId);
             log.debug("Deleted user {}", userId);
+            for (PhotoCollection collection: collectionsToUpdate) {
+                collection.setLikesCount(collection.getJuryLikes().size());
+            }
+            photoCollectionRepository.saveAll(collectionsToUpdate);
             return userRepository.findAll();
         } else {
             throw new UserNotFoundException(userId);

@@ -4,25 +4,21 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
-import lt.javinukai.javinukai.entity.Category;
-import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.ParticipationRequest;
-import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.entity.*;
 import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.ParticipationRequestRepository;
 import lt.javinukai.javinukai.wrapper.ContestWrapper;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +29,13 @@ public class ContestService {
     private final ContestRepository contestRepository;
     private final ParticipationRequestRepository participationRequestRepository;
     private final CompetitionRecordRepository recordRepository;
+    private final CompetitionRecordService competitionRecordService;
+    private final PhotoService photoService;
+    private final RateService rateService;
 
 
     @Transactional
-    public Contest createContest(ContestDTO contestDTO) {
+    public Contest createContest(ContestDTO contestDTO, MultipartFile thumbnailFile) {
         final Contest contest = ContestMapper.contestDTOToContest(contestDTO);
         final Contest createdContest = contestRepository.save(contest);
 
@@ -48,14 +47,15 @@ public class ContestService {
                             category.getDescription(),
                             category.getMaxTotalSubmissions());
 
-                if (categoryIn == null) {
-                    throw new EntityNotFoundException("category was not found with ID: " + category.getId());
-                }
+            if (categoryIn == null) {
+                throw new EntityNotFoundException("category was not found with ID: " + category.getId());
+            }
             categoryList.add(categoryIn);
         }
 
         createdContest.setCategories(categoryList);
-        contestRepository.save(contest);
+        createdContest.setThumbnailURL(photoService.generatedContestThumbnail(createdContest.getId(), thumbnailFile));
+        contestRepository.save(createdContest);
 
         log.info("{}: Created and added new contest to database", this.getClass().getName());
         return createdContest;
@@ -111,11 +111,16 @@ public class ContestService {
     }
 
     @Transactional
-    public Contest updateContest(UUID id, ContestDTO contestDTO) {
-
+    public Contest updateContest(UUID id, ContestDTO contestDTO, MultipartFile file) {
         final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
         contestToUpdate.setName(contestDTO.getName());
+
+        if (file != null && file.getContentType().startsWith("image")) {
+            String thumbnailURL = photoService.generatedContestThumbnail(id, file);
+            contestToUpdate.setThumbnailURL(thumbnailURL);
+        }
+
         contestToUpdate.setDescription(contestDTO.getDescription());
         contestToUpdate.setMaxTotalSubmissions(contestDTO.getMaxTotalSubmissions());
         contestToUpdate.setMaxUserSubmissions(contestDTO.getMaxUserSubmissions());
@@ -127,20 +132,43 @@ public class ContestService {
     }
 
     @Transactional
+    // if some categories are deleted, corresponding records must also be deleted
+    // if categories are added, new records must be created for approved users
     public Contest updateCategoriesOfContest(UUID id, List<Category> categories) {
 
         final Contest contestToUpdate = contestRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Contest was not found with ID: " + id));
 
-        final List<Category> updatedCategoryList = new ArrayList<>();
+        List<Category> newCategories = new ArrayList<>();
 
         for (Category category : categories) {
             final Category categoryIn = categoryRepository.findById(category.getId()).orElseThrow(
                     () -> new EntityNotFoundException("Category was not found with ID: " + category.getId()));
-            updatedCategoryList.add(categoryIn);
+            newCategories.add(categoryIn);
+        }
+        List<Category> extraCategories = new ArrayList<>();
+        List<Category> removedCategories = new ArrayList<>();
+        List<Category> oldCategories = contestToUpdate.getCategories();
+        for (Category oldCategory : oldCategories) {
+            if (!newCategories.contains(oldCategory)) {
+                removedCategories.add(oldCategory);
+            }
+        }
+        for (Category newCategory : newCategories) {
+            if (!oldCategories.contains(newCategory)) {
+                extraCategories.add(newCategory);
+            }
         }
 
-        contestToUpdate.setCategories(updatedCategoryList);
+        if (!extraCategories.isEmpty()) {
+           competitionRecordService.createRecordsForApprovedUsers(extraCategories, contestToUpdate.getId());
+        }
+        if (!removedCategories.isEmpty()) {
+            competitionRecordService.deleteRecordsForCategories(removedCategories, contestToUpdate.getId());
+        }
+
+
+        contestToUpdate.setCategories(newCategories);
         return contestRepository.save(contestToUpdate);
     }
 
@@ -154,4 +182,28 @@ public class ContestService {
         }
     }
 
+    public void startNewCompetitionStage(UUID contestId) {
+        List<PhotoCollection> collections = rateService.findAllCollectionsInContest(contestId);
+        collections
+                .forEach(c -> {
+                    if (c.getLikesCount() == 0) {
+                        c.setHidden(true);
+                    } else {
+                        c.removeAllLikesFromCollection();
+                        c.setLikesCount(0);
+                    }
+                });
+        rateService.updateCollections(collections);
+    }
+
+
+    public byte[] retrieveContestThumbnail(UUID id) {
+        return photoService.getThumbnailBytes(id);
+    }
+
+    public List<String> retrieveLatestContestURLs(int limit) {
+        Pageable pageable = Pageable.ofSize(limit);
+        List<Contest> latestContests = contestRepository.findByOrderByCreatedAtDesc(Limit.of(limit));
+        return latestContests.stream().map(Contest::getThumbnailURL).filter(Objects::nonNull).toList();
+    }
 }

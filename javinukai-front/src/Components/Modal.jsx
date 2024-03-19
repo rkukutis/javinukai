@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-export default function Modal({ children, isOpen, setIsOpen }) {
+export default function Modal({ children, isOpen, setIsOpen, backroundColor }) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog className="relative z-10" onClose={() => setIsOpen(false)}>
@@ -28,7 +28,11 @@ export default function Modal({ children, isOpen, setIsOpen }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full md:w-fit overflow-hidden rounded-lg p-2 bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className={`w-full md:w-fit overflow-hidden rounded-lg p-2 ${
+                  backroundColor ? backroundColor : "bg-white"
+                } text-left align-middle shadow-xl transition-all`}
+              >
                 {children}
               </Dialog.Panel>
             </Transition.Child>

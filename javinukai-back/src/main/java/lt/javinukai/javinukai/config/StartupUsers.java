@@ -79,10 +79,12 @@ public class StartupUsers {
     @Bean
     CommandLineRunner createDirectories() {
         return args -> {
-            Path root = Path.of("src/main/resources/images");
-            if (!Files.exists(root)) Files.createDirectories(root);
+            Path thumbnailRoot = Path.of("src/main/resources/thumbnails");
+            if (!Files.exists(thumbnailRoot)) Files.createDirectories(thumbnailRoot);
+            Path photoRoot = Path.of("src/main/resources/images");
+            if (!Files.exists(photoRoot)) Files.createDirectories(photoRoot);
             for (ImageSize size : ImageSize.values()) {
-                Path storagePathParent = Path.of(root.toString(), size.localStoragePath);
+                Path storagePathParent = Path.of(photoRoot.toString(), size.localStoragePath);
                 if (!Files.exists(storagePathParent)) Files.createDirectory(storagePathParent);
             }
         };

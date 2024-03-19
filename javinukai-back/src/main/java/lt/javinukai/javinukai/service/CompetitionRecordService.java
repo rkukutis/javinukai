@@ -39,6 +39,20 @@ public class CompetitionRecordService {
     @Value("${app.constants.user-defaults.max-photos.collection}")
     private int defaultMaxCollections;
 
+    private int getLimit(User approvedUser, Category newCategory) {
+        int limit = 0;
+        if (approvedUser.isCustomLimits()) {
+            limit = newCategory.getType() == PhotoSubmissionType.SINGLE ?
+                    approvedUser.getMaxSinglePhotos() :
+                    approvedUser.getMaxCollections();
+        } else {
+            limit = newCategory.getType() == PhotoSubmissionType.SINGLE ?
+                    defaultMaxSinglePhotos :
+                    defaultMaxCollections;
+        }
+        return limit;
+    }
+
     @Transactional
     public UserParticipationResponse createUsersCompetitionRecords(UUID contestID, UUID userID) {
 
@@ -68,16 +82,7 @@ public class CompetitionRecordService {
 
         final List<CompetitionRecord> usersCompetitionRecords = new ArrayList<>();
         for (Category category : contestToParticipateIn.getCategories()) {
-            int limit = 0;
-            if (participantUser.isCustomLimits()) {
-                limit = category.getType() == PhotoSubmissionType.SINGLE ?
-                        participantUser.getMaxSinglePhotos() :
-                        participantUser.getMaxCollections();
-            } else {
-                limit = category.getType() == PhotoSubmissionType.SINGLE ?
-                        defaultMaxSinglePhotos :
-                        defaultMaxCollections;
-            }
+            int limit = getLimit(participantUser, category);
             final CompetitionRecord record = CompetitionRecord.builder()
                     .contest(contestToParticipateIn)
                     .user(participantUser)
@@ -96,6 +101,32 @@ public class CompetitionRecordService {
                 .message(message)
                 .httpStatus(httpStatus)
                 .build();
+    }
+
+    public void createRecordsForApprovedUsers(List<Category> newCategories, UUID contestId) {
+        // find all approved users
+       List<User> approvedUsers = competitionRecordRepository.findByContestId(contestId)
+               .stream()
+               .map((CompetitionRecord::getUser))
+               .distinct()
+               .toList();
+
+       Contest contest = contestRepository.findById(contestId).orElseThrow(
+                () -> new EntityNotFoundException("Contest was not found with ID: " + contestId));
+
+        for (User approvedUser : approvedUsers) {
+            for (Category newCategory : newCategories) {
+                int limit = getLimit(approvedUser, newCategory);
+                CompetitionRecord record = CompetitionRecord.builder()
+                        .contest(contest)
+                        .user(approvedUser)
+                        .category(newCategory)
+                        .maxPhotos(limit)
+                        .build();
+
+                competitionRecordRepository.save(record);
+            }
+        }
     }
 
     // this will retrieve the entries for the jury
@@ -135,11 +166,18 @@ public class CompetitionRecordService {
         }
     }
 
+
     public CompetitionRecord retrieveUserCompetitionRecord(UUID categoryId, UUID contestId, UUID userId) {
         return competitionRecordRepository.findByCategoryIdAndContestIdAndUserId(categoryId, contestId, userId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(
                         "Competition record for user %s in contest %s category %s not found",
                         userId, contestId, categoryId
                 )));
+    }
+
+    public void deleteRecordsForCategories(List<Category> removedCategories, UUID contestId) {
+        for (Category removedCategory : removedCategories) {
+            competitionRecordRepository.deleteByCategoryIdAndContestId(removedCategory.getId(), contestId);
+        }
     }
 }

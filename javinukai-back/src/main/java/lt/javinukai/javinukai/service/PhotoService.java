@@ -198,6 +198,39 @@ public class PhotoService {
         }
     }
 
+    public String generatedContestThumbnail(UUID contestId, MultipartFile file) {
+        if (contestId == null || file == null) {
+            throw new RuntimeException("Contest Id or image file must not be null");
+        }
+        if (!Objects.requireNonNull(file.getContentType()).startsWith("image")) {
+            throw new ImageValidationException("Thumbnail must be an image file");
+        }
+        try {
+            ProcessedImage processedImage = new ProcessedImage(file);
+            byte[] imageBytes = processedImage.getResizedImage(ImageSize.SMALL);
+            String fileName = contestId + ".jpg";
+            Path storagePath = Path.of("src/main/resources/thumbnails", fileName);
+            if (Files.exists(storagePath)) Files.delete(storagePath);
+            Files.write(storagePath, imageBytes);
+            return new URIBuilder()
+                    .setScheme(scheme)
+                    .setHost(host)
+                    .setPathSegments("api", "v1", "contests", contestId.toString(), "thumbnail")
+                    .toString();
+        } catch (IOException exception) {
+            throw new ImageProcessingException("Could not process new contest thumbnail");
+        }
+    }
+
+    public byte[] getThumbnailBytes(UUID contestId) {
+        String filename = contestId.toString() + ".jpg";
+        Path storagePath = Path.of("src/main/resources/thumbnails", filename);
+        try {
+           return Files.readAllBytes(storagePath);
+        } catch (IOException exception) {
+            throw new NoImagesException("Thumbnail for contest " + contestId + " not found");
+        }
+    }
 
     public PhotoCollection updateCollectionInfo(UUID photoCollectionId, CollectionUpdateRequest updatedInfo) {
         PhotoCollection collection = photoCollectionRepository.findById(photoCollectionId)

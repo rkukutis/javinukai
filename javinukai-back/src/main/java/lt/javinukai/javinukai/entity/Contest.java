@@ -29,6 +29,10 @@ public class Contest {
     private String name;
 
     @Setter
+    @Column(name = "thumbnail_url")
+    private String thumbnailURL;
+
+    @Setter
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
