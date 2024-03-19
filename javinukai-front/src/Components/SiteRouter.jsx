@@ -16,7 +16,6 @@ import UserManagementPage from "../pages/UserManagementPage";
 import UserDetailsPage from "../pages/UserDetailsPage";
 import ContestPage from "../pages/ContestPage";
 import CategoryPage from "../pages/CategoryPage";
-import PreviewPage from "../pages/PreviewPage";
 import ParticipationRequests from "./participation-request-components/ParticipationRequests";
 import NotFoundPage from "../pages/NotFoundPage";
 
@@ -129,10 +128,6 @@ function SiteRouter({ user }) {
             <Route
               path={getRoute(userRole, ["ADMIN"], "/category-page")}
               element={<CategoryPage />}
-            />
-            <Route
-              path={getRoute(userRole, ["ADMIN", "MODERATOR"], "/preview-page")}
-              element={<PreviewPage />}
             />
 
             <Route
