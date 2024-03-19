@@ -54,6 +54,7 @@ public class PhotoCollection {
             joinColumns = @JoinColumn(name = "collection_id"),
             inverseJoinColumns = @JoinColumn(name = "jury_id")
     )
+    @JsonIgnore
     private List<User> juryLikes;
 
     @Setter

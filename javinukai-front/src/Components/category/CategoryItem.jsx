@@ -51,7 +51,8 @@ export function CategoryItem({
                 <Button
                   onClick={() =>
                     navigate(
-                      `/contest/${contestInfo.id}/category/${categoryInfo.id}/contestant-entries`
+                      `/contest/${contestInfo.id}/category/${categoryInfo.id}/contestant-entries`,
+                      { state: { contestInfo, categoryInfo } }
                     )
                   }
                 >
