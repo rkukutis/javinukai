@@ -11,6 +11,7 @@ export function CategoryItem({
   contestInfo,
   expandedCategory,
   onSetExpandedCategory,
+  contestLimitReached,
   canParticipate,
 }) {
   const { t } = useTranslation();
@@ -50,7 +51,8 @@ export function CategoryItem({
                 <Button
                   onClick={() =>
                     navigate(
-                      `/contest/${contestInfo.id}/category/${categoryInfo.id}/contestant-entries`
+                      `/contest/${contestInfo.id}/category/${categoryInfo.id}/contestant-entries`,
+                      { state: { contestInfo, categoryInfo } }
                     )
                   }
                 >
@@ -60,7 +62,11 @@ export function CategoryItem({
             </div>
           )}
           {user && canParticipate && (
-            <UserSubmissionView contest={contestInfo} category={categoryInfo} />
+            <UserSubmissionView
+              contest={contestInfo}
+              category={categoryInfo}
+              contestLimitReached={contestLimitReached}
+            />
           )}
         </div>
       )}

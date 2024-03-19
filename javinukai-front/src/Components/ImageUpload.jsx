@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import StyledInput from "./StyledInput";
 import FormFieldError from "./FormFieldError";
 import { useTranslation } from "react-i18next";
-import getMultipartForm from "../utils/getMultipartForm";
+import { getPhotoUploadMultipart } from "../utils/getMultipartForm";
 
 function ImageUpload({
   userRecord,
@@ -61,7 +61,7 @@ function ImageUpload({
       return;
     }
     mutate({
-      data: getMultipartForm(
+      data: getPhotoUploadMultipart(
         title,
         description,
         contestInfo.id,

@@ -10,7 +10,7 @@ const defaultPagination = {
   page: 0,
   limit: 10,
   sortBy: "createdAt",
-  sortDesc: "false",
+  sortDesc: "true",
   searchedField: null,
 };
 
@@ -38,7 +38,7 @@ function ContestsPage() {
   });
 
   return (
-    <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
+    <>
       {isFetching ? (
         <SpinnerPage />
       ) : (
@@ -62,6 +62,7 @@ function ContestsPage() {
                 <option value="totalSubmissions">
                   {t("ContestsPage.contestTotalEntriesOption")}
                 </option>
+                <option value="createdAt">Creation Date</option>
               </>
             }
             lastPage={data?.last}
@@ -78,7 +79,7 @@ function ContestsPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

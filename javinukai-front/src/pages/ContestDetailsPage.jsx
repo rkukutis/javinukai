@@ -11,23 +11,22 @@ import Button from "../Components/Button";
 import toast from "react-hot-toast";
 import sendParticipationRequest from "../services/participation-requests/sendParticipationRequest";
 import useUserStore from "../stores/userStore";
+import { ParticipationStatus } from "../Components/contest/ParticipationStatus";
+import Modal from "../Components/Modal";
+import CreateContest from "../Components/Contest-Components/CreateContest";
 
-function ParticipationStatus({ status }) {
-  const { t } = useTranslation();
-  const styles = {
-    PENDING: ["bg-yellow-500", t(`ParticipationStatus.PENDING`)],
-    ACCEPTED: ["bg-green-500", t(`ParticipationStatus.ACCEPTED`)],
-    DECLINED: ["bg-red-500", t(`ParticipationStatus.DECLINED`)],
-  };
-
+function EditContestSection({ contestInfo, categoriesInfo }) {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
-    <>
-      {status && (
-        <span className={`p-2 text-white rounded ${styles[status][0]}`}>
-          {styles[status][1]}
-        </span>
-      )}
-    </>
+    <div>
+      <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
+      <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
+        <CreateContest
+          initialContestInfo={contestInfo?.contest}
+          initialCategories={categoriesInfo}
+        />
+      </Modal>
+    </div>
   );
 }
 
@@ -59,15 +58,15 @@ function ContestDetailsPage() {
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
-      <div className="w-full xl:w-3/4 pb-4 px-6 bg-white shadow-md">
+      <div className={`w-full xl:w-3/4 pb-4 px-6 bg-white shadow-md`}>
         <div className="flex flex-col space-y-4">
           <section className="relative">
             <img
               className="w-full h-[30rem] object-cover"
-              src={contestPhoto}
+              src={data?.contest.thumbnailURL ?? contestPhoto}
               alt="contest-thumbnail"
             />
-            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm backdrop-brightness-90 pr-6 back">
+            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm backdrop-brightness-50 pr-6 back">
               <div className="ml-12 mt-12 flex-col space-y-6">
                 <h2 className="text text-lg top-4 text text-white xl:text-3xl">
                   {t("ContestDetailsPage.contest")}
@@ -88,13 +87,21 @@ function ContestDetailsPage() {
                 <div>
                   <ParticipationStatus status={data?.status} />
                 </div>
+                {data?.status == "ACCEPTED" && (
+                  <h1 className="text-xl text-white">
+                    {t("ContestDetailsPage.userEntries")}: {data?.userEntries} /{" "}
+                    {data?.maxUserEntries}
+                  </h1>
+                )}
+
                 <h2 className="text-white text-xl">
                   {t("ContestDetailsPage.entries")}: {data?.totalEntries} /{" "}
-                  {data?.contest.maxSubmissions}
+                  {data?.contest.maxTotalSubmissions}
                 </h2>
               </div>
             </div>
           </section>
+          <EditContestSection contestInfo={data} categoriesInfo={categories} />
           <section className="text text-slate-700 leading-loose text-lg">
             <h1 className="text-2xl text-teal-500 font-bold py-2">
               {t("ContestDetailsPage.description")}
@@ -109,6 +116,10 @@ function ContestDetailsPage() {
               {categories?.map((category) => (
                 <CategoryItem
                   canParticipate={data?.status == "ACCEPTED"}
+                  contestLimitReached={
+                    data?.maxUserEntries == data?.userEntries ||
+                    data?.contest.maxTotalSubmissions == data?.totalEntries
+                  }
                   key={category.id}
                   categoryInfo={category}
                   contestInfo={data?.contest}
@@ -119,7 +130,7 @@ function ContestDetailsPage() {
             </div>
           </section>
         </div>
-        {!data?.status && user && (
+        {!data?.status && user.role !== "JURY" && user && (
           <Button onClick={requestMutation}>
             {t("ContestDetailsPage.participate")}
           </Button>

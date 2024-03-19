@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.dto.request.contest;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ContestDTO {
 
     private UUID id;
@@ -37,8 +39,13 @@ public class ContestDTO {
 
     @NonNull
     @Min(value = 1, message = "AT_LEAST_ONE")
-    @Max(value = 9999999 ,message = "TOO_MANY_SUBMISSIONS")
-    private long totalSubmissions;
+    @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
+    private long maxTotalSubmissions;
+
+    @NonNull
+    @Min(value = 1, message = "AT_LEAST_ONE")
+    @Max(value = 9999999, message = "TOO_MANY_SUBMISSIONS")
+    private long maxUserSubmissions;
 
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;

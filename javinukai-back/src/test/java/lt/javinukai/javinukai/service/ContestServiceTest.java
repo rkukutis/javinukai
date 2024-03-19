@@ -1,10 +1,14 @@
 package lt.javinukai.javinukai.service;
 
 
+import com.sun.tools.jconsole.JConsoleContext;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.Contest;
+import lt.javinukai.javinukai.enums.PhotoSubmissionType;
+import lt.javinukai.javinukai.mapper.ContestMapper;
 import lt.javinukai.javinukai.repository.CategoryRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import org.assertj.core.api.Assertions;
@@ -12,7 +16,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -31,77 +39,28 @@ class ContestServiceTest {
     @InjectMocks
     private ContestService contestService;
 
-//    @Test
-//    public void createContestReturnsContest() {
-//
-//        final UUID categoryID = UUID.randomUUID();
-//        final Category category01 = Category.builder()
-//                .id(categoryID)
-//                .name("test category name")
-//                .description("test category description")
-//                .totalSubmissions(66)
-//                .build();
-//
-//        final UUID contestID = UUID.randomUUID();
-//        final Contest contest01 = Contest.builder()
-//                .id(contestID)
-//                .name("test contest name")
-//                .description("test contest description")
-//                .totalSubmissions(666)
-//                .categories(Collections.singletonList(category01))
-//                .startDate(ZonedDateTime.now())
-//                .endDate(ZonedDateTime.now())
-//                .build();
-//
-//        final ContestDTO contestDTO01 = ContestMapper.contestToContestDTO(contest01);
-//        contestDTO01.setCategories(Collections.singletonList(category01));
-//
-//        when(contestRepository.save(Mockito.any(Contest.class))).thenReturn(contest01);
-//        when(categoryRepository.findById(categoryID)).thenReturn(Optional.ofNullable(category01));
-//
-//        final Contest createdContest = contestService
-//                .createContest(ContestMapper.contestToContestDTOTest(contest01));
-//
-//        Assertions.assertThat(createdContest).isNotNull();
-//        Assertions.assertThat(createdContest.getCategories()).isNotNull();
-//    }
+    @Test
+    public void retrieveAllContestsReturnsPageOfContests() {
+        final Contest contest01 = Contest.builder()
+                .name("test contest name")
+                .description("test contest description")
+                .maxTotalSubmissions(666)
+                .startDate(ZonedDateTime.now())
+                .endDate(ZonedDateTime.now())
+                .build();
 
-//        @Test
-//        public void retrieveAllContestsReturnsPageOfContests() {
-//
-//            final Contest contest01 = Contest.builder()
-//                    .name("test contest name")
-//                    .description("test contest description")
-//                    .totalSubmissions(666)
-//                    .startDate(ZonedDateTime.now())
-//                    .endDate(ZonedDateTime.now())
-//                    .build();
-//
-//            final List<Contest> expectedContestList = new ArrayList<>();
-//            expectedContestList.add(contest01);
-//
-//            Page<Contest> page = new PageImpl<>(expectedContestList);
-//
-//            when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(page);
-//
-//            Page<Contest> retriecedPage = contestService.retrieveAllContests(1, 10);
-//
-//            assertNotNull(retriecedPage);
-//            assertEquals(expectedContestList.size(), retriecedPage.getContent().size());
-//        }
+        final List<Contest> expectedContestList = new ArrayList<>();
+        expectedContestList.add(contest01);
 
-//    @Test
-//    public void retrieveAllContestsReturnsEmptyList() {
-//
-//        final Page<Contest> emptyPage = new PageImpl<>(new ArrayList<>());
-//
-//        when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(emptyPage);
-//
-//        final Page<Contest> retrievedPage = contestService.retrieveAllContests(0, 10);
-//
-//        assertNotNull(retrievedPage);
-//        assertTrue(retrievedPage.isEmpty());
-//    }
+        Page<Contest> expectedPage = new PageImpl<>(expectedContestList);
+
+        when(contestRepository.findAll(Mockito.any(Pageable.class))).thenReturn(expectedPage);
+
+        Page<Contest> retrievedPage = contestService.retrieveAllContests(Pageable.unpaged(), null);
+
+        assertNotNull(retrievedPage);
+        assertEquals(expectedContestList.size(), retrievedPage.getContent().size());
+    }
 
     @Test
     void retrieveContestReturnsContest() {
@@ -110,14 +69,14 @@ class ContestServiceTest {
         Category category01 = Category.builder()
                 .name("gamta")
                 .description("ir taip aišku ")
-                .maxSubmissions(100)
+                .maxTotalSubmissions(100)
                 .build();
 
         Contest expectedContest = Contest.builder()
                 .name("viltis")
                 .description("paskutinė, nepabegusi")
                 .categories(Collections.singletonList(category01))
-                .maxSubmissions(666)
+                .maxTotalSubmissions(666)
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
                 .build();
@@ -130,38 +89,40 @@ class ContestServiceTest {
 
         verify(contestRepository, times(1)).findById(eq(id));
     }
+/*
+    @Test
+    void updateCategoriesOfContestReturnsContest() {
 
-//    @Test
-//    void updateCategoriesOfContestReturnsContest() {
-//
-//        final UUID categoryID = UUID.randomUUID();
-//        final Category category = new Category(categoryID,
-//                "test category name",
-//                "testCategory description",
-//                66,
-//                null, null, null, null);
-//        List<Category> categories = new ArrayList<>();
-//        categories.add(category);
-//
-//        when(categoryRepository.findById(categoryID)).thenReturn(Optional.of(category));
-//
-//        final UUID contestID = UUID.randomUUID();
-//        final Contest initialContest = new Contest(contestID,
-//                "test contest name",
-//                "test contest description",
-//                null,
-//                666,
-//                null, null, null, null);
-//
-//        when(contestRepository.findById(contestID)).thenReturn(Optional.ofNullable(initialContest));
-//        when(contestRepository.save(any(Contest.class))).thenReturn(initialContest);
-//
-//        final Contest updatedContest = contestService.updateCategoriesOfContest(initialContest.getId(), categories);
-//
-//        Assertions.assertThat(updatedContest).isNotNull();
-//        Assertions.assertThat(updatedContest.getId()).isNotNull();
-//    }
+        final UUID categoryID = UUID.randomUUID();
+        final Category category = new Category(categoryID,
+                "test category name",
+                "testCategory description",
+                66,
+                30,
+                null, null, null, null, null, PhotoSubmissionType.SINGLE);
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
 
+        when(categoryRepository.findById(categoryID)).thenReturn(Optional.of(category));
+
+        final UUID contestID = UUID.randomUUID();
+        final Contest initialContest = new Contest(contestID,
+                "test contest name",
+                "test contest description",
+                null,
+                null,
+                null,
+                666, 50, null, null, null, null);
+
+        when(contestRepository.findById(contestID)).thenReturn(Optional.ofNullable(initialContest));
+        when(contestRepository.save(any(Contest.class))).thenReturn(initialContest);
+
+        final Contest updatedContest = contestService.updateCategoriesOfContest(initialContest.getId(), categories);
+
+        Assertions.assertThat(updatedContest).isNotNull();
+        Assertions.assertThat(updatedContest.getId()).isNotNull();
+    }
+*/
     @Test
     void deleteContestSuccess() {
         UUID contestId = UUID.randomUUID();

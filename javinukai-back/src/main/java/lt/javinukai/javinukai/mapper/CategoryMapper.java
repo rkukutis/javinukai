@@ -11,7 +11,8 @@ public class CategoryMapper {
         return Category.builder()
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
-                .maxSubmissions(categoryDTO.getTotalSubmissions())
+                .maxTotalSubmissions(categoryDTO.getMaxTotalSubmissions())
+                .maxUserSubmissions(categoryDTO.getMaxUserSubmissions())
                 .uploadedPhotos(categoryDTO.getUploadedPhotos())
                 .type(categoryDTO.getType())
                 .build();
@@ -20,10 +21,12 @@ public class CategoryMapper {
     public static CategoryDTO categoryToCategoryDTO(Category category) {
         return CategoryDTO.builder()
                 .id(category.getId())
+                .maxUserSubmissions(category.getMaxUserSubmissions())
+                .maxTotalSubmissions(category.getMaxTotalSubmissions())
                 .name(category.getName())
                 .description(category.getDescription())
-                .totalSubmissions(category.getMaxSubmissions())
                 .type(category.getType())
+                .uploadedPhotos(category.getUploadedPhotos())
                 .build();
     }
 }

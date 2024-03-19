@@ -10,12 +10,14 @@ import lt.javinukai.javinukai.entity.Photo;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
-import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.exception.*;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.utility.ProcessedImage;
+import lt.javinukai.javinukai.wrapper.PhotoCollectionWrapper;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -198,6 +200,39 @@ public class PhotoService {
         }
     }
 
+    public String generatedContestThumbnail(UUID contestId, MultipartFile file) {
+        if (contestId == null || file == null) {
+            throw new RuntimeException("Contest Id or image file must not be null");
+        }
+        if (!Objects.requireNonNull(file.getContentType()).startsWith("image")) {
+            throw new ImageValidationException("Thumbnail must be an image file");
+        }
+        try {
+            ProcessedImage processedImage = new ProcessedImage(file);
+            byte[] imageBytes = processedImage.getResizedImage(ImageSize.SMALL);
+            String fileName = contestId + ".jpg";
+            Path storagePath = Path.of("src/main/resources/thumbnails", fileName);
+            if (Files.exists(storagePath)) Files.delete(storagePath);
+            Files.write(storagePath, imageBytes);
+            return new URIBuilder()
+                    .setScheme(scheme)
+                    .setHost(host)
+                    .setPathSegments("api", "v1", "contests", contestId.toString(), "thumbnail")
+                    .toString();
+        } catch (IOException exception) {
+            throw new ImageProcessingException("Could not process new contest thumbnail");
+        }
+    }
+
+    public byte[] getThumbnailBytes(UUID contestId) {
+        String filename = contestId.toString() + ".jpg";
+        Path storagePath = Path.of("src/main/resources/thumbnails", filename);
+        try {
+           return Files.readAllBytes(storagePath);
+        } catch (IOException exception) {
+            throw new NoImagesException("Thumbnail for contest " + contestId + " not found");
+        }
+    }
 
     public PhotoCollection updateCollectionInfo(UUID photoCollectionId, CollectionUpdateRequest updatedInfo) {
         PhotoCollection collection = photoCollectionRepository.findById(photoCollectionId)
@@ -207,4 +242,23 @@ public class PhotoService {
         collection.setDescription(updatedInfo.getNewDescription());
         return photoCollectionRepository.save(collection);
     }
+
+    private PhotoCollectionWrapper wrapCollectionWithUserRating(PhotoCollection collection, User requestingUser) {
+        return PhotoCollectionWrapper.builder()
+                .collection(collection)
+                .isLiked(collection.getJuryLikes().contains(requestingUser))
+                .build();
+    }
+
+    public Page<PhotoCollectionWrapper> getContestCategoryCollections(Pageable pageable, User requestingUser,
+                                                                      String display, UUID contestId, UUID categoryId) {
+        Page<PhotoCollection> photoCollectionPage = photoCollectionRepository.findCollectionsByContestIdAndCategoryId(contestId, categoryId, pageable);
+        if (display.equals("liked")) {
+            photoCollectionPage = photoCollectionRepository.findByLikesCountGreaterThan(contestId, categoryId, 0, pageable);
+        } else if (display.equals("unliked")) {
+            photoCollectionPage = photoCollectionRepository.findByLikesCountEquals(contestId, categoryId, 0, pageable);
+        }
+        return photoCollectionPage.map(photoCollection -> wrapCollectionWithUserRating(photoCollection, requestingUser));
+    }
+
 }

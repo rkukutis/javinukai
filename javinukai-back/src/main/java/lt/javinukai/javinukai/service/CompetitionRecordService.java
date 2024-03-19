@@ -15,6 +15,7 @@ import lt.javinukai.javinukai.mapper.CompetitionRecordMapper;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,25 @@ public class CompetitionRecordService {
     private final ContestRepository contestRepository;
     private final CompetitionRecordRepository competitionRecordRepository;
     private final UserRepository userRepository;
+
+    @Value("${app.constants.user-defaults.max-photos.single}")
+    private int defaultMaxSinglePhotos;
+    @Value("${app.constants.user-defaults.max-photos.collection}")
+    private int defaultMaxCollections;
+
+    private int getLimit(User approvedUser, Category newCategory) {
+        int limit = 0;
+        if (approvedUser.isCustomLimits()) {
+            limit = newCategory.getType() == PhotoSubmissionType.SINGLE ?
+                    approvedUser.getMaxSinglePhotos() :
+                    approvedUser.getMaxCollections();
+        } else {
+            limit = newCategory.getType() == PhotoSubmissionType.SINGLE ?
+                    defaultMaxSinglePhotos :
+                    defaultMaxCollections;
+        }
+        return limit;
+    }
 
     @Transactional
     public UserParticipationResponse createUsersCompetitionRecords(UUID contestID, UUID userID) {
@@ -60,16 +80,14 @@ public class CompetitionRecordService {
                     .build();
         }
 
-        // čia matau sukuria record'us visoms kategorijoms, reikia tikėtis, kad kategorijų nebus daug
         final List<CompetitionRecord> usersCompetitionRecords = new ArrayList<>();
         for (Category category : contestToParticipateIn.getCategories()) {
+            int limit = getLimit(participantUser, category);
             final CompetitionRecord record = CompetitionRecord.builder()
                     .contest(contestToParticipateIn)
                     .user(participantUser)
                     .category(category)
-                    .maxPhotos(category.getType() == PhotoSubmissionType.SINGLE ?
-                            participantUser.getMaxSinglePhotos() :
-                            participantUser.getMaxCollections())
+                    .maxPhotos(limit)
                     .build();
             final CompetitionRecord savedRecord = competitionRecordRepository.save(record);
             usersCompetitionRecords.add(savedRecord);
@@ -83,6 +101,32 @@ public class CompetitionRecordService {
                 .message(message)
                 .httpStatus(httpStatus)
                 .build();
+    }
+
+    public void createRecordsForApprovedUsers(List<Category> newCategories, UUID contestId) {
+        // find all approved users
+       List<User> approvedUsers = competitionRecordRepository.findByContestId(contestId)
+               .stream()
+               .map((CompetitionRecord::getUser))
+               .distinct()
+               .toList();
+
+       Contest contest = contestRepository.findById(contestId).orElseThrow(
+                () -> new EntityNotFoundException("Contest was not found with ID: " + contestId));
+
+        for (User approvedUser : approvedUsers) {
+            for (Category newCategory : newCategories) {
+                int limit = getLimit(approvedUser, newCategory);
+                CompetitionRecord record = CompetitionRecord.builder()
+                        .contest(contest)
+                        .user(approvedUser)
+                        .category(newCategory)
+                        .maxPhotos(limit)
+                        .build();
+
+                competitionRecordRepository.save(record);
+            }
+        }
     }
 
     // this will retrieve the entries for the jury
@@ -122,11 +166,18 @@ public class CompetitionRecordService {
         }
     }
 
+
     public CompetitionRecord retrieveUserCompetitionRecord(UUID categoryId, UUID contestId, UUID userId) {
         return competitionRecordRepository.findByCategoryIdAndContestIdAndUserId(categoryId, contestId, userId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(
                         "Competition record for user %s in contest %s category %s not found",
                         userId, contestId, categoryId
                 )));
+    }
+
+    public void deleteRecordsForCategories(List<Category> removedCategories, UUID contestId) {
+        for (Category removedCategory : removedCategories) {
+            competitionRecordRepository.deleteByCategoryIdAndContestId(removedCategory.getId(), contestId);
+        }
     }
 }

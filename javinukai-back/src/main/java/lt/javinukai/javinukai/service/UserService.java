@@ -3,10 +3,11 @@ package lt.javinukai.javinukai.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.UserRole;
-import lt.javinukai.javinukai.dto.request.user.CreateNewUserRequest;
 import lt.javinukai.javinukai.dto.request.user.UserRegistrationRequest;
+import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
+import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final AuthenticationService authenticationService;
+    private final PhotoCollectionRepository photoCollectionRepository;
 
     public User createUser(UserRegistrationRequest registrationRequest) {
        return authenticationService.register(registrationRequest, true);
@@ -46,7 +48,7 @@ public class UserService {
     public User updateUser(User updatedUser, UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
-        log.debug("{}: Updating user {}", this.getClass().getName(), user.getId());
+        log.info("{}: Updating user {}", this.getClass().getName(), user.getId());
         user.setName(updatedUser.getName());
         user.setSurname(updatedUser.getSurname());
         user.setEmail(updatedUser.getEmail());
@@ -70,14 +72,28 @@ public class UserService {
             user.setIsNonLocked(updateUser.getIsNonLocked());
             log.info("Updating user {} isNonLocked state from {} to {}",
                     user.getId(), previousIsNonLocked, updateUser.getIsNonLocked());
+        } else if (!user.getMaxTotal().equals(updateUser.getMaxTotal()) ||
+                !user.getMaxSinglePhotos().equals(updateUser.getMaxSinglePhotos()) ||
+                !user.getMaxCollections().equals(updateUser.getMaxCollections())
+        ) {
+            user.setMaxTotal(updateUser.getMaxTotal());
+            user.setMaxSinglePhotos(updateUser.getMaxSinglePhotos());
+            user.setMaxCollections(updateUser.getMaxCollections());
+            user.setCustomLimits(true);
+            log.info("Updating user {} photo upload limits", user.getId());
         }
         return userRepository.save(user);
     }
 
     public List<User> deleteUser(UUID userId) {
         if (userRepository.existsById(userId)) {
+            List<PhotoCollection> collectionsToUpdate = photoCollectionRepository.findLikedCollectionsByJuryId(userId);
             userRepository.deleteById(userId);
             log.debug("Deleted user {}", userId);
+            for (PhotoCollection collection: collectionsToUpdate) {
+                collection.setLikesCount(collection.getJuryLikes().size());
+            }
+            photoCollectionRepository.saveAll(collectionsToUpdate);
             return userRepository.findAll();
         } else {
             throw new UserNotFoundException(userId);

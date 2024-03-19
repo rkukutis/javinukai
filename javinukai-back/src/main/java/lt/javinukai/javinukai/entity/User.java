@@ -1,6 +1,7 @@
 package lt.javinukai.javinukai.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lt.javinukai.javinukai.config.security.UserRole;
@@ -44,6 +45,8 @@ public class User implements UserDetails {
     private Boolean isFreelance;
     @Setter
     private String institution;
+    @Setter
+    private boolean customLimits;
     @Setter
     private Integer maxTotal;
     @Setter
@@ -133,6 +136,17 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
+    @Setter
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
+    @JoinTable(
+            name = "likes",
+            joinColumns = @JoinColumn(name = "jury_id"),
+            inverseJoinColumns = @JoinColumn(name = "collection_id")
+    )
+    private List<PhotoCollection> likedCollections;
 
     @PrePersist
     protected void onCreate() {

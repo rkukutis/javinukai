@@ -29,6 +29,10 @@ public class Contest {
     private String name;
 
     @Setter
+    @Column(name = "thumbnail_url")
+    private String thumbnailURL;
+
+    @Setter
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
@@ -55,8 +59,12 @@ public class Contest {
     private List<ParticipationRequest> participationRequests;
 
     @Setter
-    @Column(name = "max_submissions")
-    private long maxSubmissions;
+    @Column(name = "max_total_submissions")
+    private long maxTotalSubmissions;
+
+    @Setter
+    @Column(name = "max_user_submissions")
+    private long maxUserSubmissions;
 
     @Setter
     @Column(name = "start_date")

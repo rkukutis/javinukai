@@ -100,7 +100,7 @@ class CompetitionRecordControllerTest {
                 .id(UUID.randomUUID())
                 .name("įvykiai")
                 .description("pokyčiai, patraukę akį")
-                .maxSubmissions(40)
+                .maxTotalSubmissions(40)
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
@@ -110,7 +110,7 @@ class CompetitionRecordControllerTest {
                 .description("gražiauisios 2023-ųjų akimirkos")
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now())
-                .maxSubmissions(20)
+                .maxTotalSubmissions(20)
                 .build();
 
         this.userParticipationResponse = UserParticipationResponse.builder()
@@ -119,69 +119,5 @@ class CompetitionRecordControllerTest {
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
-/*
-    @Test
-    void addUserToContestReturnsRecord() throws Exception{
 
-        UUID contestID = UUID.randomUUID();
-        UUID userID = UUID.randomUUID();
-
-        given(competitionRecordService.createUsersCompetitionRecords(contestID, userID))
-                .willReturn(userParticipationResponse);
-
-        ResultActions response = mockMvc.perform(post("/api/v1/records")
-                .param("contestID", contestID.toString())
-                .param("userID", userID.toString())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(HttpStatus.OK.value()));
-    }
-
-    @Test
-    void retrieveAllRecordsReturnsPage_Success() throws Exception {
-
-        List<CompetitionRecord> records = new ArrayList<>();
-        CompetitionRecord record = CompetitionRecord.builder()
-                .id(UUID.randomUUID())
-                .user(user)
-                .category(category)
-                .contest(contest)
-                .build();
-        records.add(record);
-
-        Page<CompetitionRecord> page = new PageImpl<>(records);
-
-        when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.of(user));
-        when(competitionRecordRepository.findByUser(any(User.class), any(Pageable.class))).thenReturn(page);
-        when(competitionRecordRepository.findAll(any(Pageable.class))).thenReturn(page);
-
-        mockMvc.perform(get("/api/v1/records")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content.length()").value(records.size()));
-    }
-*/
-//    @Test
-//    void testUpdateRecord_Success() {
-//
-//        UUID recordID = UUID.randomUUID();
-//
-//        CompetitionRecordDTO competitionRecordDTO = CompetitionRecordDTO.builder()
-//                .maxPhotos(10)
-////                .photos(Collections.singletonList(""))
-//                .build();
-//
-//        CompetitionRecord updatedCompetitionRecord = CompetitionRecord.builder()
-//                .maxPhotos(15)
-//                .build();
-//
-//        when(competitionRecordService.updateCompetitionRecord(any(UUID.class), any(CompetitionRecordDTO.class)))
-//                .thenReturn(updatedCompetitionRecord);
-//
-//        ResponseEntity<CompetitionRecord> response = competitionRecordController
-//                .updateRecord(recordID, competitionRecordDTO);
-//
-//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        assertThat(response.getBody()).isEqualTo(updatedCompetitionRecord);
-//    }
 }

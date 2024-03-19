@@ -1,37 +1,87 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import getCompetitionRecords from "../services/records/getCompetitionRecords";
-import ContestEntryJury from "./contest/ContestEntryJury";
+import { useLocation, useParams } from "react-router-dom";
 import SpinnerPage from "../pages/SpinnerPage";
+import getContestCategoryEntries from "../services/entries/getContestCategoryEntries";
+import { useEffect, useState } from "react";
+import { JuryViewPagination } from "./JuryViewPagination";
+import { SinglesSection } from "./SinglesSection";
+import SeriesEntry from "./contest/SeriesEntry";
+
+function SeriesSection({ entries }) {
+  return (
+    <div>
+      {entries.content.map((entry) => (
+        <SeriesEntry key={entry.id} entry={entry} />
+      ))}
+    </div>
+  );
+}
+
+const defaultPagination = {
+  limit: 25,
+  page: 0,
+  display: "all",
+};
 
 function JurySubmissionView() {
+  const [pagination, setPagination] = useState(defaultPagination);
+  const location = useLocation();
   const { contestId, categoryId } = useParams();
-  const { data: records, isFetching } = useQuery({
-    queryKey: ["contestRecords", contestId, categoryId],
-    queryFn: () => getCompetitionRecords(contestId, categoryId),
+
+  const { data: entries, isFetching } = useQuery({
+    queryKey: [
+      "contestCategoryEntries",
+      contestId,
+      categoryId,
+      pagination.display,
+      pagination.limit,
+      pagination.page,
+    ],
+    queryFn: () =>
+      getContestCategoryEntries(
+        contestId,
+        categoryId,
+        pagination.page,
+        pagination.limit,
+        pagination.display
+      ),
   });
+
+  console.log(entries);
 
   return (
     <>
       {isFetching ? (
         <SpinnerPage />
       ) : (
-        <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
-          <div className="w-4/5 bg-white rounded my-12 min-h-[80vh] p-3">
-            <h1 className="text-2xl text-teal-500 my-3">Contest Entries</h1>
-            {records?.content.map((record) => (
-              <div className="flex-col flex space-y-2" key={record.id}>
-                {record.entries.map((entry, i) => (
-                  <ContestEntryJury
-                    index={i}
-                    key={entry.id}
-                    entry={entry}
-                    categoryType={record.category.type}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
+        <div className="w-4/5 bg-white rounded my-12 min-h-[80vh] p-3">
+          <h1 className="text-2xl my-3">
+            <b>Contest: </b>
+            {location?.state.contestInfo.name}
+          </h1>
+          <h1 className="text-xl my-3">
+            <b>Category: </b>
+            {location?.state.categoryInfo.name}
+          </h1>
+          <JuryViewPagination
+            pagination={pagination}
+            setPagination={setPagination}
+            availablePageNumber={entries?.totalPages}
+            limitObjectName="entries"
+            firstPage={entries?.first}
+            lastPage={entries?.last}
+          />
+          {entries?.content.length == 0 ? (
+            <p>No entries here :)</p>
+          ) : (
+            <>
+              {location.state.categoryInfo.type == "SINGLE" ? (
+                <SinglesSection entries={entries} />
+              ) : (
+                <SeriesSection entries={entries} />
+              )}
+            </>
+          )}
         </div>
       )}
     </>

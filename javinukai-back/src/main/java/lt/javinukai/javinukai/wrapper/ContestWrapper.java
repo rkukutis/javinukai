@@ -12,5 +12,6 @@ public class ContestWrapper {
     private Contest contest;
     private ParticipationRequestStatus status;
     private long totalEntries;
+    private long maxUserEntries;
     private long userEntries;
 }
