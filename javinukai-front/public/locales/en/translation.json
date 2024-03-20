@@ -256,7 +256,8 @@
   },
 
   "ContestCard": {
-    "detailsButton": "Details"
+    "detailsButton": "Details",
+    "endContest":"End contest"
   },
 
   "ContestDetailsPage": {

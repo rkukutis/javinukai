@@ -258,7 +258,8 @@
   },
 
   "ContestCard": {
-    "detailsButton": "Plačiau"
+    "detailsButton": "Plačiau",
+    "endContest": "Užbaigti konkursą"
   },
 
   "ContestDetailsPage": {
