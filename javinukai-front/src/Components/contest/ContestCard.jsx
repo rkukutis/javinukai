@@ -38,18 +38,6 @@ export default function ContestCard({ contestInfo }) {
             {t("ContestCard.detailsButton")}
           </Button>
 
-          {(user.role === "ADMIN" || user.role === "MODERATOR") && (
-            <Button
-              id="endContestButton"
-              onClick={() =>
-                alert("add to archive - " + `contest id -> ${contestInfo.id}`)
-              }
-              extraStyle="w-full xl:w-fit bg-red-400 hover:bg-red-200"
-            >
-              {t("ContestCard.endContest")}
-            </Button>
-          )}
-
           <div className="flex items-center space-x-2">
             <img className="inline" src={calendarIcon} />
             <p className="text-slate-600 font-semibold">
