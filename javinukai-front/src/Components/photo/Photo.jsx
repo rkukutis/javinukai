@@ -1,4 +1,4 @@
-export function Photo({ photo, onClick }) {
+export default function Photo({ photo, onClick }) {
   return (
     <img
       onClick={onClick}

@@ -3,6 +3,8 @@ package lt.javinukai.javinukai.repository;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.entity.PhotoCollection;
 import lt.javinukai.javinukai.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -39,4 +41,13 @@ public interface PhotoCollectionRepository extends JpaRepository<PhotoCollection
 
     @Query("SELECT p FROM PhotoCollection p JOIN p.competitionRecord c WHERE c.contest = ?1")
     List<PhotoCollection> findCollectionsInContest (Contest contest);
+
+    @Query(nativeQuery = true, value = "SELECT PHOTO_COLLECTION.* FROM PHOTO_COLLECTION JOIN COMPETITION_RECORD ON PHOTO_COLLECTION.COMPETITION_RECORD_ID=COMPETITION_RECORD.ID WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND COMPETITION_RECORD.CATEGORY_ID = ?2 AND PHOTO_COLLECTION.LIKES_COUNT > ?3")
+    Page<PhotoCollection> findByLikesCountGreaterThan(UUID competitionId, UUID categoryId, int i, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT PHOTO_COLLECTION.* FROM PHOTO_COLLECTION JOIN COMPETITION_RECORD ON PHOTO_COLLECTION.COMPETITION_RECORD_ID=COMPETITION_RECORD.ID WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND COMPETITION_RECORD.CATEGORY_ID = ?2 AND PHOTO_COLLECTION.LIKES_COUNT = ?3")
+    Page<PhotoCollection> findByLikesCountEquals(UUID competitionId, UUID categoryId, int i, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT PHOTO_COLLECTION.* FROM PHOTO_COLLECTION JOIN COMPETITION_RECORD ON PHOTO_COLLECTION.COMPETITION_RECORD_ID=COMPETITION_RECORD.ID WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND COMPETITION_RECORD.CATEGORY_ID = ?2")
+    Page<PhotoCollection> findCollectionsByContestIdAndCategoryId(UUID contestId, UUID categoryId, Pageable pageable);
 }

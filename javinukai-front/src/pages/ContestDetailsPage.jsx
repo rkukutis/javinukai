@@ -130,7 +130,7 @@ function ContestDetailsPage() {
             </div>
           </section>
         </div>
-        {!data?.status && user && (
+        {!data?.status && user.role !== "JURY" && user && (
           <Button onClick={requestMutation}>
             {t("ContestDetailsPage.participate")}
           </Button>

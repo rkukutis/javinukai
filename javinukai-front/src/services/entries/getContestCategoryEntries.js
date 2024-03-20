@@ -1,8 +1,8 @@
-export default async function (contestId, categoryId) {
+export default async function (contestId, categoryId, page, limit, display) {
   const res = await fetch(
     `${
       import.meta.env.VITE_BACKEND
-    }/api/v1/records/contest/${contestId}/category/${categoryId}`,
+    }/api/v1/images/contest/${contestId}/category/${categoryId}?page=${page}&limit=${limit}&display=${display}`,
     {
       method: "GET",
       mode: "cors",

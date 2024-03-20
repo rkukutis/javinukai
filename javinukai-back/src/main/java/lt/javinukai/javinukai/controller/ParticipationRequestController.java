@@ -42,11 +42,6 @@ public class ParticipationRequestController {
         return ResponseEntity.ok().body(participationRequestService.getAllRequests(pageRequest, contains));
     }
 
-//    @GetMapping("/request/{requestId}")
-//    public ResponseEntity<ParticipationRequest> getRequestById(@PathVariable UUID requestId) {
-//        log.info("Data for participation request {} requested", requestId);
-//        return ResponseEntity.ok().body(participationRequestService.getRequestById(requestId));
-//    }
 
     @PostMapping("/request")
     public ParticipationRequest createParticipationRequest(@AuthenticationPrincipal User user,

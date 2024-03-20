@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Photo } from "../photo/Photo";
+import Photo from "../photo/Photo";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import deleteEntry from "../../services/entries/deleteEntry";
