@@ -11,6 +11,7 @@ import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.enums.ImageSize;
 import lt.javinukai.javinukai.exception.NoImagesException;
 import lt.javinukai.javinukai.service.PhotoService;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,8 +32,8 @@ public class PhotoController {
 
     @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
     public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
-                                                        @RequestParam("title") @NotBlank String title,
-                                                        @RequestParam("description") @NotBlank String description,
+                                                        @RequestParam("title") @Length(max = 100, message = "TITLE_LENGTH_EXCEEDED") String title,
+                                                        @RequestParam("description") @NotBlank @Length(max = 1000, message = "DESCRIPTION_LENGTH_EXCEEDED") String description,
                                                         @RequestParam("contestId") @NotNull UUID contestId,
                                                         @RequestParam("categoryId") @NotNull UUID categoryId,
                                                         @AuthenticationPrincipal User participant

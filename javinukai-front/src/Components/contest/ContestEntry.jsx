@@ -1,4 +1,3 @@
-import formatTimestap from "../../utils/formatTimestap";
 import { useState } from "react";
 import { Photo } from "../photo/Photo";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -53,11 +52,16 @@ function EditEntrySection({ onClose, entry }) {
           <section className="form-field">
             <label>{t("EditEntrySection.newName")}</label>
             <input
-              id="surname"
+              id="newName"
               className="form-field__input"
-              {...register("newName")}
+              {...register("newName", {
+                maxLength: {
+                  value: 100,
+                  message: t("imageUpload.titleLength"),
+                },
+              })}
             />
-            {errors.surname && (
+            {errors.newName && (
               <FormFieldError>{errors.newName.message}</FormFieldError>
             )}
           </section>
@@ -66,9 +70,14 @@ function EditEntrySection({ onClose, entry }) {
             <textarea
               id="newDescription"
               className="h-80 border-2 rounded p-3 my-2"
-              {...register("newDescription")}
+              {...register("newDescription", {
+                required: t("imageUpload.photoDescriptionRequired"),
+                maxLength: {
+                  value: 1000,
+                  message: t("imageUpload.descriptionLength")}
+              })}
             />
-            {errors.surname && (
+            {errors.newDescription && (
               <FormFieldError>{errors.newDescription.message}</FormFieldError>
             )}
           </section>
