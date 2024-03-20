@@ -63,7 +63,9 @@
     "photoSelector": "Select or drop photos here",
     "photoUploading": "Uploading...",
     "PhotoNumberError": "This category accepts only single photos",
-    "entryLimitError": "Entry not submitted. You have already reached your entry limit for this category"
+    "entryLimitError": "Entry not submitted. You have already reached your entry limit for this category",
+    "titleLength": "Title must not exceed 100 characters",
+    "descriptionLength": "Description must not exceed 1000 characters"
   },
 
   "uploadImages": {
