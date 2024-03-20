@@ -131,7 +131,7 @@ function ContestDetailsPage() {
           </section>
         </div>
         {!data?.status && user && (
-          <Button onClick={requestMutation}>
+          <Button extraStyle="mt-4" onClick={requestMutation}>
             {t("ContestDetailsPage.participate")}
           </Button>
         )}

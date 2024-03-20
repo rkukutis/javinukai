@@ -26,7 +26,10 @@ export function JuryViewPagination({
   }
 
   return (
-    <div className="xl:grid xl:grid-cols-3 xl:gap-4 bg-slate-50 rounded">
+    <div
+      className="xl:grid xl:grid-cols-3 bg-slate-50 xl:gap-4 px-2
+    shadow rounded"
+    >
       <section className="flex flex-col py-2">
         <label className="mb-1">Page</label>
         <div className="flex space-x-3">
@@ -60,7 +63,7 @@ export function JuryViewPagination({
           {limitObjectName} {t("PaginationSettings.perPage")}
         </label>
         <select
-          className="py-2 px-4 bg-white rounded-md"
+          className="py-2 px-4 bg-white rounded-md shadow"
           onChange={handleLimitChange}
           value={pagination.limit}
         >
@@ -73,7 +76,7 @@ export function JuryViewPagination({
       <section className="flex flex-col py-2">
         <label className="mb-1">Show entries</label>
         <select
-          className="py-2 px-4 bg-white rounded-md"
+          className="py-2 px-4 bg-white rounded-md shadow"
           onChange={handleFilterChange}
           value={pagination.display}
         >

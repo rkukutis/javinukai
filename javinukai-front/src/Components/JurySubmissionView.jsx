@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation, useParams } from "react-router-dom";
 import SpinnerPage from "../pages/SpinnerPage";
 import getContestCategoryEntries from "../services/entries/getContestCategoryEntries";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { JuryViewPagination } from "./JuryViewPagination";
 import { SinglesSection } from "./SinglesSection";
 import SeriesEntry from "./contest/SeriesEntry";
@@ -11,7 +11,11 @@ function SeriesSection({ entries }) {
   return (
     <div>
       {entries.content.map((entry) => (
-        <SeriesEntry key={entry.id} entry={entry} />
+        <SeriesEntry
+          key={entry.collection.id}
+          entry={entry}
+          entries={entries}
+        />
       ))}
     </div>
   );
