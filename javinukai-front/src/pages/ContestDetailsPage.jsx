@@ -101,7 +101,19 @@ function ContestDetailsPage() {
               </div>
             </div>
           </section>
+
           <EditContestSection contestInfo={data} categoriesInfo={categories} />
+          {(user.role === "ADMIN" || user.role === "MODERATOR") && (
+            <Button
+              id="endContestButton"
+              onClick={() =>
+                alert("add to archive - " + `contest id -> ${contestId}`)
+              }
+              extraStyle="w-full xl:w-fit bg-red-400 hover:bg-red-200"
+            >
+              {t("ContestCard.endContest")}
+            </Button>
+          )}
           <section className="text text-slate-700 leading-loose text-lg">
             <h1 className="text-2xl text-teal-500 font-bold py-2">
               {t("ContestDetailsPage.description")}
