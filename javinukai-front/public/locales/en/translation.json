@@ -4,7 +4,8 @@
     "logout": "Log out",
     "manageUsers": "Manage users",
     "createContest": "Create contest",
-    "participationRequests": "Approve requests"
+    "participationRequests": "Approve requests",
+    "archive": "Archive"
   },
 
   "navbar": {
@@ -257,7 +258,8 @@
   },
 
   "ContestCard": {
-    "detailsButton": "Details"
+    "detailsButton": "Details",
+    "endContest":"End contest"
   },
 
   "ContestDetailsPage": {

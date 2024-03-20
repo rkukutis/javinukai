@@ -4,7 +4,8 @@
     "logout": "Atsijungti",
     "manageUsers": "Valdyti vartotojus",
     "createContest": "Sukurti konkursą",
-    "participationRequests": "Patvirtinti dalyvius"
+    "participationRequests": "Patvirtinti dalyvius",
+    "archive": "Archyvas"
   },
 
   "navbar": {
@@ -259,7 +260,8 @@
   },
 
   "ContestCard": {
-    "detailsButton": "Plačiau"
+    "detailsButton": "Plačiau",
+    "endContest": "Užbaigti konkursą"
   },
 
   "ContestDetailsPage": {
