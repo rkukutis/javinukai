@@ -141,7 +141,7 @@ export default function CreateContest({
             htmlFor="thumbnailFile"
             className="block text-sm font-medium text-gray-700"
           >
-            Thumbnail
+            {t("CreateContest.contesThumbnail")}
           </label>
           <input
             onChange={handleThumbnailFileAdd}
@@ -209,7 +209,7 @@ export default function CreateContest({
               htmlFor="maxTotalSubmissions"
               className="block text-sm font-medium text-gray-700"
             >
-              Max total submissions
+              {t("CreateContest.maxTotalSubmissions")}
             </label>
             <input
               min={0}
@@ -233,7 +233,7 @@ export default function CreateContest({
               htmlFor="maxUserSubmissions"
               className="block text-sm font-medium text-gray-700"
             >
-              Max submissions per user
+              {t("CreateContest.maxSubmissionsPerUser")}
             </label>
             <input
               min={0}
@@ -262,7 +262,7 @@ export default function CreateContest({
         <StyledInput
           form="contest-create-form"
           extraStyle="px-2 text-lg font-bold"
-          value="Create contest"
+          value={t("CreateContest.creation")}
           type="submit"
         />
       </div>

@@ -4,6 +4,7 @@ import axios from "axios";
 import FormFieldError from "../FormFieldError";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+
 function CreateCategory({ onCreateCategory, closeModal }) {
   const { t } = useTranslation();
   const {
@@ -63,7 +64,7 @@ function CreateCategory({ onCreateCategory, closeModal }) {
               htmlFor="maxTotalSubmissions"
               className="block text-gray-700"
             >
-              Max Total Submissions
+              {t("CreateCategory.categoryTotalSubmissions")}
             </label>
             <input
               min={0}
@@ -83,7 +84,7 @@ function CreateCategory({ onCreateCategory, closeModal }) {
           </div>
           <div className="mb-4">
             <label htmlFor="maxUserSubmissions" className="block text-gray-700">
-              Max Submissions Per User
+            {t("CategorySelection.categoryMaxUserSubmissions")}
             </label>
             <input
               min={0}
@@ -103,7 +104,7 @@ function CreateCategory({ onCreateCategory, closeModal }) {
           </div>
           <div className="mb-4">
             <label htmlFor="type" className="block text-gray-700">
-              Category Type
+            {t("CreateCategory.categoryType")}
             </label>
             <select
               id="type"

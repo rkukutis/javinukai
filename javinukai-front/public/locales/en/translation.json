@@ -372,8 +372,10 @@
     "categoryDeleteConfirmation": "Are you sure you want to delete this Category?",
     "categoryDeleteYes": "yes",
     "categoryDeleteNo": "no",
-    "searchCategories": "Search Categories",
-    "searchPlaceholder": "Search Categories by name"
+    "maxTotalSubmissions": "Max Submissions",
+    "maxSubmissionsPerUser": "Max Submissions Per User",
+    "contesThumbnail": "Thumbnail",
+    "creation": "Create Contest"
   },
 
   "CreateCategory": {
@@ -384,6 +386,36 @@
     "categoryType": "Category Type",
     "categorySelectType": "Select Category Type",
     "categoryCreateButton": "Create category"
+  },
+
+  "CategorySelection":{
+    "categories": "Categories",
+    "noCategoriesAdded": "No Categories Added yet!",
+    "categoryName": "Name",
+    "categoryType": "Category Type",
+    "categoryMaxSubmissions": "Max Submissions",
+    "categoryMaxUserSubmissions": "Max User Submissions",
+    "addCategoriesFromDataBase": "Add Categories From Data",
+    "CreateNewCategory": "Create And Add Category"
+  },
+
+  "CategoryList":{
+    "categoriesName": "Name",
+    "categoriesMaxTotalSubmissions": "Max Submissions",
+    "categoriesMaxUserSubmissions": "Max User Submissions",
+    "categoriesType": "Category Type",
+    "categoryName": "Name"
+
+  },
+
+  "EditCategoryModal":{
+"editCategory": "Edit Category",
+"categoryName": "Name",
+"categoryDescription": "Description",
+"categoryMaxSubmissions": "Max Submissions",
+"categoryMaxUserSubmissions": "Max User Submissions",
+"categoryType": "Category Type",
+"updateCategory": "Update Category"
   },
 
   "PersonalInformation": {
