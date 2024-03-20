@@ -4,8 +4,10 @@ import calendarIcon from "../../assets/icons/date_range_FILL0_wght400_GRAD0_opsz
 import formatTimestap from "../../utils/formatTimestap";
 import Button from "../Button";
 import { useTranslation } from "react-i18next";
+import useUserStore from "../../stores/userStore";
 
 export default function ContestCard({ contestInfo }) {
+  const { user } = useUserStore((state) => state);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -25,7 +27,11 @@ export default function ContestCard({ contestInfo }) {
         <div className="flex flex-col xl:flex-row space-y-2 lg:space-y-0 items-center xl:space-x-2 w-">
           <Button
             onClick={() =>
-              navigate(`/contest/${contestInfo.id}`, { withCredentials: true })
+              user
+                ? navigate(`/contest/${contestInfo.id}`, {
+                    withCredentials: true,
+                  })
+                : navigate(`/login`)
             }
             extraStyle="w-full xl:w-fit"
           >
