@@ -41,7 +41,6 @@ export function SinglesSection({ entries }) {
     console.log(entry);
     if (likedEnlargedEntries.includes(entry)) {
       removeLikeMutation(entry.collection.id);
-      console.log(likedEnlargedEntries);
       const filtered = likedEnlargedEntries.filter(
         (likedEntry) => likedEntry != entry
       );
@@ -65,7 +64,7 @@ export function SinglesSection({ entries }) {
 
   return (
     <>
-      <div className="xl:grid-cols-4 xl:grid xl:gap-3">
+      <div className="xl:grid-cols-4 xl:grid xl:gap-3 my-3">
         {entries?.content.map((entry) => (
           <SinglePhotoCollection
             key={entry.id}
