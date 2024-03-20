@@ -4,6 +4,7 @@ import Modal from "../Modal";
 import CategoryList from "./CategoryList";
 import Button from "../Button";
 import { SelectedCategoryItem } from "./SelectedCategoryItem";
+import { useTranslation } from "react-i18next";
 
 export function CategorySelection({
   selectedCategories,
@@ -31,21 +32,21 @@ export function CategorySelection({
     );
     setSelectedCategories(filtered);
   }
-
+  const { t } = useTranslation();
   return (
     <section className="bg-slate-50 p-3 my-2 rounded">
-      <h1 className="text-xl mb-2">Categories</h1>
+      <h1 className="text-xl mb-2">{t("CategorySelection.categories")}</h1>
       {selectedCategories.length == 0 ? (
         <p className="text-center py-4 bg-red-100 rounded">
-          No categories added yet!
+          {t("CategorySelection.noCategoriesAdded")}
         </p>
       ) : (
         <>
           <div className="xl:grid-cols-12 xl:grid bg-white p-2 rounded shadow">
-            <h2 className="col-span-4">Name</h2>
-            <h2 className="col-span-2">Type</h2>
-            <h2 className="col-span-2">Max total</h2>
-            <h2 className="col-span-2">Max user</h2>
+            <h2 className="col-span-4">{t("CategorySelection.categoryName")}</h2>
+            <h2 className="col-span-2">{t("CategorySelection.categoryType")}</h2>
+            <h2 className="col-span-2">{t("CategorySelection.categoryMaxSubmissions")}</h2>
+            <h2 className="col-span-2">{t("CategorySelection.categoryMaxUserSubmissions")}</h2>
           </div>
           <div className="space-y-2 mt-2">
             {selectedCategories.map((category) => (
@@ -61,13 +62,13 @@ export function CategorySelection({
       )}
       <div className="mt-2 xl:grid-cols-2 xl:grid xl:gap-4">
         <Button type="button" onClick={() => setAddCategoryModalOpen(true)}>
-          Add categories from database
+        {t("CategorySelection.addCategoriesFromDataBase")}
         </Button>
         <Button
           type="button"
           onClick={() => setCreateCategoryModalIsOpen(true)}
         >
-          Create and add new category
+          {t("CategorySelection.CreateNewCategory")}
         </Button>
       </div>
       <Modal
