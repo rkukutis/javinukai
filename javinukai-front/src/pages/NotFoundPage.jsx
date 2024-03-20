@@ -10,7 +10,7 @@ function NotFoundPage() {
 
   const { t } = useTranslation();
   return (
-    <div className="flex flex-col items-center justify-top h-screen bg-gray-100">
+    <div className=" w-full h-screen flex flex-col items-center justify-top bg-gray-100">
       <div className="text-6xl font-bold m-8 text-red-600">404</div>
       <h1 className="text-3xl font-bold mb-4">
         {t("NotFoundPage.notFoundInfoTitle")}

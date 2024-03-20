@@ -19,6 +19,7 @@
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-http-backend": "^2.5.0",
     "react": "^18.2.0",
+    "react-cookie": "^7.1.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.50.0",
@@ -26,6 +27,7 @@
     "react-i18next": "^14.0.1",
     "react-router-dom": "^6.22.0",
     "react-spinners": "^0.13.8",
+    "universal-cookie": "^7.1.0",
     "zustand": "^4.5.0",
     "zustand-persist": "^0.4.0"
   },
