@@ -357,7 +357,7 @@
   },
 
   "CreateContest": {
-    "contestTitle": "Sukurti konkursą",
+    "contestTitle": "Sukurti Konkursą",
     "contestName": "Pavadinimas",
     "description": "Aprašymas",
     "startDate": "Pradžios Data",
@@ -375,8 +375,11 @@
     "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategoriją?",
     "categoryDeleteYes": "taip",
     "categoryDeleteNo": "ne",
-    "searchCategories": "ieškoti kategorijų",
-    "searchPlaceholder": "ieškoti kategorijų pagal pavadinimą"
+    "maxTotalSubmissions": "Maksimalus pateikimu skaičius",
+    "maxSubmissionsPerUser": "Maksimalus pateikimainu skaičius per vartotoją",
+    "contesThumbnail": "Konkurso Nuotrauka",
+    "creation": "Sukurti Konkursą"
+   
   },
 
   "CreateCategory": {
@@ -384,9 +387,40 @@
     "categoryName": "Pavadinimas",
     "categoryDescription": "Aprašymas",
     "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
-    "categoryType": "kategorijos tipas",
-    "categorySelectType": "pasirinkiti kategorijos tipa",
-    "categoryCreateButton": "sukurti kategorija"
+    "categoryType": "Kategorijos Tipas",
+    "categoryCreateButton": "Sukurti Kategorija"
+  },
+
+  "CategorySelection":{
+    "categories": "Kategorijos",
+    "noCategoriesAdded": "Dar nėra pridėtų kategorijų!",
+    "categoryName": "Pavadinimas",
+    "categoryType": "Kategorijos Tipas",
+    "categoryMaxSubmissions": "Maksimalus pateikimų skaičius",
+    "categoryMaxUserSubmissions": "Maksimalus pateikimainu skaičius per vartotoją",
+    "addCategoriesFromDataBase": "Pridėti kategorijas iš duomenų bazės",
+    "CreateNewCategory": "Sukurti ir pridėti kategoriją"
+  },
+
+  "CategoryList":{
+    "categoriesName": "pavadinimą",
+"categoriesMaxTotalSubmissions": "Maksimalus Kategorijos Pateikimų Skaičius",
+"categoriesMaxUserSubmissions": "Maksimalus Pateikimainu Skaičius Per Vartotoją",
+"categoriesType": "Kategorijos Tipas",
+"categoryName": "Pavadinimas"
+
+
+  },
+
+
+  "EditCategoryModal":{
+    "editCategory": "Redaguoti kategoriją",
+    "categoryName": "Pavadinimas",
+    "categoryDescription": "Aprašymas",
+    "categoryMaxSubmissions": "Maksimalus pateikimų skaičius",
+    "categoryMaxUserSubmissions": "Maksimalus pateikimainu skaičius per vartotoją",
+    "categoryType": "Kategorijos Tipas",
+    "updateCategory": "Atnaujinti kategoriją"
   },
 
   "PersonalInformation": {
