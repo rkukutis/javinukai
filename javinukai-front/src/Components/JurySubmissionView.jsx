@@ -6,8 +6,10 @@ import { useState } from "react";
 import { JuryViewPagination } from "./JuryViewPagination";
 import { SinglesSection } from "./SinglesSection";
 import SeriesEntry from "./contest/SeriesEntry";
+import { useTranslation } from "react-i18next";
 
 function SeriesSection({ entries }) {
+  
   return (
     <div>
       {entries.content.map((entry) => (
@@ -52,7 +54,7 @@ function JurySubmissionView() {
   });
 
   console.log(entries);
-
+  const { t } = useTranslation();
   return (
     <>
       {isFetching ? (
@@ -60,11 +62,11 @@ function JurySubmissionView() {
       ) : (
         <div className="w-4/5 bg-white rounded my-12 min-h-[80vh] p-3">
           <h1 className="text-2xl my-3">
-            <b>Contest: </b>
+            <b>{t("JurySubmissionView.contestTitle")} </b>
             {location?.state.contestInfo.name}
           </h1>
           <h1 className="text-xl my-3">
-            <b>Category: </b>
+            <b>{t("JurySubmissionView.categoryTitle")} </b>
             {location?.state.categoryInfo.name}
           </h1>
           <JuryViewPagination
@@ -76,7 +78,7 @@ function JurySubmissionView() {
             lastPage={entries?.last}
           />
           {entries?.content.length == 0 ? (
-            <p>No entries here :)</p>
+            <p>{t("JurySubmissionView.noEntriesTitle")}</p>
           ) : (
             <>
               {location.state.categoryInfo.type == "SINGLE" ? (

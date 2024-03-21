@@ -255,7 +255,8 @@
     "contestStartDateOption": "Pradžios data",
     "contestEndDateOption": "Pabaigos data",
     "contestTotalEntriesOption": "Pateikimų skaičius",
-    "contestSeachFieldName": "pavadinimą"
+    "contestSeachFieldName": "Pavadinimą",
+    "contestCreatedDate": "Creation date"
   },
 
   "ContestCard": {
@@ -276,7 +277,9 @@
   },
 
   "CategoryItem": {
-    "juryViewEntries": "Peržiūrėti dalyvių pateiktis"
+    "juryViewEntries": "Peržiūrėti dalyvių pateiktis",
+    "entryLimit":"Bendras pateikčių limitas",
+    "defaultLimit": "Numatytas limitas vienam vartotojui"
   },
 
   "UserSubmissionView": {
@@ -286,8 +289,8 @@
   },
 
   "ContestEntry": {
-    "photos": "nuotraukos",
-    "deletionConfirmation": "Ar tikrau norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas",
+    "photos": "Nuotraukos",
+    "deletionConfirmation": "Ar tikrai norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas",
     "editDetailsButton": "Pakeisti pateikties informaciją"
   },
 
@@ -352,50 +355,62 @@
   },
 
   "categoryTypes": {
-    "SINGLE": "Pavienės nuotraukos",
-    "COLLECTION": "Nuotraukų serijos"
+    "SINGLE": "Pavienės",
+    "COLLECTION": "Serijos"
   },
 
   "CreateContest": {
-    "contestTitle": "Sukurti Konkursą",
+    "contestTitle": "Sukurti konkursą",
     "contestName": "Pavadinimas",
     "description": "Aprašymas",
-    "startDate": "Pradžios Data",
-    "endDate": "Pabaigos Data",
+    "startDate": "Pradžios data",
+    "endDate": "Pabaigos data",
     "totalSubmissions": "Maksimalus pateikimų skaičius",
-    "createNewCategory": "Sukurti nauja kategorija",
+    "createNewCategory": "Sukurti naują kategoriją",
     "close": "Uždaryti",
-    "categoryDescription": "aprašymas",
+    "categoryDescription": "Aprašymas",
     "editCategory": "Redaguoti",
-    "deleteCategory": "ištrinti kategoriją",
-    "removeCategory": "pašalinti kategoriją",
-    "addCategory": "pridėti",
-    "contestCreated": "konkursas sukurtas!",
-    "createContestButton": "sukurti konkursą",
+    "deleteCategory": "Ištrinti kategoriją",
+    "removeCategory": "Pašalinti kategoriją",
+    "addCategory": "Pridėti",
+    "contestCreated": "Konkursas sukurtas!",
+    "createContestButton": "Sukurti konkursą",
     "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategoriją?",
-    "categoryDeleteYes": "taip",
-    "categoryDeleteNo": "ne",
-    "maxTotalSubmissions": "Maksimalus pateikimu skaičius",
-    "maxSubmissionsPerUser": "Maksimalus pateikimainu skaičius per vartotoją",
-    "contesThumbnail": "Konkurso Nuotrauka",
-    "creation": "Sukurti Konkursą"
-   
+    "categoryDeleteYes": "Taip",
+    "categoryDeleteNo": "Ne",
+    "maxTotalSubmissions": "Maksimalus pateikimų skaičius",
+    "maxSubmissionsPerUser": "Maksimalus pateikimų skaičius per vartotoją",
+    "contesThumbnail": "Konkurso nuotrauka",
+    "creation": "Sukurti konkursą",
+    "invalidDatesError": "Netinkamos datų reikšmės",
+    "contestDetailsUpdatedSuccess": "Konkurso informacija sėkmingai atnaujinta",
+    "contestDetailsUpdatedError": "Įvyko klaida atnaujinant konkurso informaciją",
+    "contestCategoriesUpdatedSuccess": "Konkurso kategorijų sąrašas sėkmingai atnaujintas",
+    "contestCategoriesUpdatedError": "Įvyko klaida atnaujinant konkurso kategorijas",
+    "contestCreatedSuccess": "Konkursas sukurtas sėkmingai",
+    "contestCreatedError": "Įvyko klaida kuriant konkursą",
+    "thumbnailError": "Galima pridėti tik vieną miniatiūrą",
+    "required": "Šis laukas yra privalomas"
   },
 
   "CreateCategory": {
-    "categoryScreen": "sukurti kategorija",
+    "categoryScreen": "Sukurti kategoriją",
     "categoryName": "Pavadinimas",
     "categoryDescription": "Aprašymas",
     "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
-    "categoryType": "Kategorijos Tipas",
-    "categoryCreateButton": "Sukurti Kategorija"
+    "categoryType": "Kategorijos tipas",
+    "categoryCreateButton": "Sukurti kategoriją",
+    "categoryCreateSuccess": "Kategorija sukurta sėkmingai",
+    "categoryCreateError": "Kuriant kategoriją įvyko klaida",
+    "required": "Šis laukas yra privalomas"
+    
   },
 
   "CategorySelection":{
     "categories": "Kategorijos",
     "noCategoriesAdded": "Dar nėra pridėtų kategorijų!",
     "categoryName": "Pavadinimas",
-    "categoryType": "Kategorijos Tipas",
+    "categoryType": "Kategorijos tipas",
     "categoryMaxSubmissions": "Maksimalus pateikimų skaičius",
     "categoryMaxUserSubmissions": "Maksimalus pateikimainu skaičius per vartotoją",
     "addCategoriesFromDataBase": "Pridėti kategorijas iš duomenų bazės",
@@ -404,12 +419,12 @@
 
   "CategoryList":{
     "categoriesName": "pavadinimą",
-"categoriesMaxTotalSubmissions": "Maksimalus Kategorijos Pateikimų Skaičius",
-"categoriesMaxUserSubmissions": "Maksimalus Pateikimainu Skaičius Per Vartotoją",
-"categoriesType": "Kategorijos Tipas",
-"categoryName": "Pavadinimas"
-
-
+    "categoriesNameCapital": "Pavadinimą",
+    "categoriesMaxTotalSubmissions": "Maksimalus kategorijos pateikimų skaičius",
+    "categoriesMaxUserSubmissions": "Maksimalus pateikimų skaičius per vartotoją",
+    "categoriesType": "Kategorijos tipas",
+    "categoryName": "Pavadinimas",
+    "categoryTitle": "Kategorijų"
   },
 
 
@@ -418,9 +433,12 @@
     "categoryName": "Pavadinimas",
     "categoryDescription": "Aprašymas",
     "categoryMaxSubmissions": "Maksimalus pateikimų skaičius",
-    "categoryMaxUserSubmissions": "Maksimalus pateikimainu skaičius per vartotoją",
-    "categoryType": "Kategorijos Tipas",
-    "updateCategory": "Atnaujinti kategoriją"
+    "categoryMaxUserSubmissions": "Maksimalus pateikimų skaičius per vartotoją",
+    "categoryType": "Kategorijos tipas",
+    "updateCategory": "Atnaujinti kategoriją",
+    "required": "Šis laukas yra privalomas",
+    "categoryUpdatedSuccess": "Kategorija sėkmingai atnaujinta",
+    "categoryUpdatedError": "Įvyko klaida atnaujinant kategoriją"
   },
 
   "PersonalInformation": {
@@ -436,7 +454,7 @@
 
   "ParticipationRequest": {
     "fieldName": "Vardas",
-    "fieldSurname": "Paverdė",
+    "fieldSurname": "Pavardė",
     "fieldEmail": "El. paštas",
     "fieldBirthYear": "Gimimo metai",
     "fieldPhoneNumber": "Telefono numeris",
@@ -471,7 +489,34 @@
   "NotFoundPage": {
     "notFoundInfoTitle": "Puslapis nerastas",
     "notFoundInfoMessage": "Puslapis, kurio ieškote nebuvo rastas",
-    "error": "klaida",
+    "error": "Klaida",
     "backToHomepage": "Grižti į pradinį puslapį"
+  },
+
+  "SeriesEntry":{
+    "description": "Aprašymas"
+  },
+
+  "ContestPreview": {
+    "contestPreviewTitle": "Konkursų peržiūros",
+    "loadingTitle": "Kraunama...",
+    "totalSubmissionsTitle": "Iš viso pateikčių",
+    "startDate": "Pradžios data:",
+    "endDate": "Pabaigos data:"
+  },
+
+  "JurySubmissionView": {
+    "contestTitle": "Konkursas:",
+    "categoryTitle": "Kategorija:",
+    "noEntriesTitle": "Nėra įrašų"
+  },
+
+  "JuryViewPagination": {
+    "pageTitle": "Puslapis",
+    "showEntriesTitle": "Rodytį pateiktis",
+    "showAll": "Visas",
+    "showLiked": "Tik patikusias",
+    "showDisliked": "Tik nepatikusias"
   }
 }
+
