@@ -47,10 +47,10 @@ function CategoryList({ onAddCategory, selectedCategories }) {
         pagination={paginationSettings}
         setPagination={setPaginationSettings}
         availablePageNumber={data?.totalPages}
-        limitObjectName="categories"
+        limitObjectName={t("CategoryList.categoryTitle")}
         sortFieldOptions={
           <>
-            <option value="name">{t("CategoryList.categoriesName")}</option>
+            <option value="name">{t("CategoryList.categoriesNameCapital")}</option>
             <option value="maxTotalSubmissions">{t("CategoryList.categoriesMaxTotalSubmissions")}</option>
             <option value="maxUserSubmissions">{t("CategoryList.categoriesMaxUserSubmissions")}</option>
             <option value="type">{t("CategoryList.categoriesType")}</option>

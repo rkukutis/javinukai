@@ -62,7 +62,8 @@ function ContestsPage() {
                 <option value="totalSubmissions">
                   {t("ContestsPage.contestTotalEntriesOption")}
                 </option>
-                <option value="createdAt">Creation Date</option>
+                <option value="createdAt">
+                  {t("ContestsPage.contestCreatedDate")}</option>
               </>
             }
             lastPage={data?.last}

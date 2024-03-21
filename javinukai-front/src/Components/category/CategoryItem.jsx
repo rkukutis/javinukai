@@ -45,8 +45,8 @@ export function CategoryItem({
       {isExpanded && (
         <div className="text border-2 border-t-white border-teal-400 rounded-b-md py-2 px-3 text-slate-700 leading-relaxed flex-col space-y-3">
           <div className="flex xl:flex-row flex-col xl:space-x-3">
-            <p>Total entry limit: {categoryInfo.maxTotalSubmissions}</p>
-            <p>Default limit per user: {categoryInfo.maxUserSubmissions}</p>
+            <p>{t("CategoryItem.entryLimit")}{categoryInfo.maxTotalSubmissions}</p>
+            <p>{t("CategoryItem.defaultLimit")}{categoryInfo.maxUserSubmissions}</p>
           </div>
           <p>{categoryInfo.description}</p>
           {user && (
