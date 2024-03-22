@@ -5,6 +5,7 @@ import StyledInput from "../StyledInput";
 import { useTranslation } from "react-i18next";
 function EditCategoryModal({ category, onClose, onUpdateCategory }) {
   const {
+    
     register,
     handleSubmit,
     formState: { errors },
@@ -18,17 +19,18 @@ function EditCategoryModal({ category, onClose, onUpdateCategory }) {
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success("Category updated successfully");
+        toast.success(t("EditCategoryModal.categoryUpdatedSuccess"));
         onUpdateCategory(res.data);
         onClose();
       })
-      .catch(() => toast.error("An error occured while updating category"));
+      .catch(() => toast.error(t("EditCategoryModal.categoryUpdatedError")));
   };
+
+  const { t } = useTranslation();
 
   if (!category) {
     return null;
   }
-  const { t } = useTranslation();
   return (
     <div className="p-6 rounded w-[50vw] h-fit">
       <h2>{t("EditCategoryModal.editCategory")}</h2>
@@ -45,7 +47,7 @@ function EditCategoryModal({ category, onClose, onUpdateCategory }) {
             className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
           />
           {errors.categoryName && (
-            <p className="text-red-500">This field is required</p>
+            <p className="text-red-500">{t("EditCategoryModal.required")}</p>
           )}
         </div>
         <div className="mb-8 h-[40vh]">

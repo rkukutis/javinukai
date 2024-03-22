@@ -31,7 +31,7 @@ export function JuryViewPagination({
     shadow rounded"
     >
       <section className="flex flex-col py-2">
-        <label className="mb-1">Page</label>
+        <label className="mb-1">{t("JuryViewPagination.pageTitle")}</label>
         <div className="flex space-x-3">
           <Button
             extraStyle="w-full"
@@ -74,15 +74,15 @@ export function JuryViewPagination({
         </select>
       </section>
       <section className="flex flex-col py-2">
-        <label className="mb-1">Show entries</label>
+        <label className="mb-1">{t("JuryViewPagination.showEntriesTitle")}</label>
         <select
           className="py-2 px-4 bg-white rounded-md shadow"
           onChange={handleFilterChange}
           value={pagination.display}
         >
-          <option value="all">All {limitObjectName}</option>
-          <option value="liked">Only liked {limitObjectName}</option>
-          <option value="unliked">Only unliked {limitObjectName}</option>
+          <option value="all">{t("JuryViewPagination.showAll")} {limitObjectName}</option>
+          <option value="liked">{t("JuryViewPagination.showLiked")} {limitObjectName}</option>
+          <option value="unliked">{t("JuryViewPagination.showDisliked")} {limitObjectName}</option>
         </select>
       </section>
     </div>

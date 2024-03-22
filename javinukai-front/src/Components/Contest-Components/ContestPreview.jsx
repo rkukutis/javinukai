@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 function ContestPreview() {
   const [contests, setContests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchContests = async () => {
@@ -23,9 +25,9 @@ function ContestPreview() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">Contest Previews</h2>
+      <h2 className="text-2xl font-semibold mb-4">{t("ContestPreview.contestPreviewTitle")}</h2>
       {loading ? (
-        <p className="text-gray-600">Loading...</p>
+        <p className="text-gray-600">{t("ContestPreview.loadingTitle")}</p>
       ) : (
         <ul>
           {contests.map((contest) => (
@@ -35,13 +37,13 @@ function ContestPreview() {
               </h3>
               <p className="text-gray-600 mb-2">{contest.description}</p>
               <p className="text-gray-700 mb-2">
-                Total Submissions: {contest.totalSubmissions}
+              {t("ContestPreview.totalSubmissionsTitle")}{contest.totalSubmissions}
               </p>
               <p className="text-gray-700 mb-2">
-                Start Date: {new Date(contest.startDate).toLocaleDateString()}
+              {t("ContestPreview.startDate")}{new Date(contest.startDate).toLocaleDateString()}
               </p>
               <p className="text-gray-700 mb-2">
-                End Date: {new Date(contest.endDate).toLocaleDateString()}
+              {t("ContestPreview.endDate")}{new Date(contest.endDate).toLocaleDateString()}
               </p>
             </li>
           ))}

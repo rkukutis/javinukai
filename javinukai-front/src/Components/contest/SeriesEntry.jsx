@@ -92,7 +92,7 @@ export default function SeriesEntry({ entry, entries }) {
           </Button>
           <div className="absolute right-2 bottom-2 flex space-x-2">
             <Button onClick={() => setDescriptionVisible(!descriptionVisible)}>
-              Description
+              {t("SeriesEntry.description")}
             </Button>
             <LikeButton isLiked={entry.liked} onClick={handleLikeClick} />
           </div>
