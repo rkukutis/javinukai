@@ -519,5 +519,12 @@
     "showAll": "All",
     "showLiked": "Only liked",
     "showDisliked": "Only disliked"
+  },
+  
+  "ArchivePage": {
+    "contestName":"Contest name",
+    "contestDescription":"Contest description",
+    "startDate":"Start date",
+    "endDate":"End date"
   }
 }

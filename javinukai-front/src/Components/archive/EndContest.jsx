@@ -1,9 +1,8 @@
 import { useState } from "react";
-import getPastCompetitionRecord from "../services/archive/getPastCompetitionRecord";
-import PaginationSettings from "../Components/PaginationSettings";
+import PaginationSettings from "../PaginationSettings";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import ArchivedContestCard from "../Components/archive/ArchivedContestCard";
+import getCompetingUsers from "../../services/users/getCompetingUsers";
 
 const defaultPagination = {
   page: 0,
@@ -13,8 +12,7 @@ const defaultPagination = {
   searchedField: null,
 };
 
-function ArchivePage() {
-
+function EndContest() {
   const [paginationSettings, setPaginationSettings] =
     useState(defaultPagination);
   const { data, isFetching } = useQuery({
@@ -27,7 +25,7 @@ function ArchivePage() {
       paginationSettings.searchedField,
     ],
     queryFn: () =>
-      getPastCompetitionRecord(
+      getCompetingUsers(
         paginationSettings.page,
         paginationSettings.limit,
         paginationSettings.sortBy,
@@ -72,4 +70,4 @@ function ArchivePage() {
   );
 }
 
-export default ArchivePage;
+export default EndContest;

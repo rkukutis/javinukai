@@ -3,13 +3,16 @@ package lt.javinukai.javinukai.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.response.ArchivingResponse;
-import lt.javinukai.javinukai.entity.CompetitionRecord;
-import lt.javinukai.javinukai.entity.PastCompetitionRecord;
-import lt.javinukai.javinukai.repository.ArchiveRepository;
+import lt.javinukai.javinukai.entity.*;
+import lt.javinukai.javinukai.repository.ArchivedContestRepository;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
+import lt.javinukai.javinukai.repository.ContestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,45 +22,79 @@ import java.util.UUID;
 @Slf4j
 public class ArchiveService {
 
+    private final ContestRepository contestRepository;
     private final CompetitionRecordRepository competitionRecordRepository;
-    private final ArchiveRepository archiveRepository;
+    private final ArchivedContestRepository archivedContestRepository;
 
     @Autowired
-    public ArchiveService(ArchiveRepository archiveRepository,
-                          CompetitionRecordRepository competitionRecordRepository) {
-        this.archiveRepository = archiveRepository;
+    public ArchiveService(CompetitionRecordRepository competitionRecordRepository,
+                          ContestRepository contestRepository,
+                          ArchivedContestRepository archivedContestRepository) {
         this.competitionRecordRepository = competitionRecordRepository;
+        this.contestRepository = contestRepository;
+        this.archivedContestRepository= archivedContestRepository;
     }
 
-    public ArchivingResponse endAndAddToArchive(UUID contestID) {
+    @Transactional
+    public ArchivingResponse addToArchive(UUID contestID, List<String> winners) {
 
-        if (competitionRecordRepository.existsById(contestID)) {
+        if (contestRepository.existsById(contestID)) {
+
+            final Contest contestToArchive = contestRepository.findById(contestID).orElseThrow(
+                    () -> new EntityNotFoundException("Contest was not found with ID: " + contestID));
+
+            final PastCompetition pastContest = PastCompetition.builder()
+                    .contestID(contestID)
+                    .contestName(contestToArchive.getName())
+                    .contestDescription(contestToArchive.getDescription())
+                    .categories(null)
+                    .startDate(contestToArchive.getStartDate())
+                    .endDate(contestToArchive.getEndDate())
+                    .participants(null)
+                    .winners(winners)
+                    .build();
+
+            final List<Category> contestCategories = contestToArchive.getCategories();
+            final List<String> categoriesToStore = new ArrayList<>();
+            for (Category c : contestCategories) {
+                categoriesToStore.add(c.getName());
+            }
+            pastContest.setCategories(categoriesToStore);
 
             final List<CompetitionRecord> competitionRecords = competitionRecordRepository.findByContestId(contestID);
-            final List<PastCompetitionRecord> pastCompetitionRecords = new ArrayList<>();
-
-            for (CompetitionRecord r : competitionRecords) {
-                PastCompetitionRecord pastCompetition = PastCompetitionRecord.builder()
-                        .firstName(r.getUser().getName())
-                        .lastName(r.getUser().getSurname())
-                        .email(r.getUser().getEmail())
-                        .categoryName(r.getCategory().getName())
-                        .categoryDescription(r.getCategory().getDescription())
-                        .contestName(r.getContest().getName())
-                        .contestDescription(r.getContest().getDescription())
-                        .build();
-                archiveRepository.save(pastCompetition);
-                pastCompetitionRecords.add(pastCompetition);
+            final List<String> participantsToStore = new ArrayList<>();
+            for (CompetitionRecord cr : competitionRecords) {
+                String userCSV = String.format("%s,%s,%s",
+                        cr.getUser().getName(),
+                        cr.getUser().getSurname(),
+                        cr.getUser().getEmail());
+                if (!participantsToStore.contains(userCSV)) {
+                    participantsToStore.add(userCSV);
+                }
             }
+            pastContest.setParticipants(participantsToStore);
+
+            archivedContestRepository.save(pastContest);
             log.info("{}: Contest was archived with ID: {}", this.getClass().getName(), contestID);
 
             return ArchivingResponse.builder()
-                    .pastCompetitionRecords(pastCompetitionRecords)
+                    .pastCompetition(pastContest)
                     .httpStatus(HttpStatus.CREATED)
-                    .message("")
+                    .message("Request for archiving a contest")
                     .build();
         } else {
             throw new EntityNotFoundException("Contest was not found with ID: " + contestID);
+        }
+    }
+
+    public Page<PastCompetition> retrieveAllRecords(Pageable pageable, String keyword) {
+
+        if (keyword == null || keyword.isEmpty()) {
+            log.info("{}: Retrieving all past competition record list from database", this.getClass());
+            return archivedContestRepository.findAll(pageable);
+        } else {
+            log.info("{}: Retrieving past competition records by name", this.getClass().getName());
+            return archivedContestRepository.findByContestNameContainingIgnoreCase(keyword, pageable);
         }
     }
 }

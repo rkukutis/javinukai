@@ -1,10 +1,8 @@
 package lt.javinukai.javinukai.dto.response;
 
 import lombok.*;
-import lt.javinukai.javinukai.entity.PastCompetitionRecord;
+import lt.javinukai.javinukai.entity.PastCompetition;
 import org.springframework.http.HttpStatus;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -12,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ArchivingResponse {
-    private List<PastCompetitionRecord> pastCompetitionRecords;
+    private PastCompetition pastCompetition;
     private HttpStatus httpStatus;
     private String message;
 }

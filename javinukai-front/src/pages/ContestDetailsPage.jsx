@@ -14,9 +14,13 @@ import useUserStore from "../stores/userStore";
 import { ParticipationStatus } from "../Components/contest/ParticipationStatus";
 import Modal from "../Components/Modal";
 import CreateContest from "../Components/Contest-Components/CreateContest";
+import EndContest from "../Components/archive/EndContest";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalEndOpen, setModalEndOpen] = useState(false);
+  const { user } = useUserStore((state) => state);
+  const { t } = useTranslation();
   return (
     <div>
       <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
@@ -26,6 +30,21 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
           initialCategories={categoriesInfo}
         />
       </Modal>
+
+      {(user.role === "ADMIN" || user.role === "MODERATOR") && (
+        <div>
+          <Button
+            id="endContestButton"
+            onClick={() => setModalEndOpen(true)}
+            extraStyle="w-full xl:w-fit bg-red-400 hover:bg-red-200"
+          >
+            {t("ContestCard.endContest")}
+          </Button>
+          <Modal isOpen={modalEndOpen} setIsOpen={setModalEndOpen}>
+            <EndContest contestInfo={contestInfo?.contest} />
+          </Modal>
+        </div>
+      )}
     </div>
   );
 }
@@ -103,17 +122,6 @@ function ContestDetailsPage() {
           </section>
 
           <EditContestSection contestInfo={data} categoriesInfo={categories} />
-          {(user.role === "ADMIN" || user.role === "MODERATOR") && (
-            <Button
-              id="endContestButton"
-              onClick={() =>
-                alert("add to archive - " + `contest id -> ${contestId}`)
-              }
-              extraStyle="w-full xl:w-fit bg-red-400 hover:bg-red-200"
-            >
-              {t("ContestCard.endContest")}
-            </Button>
-          )}
           <section className="text text-slate-700 leading-loose text-lg">
             <h1 className="text-2xl text-teal-500 font-bold py-2">
               {t("ContestDetailsPage.description")}
