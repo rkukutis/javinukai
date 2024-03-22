@@ -16,14 +16,16 @@ import Modal from "../Components/Modal";
 import CreateContest from "../Components/Contest-Components/CreateContest";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
+  const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <div>
       <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
         <CreateContest
-          initialContestInfo={contestInfo?.contest}
-          initialCategories={categoriesInfo}
+        title={t("ContestDetailsPage.contestEditTitle")}
+        initialContestInfo={contestInfo?.contest}
+        initialCategories={categoriesInfo}
         />
       </Modal>
     </div>
