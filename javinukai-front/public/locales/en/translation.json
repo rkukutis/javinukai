@@ -63,7 +63,9 @@
     "photoSelector": "Select or drop photos here",
     "photoUploading": "Uploading...",
     "PhotoNumberError": "This category accepts only single photos",
-    "entryLimitError": "Entry not submitted. You have already reached your entry limit for this category"
+    "entryLimitError": "Entry not submitted. You have already reached your entry limit for this category",
+    "titleLength": "Title must not exceed 100 characters",
+    "descriptionLength": "Description must not exceed 1000 characters"
   },
 
   "uploadImages": {
@@ -251,7 +253,8 @@
     "contestStartDateOption": "Start date",
     "contestEndDateOption": "End date",
     "contestTotalEntriesOption": "Entry number",
-    "contestSeachFieldName": "name"
+    "contestSeachFieldName": "Name",
+    "contestCreatedDate": "Creation date"
   },
 
   "ContestCard": {
@@ -260,7 +263,7 @@
 
   "ContestDetailsPage": {
     "contest": "Contest",
-    "startDate": "Start Date",
+    "startDate": "Start date",
     "endDate": "End date",
     "description": "Description",
     "categories": "Categories",
@@ -272,7 +275,9 @@
   },
 
   "CategoryItem": {
-    "juryViewEntries": "View contestant entries"
+    "juryViewEntries": "View contestant entries",
+    "entryLimit":"Total entry limit:",
+    "defaultLimit": "Default limit per user:"
   },
 
   "UserSubmissionView": {
@@ -282,7 +287,7 @@
   },
 
   "ContestEntry": {
-    "photos": "photos",
+    "photos": "Photos",
     "deletionConfirmation": "Are you sure you want to delete this entry? This action is irreversible",
     "editDetailsButton": "Edit entry details"
   },
@@ -298,7 +303,7 @@
     "userMaxCollectionsOption": "Max collections per category",
     "userIsEnabledOption": "Enabled",
     "userisNonLockedOption": "Blocked",
-    "userSeachFieldName": "surname",
+    "userSeachFieldName": "Surname",
     "limits": "Limits",
     "addNewUserButton": "Add new user"
   },
@@ -354,36 +359,86 @@
   },
 
   "CreateContest": {
-    "contestTitle": "Create Contest",
-    "contestName": "Contest Name",
+    "contestTitle": "Create contest",
+    "contestName": "Contest name",
     "description": "Description",
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "totalSubmissions": "Total Submissions",
-    "createNewCategory": "Create New Category",
-    "close": "close",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "totalSubmissions": "Total submissions",
+    "createNewCategory": "Create new category",
+    "close": "Close",
     "categoryDescription": "Description",
-    "editCategory": "Edit Category",
-    "deleteCategory": "Delete Category",
-    "removeCategory": "remove",
-    "addCategory": "add",
+    "editCategory": "Edit category",
+    "deleteCategory": "Delete category",
+    "removeCategory": "Remove",
+    "addCategory": "Add",
     "contestCreated": "Contest created!",
     "createContestButton": "Create contest",
-    "categoryDeleteConfirmation": "Are you sure you want to delete this Category?",
-    "categoryDeleteYes": "yes",
-    "categoryDeleteNo": "no",
-    "searchCategories": "Search Categories",
-    "searchPlaceholder": "Search Categories by name"
+    "categoryDeleteConfirmation": "Are you sure you want to delete this category?",
+    "categoryDeleteYes": "Yes",
+    "categoryDeleteNo": "No",
+    "maxTotalSubmissions": "Max submissions",
+    "maxSubmissionsPerUser": "Max submissions per user",
+    "contesThumbnail": "Thumbnail",
+    "creation": "Create contest",
+    "invalidDatesError": "Invalid date values",
+    "contestDetailsUpdatedSuccess": "Contest details updated successfully",
+    "contestDetailsUpdatedError": "An error has occured updating contest details",
+    "contestCategoriesUpdatedSuccess": "Contest category list updated successfully",
+    "contestCategoriesUpdatedError": "An error has occured updating contest categories",
+    "contestCreatedSuccess": "Contest created successfully",
+    "contestCreatedError": "An error has occured while creating an contest",
+    "thumbnailError": "Only one thumbnail can be added",
+    "required": "Required"
   },
 
   "CreateCategory": {
-    "categoryScreen": "Create Category",
+    "categoryScreen": "Create category",
     "categoryName": "Name",
     "categoryDescription": "Description",
     "categoryTotalSubmissions": "Total submissions",
-    "categoryType": "Category Type",
-    "categorySelectType": "Select Category Type",
-    "categoryCreateButton": "Create category"
+    "categoryType": "Category type",
+    "categorySelectType": "Select category type",
+    "categoryCreateButton": "Create category",
+    "categoryCreateSuccess": "Category created successfully",
+    "categoryCreateError": "Error creating category",
+    "required": "Required"
+  },
+
+  "CategorySelection":{
+    "categories": "Categories",
+    "noCategoriesAdded": "No categories added yet!",
+    "categoryName": "Name",
+    "categoryType": "Category type",
+    "categoryMaxSubmissions": "Max submissions",
+    "categoryMaxUserSubmissions": "Max user submissions",
+    "addCategoriesFromDataBase": "Add categories from data",
+    "CreateNewCategory": "Create and add category"
+  },
+
+  "CategoryList":{
+    "categoriesName": "name",
+    "categoriesNameCapital": "Name",
+    "categoriesMaxTotalSubmissions": "Max submissions",
+    "categoriesMaxUserSubmissions": "Max user submissions",
+    "categoriesType": "Category type",
+    "categoryName": "Name",
+    "categoryTitle": "Categories"
+
+  },
+
+  "EditCategoryModal":{
+"editCategory": "Edit category",
+"categoryName": "Name",
+"categoryDescription": "Description",
+"categoryMaxSubmissions": "Max submissions",
+"categoryMaxUserSubmissions": "Max user submissions",
+"categoryType": "Category type",
+"updateCategory": "Update category",
+"required": "Required",
+"categoryUpdatedSuccess": "Category updated successfully",
+"categoryUpdatedError": "An error occured while updating category"
+
   },
 
   "PersonalInformation": {
@@ -434,7 +489,33 @@
   "NotFoundPage": {
     "notFoundInfoTitle": "Page not found",
     "notFoundInfoMessage": "Page that you are seeking was not found",
-    "error": "error",
+    "error": "Error",
     "backToHomepage": "Return to homepage"
+  },
+
+  "SeriesEntry":{
+    "description": "Description"
+  },
+
+  "ContestPreview": {
+    "contestPreviewTitle": "Contest previews",
+    "loadingTitle": "Loading...",
+    "totalSubmissionsTitle": "Total submissions:",
+    "startDate": "Start date:",
+    "endDate": "End date:"
+  },
+
+  "JurySubmissionView": {
+    "contestTitle": "Contest:",
+    "categoryTitle": "Category:",
+    "noEntriesTitle": "No entries here:"
+  },
+
+  "JuryViewPagination": {
+    "pageTitle": "Page",
+    "showEntriesTitle": "Show entries",
+    "showAll": "All",
+    "showLiked": "Only liked",
+    "showDisliked": "Only disliked"
   }
 }

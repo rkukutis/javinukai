@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import FormFieldError from "../FormFieldError";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+
 function CreateCategory({ onCreateCategory, closeModal }) {
   const { t } = useTranslation();
   const {
@@ -19,10 +20,10 @@ function CreateCategory({ onCreateCategory, closeModal }) {
       })
       .then((res) => {
         onCreateCategory(res.data);
-        toast.success("Category created successfully");
+        toast.success(t("CreateCategory.categoryCreateSuccess"));
         closeModal();
       })
-      .catch(() => toast.error("Error creating category"));
+      .catch(() => toast.error(t("CreateCategory.categoryCreateError")));
   };
 
   return (
@@ -35,7 +36,7 @@ function CreateCategory({ onCreateCategory, closeModal }) {
           <input
             type="text"
             id="name"
-            {...register("name", { required: "Required" })}
+            {...register("name", { required: t('CreateCategory.required') })}
             className={`mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500 ${
               errors.name ? "border-red-500" : ""
             }`}
@@ -50,7 +51,7 @@ function CreateCategory({ onCreateCategory, closeModal }) {
           </label>
           <textarea
             id="description"
-            {...register("description", { required: "Required" })}
+            {...register("description", { required: t('CreateCategory.required') })}
             className={`mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500 `}
           />
           {errors.description && (
@@ -63,14 +64,14 @@ function CreateCategory({ onCreateCategory, closeModal }) {
               htmlFor="maxTotalSubmissions"
               className="block text-gray-700"
             >
-              Max Total Submissions
+              {t("CreateCategory.categoryTotalSubmissions")}
             </label>
             <input
               min={0}
               type="number"
               id="maxTotalSubmissions"
               {...register("maxTotalSubmissions", {
-                required: "Required",
+                required: t('CreateCategory.required'),
                 min: 1,
               })}
               className={`mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500`}
@@ -83,14 +84,14 @@ function CreateCategory({ onCreateCategory, closeModal }) {
           </div>
           <div className="mb-4">
             <label htmlFor="maxUserSubmissions" className="block text-gray-700">
-              Max Submissions Per User
+            {t("CategorySelection.categoryMaxUserSubmissions")}
             </label>
             <input
               min={0}
               type="number"
               id="maxUserSubmissions"
               {...register("maxUserSubmissions", {
-                required: "Required",
+                required: t('CreateCategory.required'),
                 min: 1,
               })}
               className={`mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500`}
@@ -103,20 +104,18 @@ function CreateCategory({ onCreateCategory, closeModal }) {
           </div>
           <div className="mb-4">
             <label htmlFor="type" className="block text-gray-700">
-              Category Type
+            {t("CreateCategory.categoryType")}
             </label>
             <select
               id="type"
-              {...register("type", { required: "Pleae Select a type" })}
+              {...register("type", { required: t('CreateCategory.required') })}
               className={`mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500 ${
                 errors.type ? "border-red-500" : ""
               }`}
             >
               <option value="">{t("CreateCategory.categorySelectType")}</option>
               <option value="SINGLE">{t("categoryTypes.SINGLE")}</option>
-              <option value="COLLECTION">
-                {t("categoryTypes.COLLECTION")}
-              </option>
+              <option value="COLLECTION">{t("categoryTypes.COLLECTION")}</option>
             </select>
 
             {errors.type && (

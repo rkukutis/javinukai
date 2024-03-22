@@ -42,7 +42,7 @@ export default function CreateContest({
     const endDate = new Date(data.endDate).toISOString();
 
     if (isNaN(Date.parse(startDate)) || isNaN(Date.parse(endDate))) {
-      toast.error("Invalid date values");
+      toast.error(t("CreateContest.invalidDatesError"));
       return;
     }
     const contestData = {
@@ -64,10 +64,10 @@ export default function CreateContest({
           }
         )
         .then(() => {
-          toast.success("Contest details updated successfully");
+          toast.success(t("CreateContest.contestDetailsUpdatedSuccess"));
           queryClient.invalidateQueries(["contest", "contestCategories"]);
         })
-        .catch(() => toast.error("An error has occured"));
+        .catch(() => toast.error(t("CreateContest.contestDetailsUpdatedError")));
       // update categories separately
       if (initialCategories != selectedCategories) {
         await axios
@@ -81,10 +81,10 @@ export default function CreateContest({
             }
           )
           .then(() => {
-            toast.success("Contest category list updated successfully");
+            toast.success(t("CreateContest.contestCategoriesUpdatedSuccess"));
             queryClient.invalidateQueries(["contest", "contestCategories"]);
           })
-          .catch(() => toast.error("An error has occured"));
+          .catch(() => toast.error(t("CreateContest.contestCategoriesUpdatedError")));
       }
     } else {
       await axios
@@ -95,15 +95,15 @@ export default function CreateContest({
             withCredentials: true,
           }
         )
-        .then(() => toast.success("Contest created successfully"))
-        .catch(() => toast.error("Ann error has occured"));
+        .then(() => toast.success(t("CreateContest.contestCreatedSuccess")))
+        .catch(() => toast.error(t("CreateContest.contestCreatedError")));
     }
   };
 
   function handleThumbnailFileAdd(e) {
     e.preventDefault();
     if (e.target.files.length != 1) {
-      toast.error("Only one thumbnail can be added");
+      toast.error(t("CreateContest.thumbnailError"));
       return;
     }
     setThumbnailFile(e.target.files[0]);
@@ -129,7 +129,7 @@ export default function CreateContest({
           <input
             type="text"
             id="name"
-            {...register("name", { required: "Required" })}
+            {...register("name", { required: t("CreateContest.required") })}
             className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
           />
           {errors.name && (
@@ -141,7 +141,7 @@ export default function CreateContest({
             htmlFor="thumbnailFile"
             className="block text-sm font-medium text-gray-700"
           >
-            Thumbnail
+            {t("CreateContest.contesThumbnail")}
           </label>
           <input
             onChange={handleThumbnailFileAdd}
@@ -159,7 +159,7 @@ export default function CreateContest({
           </label>
           <textarea
             id="description"
-            {...register("description", { required: "Required" })}
+            {...register("description", { required: t("CreateContest.required") })}
             className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
           />
           {errors.description && (
@@ -178,7 +178,7 @@ export default function CreateContest({
               type="date"
               id="startDate"
               {...register("startDate", {
-                required: "Required",
+                required: t("CreateContest.required"),
                 min: { value: 1 },
               })}
               className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
@@ -197,7 +197,7 @@ export default function CreateContest({
             <input
               type="date"
               id="endDate"
-              {...register("endDate", { required: "Required", min: 1 })}
+              {...register("endDate", { required: t("CreateContest.required"), min: 1 })}
               className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
             />
             {errors.endDate && (
@@ -209,7 +209,7 @@ export default function CreateContest({
               htmlFor="maxTotalSubmissions"
               className="block text-sm font-medium text-gray-700"
             >
-              Max total submissions
+              {t("CreateContest.maxTotalSubmissions")}
             </label>
             <input
               min={0}
@@ -217,7 +217,7 @@ export default function CreateContest({
               type="number"
               id="maxTotalSubmissions"
               {...register("maxTotalSubmissions", {
-                required: "Required",
+                required: t("CreateContest.required"),
                 min: 1,
               })}
               className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
@@ -233,7 +233,7 @@ export default function CreateContest({
               htmlFor="maxUserSubmissions"
               className="block text-sm font-medium text-gray-700"
             >
-              Max submissions per user
+              {t("CreateContest.maxSubmissionsPerUser")}
             </label>
             <input
               min={0}
@@ -241,7 +241,7 @@ export default function CreateContest({
               type="number"
               id="maxUserSubmissions"
               {...register("maxUserSubmissions", {
-                required: "Required",
+                required: t("CreateContest.required"),
                 min: 1,
               })}
               className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
@@ -262,7 +262,7 @@ export default function CreateContest({
         <StyledInput
           form="contest-create-form"
           extraStyle="px-2 text-lg font-bold"
-          value="Create contest"
+          value={t("CreateContest.creation")}
           type="submit"
         />
       </div>

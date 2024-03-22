@@ -24,7 +24,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.hibernate.validator.constraints.Length;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -38,8 +38,8 @@ public class PhotoController {
 
     @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
     public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
-                                                        @RequestParam("title") @NotBlank String title,
-                                                        @RequestParam("description") @NotBlank String description,
+                                                        @RequestParam("title") @Length(max = 100, message = "TITLE_LENGTH_EXCEEDED") String title,
+                                                        @RequestParam("description") @NotBlank @Length(max = 1000, message = "DESCRIPTION_LENGTH_EXCEEDED") String description,
                                                         @RequestParam("contestId") @NotNull UUID contestId,
                                                         @RequestParam("categoryId") @NotNull UUID categoryId,
                                                         @AuthenticationPrincipal User participant

@@ -3,6 +3,7 @@ import getAllCategories from "../../services/categories/getAllCategories";
 import PaginationSettings from "../PaginationSettings";
 import { useQuery } from "@tanstack/react-query";
 import CategoryPreview from "./CategoryPreview";
+import { useTranslation } from "react-i18next";
 
 function checkIfCategoryAlreadySelected(selectedCategories, category) {
   return selectedCategories.filter((sc) => sc.id == category.id).length == 0;
@@ -39,31 +40,31 @@ function CategoryList({ onAddCategory, selectedCategories }) {
   });
 
   console.log(data);
-
+  const { t } = useTranslation();
   return (
     <div className="w-[60vw] p-3">
       <PaginationSettings
         pagination={paginationSettings}
         setPagination={setPaginationSettings}
         availablePageNumber={data?.totalPages}
-        limitObjectName="categories"
+        limitObjectName={t("CategoryList.categoryTitle")}
         sortFieldOptions={
           <>
-            <option value="name">Name</option>
-            <option value="maxTotalSubmissions">Max total submissions</option>
-            <option value="maxUserSubmissions">Max user submissions</option>
-            <option value="type">Type</option>
+            <option value="name">{t("CategoryList.categoriesNameCapital")}</option>
+            <option value="maxTotalSubmissions">{t("CategoryList.categoriesMaxTotalSubmissions")}</option>
+            <option value="maxUserSubmissions">{t("CategoryList.categoriesMaxUserSubmissions")}</option>
+            <option value="type">{t("CategoryList.categoriesType")}</option>
           </>
         }
-        searchByFieldName="name"
+        searchByFieldName={t("CategoryList.categoriesName")}
         firstPage={data?.first}
         lastPage={data?.last}
       />
       <div className="xl:grid xl:grid-cols-12 bg-white shadow py-2 px-3 place-items-left rounded mb-2">
-        <h2 className="col-span-4">Name</h2>
-        <p className="col-span-2">Type</p>
-        <p className="col-span-2">Max Total Submissions</p>
-        <p className="col-span-2">Max User Submissions</p>
+        <h2 className="col-span-4">{t("CategoryList.categoryName")}</h2>
+        <p className="col-span-2">{t("CategoryList.categoriesType")}</p>
+        <p className="col-span-2">{t("CategoryList.categoriesMaxTotalSubmissions")}</p>
+        <p className="col-span-2">{t("CategoryList.categoriesMaxUserSubmissions")}</p>
       </div>
       <div className="bg-slate-50 space-y-2 h-fit overflow-auto">
         {data?.content

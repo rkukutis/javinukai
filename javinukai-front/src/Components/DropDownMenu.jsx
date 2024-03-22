@@ -18,7 +18,7 @@ export default function DropDownMenu({ mutationFunction }) {
         </Menu.Button>
       </div>
 
-      <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hover:">
         {(user.role == "ADMIN" ||
           user.role == "MODERATOR" ||
           user.role == "USER") && (
@@ -28,7 +28,7 @@ export default function DropDownMenu({ mutationFunction }) {
                 href="/personal-info"
                 className={classNames(
                   active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                  "block px-4 py-2 text-sm"
+                  "block px-4 py-2 text-sm rounded-md"
                 )}
               >
                 {t("dropdownMenu.accountSettings")}
@@ -45,7 +45,7 @@ export default function DropDownMenu({ mutationFunction }) {
                   href="/manage-users"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
+                    "block px-4 py-2 text-sm rounded-md"
                   )}
                 >
                   {t("dropdownMenu.manageUsers")}
@@ -57,8 +57,8 @@ export default function DropDownMenu({ mutationFunction }) {
                 <a
                   href="/contest-page"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700 ",
+                    "block px-4 py-2 text-sm rounded-md"
                   )}
                 >
                   {t("dropdownMenu.createContest")}
@@ -76,7 +76,7 @@ export default function DropDownMenu({ mutationFunction }) {
                   href="/requests"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
+                    "block px-4 py-2 text-sm rounded-md"
                   )}
                 >
                   {t("dropdownMenu.participationRequests")}
@@ -93,7 +93,7 @@ export default function DropDownMenu({ mutationFunction }) {
               type="submit"
               className={classNames(
                 active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                "block w-full px-4 py-2 text-left text-sm"
+                "block w-full px-4 py-2 text-left text-sm rounded-md"
               )}
             >
               {t("dropdownMenu.logout")}

@@ -80,12 +80,14 @@ function ImageUpload({
         <section className="form-field">
           <label>
             {t("imageUpload.photoTitle")}
-            <span className="text-red-600">*</span>
+            
           </label>
           <input
             className="form-field__input"
             {...register("title", {
-              required: t("imageUpload.photoTitleRequired"),
+              maxLength: {
+                value: 100,
+                message: t("imageUpload.titleLength")}
             })}
           />
           {errors.title && (
@@ -101,6 +103,9 @@ function ImageUpload({
             className="form-field__input"
             {...register("description", {
               required: t("imageUpload.photoDescriptionRequired"),
+              maxLength: {
+                value: 1000,
+                message: t("imageUpload.descriptionLength")}
             })}
           />
           {errors.description && (
