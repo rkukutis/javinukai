@@ -1,23 +1,31 @@
 import { useState } from "react";
 import PaginationSettings from "../PaginationSettings";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import getCompetingUsers from "../../services/users/getCompetingUsers";
+import Button from "../Button";
+import endCompetition from "../../services/archive/endCompetition";
+import toast from "react-hot-toast";
+import ParticipantCard from "./ParticipantCard";
 
 const defaultPagination = {
   page: 0,
   limit: 25,
-  sortBy: "contestName",
+  sortBy: "email",
   sortDesc: "false",
   searchedField: null,
 };
 
-function EndContest() {
+function EndContest({ contest, close }) {
+  const { id } = contest;
   const [paginationSettings, setPaginationSettings] =
     useState(defaultPagination);
+  const [winners, setWinners] = useState([]);
+
   const { data, isFetching } = useQuery({
     queryKey: [
-      "archiveRecords",
+      "stillCompeting",
+      id,
       paginationSettings.page,
       paginationSettings.limit,
       paginationSettings.sortBy,
@@ -26,6 +34,7 @@ function EndContest() {
     ],
     queryFn: () =>
       getCompetingUsers(
+        id,
         paginationSettings.page,
         paginationSettings.limit,
         paginationSettings.sortBy,
@@ -35,10 +44,41 @@ function EndContest() {
   });
   const { t } = useTranslation();
 
-  console.log("data in archive page -> ", data?.content);
+  const handleClick = (email) => {
+    if (winners.includes(email)) {
+      const filteredWinners = winners.filter((winner) => winner !== email);
+      setWinners(filteredWinners);
+      return;
+    }
+    setWinners([...winners, email]);
+  };
 
-  const displayContests = data?.content.map((data) => {
-    return <ArchivedContestCard key={data.id} contest={data} />;
+  const handleEndContest = () => {
+    mutate({ id, winners });
+    close();
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: (data) => endCompetition(data),
+    onSuccess: () => {
+      toast.success("konkursas užbaigtas");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
+  const isWinner = (participant) => winners.includes(participant.email);
+
+  const displayParticipants = data?.content.map((participant) => {
+    return (
+      <ParticipantCard
+        key={participant.email}
+        handleClick={handleClick}
+        participant={participant}
+        isWinner={isWinner}
+      />
+    );
   });
 
   return (
@@ -54,17 +94,19 @@ function EndContest() {
               <option value="contestName">
                 {t("ArchivePage.contestName")}
               </option>
-              <option value="contestDescription">
-                {t("ArchivePage.contestDescription")}
-              </option>
             </>
           }
           searchByFieldName={t("ArchivePage.contestName")}
           firstPage={data?.first}
           lastPage={data?.last}
         />
-        <div></div>
-        {displayContests}
+        <div>{t("EndContest.endContestTitle")}</div>
+        <div>{t("EndContest.participants")}</div>
+        <div>{displayParticipants}</div>
+
+        <Button onClick={() => handleEndContest()}>
+          {t("EndContest.endContestButton")}
+        </Button>
       </div>
     </div>
   );

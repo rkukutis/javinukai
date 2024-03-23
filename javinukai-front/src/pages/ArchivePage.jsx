@@ -37,8 +37,6 @@ function ArchivePage() {
   });
   const { t } = useTranslation();
 
-  console.log("data in archive page -> ", data?.content);
-
   const displayContests = data?.content.map((data) => {
     return <ArchivedContestCard key={data.id} contest={data} />;
   });

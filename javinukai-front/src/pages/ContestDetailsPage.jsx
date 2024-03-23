@@ -21,8 +21,9 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
   const [modalEndOpen, setModalEndOpen] = useState(false);
   const { user } = useUserStore((state) => state);
   const { t } = useTranslation();
+
   return (
-    <div>
+    <div className="flex gap-1">
       <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
         <CreateContest
@@ -31,8 +32,8 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
         />
       </Modal>
 
-      {(user.role === "ADMIN" || user.role === "MODERATOR") && (
-        <div>
+      {user.role === "ADMIN" && (
+        <>
           <Button
             id="endContestButton"
             onClick={() => setModalEndOpen(true)}
@@ -41,9 +42,12 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
             {t("ContestCard.endContest")}
           </Button>
           <Modal isOpen={modalEndOpen} setIsOpen={setModalEndOpen}>
-            <EndContest contestInfo={contestInfo?.contest} />
+            <EndContest
+              contest={contestInfo?.contest}
+              close={() => setModalEndOpen(false)}
+            />
           </Modal>
-        </div>
+        </>
       )}
     </div>
   );

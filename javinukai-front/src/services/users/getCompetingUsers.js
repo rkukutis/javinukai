@@ -6,10 +6,11 @@ export default async function (
   sortDesc,
   contains
 ) {
+
   const res = await fetch(
     `${
       import.meta.env.VITE_BACKEND
-    }/api/v1/records/competing/${contestID}?page=${page}&limit=${limit}&sortBy=${sortBy}&sortDesc=${sortDesc}${
+      }/api/v1/records/competing/${contestID}?page=${page}&limit=${limit}&sortBy=${sortBy}&sortDesc=${sortDesc}${
       contains ? "&contains=" + contains : ""
     }`,
     {

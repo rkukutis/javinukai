@@ -260,7 +260,7 @@
 
   "ContestCard": {
     "detailsButton": "Details",
-    "endContest":"End contest"
+    "endContest": "End contest"
   },
 
   "ContestDetailsPage": {
@@ -278,7 +278,7 @@
 
   "CategoryItem": {
     "juryViewEntries": "View contestant entries",
-    "entryLimit":"Total entry limit:",
+    "entryLimit": "Total entry limit:",
     "defaultLimit": "Default limit per user:"
   },
 
@@ -407,7 +407,7 @@
     "required": "Required"
   },
 
-  "CategorySelection":{
+  "CategorySelection": {
     "categories": "Categories",
     "noCategoriesAdded": "No categories added yet!",
     "categoryName": "Name",
@@ -418,7 +418,7 @@
     "CreateNewCategory": "Create and add category"
   },
 
-  "CategoryList":{
+  "CategoryList": {
     "categoriesName": "name",
     "categoriesNameCapital": "Name",
     "categoriesMaxTotalSubmissions": "Max submissions",
@@ -426,21 +426,19 @@
     "categoriesType": "Category type",
     "categoryName": "Name",
     "categoryTitle": "Categories"
-
   },
 
-  "EditCategoryModal":{
-"editCategory": "Edit category",
-"categoryName": "Name",
-"categoryDescription": "Description",
-"categoryMaxSubmissions": "Max submissions",
-"categoryMaxUserSubmissions": "Max user submissions",
-"categoryType": "Category type",
-"updateCategory": "Update category",
-"required": "Required",
-"categoryUpdatedSuccess": "Category updated successfully",
-"categoryUpdatedError": "An error occured while updating category"
-
+  "EditCategoryModal": {
+    "editCategory": "Edit category",
+    "categoryName": "Name",
+    "categoryDescription": "Description",
+    "categoryMaxSubmissions": "Max submissions",
+    "categoryMaxUserSubmissions": "Max user submissions",
+    "categoryType": "Category type",
+    "updateCategory": "Update category",
+    "required": "Required",
+    "categoryUpdatedSuccess": "Category updated successfully",
+    "categoryUpdatedError": "An error occured while updating category"
   },
 
   "PersonalInformation": {
@@ -495,7 +493,7 @@
     "backToHomepage": "Return to homepage"
   },
 
-  "SeriesEntry":{
+  "SeriesEntry": {
     "description": "Description"
   },
 
@@ -520,11 +518,17 @@
     "showLiked": "Only liked",
     "showDisliked": "Only disliked"
   },
-  
+
   "ArchivePage": {
-    "contestName":"Contest name",
-    "contestDescription":"Contest description",
-    "startDate":"Start date",
-    "endDate":"End date"
+    "contestName": "Contest name",
+    "contestDescription": "Contest description",
+    "startDate": "Start date",
+    "endDate": "End date"
+  },
+
+  "EndContest": {
+    "participants": "Still competing participants",
+    "endContestTitle": "End contest",
+    "endContestButton": "End contest"
   }
 }
