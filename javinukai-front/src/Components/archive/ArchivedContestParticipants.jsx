@@ -1,7 +1,8 @@
-function ArchivedContestParticipants({ contest, close }) {
-  const { participants, winners } = contest;
+import { useTranslation } from "react-i18next";
 
-  console.log("contest in details ->  " + contest);
+function ArchivedContestParticipants({ contest }) {
+  const { t } = useTranslation();
+  const { participants, winners } = contest;
 
   const isWinner = (participant) => {
     return participant.split(",").some((name) => winners.includes(name));
@@ -12,14 +13,18 @@ function ArchivedContestParticipants({ contest, close }) {
       <div key={participant}>
         {`${index + 1}. ${participant.replace(/,/g, " ")}`}{" "}
         <span style={{ color: isWinner(participant) ? "red" : "black" }}>
-          {isWinner(participant) && "Konkurso laimetoja (-as)"}
+          {isWinner(participant) &&
+            t("ContestPastParticipants.winnerIndicator")}
         </span>
       </div>
     );
   });
 
   return (
-    <div>
+    <div className="p-6 rounded w-[50vw] h-fit">
+      <div className="p-1 text-lg">
+        {t("ContestPastParticipants.pastParticipantsTitle")}
+      </div>
       <div>{participantsToDisplay}</div>
     </div>
   );

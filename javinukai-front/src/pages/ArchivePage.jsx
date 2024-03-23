@@ -4,6 +4,8 @@ import PaginationSettings from "../Components/PaginationSettings";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import ArchivedContestCard from "../Components/archive/ArchivedContestCard";
+import SpinnerPage from "./SpinnerPage";
+import ChangePage from "../Components/user-management/ChangePage";
 
 const defaultPagination = {
   page: 0,
@@ -14,7 +16,6 @@ const defaultPagination = {
 };
 
 function ArchivePage() {
-
   const [paginationSettings, setPaginationSettings] =
     useState(defaultPagination);
   const { data, isFetching } = useQuery({
@@ -42,31 +43,49 @@ function ArchivePage() {
   });
 
   return (
-    <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
-      <div className="xl:w-4/4 w-full px-2">
-        <PaginationSettings
-          pagination={paginationSettings}
-          setPagination={setPaginationSettings}
-          availablePageNumber={data?.totalPages}
-          limitObjectName={t("UserManagementPage.userLimitObject")}
-          sortFieldOptions={
-            <>
-              <option value="contestName">
-                {t("ArchivePage.contestName")}
-              </option>
-              <option value="contestDescription">
-                {t("ArchivePage.contestDescription")}
-              </option>
-            </>
-          }
-          searchByFieldName={t("ArchivePage.contestName")}
-          firstPage={data?.first}
-          lastPage={data?.last}
-        />
-        <div></div>
-        {displayContests}
-      </div>
-    </div>
+    <>
+      {isFetching ? (
+        <SpinnerPage />
+      ) : (
+        <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
+          <div className="xl:w-4/4 w-full px-2">
+            <PaginationSettings
+              pagination={paginationSettings}
+              setPagination={setPaginationSettings}
+              availablePageNumber={data?.totalPages}
+              limitObjectName={t("ArchivePage.contestsLimitObject")}
+              sortFieldOptions={
+                <>
+                  <option value="contestName">
+                    {t("ArchivePage.contestNameOption")}
+                  </option>
+                  <option value="contestDescription">
+                    {t("ArchivePage.contestDescriptionOption")}
+                  </option>
+                  <option value="startDate">
+                    {t("ArchivePage.contestStartDateOption")}
+                  </option>
+                  <option value="endDate">
+                    {t("ArchivePage.contestEndDateOption")}
+                  </option>
+                </>
+              }
+              searchByFieldName={t("ArchivePage.contestNameSearch")}
+              firstPage={data?.first}
+              lastPage={data?.last}
+            />
+            <div>{displayContests}</div>
+            <div>
+              <ChangePage
+                pagination={paginationSettings}
+                setPagination={setPaginationSettings}
+                availablePageNumber={data?.totalPages}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

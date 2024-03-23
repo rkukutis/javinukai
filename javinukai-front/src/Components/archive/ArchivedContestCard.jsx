@@ -13,26 +13,44 @@ function ArchivedContestCard({ contest }) {
 
   return (
     <>
-      <div onClick={() => setPastParticipantsModalOpen(true)}>
-        <div>
-          <p>
-            <b>{contestName}</b>
-          </p>
-        </div>
-        <div>{contestDescription}</div>
-        <div>
-          <p>
-            <b>{categories}</b>
-          </p>
-        </div>
-        <div>
-          {t("ArchivePage.startDate")} {" - "}
-          {moment(startDate).format("YYYY-MM-DD")}
-        </div>
-        <div>
-          {" "}
-          {t("ArchivePage.endDate")} {" - "}
-          {moment(endDate).format("YYYY-MM-DD")}
+      <div
+        onClick={() => setPastParticipantsModalOpen(true)}
+        className="w-full flex flex-col items-center bg-slate-100"
+      >
+        <div className="hover:bg-gray-100 lg:w-5/6 w-full h-fit bg-white shadow-md lg:my-4 p-8 rounded-md">
+          <div>
+            <p className="text-2xl">{contestName}</p>
+          </div>
+          <div className="lg:space-y-0 pb-2">{contestDescription}</div>
+          <div>
+            <p className="text-xl">{t("ArchivePage.categories")}</p>
+            {categories.map((category) => {
+              return (
+                <p
+                  className="text-teal-600"
+                  key={category}
+                >{`- ${category}`}</p>
+              );
+            })}
+          </div>
+          <div className="lg:grid lg:grid-cols-3 flex flex-col">
+            <div>
+              <span className="text-lg">
+                {t("ArchivePage.startDate")} {" - "}
+              </span>
+              <span className="text-lg text-wrap text-teal-600">
+                {moment(startDate).format("YYYY-MM-DD")}
+              </span>
+            </div>
+            <div>
+              <span className="text-lg">
+                {t("ArchivePage.endDate")} {" - "}
+              </span>
+              <span className="text-lg text-wrap text-teal-600">
+                {moment(endDate).format("YYYY-MM-DD")}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <Modal

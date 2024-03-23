@@ -280,7 +280,7 @@
 
   "CategoryItem": {
     "juryViewEntries": "Peržiūrėti dalyvių pateiktis",
-    "entryLimit":"Bendras pateikčių limitas",
+    "entryLimit": "Bendras pateikčių limitas",
     "defaultLimit": "Numatytas limitas vienam vartotojui"
   },
 
@@ -405,10 +405,9 @@
     "categoryCreateSuccess": "Kategorija sukurta sėkmingai",
     "categoryCreateError": "Kuriant kategoriją įvyko klaida",
     "required": "Šis laukas yra privalomas"
-    
   },
 
-  "CategorySelection":{
+  "CategorySelection": {
     "categories": "Kategorijos",
     "noCategoriesAdded": "Dar nėra pridėtų kategorijų!",
     "categoryName": "Pavadinimas",
@@ -419,7 +418,7 @@
     "CreateNewCategory": "Sukurti ir pridėti kategoriją"
   },
 
-  "CategoryList":{
+  "CategoryList": {
     "categoriesName": "pavadinimą",
     "categoriesNameCapital": "Pavadinimą",
     "categoriesMaxTotalSubmissions": "Maksimalus kategorijos pateikimų skaičius",
@@ -429,8 +428,7 @@
     "categoryTitle": "Kategorijų"
   },
 
-
-  "EditCategoryModal":{
+  "EditCategoryModal": {
     "editCategory": "Redaguoti kategoriją",
     "categoryName": "Pavadinimas",
     "categoryDescription": "Aprašymas",
@@ -495,7 +493,7 @@
     "backToHomepage": "Grižti į pradinį puslapį"
   },
 
-  "SeriesEntry":{
+  "SeriesEntry": {
     "description": "Aprašymas"
   },
 
@@ -519,6 +517,30 @@
     "showAll": "Visas",
     "showLiked": "Tik patikusias",
     "showDisliked": "Tik nepatikusias"
+  },
+
+  "ArchivePage": {
+    "contestName": "Konkurso pavadinimas",
+    "contestDescription": "Konkurso aprašymas",
+    "startDate": "Pradžios data",
+    "endDate": "Pabaigos data",
+    "contestNameSearch": "konkurso pavadinimą",
+    "contestsLimitObject": "Konkursai",
+    "contestNameOption": "Konkurso pavadinimas",
+    "contestDescriptionOption": "Konkurso aprašymas",
+    "contestStartDateOption": "Pradžios data",
+    "contestEndDateOption": "Pabaigos data",
+    "categories": "Kategorijos"
+  },
+
+  "EndContest": {
+    "participants": "Dar besirungiantys dalyviai, pasirinkite nugalėtojus",
+    "endContestTitle": "Užbaigti konkursą",
+    "endContestButton": "Užbaigti konkursą"
+  },
+
+  "ContestPastParticipants": {
+    "pastParticipantsTitle": "Dalyviai",
+    "winnerIndicator": "Nugalėtoja(s)"
   }
 }
-

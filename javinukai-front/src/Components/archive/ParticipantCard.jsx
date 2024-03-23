@@ -4,17 +4,16 @@ function ParticipantCard({ handleClick, participant, isWinner }) {
   return (
     <div
       onClick={() => handleClick(email)}
-      className="xl:grid xl:grid-cols-2 px-3 xl:px-0 w-full flex justify-between hover:cursor-pointer hover:bg-teal-100"
+      className="px-1 w-full flex hover:cursor-pointer hover:bg-teal-100"
       style={{
         backgroundColor: isWinner(participant) ? "#99f6e4" : "transparent",
       }}
     >
-      <div className="xl:grid xl:grid-cols-10 px-3 xl:px-0 w-full flex justify-between">
-        <span>{firstName}</span>
-        <span>{lastName}</span>
-      </div>
-      <div>
-        <span>{email}</span>
+      <div className="grid grid-cols-2 w-full">
+        <div className="col-span-1 text-teal-800">
+          {firstName} {lastName}
+        </div>
+        <div className="col-span-1 text-teal-800">{email}</div>
       </div>
     </div>
   );

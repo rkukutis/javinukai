@@ -523,12 +523,24 @@
     "contestName": "Contest name",
     "contestDescription": "Contest description",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "contestNameSearch": "contest name",
+    "contestsLimitObject": "Contests",
+    "contestNameOption": "Contest name",
+    "contestDescriptionOption": "Contest description",
+    "contestStartDateOption": "Start date",
+    "contestEndDateOption": "End date",
+    "categories": "Categories"
   },
 
   "EndContest": {
-    "participants": "Still competing participants",
+    "participants": "Still competing participants, select winners",
     "endContestTitle": "End contest",
     "endContestButton": "End contest"
+  },
+
+  "ContestPastParticipants": {
+    "pastParticipantsTitle": "Participants",
+    "winnerIndicator": "Contest winner"
   }
 }

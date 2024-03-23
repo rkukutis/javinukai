@@ -7,6 +7,8 @@ import Button from "../Button";
 import endCompetition from "../../services/archive/endCompetition";
 import toast from "react-hot-toast";
 import ParticipantCard from "./ParticipantCard";
+import SpinnerPage from "../../pages/SpinnerPage";
+import ChangePage from "../user-management/ChangePage";
 
 const defaultPagination = {
   page: 0,
@@ -82,33 +84,58 @@ function EndContest({ contest, close }) {
   });
 
   return (
-    <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
-      <div className="xl:w-4/4 w-full px-2">
-        <PaginationSettings
-          pagination={paginationSettings}
-          setPagination={setPaginationSettings}
-          availablePageNumber={data?.totalPages}
-          limitObjectName={t("UserManagementPage.userLimitObject")}
-          sortFieldOptions={
-            <>
-              <option value="contestName">
-                {t("ArchivePage.contestName")}
-              </option>
-            </>
-          }
-          searchByFieldName={t("ArchivePage.contestName")}
-          firstPage={data?.first}
-          lastPage={data?.last}
-        />
-        <div>{t("EndContest.endContestTitle")}</div>
-        <div>{t("EndContest.participants")}</div>
-        <div>{displayParticipants}</div>
+    <>
+      {isFetching ? (
+        <SpinnerPage />
+      ) : (
+        <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
+          <div className="xl:w-4/4 w-full px-2">
+            <PaginationSettings
+              pagination={paginationSettings}
+              setPagination={setPaginationSettings}
+              availablePageNumber={data?.totalPages}
+              limitObjectName={t("UserManagementPage.userLimitObject")}
+              sortFieldOptions={
+                <>
+                  <option value="contestName">
+                    {t("ArchivePage.contestName")}
+                  </option>
+                </>
+              }
+              searchByFieldName={t("ArchivePage.contestName")}
+              firstPage={data?.first}
+              lastPage={data?.last}
+            />
 
-        <Button onClick={() => handleEndContest()}>
-          {t("EndContest.endContestButton")}
-        </Button>
-      </div>
-    </div>
+            <div className="flex flex-col justify-center">
+              <div className="flex flex-col">
+                <div className="p-3 text-2xl items-center">
+                  {t("EndContest.endContestTitle")}
+                </div>
+                <div className="pl-7 text-lg">
+                  {t("EndContest.participants")}
+                </div>
+              </div>
+              <div className="pl-10 pb-5 pt-2 rounded w-[30vw]">
+                {displayParticipants}
+              </div>
+            </div>
+            <ChangePage
+              pagination={paginationSettings}
+              setPagination={setPaginationSettings}
+              availablePageNumber={data?.totalPages}
+            />
+          </div>
+
+          <Button
+            extraStyle="mt-5 w-full xl:w-fit bg-red-400 hover:bg-red-200"
+            onClick={() => handleEndContest()}
+          >
+            {t("EndContest.endContestButton")}
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
 
