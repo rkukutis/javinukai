@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 function CompetitionRecordPreview() {
   const [competitionRecords, setCompetitionRecords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchCompetitionRecords = async () => {
@@ -24,16 +26,16 @@ function CompetitionRecordPreview() {
 
   return (
     <div>
-      <h2>Competition Records</h2>
+      <h2>{t("ContestPreview.recordsTitle")}</h2>
       {loading ? (
-        <p>Loading...</p>
+        <p>{t("ContestPreview.loadingTitle")}</p>
       ) : (
         <ul>
           {competitionRecords.map((record) => (
             <li key={record.id}>
               <h3>{record.contestName}</h3>
-              <p>User: {record.userName}</p>
-              <p>Category: {record.categoryName}</p>
+              <p>{t("ContestPreview.userTitle")} {record.userName}</p>
+              <p>{t("ContestPreview.categoryTitle")} {record.categoryName}</p>
               {/* Add more details as needed */}
             </li>
           ))}

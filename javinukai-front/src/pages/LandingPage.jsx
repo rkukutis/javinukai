@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import getLatestContestThumbnails from "../services/contests/getLatestContestThumbnails";
 import { useEffect, useState } from "react";
 import logo from "../assets/logo.jpg";
+import { useTranslation } from "react-i18next";
 
 function ImageContainer({ imageUrl }) {
   return (
@@ -27,6 +28,7 @@ function LandingPage() {
     queryFn: getLatestContestThumbnails,
   });
   const [images, setImages] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(
     function () {
@@ -57,13 +59,13 @@ function LandingPage() {
       </div>
       <div className="flex flex-col space-y-12">
         <h1 className="xl:text-5xl text-2xl w-8 xl:w-12 leading-normal font-bold text-white">
-          Lithuanian Press Photography
+          {t("LandingPage.mainTitle")}
         </h1>
         <Link
           className="text-3xl text-white hover:translate-x-5 transition"
           to="/contests"
         >
-          Contests {"➡️"}
+          {t("LandingPage.contestsTitle")} {"➡️"}
         </Link>
       </div>
     </div>

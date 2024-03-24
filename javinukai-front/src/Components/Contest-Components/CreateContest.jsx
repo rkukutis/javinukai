@@ -12,6 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 export default function CreateContest({
   initialContestInfo,
   initialCategories,
+  title
 }) {
   const queryClient = useQueryClient();
   const {
@@ -108,7 +109,7 @@ export default function CreateContest({
     }
     setThumbnailFile(e.target.files[0]);
   }
-
+  
   return (
     <div
       className={`${
@@ -116,7 +117,7 @@ export default function CreateContest({
       } mx-auto p-6 bg-white rounded-md shadow-md`}
     >
       <h2 className="text-2xl font-semibold mb-4">
-        {t("CreateContest.contestTitle")}
+      {title ? title : t("CreateContest.contestTitle")}
       </h2>
       <form id="contest-create-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
