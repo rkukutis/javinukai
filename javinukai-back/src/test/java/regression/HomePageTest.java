@@ -1,4 +1,4 @@
-package tests;
+package regression;
 
 public class HomePageTest extends BaseTest{
 
