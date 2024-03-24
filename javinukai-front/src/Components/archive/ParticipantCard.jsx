@@ -10,10 +10,10 @@ function ParticipantCard({ handleClick, participant, isWinner }) {
       }}
     >
       <div className="grid grid-cols-2 w-full">
-        <div className="col-span-1 text-teal-800">
+        <div className="col-span-1 text-teal-600">
           {firstName} {lastName}
         </div>
-        <div className="col-span-1 text-teal-800">{email}</div>
+        <div className="col-span-1 text-teal-600">{email}</div>
       </div>
     </div>
   );

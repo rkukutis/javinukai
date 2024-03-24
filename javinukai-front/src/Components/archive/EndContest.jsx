@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PaginationSettings from "../PaginationSettings";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import getCompetingUsers from "../../services/users/getCompetingUsers";
@@ -8,7 +7,7 @@ import endCompetition from "../../services/archive/endCompetition";
 import toast from "react-hot-toast";
 import ParticipantCard from "./ParticipantCard";
 import SpinnerPage from "../../pages/SpinnerPage";
-import ChangePage from "../user-management/ChangePage";
+import { useNavigate } from "react-router-dom";
 
 const defaultPagination = {
   page: 0,
@@ -19,10 +18,12 @@ const defaultPagination = {
 };
 
 function EndContest({ contest, close }) {
-  const { id } = contest;
+  const { id, name } = contest;
+  console.log("contest in end contest -> ", contest);
   const [paginationSettings, setPaginationSettings] =
     useState(defaultPagination);
   const [winners, setWinners] = useState([]);
+  const navigate = useNavigate();
 
   const { data, isFetching } = useQuery({
     queryKey: [
@@ -63,7 +64,8 @@ function EndContest({ contest, close }) {
   const { mutate } = useMutation({
     mutationFn: (data) => endCompetition(data),
     onSuccess: () => {
-      toast.success("konkursas užbaigtas");
+      navigate("/contests");
+      toast.success(t("EndContest.endContestSucess"));
     },
     onError: (err) => {
       toast.error(err.message);
@@ -90,41 +92,20 @@ function EndContest({ contest, close }) {
       ) : (
         <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
           <div className="xl:w-4/4 w-full px-2">
-            <PaginationSettings
-              pagination={paginationSettings}
-              setPagination={setPaginationSettings}
-              availablePageNumber={data?.totalPages}
-              limitObjectName={t("UserManagementPage.userLimitObject")}
-              sortFieldOptions={
-                <>
-                  <option value="contestName">
-                    {t("ArchivePage.contestName")}
-                  </option>
-                </>
-              }
-              searchByFieldName={t("ArchivePage.contestName")}
-              firstPage={data?.first}
-              lastPage={data?.last}
-            />
-
             <div className="flex flex-col justify-center">
               <div className="flex flex-col">
-                <div className="p-3 text-2xl items-center">
-                  {t("EndContest.endContestTitle")}
+                <div className="mt-10 mb-5 text-2xl text-center items-center">
+                  <p className="text-3xl">{t("EndContest.endContestTitle")} </p>
+                  <p className="text-pink-600 w-30 inline-block">{name}</p>
                 </div>
                 <div className="pl-7 text-lg">
                   {t("EndContest.participants")}
                 </div>
               </div>
-              <div className="pl-10 pb-5 pt-2 rounded w-[30vw]">
+              <div className="pl-10 pb-5 pt-2 rounded w-full">
                 {displayParticipants}
               </div>
             </div>
-            <ChangePage
-              pagination={paginationSettings}
-              setPagination={setPaginationSettings}
-              availablePageNumber={data?.totalPages}
-            />
           </div>
 
           <Button

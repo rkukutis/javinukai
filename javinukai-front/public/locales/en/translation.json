@@ -536,7 +536,8 @@
   "EndContest": {
     "participants": "Still competing participants, select winners",
     "endContestTitle": "End contest",
-    "endContestButton": "End contest"
+    "endContestButton": "End contest",
+    "endContestSucess": "Contest has been ended"
   },
 
   "ContestPastParticipants": {

@@ -536,7 +536,8 @@
   "EndContest": {
     "participants": "Dar besirungiantys dalyviai, pasirinkite nugalėtojus",
     "endContestTitle": "Užbaigti konkursą",
-    "endContestButton": "Užbaigti konkursą"
+    "endContestButton": "Užbaigti konkursą",
+    "endContestSucess": "Konkursas buvo pabagtas"
   },
 
   "ContestPastParticipants": {
