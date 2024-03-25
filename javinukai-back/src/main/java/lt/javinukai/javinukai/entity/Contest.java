@@ -55,7 +55,7 @@ public class Contest {
     @Setter
     @JsonIgnore
     @OneToMany(mappedBy = "contest",
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     private List<ParticipationRequest> participationRequests;
 
     @Setter
