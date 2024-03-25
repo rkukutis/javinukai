@@ -14,12 +14,17 @@ import useUserStore from "../stores/userStore";
 import { ParticipationStatus } from "../Components/contest/ParticipationStatus";
 import Modal from "../Components/Modal";
 import CreateContest from "../Components/Contest-Components/CreateContest";
+import DeleteContest from "../Components/Contest-Components/DeleteContest";
+import StartNewContestStage from "../Components/Contest-Components/StartNewContestStage";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const [modalOpen, setModalOpen] = useState(false);
+  //console.log("infooooooo", contestInfo)
   return (
-    <div>
+    <div className="flex space-x-1">
       <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
+      <Button onClick={() => DeleteContest(contestInfo.contest.id)}>Delete Contest</Button>
+      <Button onClick={() => StartNewContestStage(contestInfo.contest.id)}>Start New Stage</Button>
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
         <CreateContest
           initialContestInfo={contestInfo?.contest}
