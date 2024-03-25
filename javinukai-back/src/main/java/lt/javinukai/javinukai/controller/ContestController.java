@@ -125,6 +125,7 @@ public class ContestController {
         log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
     
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")

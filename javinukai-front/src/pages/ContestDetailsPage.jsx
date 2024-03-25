@@ -25,25 +25,36 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
   const { user } = useUserStore((state) => state);
 
   return (
-    <div className="flex space-x-1">
-      <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
-      <Button onClick={() => DeleteContest(contestInfo.contest.id)}>Delete Contest</Button>
-      <Button onClick={() => StartNewContestStage(contestInfo.contest.id)}>Start New Stage</Button>
-      <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
-        <CreateContest
-        contestTitle={t("ContestDetailsPage.contestEditTitle")}
-        saveTitle={t("ContestDetailsPage.contestEditSave")}
-        initialContestInfo={contestInfo?.contest}
-        initialCategories={categoriesInfo}
-        />
-      </Modal>
-
+    <div className="flex space-x-2 justify-end">
+      {(user.role === "ADMIN" || user.role === "MODERATOR") && (
+        <Button
+          onClick={() => {
+            if (confirm(t("StartNewContestStage.newStageConfirm"))) {
+              StartNewContestStage(contestInfo.contest.id);
+            }
+          }}
+        >
+          {t("ContestCard.startNewStage")}
+        </Button>
+      )}
       {user.role === "ADMIN" && (
         <>
+          <Button onClick={() => setModalOpen(true)}
+          extraStyle="bg-orange-500 hover:bg-orange-300">
+            {t("ContestCard.editContest")}
+          </Button>
+          <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
+            <CreateContest
+              contestTitle={t("ContestDetailsPage.contestEditTitle")}
+              saveTitle={t("ContestDetailsPage.contestEditSave")}
+              initialContestInfo={contestInfo?.contest}
+              initialCategories={categoriesInfo}
+            />
+          </Modal>
           <Button
             id="endContestButton"
             onClick={() => setModalEndOpen(true)}
-            extraStyle="w-full xl:w-fit bg-red-400 hover:bg-red-200"
+            extraStyle="bg-orange-500 hover:bg-orange-300"
           >
             {t("ContestCard.endContest")}
           </Button>
@@ -53,6 +64,12 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
               close={() => setModalEndOpen(false)}
             />
           </Modal>
+          <Button
+            extraStyle="bg-red-500 hover:bg-red-300"
+            onClick={() => DeleteContest(contestInfo.contest.id)}
+          >
+            {t("ContestCard.deleteContest")}
+          </Button>
         </>
       )}
     </div>

@@ -57,6 +57,7 @@ function EndContest({ contest, close }) {
   };
 
   const handleEndContest = () => {
+    if (!window.confirm(t("EndContest.confirmationQuestion"))) return;
     mutate({ id, winners });
     close();
   };
