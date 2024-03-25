@@ -260,7 +260,14 @@
 
   "ContestCard": {
     "detailsButton": "Details",
-    "endContest": "End contest"
+    "endContest": "End contest",
+    "startNewStage": "Start new stage",
+    "editContest": "Edit contest",
+    "deleteContest": "Delete contest"
+  },
+
+  "StartNewContestStage": {
+"newStageConfirm": "Are you sure you want to start new competition stage?"
   },
 
   "ContestDetailsPage": {
@@ -539,7 +546,8 @@
     "participants": "Still competing participants, select winners",
     "endContestTitle": "End contest",
     "endContestButton": "End contest",
-    "endContestSucess": "Contest has been ended"
+    "endContestSucess": "Contest has been ended",
+    "confirmationQuestion": "Are you sure want to end the contest?"
   },
 
   "ContestPastParticipants": {

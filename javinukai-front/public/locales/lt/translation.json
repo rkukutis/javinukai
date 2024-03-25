@@ -262,8 +262,15 @@
 
   "ContestCard": {
     "detailsButton": "Plačiau",
-    "endContest": "Užbaigti konkursą"
+    "endContest": "Baigti konkursą",
+    "startNewStage": "Naujas etapas",
+    "editContest": "Redaguoti konkursą",
+    "deleteContest": "Ištrinti konkursą"
   },
+
+  "StartNewContestStage": {
+    "newStageConfirm": "Ar tikrai norite pradėti naująjį konkurso etapą?"
+},
 
   "ContestDetailsPage": {
     "contest": "Konkursas",
@@ -550,9 +557,10 @@
 
   "EndContest": {
     "participants": "Dar besirungiantys dalyviai, pasirinkite nugalėtojus",
-    "endContestTitle": "Užbaigti konkursą",
-    "endContestButton": "Užbaigti konkursą",
-    "endContestSucess": "Konkursas buvo pabagtas"
+    "endContestTitle": "Konkurso pabaiga",
+    "endContestButton": "Baigti konkursą",
+    "endContestSucess": "Konkursas sėkmingai užbaigtas",
+    "confirmationQuestion": "Ar tikrai norite užbaigti konkursą?"
   },
 
   "ContestPastParticipants": {
