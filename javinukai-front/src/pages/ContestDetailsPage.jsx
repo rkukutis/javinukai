@@ -21,7 +21,6 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalEndOpen, setModalEndOpen] = useState(false);
   const { user } = useUserStore((state) => state);
-  const { t } = useTranslation();
 
   return (
     <div className="flex gap-1">
