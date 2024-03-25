@@ -272,7 +272,8 @@
     "participationError": "An error has occured while sending a participation",
     "userEntries": "Your entries",
     "entries": "Total entries",
-    "contestEditTitle": "Edit contest"
+    "contestEditTitle": "Edit contest",
+    "contestEditSave": "Save changes"
   },
 
   "CategoryItem": {
