@@ -39,4 +39,6 @@ public interface PhotoCollectionRepository extends JpaRepository<PhotoCollection
             " HIDDEN_FROM_JURY = FALSE")
     Page<PhotoCollection> findCollectionsByContestIdAndCategoryId(UUID contestId, UUID categoryId, Pageable pageable);
 
+    List<PhotoCollection> findCollectionsByCompetitionRecordId(UUID id);
+
 }
