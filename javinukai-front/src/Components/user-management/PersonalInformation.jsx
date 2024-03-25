@@ -7,15 +7,13 @@ import useUserStore from "../../stores/userStore";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import updateUserDetails from "../../services/users/updateUserDetails";
-import ChangePassword from "/src/Components/user-management/ChangePassword"
+import ChangePassword from "/src/Components/user-management/ChangePassword";
 import { useForm } from "react-hook-form";
 import FormFieldError from "../../Components/FormFieldError";
 import validateEmail from "../../utils/validateEmail";
 import { useNavigate } from "react-router-dom";
 import logoutUser from "../../services/auth/logoutUser";
-
-
-
+import BackButton from "../BackButton";
 
 function PersonalInformation() {
   const navigate = useNavigate();
@@ -23,8 +21,12 @@ function PersonalInformation() {
   const [showLogoutMessage, setShowLogoutMessage] = useState();
   const { user, removeUser } = useUserStore((state) => state);
   const [data, setData] = useState({});
-  const { register, formState: { errors }, handleSubmit } = useForm();
-  const { data: userData, isFetching} = useQuery({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const { data: userData, isFetching } = useQuery({
     queryKey: ["user", user.id],
     queryFn: () => getUser(user.id),
   });
@@ -32,8 +34,6 @@ function PersonalInformation() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
   const queryClient = useQueryClient();
-
-
 
   useEffect(() => {
     if (userData) {
@@ -53,7 +53,7 @@ function PersonalInformation() {
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditedData({...data});
+    setEditedData({ ...data });
   };
 
   const handleCancel = () => {
@@ -62,17 +62,17 @@ function PersonalInformation() {
   };
 
   const handleChange = (fieldName, value) => {
-    if (fieldName === 'isFreelance') {
-      const parsedValue = value === 'true';
-      setEditedData(prevData => ({
+    if (fieldName === "isFreelance") {
+      const parsedValue = value === "true";
+      setEditedData((prevData) => ({
         ...prevData,
         [fieldName]: parsedValue,
-        institution: parsedValue ? '' : prevData.institution
+        institution: parsedValue ? "" : prevData.institution,
       }));
     } else {
-      setEditedData(prevData => ({
+      setEditedData((prevData) => ({
         ...prevData,
-        [fieldName]: value
+        [fieldName]: value,
       }));
     }
   };
@@ -98,7 +98,7 @@ function PersonalInformation() {
     }
   };
 
-const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
+  const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
 
   return (
     <>
@@ -314,12 +314,13 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
                           })}
                           className="text-lg text-wrap text-teal-600 border-b border-teal-600 form-field__input"
                           value={editedData.email}
-                          onChange={(e) => handleChange("email", e.target.value)
+                          onChange={(e) =>
+                            handleChange("email", e.target.value)
                           }
                         />
                         {showLogoutMessage && (
                           <p className="text-sm text-red-600">
-                            {t('PersonalInformation.emailLogoutMessage')}
+                            {t("PersonalInformation.emailLogoutMessage")}
                           </p>
                         )}
                         {errors.email && (
@@ -454,7 +455,7 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
               )}
             </div>
 
-            <div className="py-3">
+            <div className="">
               <Button
                 onClick={() => setIsShowPasswordVisible(!isShowPasswordVisible)}
                 extraStyle="text-lg mt-2 w-full lg:w-fit"
@@ -463,6 +464,7 @@ const [isShowPasswordVisible, setIsShowPasswordVisible] = useState(false);
               </Button>
               {isShowPasswordVisible && <ChangePassword />}
             </div>
+            <BackButton extraStyle="mt-2 mx-0" />
           </div>
         </div>
       )}

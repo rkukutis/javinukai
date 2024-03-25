@@ -7,9 +7,9 @@ import { JuryViewPagination } from "./JuryViewPagination";
 import { SinglesSection } from "./SinglesSection";
 import SeriesEntry from "./contest/SeriesEntry";
 import { useTranslation } from "react-i18next";
+import BackButton from "./BackButton";
 
 function SeriesSection({ entries }) {
-  
   return (
     <div>
       {entries.content.map((entry) => (
@@ -60,7 +60,7 @@ function JurySubmissionView() {
       {isFetching ? (
         <SpinnerPage />
       ) : (
-        <div className="w-4/5 bg-white rounded my-12 min-h-[80vh] p-3">
+        <div className="w-4/5 bg-white rounded my-12 h-[80vh] p-3">
           <h1 className="text-2xl my-3">
             <b>{t("JurySubmissionView.contestTitle")} </b>
             {location?.state.contestInfo.name}
@@ -78,7 +78,10 @@ function JurySubmissionView() {
             lastPage={entries?.last}
           />
           {entries?.content.length == 0 ? (
-            <p>{t("JurySubmissionView.noEntriesTitle")}</p>
+            <div className="flex items-center justify-center h-full">
+              <p>{t("JurySubmissionView.noEntriesTitle")}</p>
+              <BackButton />
+            </div>
           ) : (
             <>
               {location.state.categoryInfo.type == "SINGLE" ? (

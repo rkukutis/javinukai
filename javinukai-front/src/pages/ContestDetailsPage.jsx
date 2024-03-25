@@ -17,6 +17,7 @@ import CreateContest from "../Components/Contest-Components/CreateContest";
 import DeleteContest from "../Components/Contest-Components/DeleteContest";
 import StartNewContestStage from "../Components/Contest-Components/StartNewContestStage";
 import EndContest from "../Components/archive/EndContest";
+import BackButton from "../Components/BackButton";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const { t } = useTranslation();
@@ -37,6 +38,7 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
           {t("ContestCard.startNewStage")}
         </Button>
       )}
+
       {user.role === "ADMIN" && (
         <>
           <Button onClick={() => setModalOpen(true)}
@@ -177,11 +179,14 @@ function ContestDetailsPage() {
             </div>
           </section>
         </div>
-        {!data?.status && user && user.role !== "JURY" && (
-          <Button extraStyle="mt-4" onClick={requestMutation}>
-            {t("ContestDetailsPage.participate")}
-          </Button>
-        )}
+        <div className="mt-4">
+          {!data?.status && user && user.role !== "JURY" && (
+            <Button onClick={requestMutation}>
+              {t("ContestDetailsPage.participate")}
+            </Button>
+          )}
+          <BackButton />
+        </div>
       </div>
     </div>
   );
