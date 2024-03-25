@@ -1,16 +1,15 @@
 package lt.javinukai.javinukai.config;
 
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.config.security.UserRole;
-import lt.javinukai.javinukai.entity.Category;
-import lt.javinukai.javinukai.entity.CompetitionRecord;
-import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.entity.*;
+import lt.javinukai.javinukai.enums.ParticipationRequestStatus;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
-import lt.javinukai.javinukai.repository.CategoryRepository;
-import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
-import lt.javinukai.javinukai.repository.ContestRepository;
-import lt.javinukai.javinukai.repository.UserRepository;
+import lt.javinukai.javinukai.repository.*;
+import lt.javinukai.javinukai.service.CompetitionRecordService;
+import lt.javinukai.javinukai.service.ParticipationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +17,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Configuration
 @Slf4j
+@RequiredArgsConstructor
 public class CompetitionRecordConfig {
 
     private final ContestRepository contestRepository;
@@ -28,19 +29,9 @@ public class CompetitionRecordConfig {
     private final CompetitionRecordRepository competitionRecordRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public CompetitionRecordConfig(ContestRepository contestRepository,
-                                   CategoryRepository categoryRepository,
-                                   CompetitionRecordRepository competitionRecordRepository,
-                                   UserRepository userRepository,
-                                   PasswordEncoder passwordEncoder) {
-        this.contestRepository = contestRepository;
-        this.categoryRepository = categoryRepository;
-        this.competitionRecordRepository = competitionRecordRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final CompetitionRecordService recordService;
+    private final ParticipationRequestRepository requestRepository;
+    private final ParticipationRequestService requestService;
 
     @Bean
     public CommandLineRunner competitionCreator() {
@@ -49,43 +40,48 @@ public class CompetitionRecordConfig {
             final Contest newContest = createContestAndCategory();
             final Contest updatedFinalContest = assignCategoryToExistingContest(newContest, newCategory);
             final User userToParticipate = createNewUser();
-//            final List<CompetitionRecord> updateCompetitionRecord = deleteRecord(competitionRecordsWithDefaultLimits);
+            createApprovedParticipationRequest(updatedFinalContest.getId(), userToParticipate.getId());
+            recordService.createUsersCompetitionRecords(updatedFinalContest.getId(), userToParticipate.getId());
         };
     }
 
-    private List<CompetitionRecord> deleteRecord(List<CompetitionRecord> enterCompetitionRecordWithDefaultLimits) {
 
-        final List<CompetitionRecord> competitionRecordList = enterCompetitionRecordWithDefaultLimits;
-        competitionRecordRepository.deleteById(competitionRecordList.get(0).getId());
-        competitionRecordList.remove(competitionRecordList.get(0));
-        return competitionRecordList;
+    private void createApprovedParticipationRequest(UUID contestId, UUID userId) {
+        Contest tempContest = contestRepository.findById(contestId)
+                .orElseThrow(() -> new EntityNotFoundException("Contest was not found with ID: " + contestId));
+        User tempUser = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User was not found with Id: " + userId));
+        ParticipationRequest participationRequest = ParticipationRequest.builder()
+                .requestStatus(ParticipationRequestStatus.ACCEPTED)
+                .build();
+        ParticipationRequest savedRequest = requestRepository.save(participationRequest);
+        savedRequest.setContest(tempContest);
+        savedRequest.setUser(tempUser);
+        requestRepository.save(participationRequest);
     }
 
     private User createNewUser() {
         final User userToCreate = User.builder()
-                .email("bensullivan@mail.com")
-                .phoneNumber("+37047812482")
-                .name("Ben")
-                .surname("Sullivan")
+                .email("jdoe@mail.com")
+                .phoneNumber("+37067598078")
+                .name("John")
+                .surname("Doe")
                 .birthYear(1960)
                 .isEnabled(true)
                 .isFreelance(true)
                 .isNonLocked(true)
-                .role(UserRole.USER)
+                .role(UserRole.ADMIN)
                 .password(passwordEncoder.encode("password"))
                 .maxTotal(50)
                 .maxSinglePhotos(30)
                 .maxCollections(6)
                 .build();
-        final User savedUser = userRepository.save(userToCreate);
-
-        return savedUser;
+        return userRepository.save(userToCreate);
     }
 
     private Contest assignCategoryToExistingContest(Contest contestToUpdate, Category categoryToAdd) {
         contestToUpdate.addCategory(categoryToAdd);
-        final Contest updatedContest = contestRepository.save(contestToUpdate);
-        return updatedContest;
+        return contestRepository.save(contestToUpdate);
     }
 
     private Contest createContestAndCategory() {
@@ -116,9 +112,7 @@ public class CompetitionRecordConfig {
                 .build();
         contestToCreate.addCategory(categoryToCreate01);
         contestToCreate.addCategory(categoryToCreate02);
-        final Contest savedContest = contestRepository.save(contestToCreate);
-
-        return  savedContest;
+        return contestRepository.save(contestToCreate);
     }
 
     private Category createCategory() {

@@ -14,20 +14,66 @@ import useUserStore from "../stores/userStore";
 import { ParticipationStatus } from "../Components/contest/ParticipationStatus";
 import Modal from "../Components/Modal";
 import CreateContest from "../Components/Contest-Components/CreateContest";
+import DeleteContest from "../Components/Contest-Components/DeleteContest";
+import StartNewContestStage from "../Components/Contest-Components/StartNewContestStage";
+import EndContest from "../Components/archive/EndContest";
+import BackButton from "../Components/BackButton";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalEndOpen, setModalEndOpen] = useState(false);
+  const { user } = useUserStore((state) => state);
+
   return (
-    <div>
-      <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
-      <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
-        <CreateContest
-        title={t("ContestDetailsPage.contestEditTitle")}
-        initialContestInfo={contestInfo?.contest}
-        initialCategories={categoriesInfo}
-        />
-      </Modal>
+    <div className="flex space-x-2 justify-end">
+      {(user.role === "ADMIN" || user.role === "MODERATOR") && (
+        <Button
+          onClick={() => {
+            if (confirm(t("StartNewContestStage.newStageConfirm"))) {
+              StartNewContestStage(contestInfo.contest.id);
+            }
+          }}
+        >
+          {t("ContestCard.startNewStage")}
+        </Button>
+      )}
+
+      {user.role === "ADMIN" && (
+        <>
+          <Button onClick={() => setModalOpen(true)}
+          extraStyle="bg-orange-500 hover:bg-orange-300">
+            {t("ContestCard.editContest")}
+          </Button>
+          <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
+            <CreateContest
+              contestTitle={t("ContestDetailsPage.contestEditTitle")}
+              saveTitle={t("ContestDetailsPage.contestEditSave")}
+              initialContestInfo={contestInfo?.contest}
+              initialCategories={categoriesInfo}
+            />
+          </Modal>
+          <Button
+            id="endContestButton"
+            onClick={() => setModalEndOpen(true)}
+            extraStyle="bg-orange-500 hover:bg-orange-300"
+          >
+            {t("ContestCard.endContest")}
+          </Button>
+          <Modal isOpen={modalEndOpen} setIsOpen={setModalEndOpen}>
+            <EndContest
+              contest={contestInfo?.contest}
+              close={() => setModalEndOpen(false)}
+            />
+          </Modal>
+          <Button
+            extraStyle="bg-red-500 hover:bg-red-300"
+            onClick={() => DeleteContest(contestInfo.contest.id)}
+          >
+            {t("ContestCard.deleteContest")}
+          </Button>
+        </>
+      )}
     </div>
   );
 }
@@ -103,6 +149,7 @@ function ContestDetailsPage() {
               </div>
             </div>
           </section>
+
           <EditContestSection contestInfo={data} categoriesInfo={categories} />
           <section className="text text-slate-700 leading-loose text-lg">
             <h1 className="text-2xl text-teal-500 font-bold py-2">
@@ -132,11 +179,14 @@ function ContestDetailsPage() {
             </div>
           </section>
         </div>
-        {!data?.status && user && user.role !== "JURY" && (
-          <Button extraStyle="mt-4" onClick={requestMutation}>
-            {t("ContestDetailsPage.participate")}
-          </Button>
-        )}
+        <div className="mt-4">
+          {!data?.status && user && user.role !== "JURY" && (
+            <Button onClick={requestMutation}>
+              {t("ContestDetailsPage.participate")}
+            </Button>
+          )}
+          <BackButton />
+        </div>
       </div>
     </div>
   );
