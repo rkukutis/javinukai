@@ -4,6 +4,7 @@ package lt.javinukai.javinukai.service;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import lt.javinukai.javinukai.entity.ParticipationRequest;
 import lt.javinukai.javinukai.entity.User;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,7 @@ import java.net.URI;
 @Slf4j
 @RequiredArgsConstructor
 public class EmailService {
-private final JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${app.client}")
     private String client;
@@ -36,7 +37,7 @@ private final JavaMailSender mailSender;
         email.setText(message);
         log.info("Sending email: {}", email);
         // disabled for testing purposes
-         //mailSender.send(email);
+        //mailSender.send(email);
     }
 
     @SneakyThrows // temp
@@ -91,9 +92,36 @@ private final JavaMailSender mailSender;
 
                 Best regards,\s
 
-                ShapeLithuanian press photography""",user.getName(), user.getSurname(), uri.toString(), sender);
+                ShapeLithuanian press photography""", user.getName(), user.getSurname(), uri.toString(), sender);
 
         sendMail(user.getEmail(), "Reset your password", message);
+    }
+
+    public void participationStatusChangeNotification(User user, ParticipationRequest participationRequest) {
+
+        String message = String.format("""
+                        Dear %s %s,
+
+                        We have sent you this email to inform you, that the status of the request to participate in the competition has been changed\s
+                                        
+                        Contest name: %s\s
+                        New status: %s\s
+
+                                     
+
+                        If you need help or have any other questions, feel free to email %s.\s
+
+                        Best regards,\s
+
+                        ShapeLithuanian press photography""",
+                user.getName(),
+                user.getSurname(),
+                participationRequest.getContest().getName(),
+                participationRequest.getRequestStatus(),
+                sender);
+
+        sendMail(user.getEmail(), "Participation requests status ", message);
+
     }
 
 }
