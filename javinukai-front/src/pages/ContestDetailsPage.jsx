@@ -16,11 +16,14 @@ import Modal from "../Components/Modal";
 import CreateContest from "../Components/Contest-Components/CreateContest";
 import DeleteContest from "../Components/Contest-Components/DeleteContest";
 import StartNewContestStage from "../Components/Contest-Components/StartNewContestStage";
+import EndContest from "../Components/archive/EndContest";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
-  //console.log("infooooooo", contestInfo)
+  const [modalEndOpen, setModalEndOpen] = useState(false);
+  const { user } = useUserStore((state) => state);
+
   return (
     <div className="flex space-x-1">
       <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
@@ -28,11 +31,30 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
       <Button onClick={() => StartNewContestStage(contestInfo.contest.id)}>Start New Stage</Button>
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
         <CreateContest
-        title={t("ContestDetailsPage.contestEditTitle")}
+        contestTitle={t("ContestDetailsPage.contestEditTitle")}
+        saveTitle={t("ContestDetailsPage.contestEditSave")}
         initialContestInfo={contestInfo?.contest}
         initialCategories={categoriesInfo}
         />
       </Modal>
+
+      {user.role === "ADMIN" && (
+        <>
+          <Button
+            id="endContestButton"
+            onClick={() => setModalEndOpen(true)}
+            extraStyle="w-full xl:w-fit bg-red-400 hover:bg-red-200"
+          >
+            {t("ContestCard.endContest")}
+          </Button>
+          <Modal isOpen={modalEndOpen} setIsOpen={setModalEndOpen}>
+            <EndContest
+              contest={contestInfo?.contest}
+              close={() => setModalEndOpen(false)}
+            />
+          </Modal>
+        </>
+      )}
     </div>
   );
 }
@@ -108,6 +130,7 @@ function ContestDetailsPage() {
               </div>
             </div>
           </section>
+
           <EditContestSection contestInfo={data} categoriesInfo={categories} />
           <section className="text text-slate-700 leading-loose text-lg">
             <h1 className="text-2xl text-teal-500 font-bold py-2">

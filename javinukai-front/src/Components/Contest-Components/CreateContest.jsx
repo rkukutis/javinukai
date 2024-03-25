@@ -12,7 +12,8 @@ import { useQueryClient } from "@tanstack/react-query";
 export default function CreateContest({
   initialContestInfo,
   initialCategories,
-  title
+  contestTitle,
+  saveTitle
 }) {
   const queryClient = useQueryClient();
   const {
@@ -117,7 +118,7 @@ export default function CreateContest({
       } mx-auto p-6 bg-white rounded-md shadow-md`}
     >
       <h2 className="text-2xl font-semibold mb-4">
-      {title ? title : t("CreateContest.contestTitle")}
+      {contestTitle ? contestTitle : t("CreateContest.contestTitle")}
       </h2>
       <form id="contest-create-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
@@ -263,7 +264,7 @@ export default function CreateContest({
         <StyledInput
           form="contest-create-form"
           extraStyle="px-2 text-lg font-bold"
-          value={t("CreateContest.creation")}
+          value={saveTitle ? saveTitle : t("CreateContest.creation")}
           type="submit"
         />
       </div>
