@@ -124,8 +124,8 @@ public class ContestController {
     public ResponseEntity<?> deleteContest(@PathVariable @NotNull UUID id) {
         log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);git 
-    }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
     @PatchMapping(path = "/contests/{contestId}/reset")
