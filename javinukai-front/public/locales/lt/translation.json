@@ -276,7 +276,8 @@
     "participationError": "Įvyko klaida siunčiant dalyvavimo prašymą",
     "userEntries": "Jūsų pateikimai",
     "entries": "Visi pateikimai",
-    "contestEditTitle": "Redaguoti konkursą"
+    "contestEditTitle": "Redaguoti konkursą",
+    "contestEditSave": "Išsaugoti pakeitimus"
   },
 
   "CategoryItem": {

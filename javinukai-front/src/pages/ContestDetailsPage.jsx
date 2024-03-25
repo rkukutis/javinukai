@@ -27,7 +27,8 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
       <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
         <CreateContest
-        title={t("ContestDetailsPage.contestEditTitle")}
+        contestTitle={t("ContestDetailsPage.contestEditTitle")}
+        saveTitle={t("ContestDetailsPage.contestEditSave")}
         initialContestInfo={contestInfo?.contest}
         initialCategories={categoriesInfo}
         />
