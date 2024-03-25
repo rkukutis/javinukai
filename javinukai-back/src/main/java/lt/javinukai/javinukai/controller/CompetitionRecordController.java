@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CompetitionRecordDTO;
 import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
 import lt.javinukai.javinukai.dto.response.CompetitionRecordResponse;
+import lt.javinukai.javinukai.dto.response.ParticipatingUser;
 import lt.javinukai.javinukai.dto.response.UserParticipationResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
@@ -98,6 +99,24 @@ public class CompetitionRecordController {
         log.info("Request for retrieving competition {} category {} competition records, {} records found",
                 contestId, categoryId, page.getTotalElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/records/competing/{contestID}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> retrieveStillCompetingUsers(@PathVariable @NotNull UUID contestID,
+                                                         @RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "25") int limit,
+                                                         @RequestParam(required = false) String contains,
+                                                         @RequestParam(defaultValue = "email") String sortBy,
+                                                         @RequestParam(defaultValue = "false") boolean sortDesc) {
+
+        log.info("Request for retrieving still competing participants for competition {}", contestID);
+        Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+        final Pageable pageable = PageRequest.of(page, limit, sort);
+        final Page<ParticipatingUser> participatingUsers = competitionRecordService
+                .retrieveCompetingParticipants(pageable, contestID, contains);
+        return new ResponseEntity<>(participatingUsers, HttpStatus.OK);
     }
 
     @PatchMapping(path = "/records/{recordID}")

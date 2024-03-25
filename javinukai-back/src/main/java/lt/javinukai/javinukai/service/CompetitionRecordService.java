@@ -4,19 +4,20 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CompetitionRecordDTO;
+import lt.javinukai.javinukai.dto.response.ParticipatingUser;
 import lt.javinukai.javinukai.dto.response.UserParticipationResponse;
-import lt.javinukai.javinukai.entity.Category;
-import lt.javinukai.javinukai.entity.CompetitionRecord;
-import lt.javinukai.javinukai.entity.Contest;
-import lt.javinukai.javinukai.entity.User;
+import lt.javinukai.javinukai.entity.*;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import lt.javinukai.javinukai.exception.UserNotFoundException;
 import lt.javinukai.javinukai.mapper.CompetitionRecordMapper;
+import lt.javinukai.javinukai.mapper.UserMapper;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
+import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import lt.javinukai.javinukai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class CompetitionRecordService {
     private final ContestRepository contestRepository;
     private final CompetitionRecordRepository competitionRecordRepository;
     private final UserRepository userRepository;
+    private final PhotoCollectionRepository photoCollectionRepository;
 
     @Value("${app.constants.user-defaults.max-photos.single}")
     private int defaultMaxSinglePhotos;
@@ -145,6 +147,36 @@ public class CompetitionRecordService {
 
     public Page<CompetitionRecord> retrieveAllUserCompetitionRecords(Pageable pageable, UUID userId) {
         return competitionRecordRepository.findByUserId(pageable, userId);
+    }
+
+    public Page<ParticipatingUser> retrieveCompetingParticipants(Pageable pageable, UUID contestId, String keyword) {
+
+        final List<CompetitionRecord> competitionRecords = competitionRecordRepository.findByContestId(contestId);
+        final List<PhotoCollection> likedPhotos = new ArrayList<>();
+        for (CompetitionRecord r : competitionRecords) {
+            final UUID recordID = r.getId();
+            List<PhotoCollection> rPhotoCollection =
+                    photoCollectionRepository.findCollectionsByCompetitionRecordId(recordID);
+            for (PhotoCollection p : rPhotoCollection) {
+                if (p != null && !p.getJuryLikes().isEmpty()) {
+                    likedPhotos.add(p);
+                }
+            }
+        }
+
+        log.info("{}: Retrieving still competing participants", this.getClass().getName());
+
+        List<ParticipatingUser> authors = new ArrayList<>();
+        List<String> emails = new ArrayList<>();
+        for (PhotoCollection pc : likedPhotos) {
+            String email = pc.getAuthor().getEmail();
+            final ParticipatingUser participant = UserMapper.userToParticipatingUsr(pc.getAuthor());
+            if (!emails.contains(email)) {
+                emails.add(email);
+                authors.add(participant);
+            }
+        }
+        return new PageImpl<>(authors);
     }
 
     @Transactional
