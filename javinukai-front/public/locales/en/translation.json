@@ -271,7 +271,8 @@
     "participationSuccess": "Participations request sent successfully",
     "participationError": "An error has occured while sending a participation",
     "userEntries": "Your entries",
-    "entries": "Total entries"
+    "entries": "Total entries",
+    "contestEditTitle": "Edit contest"
   },
 
   "CategoryItem": {
@@ -517,5 +518,17 @@
     "showAll": "All",
     "showLiked": "Only liked",
     "showDisliked": "Only disliked"
+  },
+
+  "LandingPage": {
+    "mainTitle": "Lithuanian Press Photography",
+    "contestsTitle": "Contests"
+  },
+
+  "CompetitionPreview": {
+    "recordsTitle": "Competition records",
+    "loadingTitle": "Loading...",
+    "userTitle": "User:",
+    "categoryTitle": "Category:"
   }
 }

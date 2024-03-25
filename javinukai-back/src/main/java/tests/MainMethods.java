@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 
 public class MainMethods extends BasePage{
@@ -17,6 +18,7 @@ public class MainMethods extends BasePage{
         super(driver);
 
     }
+
     public String waitForPopUp(String waitForPopUpText){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@role='status']"),  waitForPopUpText));

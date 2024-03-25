@@ -1,8 +1,12 @@
-package tests;
+package regression;
 
 import org.assertj.core.api.AssertionsForClassTypes;
 
 import org.junit.jupiter.api.Test;
+import tests.LandingPage;
+import tests.LoginPage;
+import tests.MainMethods;
+import tests.RegisterPage;
 
 
 public class RegisterPageTest extends BaseTest{

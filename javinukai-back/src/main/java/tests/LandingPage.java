@@ -10,11 +10,20 @@ public class LandingPage extends BasePage{
 
     @FindBy (xpath = "/html/body/div/div[2]/header/div/div[2]/a/button")
     private WebElement loginButton;
-    @FindBy(xpath ="//*[@id=\"root\"]/div[2]/header/div/div[2]/div[1]/button[1]/img")
+    @FindBy(xpath ="(//img)[2]")
     private WebElement englishLanguage;
+
+    @FindBy(xpath = "(//img)[3]")
+    private WebElement lithuanianLanguage;
+
+    @FindBy(xpath = "//a[@href='/contests']")
+    private WebElement homePage;
+
     public LandingPage(WebDriver driver) {
         super(driver);
     }
+
+    public void clickHomePage(){homePage.click();}
 
     public void clickOnLogin(){loginButton.click();}
     public void setEnglishLanguage(){englishLanguage.click();}

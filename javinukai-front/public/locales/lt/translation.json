@@ -15,7 +15,7 @@
   },
 
   "layout": {
-    "name": "Lietuvos spaudos fotografija",
+    "name": "Lietuvos Spaudos Fotografija",
     "login": "Prisijungimas",
     "loggedOutSuccess": "Sėkmingai atsijungėte!",
     "adminContact": "Administracija"
@@ -273,7 +273,8 @@
     "participationSuccess": "Dalyvavimo prašymas išsiųstas",
     "participationError": "Įvyko klaida siunčiant dalyvavimo prašymą",
     "userEntries": "Jūsų pateikimai",
-    "entries": "Visi pateikimai"
+    "entries": "Visi pateikimai",
+    "contestEditTitle": "Redaguoti konkursą"
   },
 
   "CategoryItem": {
@@ -399,6 +400,7 @@
     "categoryDescription": "Aprašymas",
     "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
     "categoryType": "Kategorijos tipas",
+    "categorySelectType": "Pasirinkite kategorijos tipą",
     "categoryCreateButton": "Sukurti kategoriją",
     "categoryCreateSuccess": "Kategorija sukurta sėkmingai",
     "categoryCreateError": "Kuriant kategoriją įvyko klaida",
@@ -517,6 +519,18 @@
     "showAll": "Visas",
     "showLiked": "Tik patikusias",
     "showDisliked": "Tik nepatikusias"
-  }
+  },
+
+  "LandingPage": {
+    "mainTitle": "Lietuvos Spaudos Fotografija",
+    "contestsTitle": "Konkursai"
+  },
+
+  "CompetitionPreview": {
+    "recordsTitle": "Konkursų įrašai",
+    "loadingTitle": "Kraunama...",
+    "userTitle": "Vartotojas:",
+    "categoryTitle": "Kategorija:"
+    }
 }
 
