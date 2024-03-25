@@ -8,12 +8,13 @@ import StyledInput from "../StyledInput";
 import { getContestCreationMultipart } from "../../utils/getMultipartForm";
 import { CategorySelection } from "./CategorySelection";
 import { useQueryClient } from "@tanstack/react-query";
+import BackButton from "../BackButton";
 
 export default function CreateContest({
   initialContestInfo,
   initialCategories,
   contestTitle,
-  saveTitle
+  saveTitle,
 }) {
   const queryClient = useQueryClient();
   const {
@@ -69,7 +70,9 @@ export default function CreateContest({
           toast.success(t("CreateContest.contestDetailsUpdatedSuccess"));
           queryClient.invalidateQueries(["contest", "contestCategories"]);
         })
-        .catch(() => toast.error(t("CreateContest.contestDetailsUpdatedError")));
+        .catch(() =>
+          toast.error(t("CreateContest.contestDetailsUpdatedError"))
+        );
       // update categories separately
       if (initialCategories != selectedCategories) {
         await axios
@@ -86,7 +89,9 @@ export default function CreateContest({
             toast.success(t("CreateContest.contestCategoriesUpdatedSuccess"));
             queryClient.invalidateQueries(["contest", "contestCategories"]);
           })
-          .catch(() => toast.error(t("CreateContest.contestCategoriesUpdatedError")));
+          .catch(() =>
+            toast.error(t("CreateContest.contestCategoriesUpdatedError"))
+          );
       }
     } else {
       await axios
@@ -110,7 +115,7 @@ export default function CreateContest({
     }
     setThumbnailFile(e.target.files[0]);
   }
-  
+
   return (
     <div
       className={`${
@@ -118,7 +123,7 @@ export default function CreateContest({
       } mx-auto p-6 bg-white rounded-md shadow-md`}
     >
       <h2 className="text-2xl font-semibold mb-4">
-      {contestTitle ? contestTitle : t("CreateContest.contestTitle")}
+        {contestTitle ? contestTitle : t("CreateContest.contestTitle")}
       </h2>
       <form id="contest-create-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
@@ -161,7 +166,9 @@ export default function CreateContest({
           </label>
           <textarea
             id="description"
-            {...register("description", { required: t("CreateContest.required") })}
+            {...register("description", {
+              required: t("CreateContest.required"),
+            })}
             className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
           />
           {errors.description && (
@@ -199,7 +206,10 @@ export default function CreateContest({
             <input
               type="date"
               id="endDate"
-              {...register("endDate", { required: t("CreateContest.required"), min: 1 })}
+              {...register("endDate", {
+                required: t("CreateContest.required"),
+                min: 1,
+              })}
               className="mt-1 p-2 w-full border-2 border-slate-100 rounded-md focus:outline-none focus:border-blue-500"
             />
             {errors.endDate && (
@@ -261,6 +271,7 @@ export default function CreateContest({
         setSelectedCategories={setSelectedCategories}
       />
       <div className="flex justify-end">
+        <BackButton />
         <StyledInput
           form="contest-create-form"
           extraStyle="px-2 text-lg font-bold"

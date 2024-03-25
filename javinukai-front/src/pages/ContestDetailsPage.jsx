@@ -17,6 +17,7 @@ import CreateContest from "../Components/Contest-Components/CreateContest";
 import DeleteContest from "../Components/Contest-Components/DeleteContest";
 import StartNewContestStage from "../Components/Contest-Components/StartNewContestStage";
 import EndContest from "../Components/archive/EndContest";
+import BackButton from "../Components/BackButton";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const { t } = useTranslation();
@@ -27,14 +28,18 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
   return (
     <div className="flex space-x-1">
       <Button onClick={() => setModalOpen(true)}>Edit Contest</Button>
-      <Button onClick={() => DeleteContest(contestInfo.contest.id)}>Delete Contest</Button>
-      <Button onClick={() => StartNewContestStage(contestInfo.contest.id)}>Start New Stage</Button>
+      <Button onClick={() => DeleteContest(contestInfo.contest.id)}>
+        Delete Contest
+      </Button>
+      <Button onClick={() => StartNewContestStage(contestInfo.contest.id)}>
+        Start New Stage
+      </Button>
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
         <CreateContest
-        contestTitle={t("ContestDetailsPage.contestEditTitle")}
-        saveTitle={t("ContestDetailsPage.contestEditSave")}
-        initialContestInfo={contestInfo?.contest}
-        initialCategories={categoriesInfo}
+          contestTitle={t("ContestDetailsPage.contestEditTitle")}
+          saveTitle={t("ContestDetailsPage.contestEditSave")}
+          initialContestInfo={contestInfo?.contest}
+          initialCategories={categoriesInfo}
         />
       </Modal>
 
@@ -160,11 +165,14 @@ function ContestDetailsPage() {
             </div>
           </section>
         </div>
-        {!data?.status && user && user.role !== "JURY" && (
-          <Button extraStyle="mt-4" onClick={requestMutation}>
-            {t("ContestDetailsPage.participate")}
-          </Button>
-        )}
+        <div className="mt-4">
+          {!data?.status && user && user.role !== "JURY" && (
+            <Button onClick={requestMutation}>
+              {t("ContestDetailsPage.participate")}
+            </Button>
+          )}
+          <BackButton />
+        </div>
       </div>
     </div>
   );
