@@ -44,83 +44,107 @@ public class EmailService {
     public void sendEmailConfirmation(User user, String token) {
 
         URI uri = new URIBuilder()
-                .setScheme(httpScheme)
-                .setHost(client)
-                .setPathSegments("confirm-email")
-                .addParameter("token", token)
-                .build();
+        .setScheme(httpScheme)
+        .setHost(client)
+        .setPathSegments("confirm-email")
+        .addParameter("token", token)
+        .build();
 
         String message = String.format("""
-                Dear %s %s,\s
+                
+                Gerb. %1$s %2$s,
+                     
+                Dėkojame, kad prisiregistravote į Lietuvos spaudos fotografiją. Mes džiaugiamės turėdami jus šalia.
+                Norėdami užbaigti registraciją, prašome paspausti nuorodą: %3$s
+                Dar kartą dėkojame už registraciją mūsų svetainėje. Jei turite kokių nors klausimų, prašome susisiekti - %4$s.
+                                
+                Geriausi linkėjimai,
+                Lietuvos spaudos fotografija
 
-                Thank you for signing up to Lithuanian press photography. We’re excited to have you on board\s
 
-                To complete registration please follow the link: %s\s
+                English version:
+                                
+                Dear %1$s %2$s,
+                                
+                Thank you for signing up to Lithuanian press photography. We’re excited to have you on board
+                To complete registration please follow the link: %3$s
+                Thank you once again for registering for our website. In case of any questions, contact - %4$s.
+                                
+                Best regards,
+                Lithuanian press photography""", user.getName(), user.getSurname(), uri.toString(), sender);
 
-                Thank you once again for registering for our website. In case of any questions, contact - %s.\s
-
-                \s
-
-                Best regards,\s
-
-                Lithuanian press photography\s""", user.getName(), user.getSurname(), uri.toString(), sender);
-
-        sendMail(user.getEmail(), "Confirm your email address", message);
+        sendMail(user.getEmail(), "Patvirtinkite savo el. paštą", message);
     }
 
     @SneakyThrows // temp
     public void sendPasswordResetToken(User user, String token) {
 
-        URI uri = new URIBuilder()
-                .setScheme(httpScheme)
-                .setHost(client)
-                .setPathSegments("reset-password")
-                .addParameter("token", token)
-                .build();
+        URI uri = new URIBuilder().setScheme(httpScheme).setHost(client).setPathSegments("reset-password").addParameter("token", token).build();
 
         String message = String.format("""
-                Dear %s %s,
+                
+                Gerb, %1$s %2$s,
+                             
+                Šį laišką siunčiame atsakydami į jūsų prašymą atkurti slaptažodį Lietuvos spaudos fotografijos puslapyje.
+                Norėdami atkurti slaptažodį Lietuvos spaudos fotografijai, prašome paspausti žemiau esančią nuorodą:
+                %3$s
+                             
+                Rekomenduojame saugoti slaptažodį ir nepateikti jo niekam. Jei manote, jog Jūsų slaptažodis buvo pažeistas, galite jį pakeisti nuėję į savo "Asmeninė informacija" puslapį ir paspausdami "Pakeisti slaptažodį".
+                Jei Jums reikia pagalbos ar turite kitų klausimų, nedvejokite rašyti el. laišką adresu: %4$s.
+                             
+                Geriausi linkėjimai,
+                Lietuvos spaudos fotografija    
+                                
+                                
+                English version:
+                                                                        
+                Dear %1$s %2$s,
 
-                We have sent you this email in response to your request to reset your password for Lithuanian press photography.\s
-                To reset your password for Lithuanian press photography, please follow the link below:\s
+                We have sent you this email in response to your request to reset your password for Lithuanian press photography.
+                To reset your password for Lithuanian press photography, please follow the link below:
+                %3$s
+                                
+                We recommend that you keep your password secure and not share it with anyone. If you feel your password has been compromised, you can change it by going to your "Personal information" page and clicking on the "Change Password".\s
+                If you need help or have any other questions, feel free to email: %4$s.
 
-                %s
+                Best regards,
+                Lithuanian press photography""", user.getName(), user.getSurname(), uri.toString(), sender);
 
-                We recommend that you keep your password secure and not share it with anyone. If you feel your password has been compromised, you can change it by going to your My Account Page and clicking on the "Change Password" link.\s
-
-                If you need help or have any other questions, feel free to email %s.\s
-
-                Best regards,\s
-
-                ShapeLithuanian press photography""", user.getName(), user.getSurname(), uri.toString(), sender);
-
-        sendMail(user.getEmail(), "Reset your password", message);
+        sendMail(user.getEmail(), "Atkurkite slaptažodį", message);
     }
 
     public void participationStatusChangeNotification(User user, ParticipationRequest participationRequest) {
 
         String message = String.format("""
-                        Dear %s %s,
-
-                        We have sent you this email to inform you, that the status of the request to participate in the competition has been changed\s
+                
+                Gerb. %1$s %2$s,
                                         
-                        Contest name: %s\s
-                        New status: %s\s
+                Šiuo laišku norime Jums pranešti, jog konkursui dalyvauti pateiktos užklausos būsena pasikeitė.
+                                        
+                Konkurso pavadinimas: %3$s
+                Nauja būsena: %4$s
+                                        
+                Jei Jums reikia pagalbos ar turite kitų klausimų, drąsiai rašykite el. laišką adresu %5$s.
+                                        
+                Geriausi linkėjimai,
+                Lietuvos spaudos fotografija
+                                        
+                                                                                        
+                English version:
+                                        
+                Dear %1$s %2$s,
 
-                                     
+                We have sent you this email to inform you, that the status of the request to participate in the competition has been changed.
+                       
+                Contest name: %3$s
+                New status: %4$s
+                         
+                If you need help or have any other questions, feel free to email %5$s.
 
-                        If you need help or have any other questions, feel free to email %s.\s
+                Best regards,
+                Lithuanian press photography""", user.getName(), user.getSurname(), participationRequest.getContest().getName(), participationRequest.getRequestStatus(), sender);
 
-                        Best regards,\s
-
-                        ShapeLithuanian press photography""",
-                user.getName(),
-                user.getSurname(),
-                participationRequest.getContest().getName(),
-                participationRequest.getRequestStatus(),
-                sender);
-
-        sendMail(user.getEmail(), "Participation requests status ", message);
+        sendMail(user.getEmail(), "Dalyvavimo prašymo būsena pasikeitė", message);
 
     }
 
