@@ -41,4 +41,5 @@ public interface PhotoCollectionRepository extends JpaRepository<PhotoCollection
 
     List<PhotoCollection> findCollectionsByCompetitionRecordId(UUID id);
 
+    void deleteByCompetitionRecordId(UUID id);
 }

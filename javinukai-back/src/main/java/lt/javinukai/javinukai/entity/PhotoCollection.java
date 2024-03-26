@@ -38,6 +38,7 @@ public class PhotoCollection {
     @JoinColumn(name = "author_id")
     private User author;
 
+    @Setter
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Photo> images;
 
@@ -83,6 +84,10 @@ public class PhotoCollection {
             return;
         }
         juryLikes.clear();
+    }
+
+    public void resetImages() {
+        images = null;
     }
 
     private ZonedDateTime createdAt;

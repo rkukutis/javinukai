@@ -13,12 +13,14 @@ import lt.javinukai.javinukai.repository.ParticipationRequestRepository;
 import lt.javinukai.javinukai.wrapper.ContestWrapper;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,13 +65,20 @@ public class ContestService {
 
     public Page<Contest> retrieveAllContests(Pageable pageable, String keyword) {
 
+        Page<Contest> page;
         if (keyword == null || keyword.isEmpty()) {
             log.info("{}: Retrieving all contests list from database", this.getClass().getName());
-            return contestRepository.findAll(pageable);
+            page = contestRepository.findAll(pageable);
         } else {
             log.info("{}: Retrieving categories by name", this.getClass().getName());
-            return contestRepository.findByNameContainingIgnoreCase(pageable, keyword);
+            page = contestRepository.findByNameContainingIgnoreCase(pageable, keyword);
         }
+
+        List<Contest> filteredContests = page.getContent().stream()
+                .filter((contest) -> !contest.isArchived())
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(filteredContests, pageable, page.getTotalElements());
     }
 
     public Contest retrieveContest(UUID id) {
