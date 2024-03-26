@@ -56,7 +56,7 @@ public class PhotoService {
                 .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
 
         ZonedDateTime endDate = competitionRecord.getContest().getEndDate();
-        if (endDate.equals(ZonedDateTime.now()) || endDate.isAfter(ZonedDateTime.now())) {
+        if (endDate.equals(ZonedDateTime.now()) || endDate.isBefore(ZonedDateTime.now())) {
             throw new ContestExpiredException("You can not submit any new photos to a contest that has ended");
         }
 
