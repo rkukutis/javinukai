@@ -25,51 +25,21 @@ import java.util.List;
 public class ApplicationFilters {
     private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final LogoutSuccessHandler logoutSuccessHandler;
-    private final HeaderWriterLogoutHandler headerWriterLogoutHandler;
-
-    @Value("${app.client}")
-    private String client;
-    @Value("${app.scheme}")
-    private String httpScheme;
 
     @Bean
     public SecurityFilterChain filters(HttpSecurity http) throws Exception {
-        // localhost:8080/swagger-ui/index.html - Swagger
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/index.html", "/error","/assets/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        //
                         .requestMatchers(HttpMethod.GET,"/api/v1/contests/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/categories/**").permitAll()
-                        //
                         .anyRequest().authenticated()
-                )
-                .headers(headers -> headers // for dev - needed for h2 console page
-                        .frameOptions((HeadersConfigurer.FrameOptionsConfig::disable))
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(httpScheme + "://" + client));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
-        return source;
-    }
-
-
-
 }

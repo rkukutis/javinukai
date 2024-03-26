@@ -5,21 +5,18 @@ spring:
   h2:
     console.enabled: true
   datasource:
-    url: jdbc:h2:mem:database
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/myfashiontrunk
+    username: rhoopoe
+    password: jIOHohfdoiHIAD445_jds#LLd
+    driverClassName: org.postgresql.Driver
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 50MB
   jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        generate_statistics: false
-        jdbc.batch_size: 20
-        order_inserts: true
+    database: postgresql
+    hibernate:
+      ddl-auto: create-drop
 logging:
   level:
     lt:
@@ -54,5 +51,5 @@ app:
         password-reset-token:
           valid-minutes: 10
       jwt-secret-key: 56bb52a9882a6z7bfd065c980908a4e656fd52a9882a6b7bfa065c982907a4e6
-      jwt-valid-hours: 72
-      jwt-cookie-valid-hours: 72
+      jwt-valid-hours: 720
+      jwt-cookie-valid-hours: 720
