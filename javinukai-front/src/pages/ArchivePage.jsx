@@ -48,7 +48,7 @@ function ArchivePage() {
         <SpinnerPage />
       ) : (
         <div className="w-full min-h-[82vh] xl:flex xl:flex-col xl:items-center bg-slate-50">
-          <div className="xl:w-4/4 w-full px-2">
+          <div className="xl:w-3/4 w-full px-2">
             <PaginationSettings
               pagination={paginationSettings}
               setPagination={setPaginationSettings}
