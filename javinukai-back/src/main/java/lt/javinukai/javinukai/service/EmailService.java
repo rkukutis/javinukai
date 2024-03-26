@@ -37,7 +37,7 @@ public class EmailService {
         email.setText(message);
         log.info("Sending email: {}", email);
         // disabled for testing purposes
-        //mailSender.send(email);
+        mailSender.send(email);
     }
 
     @SneakyThrows // temp
