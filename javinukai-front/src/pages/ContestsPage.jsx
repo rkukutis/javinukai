@@ -5,6 +5,7 @@ import PaginationSettings from "../Components/PaginationSettings";
 import ContestCard from "../Components/contest/ContestCard";
 import { useTranslation } from "react-i18next";
 import SpinnerPage from "./SpinnerPage";
+import ChangePage from "../Components/user-management/ChangePage";
 
 const defaultPagination = {
   page: 0,
@@ -78,6 +79,13 @@ function ContestsPage() {
               <ContestCard key={contest.id} contestInfo={contest} />
             ))}
           </div>
+          <div>
+              <ChangePage
+                pagination={paginationSettings}
+                setPagination={setPaginationSettings}
+                availablePageNumber={data?.totalPages}
+              />
+            </div>
         </div>
       )}
     </>
