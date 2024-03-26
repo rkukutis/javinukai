@@ -27,8 +27,8 @@ logging:
         jpa: INFO
 app:
   scheme: https
-  host: https://lietuvos-spaudos-fotografija.rhoopoe.com
-  client: https://lietuvos-spaudos-fotografija.rhoopoe.com
+  host: lietuvos-spaudos-fotografija.rhoopoe.com
+  client: lietuvos-spaudos-fotografija.rhoopoe.com
   email:
     sender-address: notrealuser23@gmail.com
     smtp-server:
