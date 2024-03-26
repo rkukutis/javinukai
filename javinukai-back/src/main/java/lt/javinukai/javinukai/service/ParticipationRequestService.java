@@ -26,6 +26,7 @@ public class ParticipationRequestService {
     private final UserRepository userRepository;
     private final ContestRepository contestRepository;
     private final CompetitionRecordService competitionRecordService;
+    private final EmailService emailService;
 
     public Page<ParticipationRequest> getAllRequests(PageRequest pageRequest, String contains) {
         if (contains == null) {
@@ -57,7 +58,6 @@ public class ParticipationRequestService {
     public List<ParticipationRequest> getRequestByUserIdAndContestId(UUID userId, UUID contestId) {
         return participationRequestRepository.findByUserIdAndContestId(userId, contestId);
     }
-
     public ParticipationRequest getRequestById(UUID requestId) {
         ParticipationRequest participationRequest = participationRequestRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Participation request was not found with ID: " + requestId));
@@ -79,6 +79,7 @@ public class ParticipationRequestService {
             UUID contestId = tempRequest.getContest().getId();
             competitionRecordService.createUsersCompetitionRecords(contestId, userId);
         }
+        emailService.participationStatusChangeNotification(tempRequest.getUser(), tempRequest);
         return participationRequestRepository.save(tempRequest);
     }
 
