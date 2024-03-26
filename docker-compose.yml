@@ -15,7 +15,7 @@ services:
       - "8080:8080"
   javinukai-db:
     image: 'postgres:15-alpine'
-    container_name: myfashiontrunk-db
+    container_name: javinukai-db
     environment:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
