@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.CategoryDTO;
 import lt.javinukai.javinukai.dto.response.CategoryCreationResponse;
+import lt.javinukai.javinukai.dto.response.CategoryWithEntriesResponse;
 import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +65,9 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/categories/contest/{contestId}")
-    public ResponseEntity<List<Category>> retrieveContestCategories(@PathVariable UUID contestId) {
+    public ResponseEntity<List<CategoryWithEntriesResponse>> retrieveContestCategories(@PathVariable UUID contestId) {
         log.info("Request for retrieving all categories for contest {}", contestId);
-        List<Category> retrievedCategories = categoryService.retrieveContestCategories(contestId);
+        List<CategoryWithEntriesResponse> retrievedCategories = categoryService.retrieveContestCategories(contestId);
         log.info("Returning {} categories for contest {}", retrievedCategories.size(), contestId);
         return ResponseEntity.ok().body(retrievedCategories);
     }

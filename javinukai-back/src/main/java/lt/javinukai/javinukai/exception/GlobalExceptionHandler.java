@@ -133,4 +133,13 @@ public class GlobalExceptionHandler {
         res.setDetail(exception.getMessage());
         return res;
     }
+
+    @ExceptionHandler({ContestExpiredException.class})
+    public ProblemDetail handleExpiredContestError(ContestExpiredException exception) {
+        log.warn(exception.getMessage());
+        ProblemDetail res = ProblemDetail.forStatus(400);
+        res.setTitle("EXPIRED_CONTEST_ERROR_ERROR");
+        res.setDetail(exception.getMessage());
+        return res;
+    }
 }

@@ -119,9 +119,9 @@ public class ContestController {
         return new ResponseEntity<>(updatedContest, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/contests/{id}")
+    @DeleteMapping(path = "/contests/{id}/delete")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> deleteContest(@PathVariable @NotNull UUID id) {
+    public ResponseEntity<String> deleteContest(@PathVariable @NotNull UUID id) {
         log.info("Request for deleting contest with ID: {}", id);
         contestService.deleteContest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -129,7 +129,7 @@ public class ContestController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MODERATOR')")
     @PatchMapping(path = "/contests/{contestId}/reset")
-    public ResponseEntity<?> startNewStage (@PathVariable UUID contestId){
+    public ResponseEntity<String> startNewStage (@PathVariable UUID contestId){
         contestService.startNewCompetitionStage(contestId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -4,7 +4,8 @@
     "logout": "Atsijungti",
     "manageUsers": "Valdyti vartotojus",
     "createContest": "Sukurti konkursą",
-    "participationRequests": "Patvirtinti dalyvius"
+    "participationRequests": "Patvirtinti dalyvius",
+    "archive": "Archyvas"
   },
 
   "navbar": {
@@ -15,7 +16,7 @@
   },
 
   "layout": {
-    "name": "Lietuvos spaudos fotografija",
+    "name": "Lietuvos Spaudos Fotografija",
     "login": "Prisijungimas",
     "loggedOutSuccess": "Sėkmingai atsijungėte!",
     "adminContact": "Administracija"
@@ -260,7 +261,15 @@
   },
 
   "ContestCard": {
-    "detailsButton": "Plačiau"
+    "detailsButton": "Plačiau",
+    "endContest": "Baigti konkursą",
+    "startNewStage": "Naujas etapas",
+    "editContest": "Redaguoti konkursą",
+    "deleteContest": "Ištrinti konkursą"
+  },
+
+  "StartNewContestStage": {
+    "newStageConfirm": "Ar tikrai norite pradėti naująjį konkurso etapą?"
   },
 
   "ContestDetailsPage": {
@@ -273,13 +282,16 @@
     "participationSuccess": "Dalyvavimo prašymas išsiųstas",
     "participationError": "Įvyko klaida siunčiant dalyvavimo prašymą",
     "userEntries": "Jūsų pateikimai",
-    "entries": "Visi pateikimai"
+    "entries": "Visi pateikimai",
+    "contestEditTitle": "Redaguoti konkursą",
+    "contestEditSave": "Išsaugoti pakeitimus"
   },
 
   "CategoryItem": {
     "juryViewEntries": "Peržiūrėti dalyvių pateiktis",
-    "entryLimit":"Bendras pateikčių limitas",
-    "defaultLimit": "Numatytas limitas vienam vartotojui"
+    "entryLimit": "Bendras pateikčių limitas",
+    "defaultLimit": "Numatytas limitas vienam vartotojui",
+    "totalEntries": "pateiktys"
   },
 
   "UserSubmissionView": {
@@ -399,14 +411,14 @@
     "categoryDescription": "Aprašymas",
     "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
     "categoryType": "Kategorijos tipas",
+    "categorySelectType": "Pasirinkite kategorijos tipą",
     "categoryCreateButton": "Sukurti kategoriją",
     "categoryCreateSuccess": "Kategorija sukurta sėkmingai",
     "categoryCreateError": "Kuriant kategoriją įvyko klaida",
     "required": "Šis laukas yra privalomas"
-    
   },
 
-  "CategorySelection":{
+  "CategorySelection": {
     "categories": "Kategorijos",
     "noCategoriesAdded": "Dar nėra pridėtų kategorijų!",
     "categoryName": "Pavadinimas",
@@ -417,7 +429,7 @@
     "CreateNewCategory": "Sukurti ir pridėti kategoriją"
   },
 
-  "CategoryList":{
+  "CategoryList": {
     "categoriesName": "pavadinimą",
     "categoriesNameCapital": "Pavadinimą",
     "categoriesMaxTotalSubmissions": "Maksimalus kategorijos pateikimų skaičius",
@@ -427,8 +439,7 @@
     "categoryTitle": "Kategorijų"
   },
 
-
-  "EditCategoryModal":{
+  "EditCategoryModal": {
     "editCategory": "Redaguoti kategoriją",
     "categoryName": "Pavadinimas",
     "categoryDescription": "Aprašymas",
@@ -493,7 +504,7 @@
     "backToHomepage": "Grižti į pradinį puslapį"
   },
 
-  "SeriesEntry":{
+  "SeriesEntry": {
     "description": "Aprašymas"
   },
 
@@ -517,6 +528,44 @@
     "showAll": "Visas",
     "showLiked": "Tik patikusias",
     "showDisliked": "Tik nepatikusias"
+  },
+
+  "LandingPage": {
+    "mainTitle": "Lietuvos Spaudos Fotografija",
+    "contestsTitle": "Konkursai"
+  },
+
+  "CompetitionPreview": {
+    "recordsTitle": "Konkursų įrašai",
+    "loadingTitle": "Kraunama...",
+    "userTitle": "Vartotojas:",
+    "categoryTitle": "Kategorija:"
+  },
+
+  "ArchivePage": {
+    "contestName": "Konkurso pavadinimas",
+    "contestDescription": "Konkurso aprašymas",
+    "startDate": "Pradžios data",
+    "endDate": "Pabaigos data",
+    "contestNameSearch": "konkurso pavadinimą",
+    "contestsLimitObject": "Konkursai",
+    "contestNameOption": "Konkurso pavadinimas",
+    "contestDescriptionOption": "Konkurso aprašymas",
+    "contestStartDateOption": "Pradžios data",
+    "contestEndDateOption": "Pabaigos data",
+    "categories": "Kategorijos"
+  },
+
+  "EndContest": {
+    "participants": "Dar besirungiantys dalyviai, pasirinkite nugalėtojus",
+    "endContestTitle": "Konkurso pabaiga",
+    "endContestButton": "Baigti konkursą",
+    "endContestSucess": "Konkursas sėkmingai užbaigtas",
+    "confirmationQuestion": "Ar tikrai norite užbaigti konkursą?"
+  },
+
+  "ContestPastParticipants": {
+    "pastParticipantsTitle": "Dalyviai",
+    "winnerIndicator": "Nugalėtoja(s)"
   }
 }
-

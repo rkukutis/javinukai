@@ -168,6 +168,7 @@ function CreateUserPage() {
               <input
                 id="phone-number"
                 className="form-field__input"
+                placeholder="+37000000001"
                 {...register("phoneNumber", {
                   required: {
                     value: true,

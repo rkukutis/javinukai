@@ -19,6 +19,7 @@ import ParticipationRequests from "./participation-request-components/Participat
 import NotFoundPage from "../pages/NotFoundPage";
 import LandingPage from "../pages/LandingPage";
 import CreateContest from "./Contest-Components/CreateContest";
+import ArchivePage from "../pages/ArchivePage";
 
 function SiteRouter({ user }) {
   const userRole = user?.role;
@@ -114,6 +115,11 @@ function SiteRouter({ user }) {
             <Route
               path={getRoute(userRole, ["ADMIN", "MODERATOR"], "/requests")}
               element={<ParticipationRequests />}
+            />
+
+            <Route
+              path={getRoute(userRole, ["ADMIN", "MODERATOR"], "/archive")}
+              element={<ArchivePage />}
             />
 
             <Route path="/*" element={<NotFoundPage />} />

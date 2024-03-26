@@ -25,7 +25,7 @@ function UserLimitEdit({ currentLimits, onLimitChange }) {
 
   return (
     <form
-      className="flex flex-col space-y-2 xl:space-y-0 xl:space-x-3 xl:grid xl:grid-cols-4"
+      className="flex flex-col space-y-2 xl:space-y-0 xl:space-x-3 xl:grid xl:grid-cols-4 xl:items-end"
       onSubmit={handleSubmit(onSubmit)}
     >
       <section className="flex flex-col">
@@ -65,7 +65,7 @@ function UserLimitEdit({ currentLimits, onLimitChange }) {
         )}
       </section>
       <StyledInput
-        extraStyle="bg-red-400"
+        extraStyle="bg-red-500 hover:bg-red-400"
         type="submit"
         value={t("DangerZone.changeLimits")}
       />

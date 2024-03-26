@@ -1,8 +1,10 @@
 package lt.javinukai.javinukai.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import lt.javinukai.javinukai.enums.PhotoSubmissionType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,9 +17,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "category")
 @Getter
+@JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class Category {
 
     @Id
