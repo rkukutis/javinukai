@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import getLatestContestThumbnails from "../services/contests/getLatestContestThumbnails";
 import { useEffect, useState } from "react";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo-larger.png";
 import { useTranslation } from "react-i18next";
 
 function ImageContainer({ imageUrl }) {

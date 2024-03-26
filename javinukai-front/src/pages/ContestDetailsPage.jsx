@@ -18,6 +18,7 @@ import DeleteContest from "../Components/Contest-Components/DeleteContest";
 import StartNewContestStage from "../Components/Contest-Components/StartNewContestStage";
 import EndContest from "../Components/archive/EndContest";
 import BackButton from "../Components/BackButton";
+import deadlineReached from "../utils/deadlineReached";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const { t } = useTranslation();
@@ -41,8 +42,10 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
 
       {user.role === "ADMIN" && (
         <>
-          <Button onClick={() => setModalOpen(true)}
-          extraStyle="bg-orange-500 hover:bg-orange-300">
+          <Button
+            onClick={() => setModalOpen(true)}
+            extraStyle="bg-orange-500 hover:bg-orange-300"
+          >
             {t("ContestCard.editContest")}
           </Button>
           <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
@@ -103,6 +106,8 @@ function ContestDetailsPage() {
       toast.error(t("ContestDetailsPage.participationError"));
     },
   });
+
+  console.log(deadlineReached(data?.contest.endDate));
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
@@ -180,11 +185,14 @@ function ContestDetailsPage() {
           </section>
         </div>
         <div className="mt-4">
-          {!data?.status && user && user.role !== "JURY" && (
-            <Button onClick={requestMutation}>
-              {t("ContestDetailsPage.participate")}
-            </Button>
-          )}
+          {!data?.status &&
+            user &&
+            user.role !== "JURY" &&
+            !deadlineReached(data?.contest.endDate) && (
+              <Button onClick={requestMutation}>
+                {t("ContestDetailsPage.participate")}
+              </Button>
+            )}
           <BackButton />
         </div>
       </div>
