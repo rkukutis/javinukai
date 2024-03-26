@@ -7,11 +7,10 @@ services:
     depends_on:
       - javinukai-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://myfashiontrunk-db:5432/compose-postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://javinukai-db:5432/compose-postgres
       - SPRING_DATASOURCE_USERNAME=compose-postgres
       - SPRING_DATASOURCE_PASSWORD=compose-postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - AWS_REGION=eu-central-1
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
     ports:
       - "8080:8080"
   javinukai-db:

@@ -5,7 +5,7 @@ spring:
   h2:
     console.enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/myfashiontrunk
+    url: jdbc:postgresql://localhost:5432/javinukai-db
     username: rhoopoe
     password: jIOHohfdoiHIAD445_jds#LLd
     driverClassName: org.postgresql.Driver

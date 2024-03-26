@@ -31,7 +31,7 @@ public class ApplicationFilters {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/index.html", "/error","/assets/**").permitAll()
+                        .requestMatchers("/", "/index.html", "/error","/assets/**", "/locales/en/**", "/locales/lt/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/contests/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/categories/**").permitAll()
