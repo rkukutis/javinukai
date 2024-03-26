@@ -5,6 +5,7 @@ import lt.javinukai.javinukai.entity.Category;
 import lt.javinukai.javinukai.entity.CompetitionRecord;
 import lt.javinukai.javinukai.entity.Contest;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
+import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,22 +13,21 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LimitCheckingService {
-    private final CompetitionRecordRepository recordRepository;
+    private final PhotoCollectionRepository collectionRepository;
 
     // return boolean if user total limit per contest not reached
     public boolean checkUserContestLimit (CompetitionRecord competitionRecord) {
-        List<CompetitionRecord> allRecords = recordRepository.findByContestIdAndUserId(
-                competitionRecord.getContest().getId(), competitionRecord.getUser().getId()
-        );
 
-        long allEntriesNumber = allRecords.stream()
-                .map(r -> Long.valueOf(r.getEntries().size()))
-                .reduce(Long::sum).orElse(0L);
+        int totalUserContestEntries = collectionRepository
+                .findVisibleCollectionsByContestIdAndUserId(
+                        competitionRecord.getContest().getId(), competitionRecord.getUser().getId()
+                ).size();
 
         if (competitionRecord.getUser().isCustomLimits()) {
-            return (competitionRecord.getUser().getMaxTotal() - allEntriesNumber) > 0;
+            return (competitionRecord.getUser().getMaxTotal() - totalUserContestEntries) > 0;
         } else {
-            return (competitionRecord.getContest().getMaxUserSubmissions() - allEntriesNumber) > 0;
+            long dif = competitionRecord.getContest().getMaxUserSubmissions() - totalUserContestEntries;
+            return dif > 0;
         }
     }
 
@@ -38,23 +38,21 @@ public class LimitCheckingService {
 
     // each contest has a number of total allowed submissions, return false if adding one more goes over the limit
     public boolean checkContestLimit(CompetitionRecord record) {
-        List<CompetitionRecord> totalRecords = recordRepository.findByContestId(record.getContest().getId());
-        long totalEntryNumber = totalRecords.stream()
-                .map(r -> r.getEntries().size())
-                .reduce(Integer::sum).orElse(0);
-        return totalEntryNumber + 1 <= record.getContest().getMaxTotalSubmissions();
+        int totalContestEntries = collectionRepository
+                .findVisibleCollectionsByContestId(record.getContest().getId()).size();
+        return totalContestEntries + 1 <= record.getContest().getMaxTotalSubmissions();
     }
 
     // the same for the category limit
     public boolean checkCategoryLimit(CompetitionRecord record) {
         Contest contest = record.getContest();
         Category category = record.getCategory();
-        List<CompetitionRecord> totalRecords = recordRepository.findByContestIdAndCategoryId(
-                contest.getId(), category.getId()
-        );
-        long totalEntryNumber = totalRecords.stream()
-                .map(r -> r.getEntries().size())
-                .reduce(Integer::sum).orElse(0);
-        return totalEntryNumber + 1 <= category.getMaxTotalSubmissions();
+
+        int totalCategoryEntries = collectionRepository
+                .findVisibleCollectionsByContestIdAndCategoryId(
+                        record.getContest().getId(), record.getCategory().getId()
+                ).size();
+
+        return totalCategoryEntries + 1 <= category.getMaxTotalSubmissions();
     }
 }

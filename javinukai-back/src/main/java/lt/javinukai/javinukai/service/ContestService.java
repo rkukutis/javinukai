@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import lt.javinukai.javinukai.dto.request.contest.ContestDTO;
 import lt.javinukai.javinukai.entity.*;
 import lt.javinukai.javinukai.mapper.ContestMapper;
-import lt.javinukai.javinukai.repository.CategoryRepository;
-import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
-import lt.javinukai.javinukai.repository.ContestRepository;
-import lt.javinukai.javinukai.repository.ParticipationRequestRepository;
+import lt.javinukai.javinukai.repository.*;
 import lt.javinukai.javinukai.wrapper.ContestWrapper;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Page;
@@ -30,6 +27,7 @@ public class ContestService {
     private final ParticipationRequestRepository participationRequestRepository;
     private final CompetitionRecordRepository recordRepository;
     private final CompetitionRecordService competitionRecordService;
+    private final PhotoCollectionRepository collectionRepository;
     private final PhotoService photoService;
     private final RateService rateService;
 
@@ -84,9 +82,8 @@ public class ContestService {
                 () -> new EntityNotFoundException("Contest was not found with ID: " + contestId));
         log.info("Retrieving contest from database, name - {}", contestId);
 
-        long totalContestEntries = recordRepository.findByContestId(contestId).stream()
-                .map(record -> record.getEntries().size())
-                .reduce(Integer::sum).orElse(0);
+        int totalContestEntries = collectionRepository
+                .findVisibleCollectionsByContestId(contestToShow.getId()).size();
 
         ContestWrapper.ContestWrapperBuilder wrapperBuilder = ContestWrapper.builder()
                 .contest(contestToShow)
@@ -97,13 +94,15 @@ public class ContestService {
                     .findByUserIdAndContestId(requestingUser.getId(), contestId);
             System.out.println(userRequests.size());
 
-            long totalUserEntries = recordRepository.findByContestIdAndUserId(contestId, requestingUser.getId()).stream()
-                    .map(record -> record.getEntries().size())
-                    .reduce(Integer::sum).orElse(0);
-            System.out.println(totalUserEntries);
+            int totalUserEntries = collectionRepository
+                    .findVisibleCollectionsByContestIdAndUserId(contestToShow.getId(), requestingUser.getId()).size();
 
             wrapperBuilder
-                    .maxUserEntries(requestingUser.getMaxTotal())
+                    .maxUserEntries(contestToShow.getMaxUserSubmissions() <= requestingUser.getMaxTotal()
+                            && !requestingUser.isCustomLimits() ?
+                            contestToShow.getMaxUserSubmissions() :
+                            requestingUser.getMaxTotal()
+                    )
                     .userEntries(totalUserEntries)
                     .status(userRequests.isEmpty() ? null : userRequests.get(0).getRequestStatus());
         }

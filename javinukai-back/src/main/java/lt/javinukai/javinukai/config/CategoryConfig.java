@@ -88,7 +88,7 @@ public class CategoryConfig {
                 .maxTotalSubmissions(888)
                 .maxUserSubmissions(50)
                 .startDate(ZonedDateTime.now())
-                .endDate(ZonedDateTime.now())
+                .endDate(ZonedDateTime.now().plusDays(7))
                 .build();
 
         contest01.addCategory(category01);
@@ -130,7 +130,7 @@ public class CategoryConfig {
                 .maxTotalSubmissions(777)
                 .maxUserSubmissions(50)
                 .startDate(ZonedDateTime.now())
-                .endDate(ZonedDateTime.now())
+                .endDate(ZonedDateTime.now().plusDays(14))
                 .build();
 
         contest01.addCategory(category01);

@@ -74,7 +74,8 @@ function EditEntrySection({ onClose, entry }) {
                 required: t("imageUpload.photoDescriptionRequired"),
                 maxLength: {
                   value: 1000,
-                  message: t("imageUpload.descriptionLength")}
+                  message: t("imageUpload.descriptionLength"),
+                },
               })}
             />
             {errors.newDescription && (
@@ -115,65 +116,72 @@ export default function ContestEntry({ entry, index, categoryType }) {
     mutate(entry.id);
   }
 
+  console.log(entry);
   return (
-    <div className="py-2 px-3 rounded-md bg-white shadow">
-      <div className="flex justify-between items-center">
-        <div className="flex space-x-3 items-center">
-          <span className="font-bold text-md md:text-md xl:text-xl text-teal-500">
-            {index + 1}
-          </span>
-          <span className="wrap text-md md:text-lg xl:text-1xl text-slate-600">
-            {entry.name}
-          </span>
-          {categoryType !== "SINGLE" && (
-            <span className="hidden md:inline">
-              ({entry.images.length} {t("ContestEntry.photos")})
-            </span>
-          )}
-        </div>
-        <div className="flex flex-col space-y-1 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-3">
-          <Button onClick={() => setIsExpanded(!isExpanded)}>
-            <img src={detailsIcon} />
-          </Button>
-          <Button
-            extraStyle="bg-red-500 hover:bg-red-400"
-            onClick={handleDeleteEntry}
-          >
-            <img src={deleteIcon} />
-          </Button>
-        </div>
-      </div>
-      {isExpanded && (
-        <div>
-          <Button onClick={() => setEditModalOpen(true)}>
-            {t("ContestEntry.editDetailsButton")}
-          </Button>
-          <Modal isOpen={editModalOpen} setIsOpen={setEditModalOpen}>
-            <EditEntrySection
-              entry={entry}
-              onClose={() => setEditModalOpen(false)}
-            />
-          </Modal>
-          <p className="text whitespace-pre-wrap mt-4">{entry.description}</p>
-          <div className="flex flex-col xl:grid xl:grid-cols-3 w-full gap-6 my-4">
-            {entry.images.map((image) => (
-              <Photo
-                key={image.id}
-                photo={image}
-                onClick={() => setFullScreenPhoto(image.id)}
-              />
-            ))}
+    <>
+      {!entry.hidden && (
+        <div className="py-2 px-3 rounded-md bg-white shadow">
+          <div className="flex justify-between items-center">
+            <div className="flex space-x-3 items-center">
+              <span className="font-bold text-md md:text-md xl:text-xl text-teal-500">
+                {index + 1}
+              </span>
+              <span className="wrap text-md md:text-lg xl:text-1xl text-slate-600">
+                {entry.name}
+              </span>
+              {categoryType !== "SINGLE" && (
+                <span className="hidden md:inline">
+                  ({entry.images.length} {t("ContestEntry.photos")})
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col space-y-1 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-3">
+              <Button onClick={() => setIsExpanded(!isExpanded)}>
+                <img src={detailsIcon} />
+              </Button>
+              <Button
+                extraStyle="bg-red-500 hover:bg-red-400"
+                onClick={handleDeleteEntry}
+              >
+                <img src={deleteIcon} />
+              </Button>
+            </div>
           </div>
-          {fullScreenPhoto && (
-            <EnlargedPhotoCarousel
-              description={entry.description}
-              photos={entry.images}
-              startingPhotoId={fullScreenPhoto}
-              onClose={setFullScreenPhoto}
-            />
+          {isExpanded && (
+            <div>
+              <Button onClick={() => setEditModalOpen(true)}>
+                {t("ContestEntry.editDetailsButton")}
+              </Button>
+              <Modal isOpen={editModalOpen} setIsOpen={setEditModalOpen}>
+                <EditEntrySection
+                  entry={entry}
+                  onClose={() => setEditModalOpen(false)}
+                />
+              </Modal>
+              <p className="text whitespace-pre-wrap mt-4">
+                {entry.description}
+              </p>
+              <div className="flex flex-col xl:grid xl:grid-cols-3 w-full gap-6 my-4">
+                {entry.images.map((image) => (
+                  <Photo
+                    key={image.id}
+                    photo={image}
+                    onClick={() => setFullScreenPhoto(image.id)}
+                  />
+                ))}
+              </div>
+              {fullScreenPhoto && (
+                <EnlargedPhotoCarousel
+                  description={entry.description}
+                  photos={entry.images}
+                  startingPhotoId={fullScreenPhoto}
+                  onClose={setFullScreenPhoto}
+                />
+              )}
+            </div>
           )}
         </div>
       )}
-    </div>
+    </>
   );
 }
