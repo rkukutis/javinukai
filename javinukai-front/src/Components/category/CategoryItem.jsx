@@ -5,6 +5,7 @@ import Button from "../Button";
 import useUserStore from "../../stores/userStore";
 import UserSubmissionView from "../UserSubmissionView";
 import { useTranslation } from "react-i18next";
+import deadlineReached from "../../utils/deadlineReached";
 
 export function CategoryItem({
   categoryInfo,
@@ -40,14 +41,16 @@ export function CategoryItem({
         <h1 className="text lg:text-lg">
           {categoryInfo.name} | {t(`categoryTypes.${categoryInfo.type}`)}
         </h1>
-        <img src={isExpanded ? expandLessIcon : expandMoreIcon} />
+        <div className="flex space-x-4">
+          <p className="text-nowrap">
+            {t("CategoryItem.totalEntries")}: {categoryInfo.totalEntries}/
+            {categoryInfo.maxTotalSubmissions}
+          </p>
+          <img src={isExpanded ? expandLessIcon : expandMoreIcon} />
+        </div>
       </div>
       {isExpanded && (
         <div className="text border-2 border-t-white border-teal-400 rounded-b-md py-2 px-3 text-slate-700 leading-relaxed flex-col space-y-3">
-          <div className="flex xl:flex-row flex-col xl:space-x-3">
-            <p>{t("CategoryItem.entryLimit")}{categoryInfo.maxTotalSubmissions}</p>
-            <p>{t("CategoryItem.defaultLimit")}{categoryInfo.maxUserSubmissions}</p>
-          </div>
           <p>{categoryInfo.description}</p>
           {user && (
             <div className=" flex xl:flex-row xl:space-x-4">
@@ -69,7 +72,9 @@ export function CategoryItem({
             <UserSubmissionView
               contest={contestInfo}
               category={categoryInfo}
-              contestLimitReached={contestLimitReached}
+              contestLimitReached={
+                contestLimitReached || deadlineReached(contestInfo.endDate)
+              }
             />
           )}
         </div>

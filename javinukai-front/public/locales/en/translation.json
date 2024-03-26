@@ -267,7 +267,7 @@
   },
 
   "StartNewContestStage": {
-"newStageConfirm": "Are you sure you want to start new competition stage?"
+    "newStageConfirm": "Are you sure you want to start new competition stage?"
   },
 
   "ContestDetailsPage": {
@@ -288,7 +288,8 @@
   "CategoryItem": {
     "juryViewEntries": "View contestant entries",
     "entryLimit": "Total entry limit:",
-    "defaultLimit": "Default limit per user:"
+    "defaultLimit": "Default limit per user:",
+    "totalEntries:": "entries"
   },
 
   "UserSubmissionView": {

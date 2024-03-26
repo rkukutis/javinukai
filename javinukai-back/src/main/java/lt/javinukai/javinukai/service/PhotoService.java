@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
@@ -54,6 +55,10 @@ public class PhotoService {
         CompetitionRecord competitionRecord = recordService
                 .retrieveUserCompetitionRecord(categoryId, contestId, participant.getId());
 
+        ZonedDateTime endDate = competitionRecord.getContest().getEndDate();
+        if (endDate.equals(ZonedDateTime.now()) || endDate.isBefore(ZonedDateTime.now())) {
+            throw new ContestExpiredException("You can not submit any new photos to a contest that has ended");
+        }
 
         // CONTEST AND CATEGORY LIMITS
         if (!limitCheckingService.checkContestLimit(competitionRecord)) {
@@ -252,11 +257,11 @@ public class PhotoService {
 
     public Page<PhotoCollectionWrapper> getContestCategoryCollections(Pageable pageable, User requestingUser,
                                                                       String display, UUID contestId, UUID categoryId) {
-        Page<PhotoCollection> photoCollectionPage = photoCollectionRepository.findCollectionsByContestIdAndCategoryId(contestId, categoryId, pageable);
+        Page<PhotoCollection> photoCollectionPage = photoCollectionRepository.findVisibleCollectionsByContestIdAndCategoryId(contestId, categoryId, pageable);
         if (display.equals("liked")) {
-            photoCollectionPage = photoCollectionRepository.findByLikesCountGreaterThan(contestId, categoryId, 0, pageable);
+            photoCollectionPage = photoCollectionRepository.findVisibleByLikesCountGreaterThan(contestId, categoryId, 0, pageable);
         } else if (display.equals("unliked")) {
-            photoCollectionPage = photoCollectionRepository.findByLikesCountEquals(contestId, categoryId, 0, pageable);
+            photoCollectionPage = photoCollectionRepository.findVisibleByLikesCountEquals(contestId, categoryId, 0, pageable);
         }
         return photoCollectionPage.map(photoCollection -> wrapCollectionWithUserRating(photoCollection, requestingUser));
     }
