@@ -518,7 +518,8 @@
   "JurySubmissionView": {
     "contestTitle": "Contest:",
     "categoryTitle": "Category:",
-    "noEntriesTitle": "No entries here:"
+    "noEntriesTitle": "No entries here:",
+    "entries": "entries"
   },
 
   "JuryViewPagination": {
