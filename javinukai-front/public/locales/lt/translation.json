@@ -519,15 +519,16 @@
   "JurySubmissionView": {
     "contestTitle": "Konkursas:",
     "categoryTitle": "Kategorija:",
-    "noEntriesTitle": "Nėra įrašų"
+    "noEntriesTitle": "Nėra įrašų",
+    "entries": "pateiktys"
   },
 
   "JuryViewPagination": {
     "pageTitle": "Puslapis",
     "showEntriesTitle": "Rodytį pateiktis",
-    "showAll": "Visas",
-    "showLiked": "Tik patikusias",
-    "showDisliked": "Tik nepatikusias"
+    "showAll": "Visos",
+    "showLiked": "Tik patikusios",
+    "showDisliked": "Tik nepatikusios"
   },
 
   "LandingPage": {

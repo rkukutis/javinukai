@@ -73,7 +73,7 @@ function JurySubmissionView() {
             pagination={pagination}
             setPagination={setPagination}
             availablePageNumber={entries?.totalPages}
-            limitObjectName="entries"
+            limitObjectName={t("JurySubmissionView.entries")}
             firstPage={entries?.first}
             lastPage={entries?.last}
           />
