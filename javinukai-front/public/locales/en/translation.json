@@ -263,6 +263,7 @@
     "endContest": "End contest",
     "startNewStage": "Start new stage",
     "editContest": "Edit contest",
+    "editdeleteContestConfirm": "Are you sure you want to change/create this contest?",
     "deleteContest": "Delete contest"
   },
 
@@ -567,5 +568,9 @@
     "loadingTitle": "Loading...",
     "userTitle": "User:",
     "categoryTitle": "Category:"
+  },
+
+  "SinglesSection": {
+    "descriptionTitle": "Description"
   }
 }

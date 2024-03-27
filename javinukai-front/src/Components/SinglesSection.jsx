@@ -8,6 +8,7 @@ import forwardIcon from "../assets/icons/arrow_forward_ios_FILL0_wght400_GRAD0_o
 import LikeButton from "./LikeButton";
 import addLike from "../services/likes/addLike";
 import removeLike from "../services/likes/removeLike";
+import { useTranslation } from "react-i18next";
 
 export function SinglesSection({ entries }) {
   const [enlargedPhotoIndex, setEnlargedPhotoIndex] = useState(null);
@@ -15,6 +16,7 @@ export function SinglesSection({ entries }) {
   const queryClient = useQueryClient();
   const [likedEnlargedEntries, setLikedEnlargedEntries] = useState([]);
   const [descriptionOpen, setDescriptionOpen] = useState(false);
+  const { t } = useTranslation();
 
   const { mutate: addLikeMutation } = useMutation({
     mutationFn: (entryId) => addLike(entryId),
@@ -114,7 +116,7 @@ export function SinglesSection({ entries }) {
                   : () => setDescriptionOpen(true)
               }
             >
-              Description
+              {t("SinglesSection.descriptionTitle")}
             </Button>
           </div>
           {descriptionOpen && (
