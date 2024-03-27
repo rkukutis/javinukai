@@ -271,6 +271,10 @@
     "newStageConfirm": "Are you sure you want to start new competition stage?"
   },
 
+  "DeleteContest": {
+    "DeleteContestConfirm": "Are you sure you want to delete competition?"
+  },
+
   "ContestDetailsPage": {
     "contest": "Contest",
     "startDate": "Start date",
