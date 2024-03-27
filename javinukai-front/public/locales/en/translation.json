@@ -295,7 +295,7 @@
     "juryViewEntries": "View contestant entries",
     "entryLimit": "Total entry limit:",
     "defaultLimit": "Default limit per user:",
-    "totalEntries:": "entries"
+    "totalEntries": "entries"
   },
 
   "UserSubmissionView": {
