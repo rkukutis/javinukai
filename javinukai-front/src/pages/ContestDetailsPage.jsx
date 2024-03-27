@@ -14,11 +14,11 @@ import useUserStore from "../stores/userStore";
 import { ParticipationStatus } from "../Components/contest/ParticipationStatus";
 import Modal from "../Components/Modal";
 import CreateContest from "../Components/Contest-Components/CreateContest";
-import deleteContest from "../Components/Contest-Components/deleteContest";
-import startNewContestStage from "../Components/Contest-Components/startNewContestStage";
 import EndContest from "../Components/archive/EndContest";
 import BackButton from "../Components/BackButton";
 import deadlineReached from "../utils/deadlineReached";
+import startNewContestStage from "../services/contests/startNewContestStage";
+import deleteContest from "../services/contests/deleteContest";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const { t } = useTranslation();
@@ -75,12 +75,10 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
             extraStyle="bg-red-500 hover:bg-red-300"
             onClick={() => {
               if (confirm(t("DeleteContest.DeleteContestConfirm"))) {
-                deleteContest(contestInfo.contest.id, queryClient);                
-                navigate('/contests');
-                // queryClient.invalidateQueries('contests');
+                deleteContest(contestInfo.contest.id, queryClient);
+                navigate("/contests");
               }
             }}
-            // onClick={() => DeleteContest(contestInfo.contest.id)}
           >
             {t("ContestCard.deleteContest")}
           </Button>
