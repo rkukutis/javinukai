@@ -33,11 +33,12 @@ public class PhotoCollection {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "author_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User author;
 
+    @Setter
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "collection", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Photo> images;
 
@@ -83,6 +84,10 @@ public class PhotoCollection {
             return;
         }
         juryLikes.clear();
+    }
+
+    public void resetImages() {
+        images = null;
     }
 
     private ZonedDateTime createdAt;

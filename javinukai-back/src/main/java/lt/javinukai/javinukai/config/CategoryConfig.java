@@ -82,6 +82,14 @@ public class CategoryConfig {
                 .type(PhotoSubmissionType.SINGLE)
                 .build();
 
+        Category category03 = Category.builder()
+                .name("Duis vestibulum tincidunt quam nec scelerisque")
+                .description("Duis tincidunt vehicula ornare. Duis ac pretium arcu. Nunc vitae venenatis est. Morbi eu elit et libero feugiat elementum. In hac habitasse platea dictumst")
+                .maxTotalSubmissions(50)
+                .maxUserSubmissions(30)
+                .type(PhotoSubmissionType.COLLECTION)
+                .build();
+
         Contest contest01 = Contest.builder()
                 .name("Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")
                 .description("Integer ullamcorper, velit in consequat sollicitudin, enim metus venenatis neque, vel iaculis nisi lectus et est. In hac habitasse platea dictumst. Nulla turpis nunc, rutrum ut cursus id, rutrum vitae ante. Praesent viverra tristique elementum. Vestibulum tempus ante nisl, ut porta tortor auctor in. Nunc viverra sapien mauris, at blandit neque pretium in. Maecenas turpis urna, posuere sit amet leo id, luctus cursus ante. Sed hendrerit urna ut enim mattis, ut volutpat risus gravida. Nam ut metus rutrum, consequat neque vel, aliquet leo. ")
@@ -93,7 +101,7 @@ public class CategoryConfig {
 
         contest01.addCategory(category01);
         contest01.addCategory(category02);
-
+        contest01.addCategory(category03);
         contestRepository.save(contest01);
         return contest01;
     }

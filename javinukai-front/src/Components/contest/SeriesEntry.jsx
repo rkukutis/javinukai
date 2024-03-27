@@ -8,10 +8,12 @@ import Modal from "../Modal";
 import backIcon from "../../assets/icons/arrow_back_ios_new_FILL0_wght400_GRAD0_opsz24.svg";
 import forwardIcon from "../../assets/icons/arrow_forward_ios_FILL0_wght400_GRAD0_opsz24.svg";
 import Button from "../Button";
+import useUserStore from "../../stores/userStore";
 
 export default function SeriesEntry({ entry, entries }) {
   const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(entry.liked);
+  const { user } = useUserStore();
   const [enlargedPhotoIndex, setEnlargedPhotoIndex] = useState(null);
   const [descriptionVisible, setDescriptionVisible] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -51,6 +53,28 @@ export default function SeriesEntry({ entry, entries }) {
 
   return (
     <div className="shadow px-2 py-4 rounded my-2" key={entry.collection.id}>
+      {(user.role == "ADMIN" || user.role == "MODERATOR") && (
+        <div className="xl:flex-row flex flex-col xl:space-x-3">
+          <p>
+            {t("SeriesEntry.author")}: {entry.collection.author.name}{" "}
+            {entry.collection.author.surname}
+          </p>
+          <p>
+            {t("SeriesEntry.likes")}:{" "}
+            <span
+              className={`
+                ${
+                  entry.collection.likesCount > 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }
+              font-bold`}
+            >
+              {entry.collection.likesCount}
+            </span>
+          </p>
+        </div>
+      )}
       <div className="flex xl:flex-row flex-col xl:space-x-3 justify-between">
         <div className="flex xl:flex-row space-y-2 xl:space-y-0 flex-col overflow-auto xl:space-x-2 py-1">
           {entry?.collection.images.map((image) => (
@@ -62,11 +86,13 @@ export default function SeriesEntry({ entry, entries }) {
             />
           ))}
         </div>
-        <LikeButton
-          onClick={handleLikeClick}
-          isLiked={isLiked}
-          setIsLiked={setIsLiked}
-        />
+        {user.role == "JURY" && (
+          <LikeButton
+            onClick={handleLikeClick}
+            isLiked={isLiked}
+            setIsLiked={setIsLiked}
+          />
+        )}
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -94,7 +120,9 @@ export default function SeriesEntry({ entry, entries }) {
             <Button onClick={() => setDescriptionVisible(!descriptionVisible)}>
               {t("SeriesEntry.description")}
             </Button>
-            <LikeButton isLiked={entry.liked} onClick={handleLikeClick} />
+            {user.role == "JURY" && (
+              <LikeButton isLiked={entry.liked} onClick={handleLikeClick} />
+            )}
           </div>
           {descriptionVisible && (
             <p className="absolute top-[15%] h-[70%] bg-white w-full p-3 overflow-auto">

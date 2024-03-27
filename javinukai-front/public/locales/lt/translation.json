@@ -60,6 +60,7 @@
     "fileTypeRequirement": "Nuotrauka turi būti JPEG formato",
     "photoSize": "Kiekviena nuotrauka turi būti mažesnė nei 10 MB",
     "photoAllSize": "Visos nuotraukos kartu turi būti mažesnės nei 50 MB",
+    "photoAllAtOnce": "Visos nuotraukos turi būti įkeltos vienu metu",
     "photoSelectorActive": "Dėkite nuotraukas čia",
     "photoSelector": "Pasirinkite arba dėkite nuotraukas čia",
     "photoUploading": "Nuotraukos keliamos...",
@@ -257,7 +258,7 @@
     "contestEndDateOption": "Pabaigos data",
     "contestTotalEntriesOption": "Pateikimų skaičius",
     "contestSeachFieldName": "Pavadinimą",
-    "contestCreatedDate": "Creation date"
+    "contestCreatedDate": "Sukūrimo data"
   },
 
   "ContestCard": {
@@ -265,11 +266,16 @@
     "endContest": "Baigti konkursą",
     "startNewStage": "Naujas etapas",
     "editContest": "Redaguoti konkursą",
+    "editdeleteContestConfirm": "Ar tikrai norite pakeisti/sukurti šį konkursą?",
     "deleteContest": "Ištrinti konkursą"
   },
 
   "StartNewContestStage": {
     "newStageConfirm": "Ar tikrai norite pradėti naująjį konkurso etapą?"
+  },
+
+  "DeleteContest": {
+    "DeleteContestConfirm": "Ar tikrai norite ištrinti konkursą?"
   },
 
   "ContestDetailsPage": {
@@ -302,7 +308,8 @@
 
   "ContestEntry": {
     "photos": "Nuotraukos",
-    "deletionConfirmation": "Ar tikrai norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas",
+    "deletionConfirmation": "Ar tikrai norite pašalinti šią pateiktį? Šis veiksmas yra negrįžtamas",
+    "deletionSuccess": "Pateiktis sėkmingai ištrinta",
     "editDetailsButton": "Pakeisti pateikties informaciją"
   },
 
@@ -505,7 +512,14 @@
   },
 
   "SeriesEntry": {
-    "description": "Aprašymas"
+    "description": "Aprašymas",
+    "author": "Autorius",
+    "likes": "Įvertinimai"
+  },
+
+  "SinglePhotoCollection": {
+    "author": "Autorius",
+    "likes": "Įvertinimai"
   },
 
   "ContestPreview": {
@@ -519,15 +533,16 @@
   "JurySubmissionView": {
     "contestTitle": "Konkursas:",
     "categoryTitle": "Kategorija:",
-    "noEntriesTitle": "Nėra įrašų"
+    "noEntriesTitle": "Nėra įrašų",
+    "entries": "pateiktys"
   },
 
   "JuryViewPagination": {
     "pageTitle": "Puslapis",
     "showEntriesTitle": "Rodytį pateiktis",
-    "showAll": "Visas",
-    "showLiked": "Tik patikusias",
-    "showDisliked": "Tik nepatikusias"
+    "showAll": "Visos",
+    "showLiked": "Tik patikusios",
+    "showDisliked": "Tik nepatikusios"
   },
 
   "LandingPage": {
@@ -567,5 +582,9 @@
   "ContestPastParticipants": {
     "pastParticipantsTitle": "Dalyviai",
     "winnerIndicator": "Nugalėtoja(s)"
+  },
+
+  "SinglesSection": {
+    "descriptionTitle": "Aprašymas"
   }
 }

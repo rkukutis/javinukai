@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getContest from "../services/contests/getContest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import contestPhoto from "../assets/contest-photo.jpg";
@@ -14,17 +14,19 @@ import useUserStore from "../stores/userStore";
 import { ParticipationStatus } from "../Components/contest/ParticipationStatus";
 import Modal from "../Components/Modal";
 import CreateContest from "../Components/Contest-Components/CreateContest";
-import DeleteContest from "../Components/Contest-Components/DeleteContest";
-import StartNewContestStage from "../Components/Contest-Components/StartNewContestStage";
 import EndContest from "../Components/archive/EndContest";
 import BackButton from "../Components/BackButton";
 import deadlineReached from "../utils/deadlineReached";
+import startNewContestStage from "../services/contests/startNewContestStage";
+import deleteContest from "../services/contests/deleteContest";
 
 function EditContestSection({ contestInfo, categoriesInfo }) {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalEndOpen, setModalEndOpen] = useState(false);
   const { user } = useUserStore((state) => state);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return (
     <div className="flex space-x-2 justify-end">
@@ -32,7 +34,7 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
         <Button
           onClick={() => {
             if (confirm(t("StartNewContestStage.newStageConfirm"))) {
-              StartNewContestStage(contestInfo.contest.id);
+              startNewContestStage(contestInfo.contest.id);
             }
           }}
         >
@@ -71,7 +73,12 @@ function EditContestSection({ contestInfo, categoriesInfo }) {
           </Modal>
           <Button
             extraStyle="bg-red-500 hover:bg-red-300"
-            onClick={() => DeleteContest(contestInfo.contest.id)}
+            onClick={() => {
+              if (confirm(t("DeleteContest.DeleteContestConfirm"))) {
+                deleteContest(contestInfo.contest.id, queryClient);
+                navigate("/contests");
+              }
+            }}
           >
             {t("ContestCard.deleteContest")}
           </Button>
@@ -106,8 +113,6 @@ function ContestDetailsPage() {
       toast.error(t("ContestDetailsPage.participationError"));
     },
   });
-
-  console.log(deadlineReached(data?.contest.endDate));
 
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">

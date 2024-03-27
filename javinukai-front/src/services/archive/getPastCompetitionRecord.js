@@ -1,10 +1,4 @@
 export default async function (page, limit, sortBy, sortDesc, contains) {
-  // console.log("page -> " + page);
-  // console.log("limit -> " + limit);
-  // console.log("sortBy -> " + sortBy);
-  // console.log("sortDesc -> " + sortDesc);
-  // console.log("contains -> " + contains);
-
   const res = await fetch(
     `${
       import.meta.env.VITE_BACKEND

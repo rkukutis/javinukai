@@ -23,6 +23,9 @@ public class LandingPage extends BasePage{
         super(driver);
     }
 
+    public void clickLithuanianLanguage(){lithuanianLanguage.click();}
+    public void clickEnglishLanguage(){englishLanguage.click();}
+
     public void clickHomePage(){homePage.click();}
 
     public void clickOnLogin(){loginButton.click();}

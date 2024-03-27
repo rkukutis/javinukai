@@ -1,5 +1,4 @@
 export default async function endCompetition(data) {
-  console.log("", data);
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND}/api/v1/archive/${data.id}`,
     {

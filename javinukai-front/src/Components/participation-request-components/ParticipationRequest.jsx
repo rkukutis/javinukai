@@ -6,7 +6,6 @@ const ParticipationRequest = ({ request, onButtonClick }) => {
   
   const {
     requestId = request.requestId,
-    // createdAt = request.createdAt,
     participantName = request.user.name,
     participantSurname = request.user.surname,
     participantEmail = request.user.email,
@@ -15,8 +14,7 @@ const ParticipationRequest = ({ request, onButtonClick }) => {
     requestStatus = request.requestStatus,
   } = request;
 
-  const { t } = useTranslation();
-  console.log("status", requestStatus);
+  const { t } = useTranslation();  
   return (
     <>
       <div className="xl:w-3/4 w-full px-2"></div>

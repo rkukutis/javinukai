@@ -19,9 +19,11 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//a[normalize-space()='Create contest']")
     private WebElement menuItemCreateContest;
-
     @FindBy(xpath = "//a[normalize-space()='Approve requests']")
     private WebElement menuItemApproveRequests;
+
+    @FindBy(xpath = "//a[@id='headlessui-menu-item-:r6:']")
+    private WebElement menuItemArchive;
     @FindBy(xpath = "//button[contains(@role, 'menuitem')  and text()='Log out']")
     private WebElement menuItemLogout;
 
@@ -31,6 +33,12 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
     }
+    public void clickPersonalInformation(){menuItemPersonalInformation.click();}
+    public void clickManageUsers(){menuItemManageUsers.click();}
+    public void clickCreateContest(){menuItemCreateContest.click();}
+    public void clickApproveRequest(){menuItemApproveRequests.click();}
+    public void clickArchive(){
+        menuItemArchive.click();}
 
     public void clickFirstContest(){firstContest.click();}
 

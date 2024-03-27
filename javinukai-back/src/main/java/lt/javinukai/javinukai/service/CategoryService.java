@@ -100,7 +100,7 @@ public class CategoryService {
         List<CategoryWithEntriesResponse> categoriesWithEntryNum = new ArrayList<>();
         for (Category category : contestCategories) {
            int categoryEntryNum = photoCollectionRepository
-                   .findVisibleCollectionsByContestIdAndCategoryId(contestId, category.getId()).size();
+                   .findCollectionsByContestIdAndCategoryId(contestId, category.getId()).size();
            categoriesWithEntryNum.add(CategoryMapper.categoryToCategoryWithEntries(category, categoryEntryNum));
         }
         return categoriesWithEntryNum;
