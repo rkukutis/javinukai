@@ -15,4 +15,9 @@ import java.util.UUID;
 public interface ContestRepository extends JpaRepository<Contest, UUID> {
     Page<Contest> findByNameContainingIgnoreCase(Pageable pageable, String contestName);
     List<Contest> findByOrderByCreatedAtDesc(Limit of);
+
+
+    Page<Contest> findByIsArchived(Pageable pageable, boolean b);
+
+    Page<Contest> findByNameContainingIgnoreCaseAndIsArchived(Pageable pageable, String keyword, boolean b);
 }

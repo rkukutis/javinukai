@@ -68,10 +68,10 @@ public class ContestService {
         Page<Contest> page;
         if (keyword == null || keyword.isEmpty()) {
             log.info("{}: Retrieving all contests list from database", this.getClass().getName());
-            page = contestRepository.findAll(pageable);
+            page = contestRepository.findByIsArchived(pageable, false);
         } else {
             log.info("{}: Retrieving categories by name", this.getClass().getName());
-            page = contestRepository.findByNameContainingIgnoreCase(pageable, keyword);
+            page = contestRepository.findByNameContainingIgnoreCaseAndIsArchived(pageable, keyword, false);
         }
 
         List<Contest> filteredContests = page.getContent().stream()
