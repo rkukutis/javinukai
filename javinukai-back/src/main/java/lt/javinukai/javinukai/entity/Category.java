@@ -45,13 +45,9 @@ public class Category {
     private long maxUserSubmissions;
 
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories",
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(
-            name = "contest_category",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "contest_id")
-    )
+
     @JsonIgnore
     private List<Contest> contests;
 
