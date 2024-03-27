@@ -38,7 +38,7 @@ public class Contest {
 
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonIgnore
     @JoinTable(
             name = "contest_category",
@@ -50,7 +50,7 @@ public class Contest {
     @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonIgnore
-    private List<CompetitionRecord> competitionRecords = new ArrayList<>();
+    private List<CompetitionRecord> competitionRecords;
 
     @Setter
     @JsonIgnore
@@ -88,14 +88,6 @@ public class Contest {
         }
         categories.add(category);
     }
-
-    public void removeCategory(Category category) {
-        if (categories == null) {
-            return;
-        }
-        categories.remove(category);
-    }
-
 
     @PrePersist
     protected void onCreate() {

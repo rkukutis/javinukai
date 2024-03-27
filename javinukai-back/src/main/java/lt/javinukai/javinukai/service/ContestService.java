@@ -32,7 +32,7 @@ public class ContestService {
     private final CompetitionRecordService competitionRecordService;
     private final PhotoService photoService;
     private final RateService rateService;
-
+    private final ParticipationRequestService requestService;
 
     @Transactional
     public Contest createContest(ContestDTO contestDTO, MultipartFile thumbnailFile) {
@@ -161,7 +161,7 @@ public class ContestService {
         }
 
         if (!extraCategories.isEmpty()) {
-           competitionRecordService.createRecordsForApprovedUsers(extraCategories, contestToUpdate.getId());
+            competitionRecordService.createRecordsForApprovedUsers(extraCategories, contestToUpdate.getId());
         }
         if (!removedCategories.isEmpty()) {
             competitionRecordService.deleteRecordsForCategories(removedCategories, contestToUpdate.getId());
@@ -175,6 +175,10 @@ public class ContestService {
     @Transactional
     public void deleteContest(UUID id) {
         if (contestRepository.existsById(id)) {
+            Contest c = contestRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("not found"));
+            requestService.deleteAllRequestsByContestId(id);
+            competitionRecordService.deleteRecordsForCategories(c.getCategories(), id);
             contestRepository.deleteById(id);
             log.info("{}: Deleted contest from the database with ID: {}", this.getClass().getName(), id);
         } else {
@@ -182,6 +186,7 @@ public class ContestService {
         }
     }
 
+    @Transactional
     public void startNewCompetitionStage(UUID contestId) {
         List<PhotoCollection> collections = rateService.findAllCollectionsInContest(contestId);
         collections
@@ -195,7 +200,6 @@ public class ContestService {
                 });
         rateService.updateCollections(collections);
     }
-
 
     public byte[] retrieveContestThumbnail(UUID id) {
         return photoService.getThumbnailBytes(id);
