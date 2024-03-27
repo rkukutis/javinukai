@@ -36,6 +36,7 @@ public class ParticipationRequestService {
         }
     }
 
+    @Transactional
     public ParticipationRequest createParticipationRequest(UUID contestId, UUID userId) {
         List<ParticipationRequest> checkList = participationRequestRepository.findByUserIdAndContestId(userId, contestId);
 
@@ -58,6 +59,7 @@ public class ParticipationRequestService {
     public List<ParticipationRequest> getRequestByUserIdAndContestId(UUID userId, UUID contestId) {
         return participationRequestRepository.findByUserIdAndContestId(userId, contestId);
     }
+
     public ParticipationRequest getRequestById(UUID requestId) {
         ParticipationRequest participationRequest = participationRequestRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Participation request was not found with ID: " + requestId));
@@ -84,13 +86,19 @@ public class ParticipationRequestService {
     }
 
     @Transactional
-    public List<ParticipationRequest> deleteParticipationRequest(UUID participationRequestId) {
+    public void deleteParticipationRequest(UUID participationRequestId) {
         if (participationRequestRepository.existsById(participationRequestId)) {
             participationRequestRepository.deleteById(participationRequestId);
             log.debug("Deleted participation request {}", participationRequestId);
-            return participationRequestRepository.findAll();
         } else {
             throw new EntityNotFoundException("Participation request was not found with ID: " + participationRequestId);
         }
+    }
+
+    @Transactional
+    public void deleteAllRequestsByContestId(UUID contestId) {
+        Contest c = contestRepository.findById(contestId)
+                .orElseThrow(() -> new EntityNotFoundException("not found"));
+        participationRequestRepository.deleteParticipationRequestsByContest(c);
     }
 }

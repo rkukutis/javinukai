@@ -1,21 +1,17 @@
 import axios from "axios";
 
-const DeleteContest = (contestId) => {
+const deleteContest = (contestId, queryClient) => {
+
   axios
-    .delete(`${import.meta.env.VITE_BACKEND}/contests/${contestId}`, {
+    .delete(`${import.meta.env.VITE_BACKEND}/api/v1/contests/${contestId}/delete`, {
       withCredentials: true,
     })
-    .then((response) => {
-      console.log("delete request status log", response);
+    .then(() => {
+      queryClient.invalidateQueries(['contests']);      
     })
     .catch((error) => {
       console.log(error);
     });
-
-  return (
-    <>
-      <div>q</div>
-    </>
-  );
+  
 };
-export default DeleteContest;
+export default deleteContest;

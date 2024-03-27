@@ -258,7 +258,7 @@
     "contestEndDateOption": "Pabaigos data",
     "contestTotalEntriesOption": "Pateikimų skaičius",
     "contestSeachFieldName": "Pavadinimą",
-    "contestCreatedDate": "Creation date"
+    "contestCreatedDate": "Sukūrimo data"
   },
 
   "ContestCard": {
@@ -266,11 +266,16 @@
     "endContest": "Baigti konkursą",
     "startNewStage": "Naujas etapas",
     "editContest": "Redaguoti konkursą",
+    "editdeleteContestConfirm": "Ar tikrai norite pakeisti/sukurti šį konkursą?",
     "deleteContest": "Ištrinti konkursą"
   },
 
   "StartNewContestStage": {
     "newStageConfirm": "Ar tikrai norite pradėti naująjį konkurso etapą?"
+  },
+
+  "DeleteContest": {
+    "DeleteContestConfirm": "Ar tikrai norite ištrinti konkursą?"
   },
 
   "ContestDetailsPage": {
@@ -577,5 +582,9 @@
   "ContestPastParticipants": {
     "pastParticipantsTitle": "Dalyviai",
     "winnerIndicator": "Nugalėtoja(s)"
+  },
+
+  "SinglesSection": {
+    "descriptionTitle": "Aprašymas"
   }
 }

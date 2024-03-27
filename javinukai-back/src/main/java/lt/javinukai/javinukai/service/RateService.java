@@ -9,6 +9,7 @@ import lt.javinukai.javinukai.entity.User;
 import lt.javinukai.javinukai.repository.ContestRepository;
 import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class RateService {
     private final PhotoCollectionRepository photoCollectionRepository;
     private final ContestRepository contestRepository;
 
+    @Transactional
     public void rateLike(UUID juryId, UUID collectionId) {
         if (checkIfCollectionLikedByJury(juryId, collectionId)) {
             return;
@@ -31,6 +33,7 @@ public class RateService {
         updateLikesCount(collectionToLike);
     }
 
+    @Transactional
     public void undoLike(UUID juryId, UUID collectionId) {
         PhotoCollection collectionToUndoLike = photoCollectionRepository.findByUserIdAndPhotoCollectionId(juryId, collectionId);
         if (checkIfCollectionLikedByJury(juryId, collectionId)) {
@@ -52,7 +55,8 @@ public class RateService {
         photoCollectionRepository.save(collectionToUpdate);
     }
 
-    public void updateCollections(List<PhotoCollection> collectionsToUpdate){
+    @Transactional
+    public void updateCollections(List<PhotoCollection> collectionsToUpdate) {
         photoCollectionRepository.saveAll(collectionsToUpdate);
     }
 
@@ -60,7 +64,7 @@ public class RateService {
         return photoCollectionRepository.findLikedCollectionsByJuryId(juryId);
     }
 
-    public List<PhotoCollection> findAllCollectionsInContest(UUID contestId){
+    public List<PhotoCollection> findAllCollectionsInContest(UUID contestId) {
         Contest c = contestRepository.getReferenceById(contestId);
         return photoCollectionRepository.findCollectionsInContest(c);
     }

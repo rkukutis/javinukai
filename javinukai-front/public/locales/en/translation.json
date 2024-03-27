@@ -264,11 +264,16 @@
     "endContest": "End contest",
     "startNewStage": "Start new stage",
     "editContest": "Edit contest",
+    "editdeleteContestConfirm": "Are you sure you want to change/create this contest?",
     "deleteContest": "Delete contest"
   },
 
   "StartNewContestStage": {
     "newStageConfirm": "Are you sure you want to start new competition stage?"
+  },
+
+  "DeleteContest": {
+    "DeleteContestConfirm": "Are you sure you want to delete competition?"
   },
 
   "ContestDetailsPage": {
@@ -576,5 +581,9 @@
     "loadingTitle": "Loading...",
     "userTitle": "User:",
     "categoryTitle": "Category:"
+  },
+
+  "SinglesSection": {
+    "descriptionTitle": "Description"
   }
 }

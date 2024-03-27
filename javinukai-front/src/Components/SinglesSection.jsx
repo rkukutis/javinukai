@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import SinglePhotoCollection from "./photo/SinglePhotoCollection";
 import Modal from "./Modal";
@@ -9,6 +9,7 @@ import LikeButton from "./LikeButton";
 import addLike from "../services/likes/addLike";
 import removeLike from "../services/likes/removeLike";
 import useUserStore from "../stores/userStore";
+import { useTranslation } from "react-i18next";
 
 export function SinglesSection({ entries }) {
   const { user } = useUserStore();
@@ -19,6 +20,7 @@ export function SinglesSection({ entries }) {
     entries?.content.filter((entry) => entry.liked == true)
   );
   const [descriptionOpen, setDescriptionOpen] = useState(false);
+  const { t } = useTranslation();
 
   const { mutate: addLikeMutation } = useMutation({
     mutationFn: (entryId) => addLike(entryId),
@@ -117,7 +119,7 @@ export function SinglesSection({ entries }) {
                   : () => setDescriptionOpen(true)
               }
             >
-              Description
+              {t("SinglesSection.descriptionTitle")}
             </Button>
           </div>
           {descriptionOpen && (
