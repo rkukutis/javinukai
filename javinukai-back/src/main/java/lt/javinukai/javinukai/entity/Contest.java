@@ -25,6 +25,10 @@ public class Contest {
     private UUID id;
 
     @Setter
+    @Column(name = "is_archived")
+    private boolean isArchived;
+
+    @Setter
     @Column(name = "name")
     private String name;
 

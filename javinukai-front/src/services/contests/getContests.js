@@ -1,4 +1,5 @@
 export default async function (page, limit, sortBy, sortDesc, name) {
+
   const res = await fetch(
     `${
       import.meta.env.VITE_BACKEND
@@ -19,5 +20,9 @@ export default async function (page, limit, sortBy, sortDesc, name) {
     const err = await res.json();
     throw new Error(err.title);
   }
-  return await res.json();
+
+  const data = await res.json();
+  console.log(data);
+
+  return data;
 }
