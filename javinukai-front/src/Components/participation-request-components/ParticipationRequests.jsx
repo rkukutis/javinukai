@@ -41,7 +41,6 @@ const ParticipationRequests = () => {
         }
       )
       .then((data) => {
-        console.log("data from request1", data);
         setFirstPage(data.data.first);
         setLastPage(data.data.last);
         setTotalPages(data.data.totalPages);
@@ -69,8 +68,7 @@ const ParticipationRequests = () => {
         {},
         { withCredentials: true }
       )
-      .then((response) => {
-        console.log("change status log", response);
+      .then(() => {        
         setStateBoolean(!stateBoolean);
       })
       .catch((error) => {

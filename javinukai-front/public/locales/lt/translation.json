@@ -272,6 +272,10 @@
     "newStageConfirm": "Ar tikrai norite pradėti naująjį konkurso etapą?"
   },
 
+  "DeleteContest": {
+    "DeleteContestConfirm": "Ar tikrai norite ištrinti konkursą?"
+  },
+
   "ContestDetailsPage": {
     "contest": "Konkursas",
     "startDate": "Pradžia",
