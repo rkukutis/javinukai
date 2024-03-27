@@ -74,7 +74,7 @@ function SiteRouter({ user }) {
             <Route
               path={getRoute(
                 userRole,
-                ["JURY"],
+                ["JURY", "ADMIN", "MODERATOR"],
                 "/contest/:contestId/category/:categoryId/contestant-entries"
               )}
               element={<JurySubmissionView />}

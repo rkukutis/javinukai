@@ -10,12 +10,14 @@ import lt.javinukai.javinukai.repository.*;
 import lt.javinukai.javinukai.wrapper.ContestWrapper;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class ContestService {
     private final PhotoCollectionRepository collectionRepository;
     private final PhotoService photoService;
     private final RateService rateService;
-
+    private final ParticipationRequestService requestService;
 
     @Transactional
     public Contest createContest(ContestDTO contestDTO, MultipartFile thumbnailFile) {
@@ -61,13 +63,20 @@ public class ContestService {
 
     public Page<Contest> retrieveAllContests(Pageable pageable, String keyword) {
 
+        Page<Contest> page;
         if (keyword == null || keyword.isEmpty()) {
             log.info("{}: Retrieving all contests list from database", this.getClass().getName());
-            return contestRepository.findAll(pageable);
+            page = contestRepository.findByIsArchived(pageable, false);
         } else {
             log.info("{}: Retrieving categories by name", this.getClass().getName());
-            return contestRepository.findByNameContainingIgnoreCase(pageable, keyword);
+            page = contestRepository.findByNameContainingIgnoreCaseAndIsArchived(pageable, keyword, false);
         }
+
+        List<Contest> filteredContests = page.getContent().stream()
+                .filter((contest) -> !contest.isArchived())
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(filteredContests, pageable, page.getTotalElements());
     }
 
     public Contest retrieveContest(UUID id) {
@@ -83,7 +92,7 @@ public class ContestService {
         log.info("Retrieving contest from database, name - {}", contestId);
 
         int totalContestEntries = collectionRepository
-                .findVisibleCollectionsByContestId(contestToShow.getId()).size();
+                .findCollectionsByContestId(contestToShow.getId()).size();
 
         ContestWrapper.ContestWrapperBuilder wrapperBuilder = ContestWrapper.builder()
                 .contest(contestToShow)
@@ -95,7 +104,7 @@ public class ContestService {
             System.out.println(userRequests.size());
 
             int totalUserEntries = collectionRepository
-                    .findVisibleCollectionsByContestIdAndUserId(contestToShow.getId(), requestingUser.getId()).size();
+                    .findCollectionsByContestIdAndUserId(contestToShow.getId(), requestingUser.getId()).size();
 
             wrapperBuilder
                     .maxUserEntries(contestToShow.getMaxUserSubmissions() <= requestingUser.getMaxTotal()
@@ -160,7 +169,7 @@ public class ContestService {
         }
 
         if (!extraCategories.isEmpty()) {
-           competitionRecordService.createRecordsForApprovedUsers(extraCategories, contestToUpdate.getId());
+            competitionRecordService.createRecordsForApprovedUsers(extraCategories, contestToUpdate.getId());
         }
         if (!removedCategories.isEmpty()) {
             competitionRecordService.deleteRecordsForCategories(removedCategories, contestToUpdate.getId());
@@ -174,6 +183,10 @@ public class ContestService {
     @Transactional
     public void deleteContest(UUID id) {
         if (contestRepository.existsById(id)) {
+            Contest c = contestRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("not found"));
+            requestService.deleteAllRequestsByContestId(id);
+            competitionRecordService.deleteRecordsForCategories(c.getCategories(), id);
             contestRepository.deleteById(id);
             log.info("{}: Deleted contest from the database with ID: {}", this.getClass().getName(), id);
         } else {
@@ -181,6 +194,7 @@ public class ContestService {
         }
     }
 
+    @Transactional
     public void startNewCompetitionStage(UUID contestId) {
         List<PhotoCollection> collections = rateService.findAllCollectionsInContest(contestId);
         collections
@@ -194,7 +208,6 @@ public class ContestService {
                 });
         rateService.updateCollections(collections);
     }
-
 
     public byte[] retrieveContestThumbnail(UUID id) {
         return photoService.getThumbnailBytes(id);

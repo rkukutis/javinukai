@@ -78,16 +78,14 @@ function ImageUpload({
     <div className="w-full bg-white shadow rounded px-3 py-5">
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="form-field">
-          <label>
-            {t("imageUpload.photoTitle")}
-            
-          </label>
+          <label>{t("imageUpload.photoTitle")}</label>
           <input
             className="form-field__input"
             {...register("title", {
               maxLength: {
                 value: 100,
-                message: t("imageUpload.titleLength")}
+                message: t("imageUpload.titleLength"),
+              },
             })}
           />
           {errors.title && (
@@ -105,7 +103,8 @@ function ImageUpload({
               required: t("imageUpload.photoDescriptionRequired"),
               maxLength: {
                 value: 1000,
-                message: t("imageUpload.descriptionLength")}
+                message: t("imageUpload.descriptionLength"),
+              },
             })}
           />
           {errors.description && (
@@ -120,6 +119,7 @@ function ImageUpload({
               <li>{t("imageUpload.photoDimensions")}</li>
               <li>{t("imageUpload.photoSize")}</li>
               <li>{t("imageUpload.photoAllSize")}</li>
+              <li>{t("imageUpload.photoAllAtOnce")}</li>
             </div>
           </ul>
           <div

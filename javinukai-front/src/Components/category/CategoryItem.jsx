@@ -41,7 +41,7 @@ export function CategoryItem({
         <h1 className="text lg:text-lg">
           {categoryInfo.name} | {t(`categoryTypes.${categoryInfo.type}`)}
         </h1>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 items-center">
           <p className="text-nowrap">
             {t("CategoryItem.totalEntries")}: {categoryInfo.totalEntries}/
             {categoryInfo.maxTotalSubmissions}
@@ -54,7 +54,7 @@ export function CategoryItem({
           <p>{categoryInfo.description}</p>
           {user && (
             <div className=" flex xl:flex-row xl:space-x-4">
-              {user.role == "JURY" && (
+              {user.role != "USER" && (
                 <Button
                   onClick={() =>
                     navigate(

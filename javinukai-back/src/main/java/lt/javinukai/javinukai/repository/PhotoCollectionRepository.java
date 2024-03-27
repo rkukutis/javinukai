@@ -40,23 +40,23 @@ public interface PhotoCollectionRepository extends JpaRepository<PhotoCollection
 
     @Query(nativeQuery = true, value = "SELECT PHOTO_COLLECTION.* FROM PHOTO_COLLECTION" +
             " JOIN COMPETITION_RECORD ON PHOTO_COLLECTION.COMPETITION_RECORD_ID=COMPETITION_RECORD.ID" +
-            " WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND COMPETITION_RECORD.CATEGORY_ID = ?2 AND" +
-            " HIDDEN_FROM_JURY = FALSE")
-    List<PhotoCollection> findVisibleCollectionsByContestIdAndCategoryId(UUID contestId, UUID categoryId);
+            " WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND COMPETITION_RECORD.CATEGORY_ID = ?2"
+    )
+    List<PhotoCollection> findCollectionsByContestIdAndCategoryId(UUID contestId, UUID categoryId);
 
     @Query(nativeQuery = true, value = "SELECT PHOTO_COLLECTION.* FROM PHOTO_COLLECTION" +
             " JOIN COMPETITION_RECORD ON PHOTO_COLLECTION.COMPETITION_RECORD_ID=COMPETITION_RECORD.ID" +
-            " WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND COMPETITION_RECORD.USER_ID = ?2 AND" +
-            " HIDDEN_FROM_JURY = FALSE")
-    List<PhotoCollection> findVisibleCollectionsByContestIdAndUserId(UUID contestId, UUID userId);
+            " WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND COMPETITION_RECORD.USER_ID = ?2"
+    )
+    List<PhotoCollection> findCollectionsByContestIdAndUserId(UUID contestId, UUID userId);
 
     @Query(nativeQuery = true, value = "SELECT PHOTO_COLLECTION.* FROM PHOTO_COLLECTION" +
             " JOIN COMPETITION_RECORD ON PHOTO_COLLECTION.COMPETITION_RECORD_ID=COMPETITION_RECORD.ID" +
-            " WHERE COMPETITION_RECORD.CONTEST_ID = ?1 AND" +
-            " HIDDEN_FROM_JURY = FALSE")
-    List<PhotoCollection> findVisibleCollectionsByContestId(UUID contestId);
+            " WHERE COMPETITION_RECORD.CONTEST_ID = ?1"
+    )
+    List<PhotoCollection> findCollectionsByContestId(UUID contestId);
 
     List<PhotoCollection> findCollectionsByCompetitionRecordId(UUID id);
 
-
+    void deleteByCompetitionRecordId(UUID id);
 }

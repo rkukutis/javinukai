@@ -14,7 +14,7 @@ export default function ContestCard({ contestInfo }) {
   return (
     <div className="bg-white rounded-md xl:grid xl:grid-cols-12">
       <img
-        className="h-[15rem] w-full object-cover shadow-md xl:col-span-2 lg:rounded-l-md rounded-t-md"
+        className="h-[15rem] w-full object-cover shadow-md xl:col-span-2 rounded-t-md xl:rounded-t-none xl:rounded-l"
         src={contestInfo.thumbnailURL ?? contestPhoto}
       />
       <div className="text xl:col-span-10 p-6 space-y-3">

@@ -56,11 +56,6 @@ public class ParticipationRequestController {
         return ResponseEntity.ok().body(participationRequestService.updateRequestStatus(requestId, ParticipationRequestStatus.valueOf(participationStatus.toUpperCase())));
     }
 
-//    @DeleteMapping("/request/{id}")
-//    public ResponseEntity<List<ParticipationRequest>> deleteParticipationRequest(@PathVariable UUID id) {
-//        return ResponseEntity.ok().body(participationRequestService.deleteParticipationRequest(id));
-//    }
-
     @DeleteMapping(path = "/request/{requestId}")
     public ResponseEntity<?> deleteContest(@PathVariable @NotNull UUID requestId) {
         log.info("Request for deleting participation request with ID: {}", requestId);

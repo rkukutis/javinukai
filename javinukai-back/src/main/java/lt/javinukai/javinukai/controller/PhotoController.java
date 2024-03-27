@@ -34,8 +34,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PhotoController {
     private final PhotoService photoService;
-
-
     @PostMapping(headers = "content-type=multipart/form-data", consumes = "image/jpg")
     public ResponseEntity<PhotoCollection> uploadImages(@RequestParam("image") MultipartFile[] images,
                                                         @RequestParam("title") @Length(max = 100, message = "TITLE_LENGTH_EXCEEDED") String title,
@@ -61,7 +59,7 @@ public class PhotoController {
 
     // this endpoint is for the jury, mods and admins
     @GetMapping("contest/{contestId}/category/{categoryId}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_JURY')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_JURY', 'ROLE_MODERATOR')")
     public ResponseEntity<Page<PhotoCollectionWrapper>> getContestCategoryCollections(@PathVariable UUID contestId,
                                                                                       @PathVariable UUID categoryId,
                                                                                       @AuthenticationPrincipal User requestingUser,

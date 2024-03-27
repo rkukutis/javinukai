@@ -8,13 +8,19 @@ import forwardIcon from "../assets/icons/arrow_forward_ios_FILL0_wght400_GRAD0_o
 import LikeButton from "./LikeButton";
 import addLike from "../services/likes/addLike";
 import removeLike from "../services/likes/removeLike";
+import useUserStore from "../stores/userStore";
+import { useTranslation } from "react-i18next";
 
 export function SinglesSection({ entries }) {
+  const { user } = useUserStore();
   const [enlargedPhotoIndex, setEnlargedPhotoIndex] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const queryClient = useQueryClient();
-  const [likedEnlargedEntries, setLikedEnlargedEntries] = useState([]);
+  const [likedEnlargedEntries, setLikedEnlargedEntries] = useState(
+    entries?.content.filter((entry) => entry.liked == true)
+  );
   const [descriptionOpen, setDescriptionOpen] = useState(false);
+  const { t } = useTranslation();
 
   const { mutate: addLikeMutation } = useMutation({
     mutationFn: (entryId) => addLike(entryId),
@@ -25,7 +31,7 @@ export function SinglesSection({ entries }) {
 
   function setModalOpenAndRefetch(boolean) {
     setModalOpen(boolean);
-    queryClient.invalidateQueries("contestCategoryEntries");
+    queryClient.invalidateQueries(["contestCategoryEntries"]);
   }
 
   function handlePhotoClick(entry) {
@@ -38,13 +44,11 @@ export function SinglesSection({ entries }) {
 
   function handleLikeClick() {
     const entry = entries?.content[enlargedPhotoIndex];
-    console.log(entry);
     if (likedEnlargedEntries.includes(entry)) {
       removeLikeMutation(entry.collection.id);
       const filtered = likedEnlargedEntries.filter(
         (likedEntry) => likedEntry != entry
       );
-      console.log(filtered);
       setLikedEnlargedEntries(filtered);
     } else {
       addLikeMutation(entry.collection.id);
@@ -67,7 +71,7 @@ export function SinglesSection({ entries }) {
       <div className="xl:grid-cols-4 xl:grid xl:gap-3 my-3">
         {entries?.content.map((entry) => (
           <SinglePhotoCollection
-            key={entry.id}
+            key={entry.collection.id}
             entry={entry}
             onClick={() => handlePhotoClick(entry)}
           />
@@ -99,14 +103,15 @@ export function SinglesSection({ entries }) {
             <img src={forwardIcon} />
           </Button>
           <div className="absolute bottom-1 right-1 flex space-x-2">
-            <LikeButton
-              onClick={handleLikeClick}
-              isLiked={
-                likedEnlargedEntries.includes(
+            {user.role == "JURY" && (
+              <LikeButton
+                onClick={handleLikeClick}
+                isLiked={likedEnlargedEntries.includes(
                   entries?.content[enlargedPhotoIndex]
-                ) || entries.content[enlargedPhotoIndex]?.liked
-              }
-            />
+                )}
+              />
+            )}
+
             <Button
               onClick={
                 descriptionOpen
@@ -114,7 +119,7 @@ export function SinglesSection({ entries }) {
                   : () => setDescriptionOpen(true)
               }
             >
-              Description
+              {t("SinglesSection.descriptionTitle")}
             </Button>
           </div>
           {descriptionOpen && (
