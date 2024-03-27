@@ -92,7 +92,7 @@ public class ContestService {
         log.info("Retrieving contest from database, name - {}", contestId);
 
         int totalContestEntries = collectionRepository
-                .findVisibleCollectionsByContestId(contestToShow.getId()).size();
+                .findCollectionsByContestId(contestToShow.getId()).size();
 
         ContestWrapper.ContestWrapperBuilder wrapperBuilder = ContestWrapper.builder()
                 .contest(contestToShow)
@@ -104,7 +104,7 @@ public class ContestService {
             System.out.println(userRequests.size());
 
             int totalUserEntries = collectionRepository
-                    .findVisibleCollectionsByContestIdAndUserId(contestToShow.getId(), requestingUser.getId()).size();
+                    .findCollectionsByContestIdAndUserId(contestToShow.getId(), requestingUser.getId()).size();
 
             wrapperBuilder
                     .maxUserEntries(contestToShow.getMaxUserSubmissions() <= requestingUser.getMaxTotal()

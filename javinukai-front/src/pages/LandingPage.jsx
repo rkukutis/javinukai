@@ -51,7 +51,7 @@ function LandingPage() {
   );
 
   return (
-    <div className="w-full h-[82vh] bg-slate-800 xl:relative flex justify-left pl-12 xl:pl-56 items-center">
+    <div className="w-full min-h-[83vh] bg-slate-800 xl:relative flex justify-left pl-12 xl:pl-56 items-center">
       <div className="hidden xl:grid xl:grid-cols-3 xl:grid-rows-3 xl:gap-4 border-r-2 pr-12 mr-12">
         {images.map((image, i) => (
           <ImageContainer key={"image" + i} imageUrl={image} />

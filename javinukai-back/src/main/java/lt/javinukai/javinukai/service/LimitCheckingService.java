@@ -19,7 +19,7 @@ public class LimitCheckingService {
     public boolean checkUserContestLimit (CompetitionRecord competitionRecord) {
 
         int totalUserContestEntries = collectionRepository
-                .findVisibleCollectionsByContestIdAndUserId(
+                .findCollectionsByContestIdAndUserId(
                         competitionRecord.getContest().getId(), competitionRecord.getUser().getId()
                 ).size();
 
@@ -39,7 +39,7 @@ public class LimitCheckingService {
     // each contest has a number of total allowed submissions, return false if adding one more goes over the limit
     public boolean checkContestLimit(CompetitionRecord record) {
         int totalContestEntries = collectionRepository
-                .findVisibleCollectionsByContestId(record.getContest().getId()).size();
+                .findCollectionsByContestId(record.getContest().getId()).size();
         return totalContestEntries + 1 <= record.getContest().getMaxTotalSubmissions();
     }
 
@@ -49,7 +49,7 @@ public class LimitCheckingService {
         Category category = record.getCategory();
 
         int totalCategoryEntries = collectionRepository
-                .findVisibleCollectionsByContestIdAndCategoryId(
+                .findCollectionsByContestIdAndCategoryId(
                         record.getContest().getId(), record.getCategory().getId()
                 ).size();
 

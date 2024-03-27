@@ -117,7 +117,7 @@ export default function UserManagementPage() {
         ) : (
           <>
             {data?.content.map((user) => (
-              <UserListItem key={user.uuid} userInfo={user} />
+              <UserListItem key={user.id} userInfo={user} />
             ))}
           </>
         )}

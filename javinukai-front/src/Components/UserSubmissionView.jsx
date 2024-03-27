@@ -24,10 +24,7 @@ function UserSubmissionView({ contest, category, contestLimitReached }) {
           <div className="flex items-center space-x-2 justify-between">
             <h1 className="text-teal-500 font-bold text-xl mb-2">
               {t("UserSubmissionView.yourEntries")}{" "}
-              {`( ${
-                userRecord?.entries.filter((entry) => entry.hidden == false)
-                  .length
-              } / ${userRecord?.maxPhotos})`}
+              {`( ${userRecord?.entries.length} / ${userRecord?.maxPhotos})`}
             </h1>
           </div>
           <div className="flex flex-col space-y-2">

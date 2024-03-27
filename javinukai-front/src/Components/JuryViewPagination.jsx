@@ -32,7 +32,7 @@ export function JuryViewPagination({
     >
       <section className="flex flex-col py-2">
         <label className="mb-1">{t("JuryViewPagination.pageTitle")}</label>
-        <div className="flex space-x-3">
+        <div className="flex xl:flex-row flex-col xl:space-x-3">
           <Button
             extraStyle="w-full"
             disabled={pagination.page == 0}
@@ -41,10 +41,7 @@ export function JuryViewPagination({
             {t("PaginationSettings.previousPage")}
           </Button>
           <p className="text-xl py-1 px-4 rounded-full bg-white">
-            {pagination.page +
-              1 +
-              "/" +
-              (availablePageNumber || pagination.page)}
+            {pagination.page + 1 + "/" + (availablePageNumber || 1)}
           </p>
           <Button
             extraStyle="w-full"
@@ -67,22 +64,30 @@ export function JuryViewPagination({
           onChange={handleLimitChange}
           value={pagination.limit}
         >
-          <option value={1}>1 {limitObjectName}</option>
+          <option value={10}>10 {limitObjectName}</option>
           <option value={25}>25 {limitObjectName}</option>
           <option value={50}>50 {limitObjectName}</option>
           <option value={100}>100 {limitObjectName}</option>
         </select>
       </section>
       <section className="flex flex-col py-2">
-        <label className="mb-1">{t("JuryViewPagination.showEntriesTitle")}</label>
+        <label className="mb-1">
+          {t("JuryViewPagination.showEntriesTitle")}
+        </label>
         <select
           className="py-2 px-4 bg-white rounded-md shadow"
           onChange={handleFilterChange}
           value={pagination.display}
         >
-          <option value="all">{t("JuryViewPagination.showAll")} {limitObjectName}</option>
-          <option value="liked">{t("JuryViewPagination.showLiked")} {limitObjectName}</option>
-          <option value="unliked">{t("JuryViewPagination.showDisliked")} {limitObjectName}</option>
+          <option value="all">
+            {t("JuryViewPagination.showAll")} {limitObjectName}
+          </option>
+          <option value="liked">
+            {t("JuryViewPagination.showLiked")} {limitObjectName}
+          </option>
+          <option value="unliked">
+            {t("JuryViewPagination.showDisliked")} {limitObjectName}
+          </option>
         </select>
       </section>
     </div>

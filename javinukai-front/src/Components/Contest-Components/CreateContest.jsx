@@ -40,7 +40,6 @@ export default function CreateContest({
   const [thumbnailFile, setThumbnailFile] = useState();
 
   const onSubmit = async (data) => {
-    console.log(data);
     const startDate = new Date(data.startDate).toISOString();
     const endDate = new Date(data.endDate).toISOString();
 

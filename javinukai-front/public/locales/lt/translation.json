@@ -60,6 +60,7 @@
     "fileTypeRequirement": "Nuotrauka turi būti JPEG formato",
     "photoSize": "Kiekviena nuotrauka turi būti mažesnė nei 10 MB",
     "photoAllSize": "Visos nuotraukos kartu turi būti mažesnės nei 50 MB",
+    "photoAllAtOnce": "Visos nuotraukos turi būti įkeltos vienu metu",
     "photoSelectorActive": "Dėkite nuotraukas čia",
     "photoSelector": "Pasirinkite arba dėkite nuotraukas čia",
     "photoUploading": "Nuotraukos keliamos...",
@@ -302,7 +303,8 @@
 
   "ContestEntry": {
     "photos": "Nuotraukos",
-    "deletionConfirmation": "Ar tikrai norite pašalinti šią pateiktį? Šis veiskams yra negrįžtamas",
+    "deletionConfirmation": "Ar tikrai norite pašalinti šią pateiktį? Šis veiksmas yra negrįžtamas",
+    "deletionSuccess": "Pateiktis sėkmingai ištrinta",
     "editDetailsButton": "Pakeisti pateikties informaciją"
   },
 
@@ -505,7 +507,14 @@
   },
 
   "SeriesEntry": {
-    "description": "Aprašymas"
+    "description": "Aprašymas",
+    "author": "Autorius",
+    "likes": "Įvertinimai"
+  },
+
+  "SinglePhotoCollection": {
+    "author": "Autorius",
+    "likes": "Įvertinimai"
   },
 
   "ContestPreview": {

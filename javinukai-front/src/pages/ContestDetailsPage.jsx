@@ -107,8 +107,6 @@ function ContestDetailsPage() {
     },
   });
 
-  console.log(deadlineReached(data?.contest.endDate));
-
   return (
     <div className="w-full min-h-[82vh] flex flex-col items-center bg-slate-50">
       <div className={`w-full xl:w-3/4 pb-4 px-6 bg-white shadow-md`}>

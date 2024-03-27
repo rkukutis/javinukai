@@ -60,6 +60,7 @@
     "photoDimensions": "Long edge of photo must be longer than 2500px and shorter than 4000px",
     "photoSize": "Each photo must be less than 10 MB in size",
     "photoAllSize": "All photos combined must be less than 50 MB",
+    "photoAllAtOnce": "Photos should be added all at once",
     "photoSelectorActive": "Drop here",
     "photoSelector": "Select or drop photos here",
     "photoUploading": "Uploading...",
@@ -301,6 +302,7 @@
   "ContestEntry": {
     "photos": "Photos",
     "deletionConfirmation": "Are you sure you want to delete this entry? This action is irreversible",
+    "deletionSuccess": "Entry deleted successfuly",
     "editDetailsButton": "Edit entry details"
   },
 
@@ -504,7 +506,14 @@
   },
 
   "SeriesEntry": {
-    "description": "Description"
+    "description": "Description",
+    "author": "Author",
+    "likes": "Likes"
+  },
+
+  "SinglePhotoCollection": {
+    "author": "Author",
+    "likes": "Likes"
   },
 
   "ContestPreview": {

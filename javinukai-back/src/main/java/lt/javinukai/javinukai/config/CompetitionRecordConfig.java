@@ -108,8 +108,8 @@ public class CompetitionRecordConfig {
                 .description("Suspendisse euismod sollicitudin tellus in porta. Praesent faucibus elit eu arcu mattis, ac vehicula massa tincidunt. In auctor mi rhoncus nisl ultrices, a posuere elit pharetra. Aenean tempor arcu at orci aliquam, et pharetra sapien dapibus. Pellentesque volutpat dolor lectus. Proin venenatis, nulla in rutrum egestas, arcu tellus viverra ipsum, eget condimentum risus diam ut ante. Aliquam volutpat viverra risus, eget sodales augue dignissim in. Nulla nulla elit, gravida at placerat eu, tristique vel lacus. Duis a nisi id orci scelerisque bibendum posuere ut leo. Integer fringilla enim at rhoncus congue. Integer viverra quis ipsum non consectetur. Aenean egestas id lorem in dictum. ")
                 .startDate(ZonedDateTime.now())
                 .endDate(ZonedDateTime.now().plusDays(5))
-                .maxTotalSubmissions(5)
-                .maxUserSubmissions(3)
+                .maxTotalSubmissions(500)
+                .maxUserSubmissions(50)
                 .build();
         contestToCreate.addCategory(categoryToCreate01);
         contestToCreate.addCategory(categoryToCreate02);
