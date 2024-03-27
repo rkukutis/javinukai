@@ -7,6 +7,7 @@ import lt.javinukai.javinukai.entity.*;
 import lt.javinukai.javinukai.repository.ArchivedContestRepository;
 import lt.javinukai.javinukai.repository.CompetitionRecordRepository;
 import lt.javinukai.javinukai.repository.ContestRepository;
+import lt.javinukai.javinukai.repository.PhotoCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,14 +26,17 @@ public class ArchiveService {
     private final ContestRepository contestRepository;
     private final CompetitionRecordRepository competitionRecordRepository;
     private final ArchivedContestRepository archivedContestRepository;
+    private final PhotoCollectionRepository photoCollectionRepository;
 
     @Autowired
     public ArchiveService(CompetitionRecordRepository competitionRecordRepository,
                           ContestRepository contestRepository,
-                          ArchivedContestRepository archivedContestRepository) {
+                          ArchivedContestRepository archivedContestRepository,
+                          PhotoCollectionRepository photoCollectionRepository) {
         this.competitionRecordRepository = competitionRecordRepository;
         this.contestRepository = contestRepository;
-        this.archivedContestRepository= archivedContestRepository;
+        this.archivedContestRepository = archivedContestRepository;
+        this.photoCollectionRepository = photoCollectionRepository;
     }
 
     @Transactional
@@ -68,6 +72,7 @@ public class ArchiveService {
                         cr.getUser().getName(),
                         cr.getUser().getSurname(),
                         cr.getUser().getEmail());
+                    photoCollectionRepository.deleteByCompetitionRecordId(cr.getId());
                 if (!participantsToStore.contains(userCSV)) {
                     participantsToStore.add(userCSV);
                 }
@@ -76,6 +81,14 @@ public class ArchiveService {
 
             archivedContestRepository.save(pastContest);
             log.info("{}: Contest was archived with ID: {}", this.getClass().getName(), contestID);
+
+            if (!contestToArchive.isArchived()) {
+                contestToArchive.setArchived(true);
+            }
+
+            for (Category c : contestToArchive.getCategories()) {
+                c.setUploadedPhotos(null);
+            }
 
             return ArchivingResponse.builder()
                     .pastCompetition(pastContest)
