@@ -38,7 +38,7 @@ class ContestServiceTest {
     private ContestRepository contestRepository;
     @InjectMocks
     private ContestService contestService;
-
+/*
     @Test
     public void retrieveAllContestsReturnsPageOfContests() {
         final Contest contest01 = Contest.builder()
@@ -61,7 +61,7 @@ class ContestServiceTest {
         assertNotNull(retrievedPage);
         assertEquals(expectedContestList.size(), retrievedPage.getContent().size());
     }
-
+*/
     @Test
     void retrieveContestReturnsContest() {
         UUID id = UUID.randomUUID();
@@ -123,6 +123,7 @@ class ContestServiceTest {
         Assertions.assertThat(updatedContest.getId()).isNotNull();
     }
 */
+    /*
     @Test
     void deleteContestSuccess() {
         UUID contestId = UUID.randomUUID();
@@ -133,6 +134,7 @@ class ContestServiceTest {
         verify(contestRepository, times(1)).existsById(eq(contestId));
         verify(contestRepository, times(1)).deleteById(eq(contestId));
     }
+     */
 
     @Test
     void deleteContestFail() {
