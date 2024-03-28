@@ -1,0 +1,590 @@
+{
+  "dropdownMenu": {
+    "accountSettings": "Asmeninė informacija",
+    "logout": "Atsijungti",
+    "manageUsers": "Valdyti vartotojus",
+    "createContest": "Sukurti konkursą",
+    "participationRequests": "Patvirtinti dalyvius",
+    "archive": "Archyvas"
+  },
+
+  "navbar": {
+    "name1": "Namai",
+    "name2": "Konkursai",
+    "name3": "Sukurti naują konkursą",
+    "name4": "add text4"
+  },
+
+  "layout": {
+    "name": "Lietuvos Spaudos Fotografija",
+    "login": "Prisijungimas",
+    "loggedOutSuccess": "Sėkmingai atsijungėte!",
+    "adminContact": "Administracija"
+  },
+
+  "homepage": {
+    "description": "Aprašymas",
+    "loginToParticipate": "Prisijunkite norėdami dalyvauti",
+    "participate": "Dalyvauti",
+    "confirmParticipation": "Patvirtinti dalyvavimą",
+    "login": "Prisijunkite"
+  },
+
+  "modal": {
+    "closeModal": "Uždaryti"
+  },
+
+  "loginPage": {
+    "email": "El. paštas",
+    "emailRequired": "Būtina įvesti el. paštą",
+    "emailValidFormat": "El. paštas turi būti tinkamo formato",
+    "password": "Slaptažodis",
+    "forgotPassword": "Pamiršote slaptažodį?",
+    "passwordRequired": "Būtina įvesti slaptažodį",
+    "register": "Registracija",
+    "login": "Prisijungti",
+    "loginSuccess": "Sėkmingai prisijungėte"
+  },
+
+  "imageUpload": {
+    "imagesUploaded": "Nuotraukos buvo įkeltos",
+    "imagesAdd": "Turite pridėti keletą nuotraukų",
+    "photoUploadTitle": "Įkelti nuotrauką(-as)",
+    "photoUpload": "Įkelti nuotrauką(-as)",
+    "photoTitle": "Pavadinimas",
+    "photoTitleRequired": "Pavadinimas yra būtinas",
+    "photoDescription": "Aprašymas",
+    "photoDescriptionRequired": "Aprašymas yra būtinas",
+    "photoRequirements": "Reikalavimai nuotraukai:",
+    "photoDimensions": "Ilgasis nuotraukos kraštas turi būti ilgesnis nei 2500 pikselių ir trumpesnis nei 4000 pikselių",
+    "fileTypeRequirement": "Nuotrauka turi būti JPEG formato",
+    "photoSize": "Kiekviena nuotrauka turi būti mažesnė nei 10 MB",
+    "photoAllSize": "Visos nuotraukos kartu turi būti mažesnės nei 50 MB",
+    "photoAllAtOnce": "Visos nuotraukos turi būti įkeltos vienu metu",
+    "photoSelectorActive": "Dėkite nuotraukas čia",
+    "photoSelector": "Pasirinkite arba dėkite nuotraukas čia",
+    "photoUploading": "Nuotraukos keliamos...",
+    "collectionTitle": "Pavadinimas:",
+    "collectionDescription": "Aprašymas:",
+    "collectionCreatedAt": "Sukurta:",
+    "PhotoNumberError": "Į šia kategoriją galite pateikti tik pavienes nuotraukas",
+    "entryLimitError": "Pateikimas atmestas. Jūs jau pasiekėte savo pateikimų limitą šiai kategorijai",
+    "titleLength": "Pavadinimas neturi viršyti 100 simbolių",
+    "descriptionLength": "Aprašymas neturi viršyti 1000 simbolių"
+  },
+
+  "uploadImages": {
+    "photoValidationError": "Failas {{photoName}} neatitinka reikalavimų",
+    "photoProcessingError": "Įvyko sistemos klaida talpinant nuotraukas",
+    "photoUploadLimitError": "Pateikimų limitas pasiektas. Daugiau pateikimų įkelti nebegalite",
+    "photoGeneralError:": "Įvyko klaida įkeliant nuotraukas"
+  },
+
+  "PaginationSettings": {
+    "perPage": "puslapyje",
+    "previousPage": "Ankstesnis",
+    "nextPage": "Sekantis",
+    "fieldTitle": "Rūšiuoti pagal lauką",
+    "sortTitle": "Rūšiavimo tvarka",
+    "sortDescending": "Mažėjanti",
+    "sortAscending": "Didėjanti",
+    "placeholderField": "įveskite",
+    "searchTitle": "Ieškoti pagal",
+    "searchButton": "Ieškoti",
+    "fieldIsEnabledYes": "Taip",
+    "fieldIsEnabledNo": "Ne"
+  },
+
+  "ConfirmEmailPage": {
+    "emailConfirmed": "Jūsų el. paštas buvo patvirtintas"
+  },
+
+  "ForgotPassPage": {
+    "title": "Užmiršote slaptažodį?",
+    "description": "Gausite el. laišką su nuoroda ir instrukcijomis, kaip iš naujo nustatyti slaptažodį. Atminkite, kad slaptažodžio nustatymo iš naujo nuoroda galios tik 10 minučių.",
+    "emailPlaceholder": "Prašau įveskite savo el. paštą",
+    "emailRequired": "El paštas yra būtinas",
+    "emailValidFormat": "El. paštas turi būti tinkamo formato",
+    "submitEmail": "Pateikti",
+    "resetSuccess": "Slaptažodžio atstatymo el.laiškas sėkmingai išsiųstas "
+  },
+
+  "RegisterPage": {
+    "registrationSuccess": "Sėkmingai užsiregistravote. Prašau patvirtinkite savo el. paštą. ",
+    "name": "Vardas",
+    "nameRequired": "Vardas yra būtinas",
+    "nameContains": "Varde turi būti tik abėcėlės simboliai",
+    "nameLength": "Vardas neturi viršyti 20 simbolių",
+
+    "surname": "Pavardė",
+    "surnameRequired": "Pavardė yra būtina",
+    "surnameContains": "Pavardėje turi būti tik abėcėlės simboliai",
+    "surnameLength": "Pavardė neturi viršyti 20 simbolių",
+
+    "birthYear": "Gimimo metai",
+    "birthYearRequired": "Gimimo metai yra būtini",
+    "birthYearValid": "Data turi būti validi. Validus pavyzdys: '1984' ",
+    "birthYearMax": "Gimimo metai negali būti vėliau nei",
+    "birthYearMin": "Gimimo metai negali būti anksčiau nei 1900m.",
+
+    "phoneNumber": "Telefono numeris",
+    "phoneNumberRequired": "Telefono numeris yra būtinas",
+    "phoneNumberValid": "Telefono numeris turi būti validus",
+    "phoneNumberLength": "Telefono numeris neturi viršyti 16 simbolių",
+
+    "email": "El. paštas",
+    "emailRequired": "El. paštas yra būtinas",
+    "emailValid": "El. pašto adresas turi būti tinkamo formato",
+    "emailLength": "El. pašto adresas neturi viršyti 200 simbolių",
+
+    "password": "Slaptažodis",
+    "passwordRequired": "Slaptažodis yra būtinas",
+    "passwordValid": "Slaptažodis turi būti bent 8 simbolių ilgio",
+    "passwordConfirm": "Patvirtinti slaptažodį",
+    "passwordConfirmRequired": "Būtinas slaptažodžio patvirtinimas",
+    "passwordConfirmMustMatch": "Slaptažodžiai turi sutapti",
+
+    "affiliationFreelance": "Laisvai samdomas",
+    "affiliationInstitution": "Atstovaujama žiniasklaidos priemonė",
+    "affiliationInstitutionName": "Atstovaujamos įstaigos pavadinimas",
+    "affiliationInstitutionRequired": "Įstaigos pavadinimas yra būtinas",
+    "affiliationInstitutionNameLength": "Įstaigos pavadinimas neturi viršyti 50 simbolių",
+    "registerSubmit": "Registruotis"
+  },
+
+  "CreateUserPage": {
+    "creationSuccess": "Anketa sukurta sėkmingai",
+    "name": "Vardas",
+    "nameRequired": "Vardas yra būtinas",
+    "nameContains": "Varde turi būti tik abėcėlės simboliai",
+    "nameLength": "Vardas neturi viršyti 20 simbolių",
+
+    "userTitle": "Rolė",
+    "admin": "Administratorius",
+    "moderator": "Moderatorius",
+    "jury": "Žiuri",
+    "user": "Vartotojas",
+
+    "surname": "Pavardė",
+    "surnameRequired": "Pavardė yra būtina",
+    "surnameContains": "Pavardėje turi būti tik abėcėlės simboliai",
+    "surnameLength": "Pavardė neturi viršyti 20 simbolių",
+
+    "birthYear": "Gimimo metai",
+    "birthYearRequired": "Gimimo metai yra būtini",
+    "birthYearValid": "Data turi būti validi. Validus pavyzdys: '1984' ",
+    "birthYearMax": "Gimimo metai negali būti vėliau nei",
+    "birthYearMin": "Gimimo metai negali būti anksčiau nei 1900m.",
+
+    "phoneNumber": "Telefono numeris",
+    "phoneNumberRequired": "Telefono numeris yra būtinas",
+    "phoneNumberValid": "Telefono numeris turi būti validus",
+    "phoneNumberLength": "Telefono numeris neturi viršyti 15 simbolių",
+
+    "email": "El. paštas",
+    "emailRequired": "El. paštas yra būtinas",
+    "emailValid": "El. pašto adresas turi būti tinkamo formato",
+    "emailLength": "El. pašto adresas neturi viršyti 200 simbolių",
+
+    "password": "Slaptažodis",
+    "passwordRequired": "Slaptažodis yra būtinas",
+    "passwordValid": "Slaptažodis turi būti bent 8 simbolių ilgio",
+    "passwordConfirm": "Patvirtinti slaptažodį",
+    "passwordConfirmRequired": "Būtinas slaptažodžio patvirtinimas",
+    "passwordConfirmMustMatch": "Slaptažodžiai turi sutapti",
+
+    "affiliationFreelance": "Laisvai samdomas",
+    "affiliationInstitution": "Atstovaujama žiniasklaidos priemonė",
+    "affiliationInstitutionName": "Atstovaujamos įstaigos pavadinimas",
+    "affiliationInstitutionRequired": "Įstaigos pavadinimas yra būtinas",
+    "affiliationInstitutionNameLength": "Įstaigos pavadinimas neturi viršyti 50 simbolių",
+    "creationSubmit": "Pridėti naują vartotoją"
+  },
+
+  "services": {
+    "uploadImagesError": "Nepavyko įkelti nuotraukų",
+    "resetPasswordError": "Bandant iš naujo nustatyti slaptažodį įvyko klaida",
+    "resetPasswordOldPasswordError": "Naujas slaptažodis negali būti toks pat kaip senas",
+    "resetPasswordResetLinkInvalid": "Slaptažodžio nustatymo iš naujo nuoroda neteisinga arba nebegalioja",
+    "forgotPasswordError": "Patikrinkite el. paštą, ar nėra slaptažodžio nustatymo iš naujo nuorodos",
+    "loginUserError": "Neteisinga kredencialai",
+    "logoutUserError": "Atsijungiant įvyko klaida",
+    "registerUserExistsError": "Naudotojas, turintis šį el. pašto adresą, jau egzistuoja",
+    "registerUserError": "Registracija nepavyko, bandykite vėliau"
+  },
+
+  "ResetPassPage": {
+    "passChangeSuccess": "Slaptažodis sėkmingai pakeistas",
+    "passChangeError": "Klaida: patikrinkite, ar slaptažodžio nustatymo iš naujo nuoroda teisinga",
+    "passTitle": "Naujas slaptažodis",
+    "passRequired": "Slaptažodis yra būtinas",
+    "passLength": "Slaptažodis turi būti bent 8 simbolių ilgio",
+    "passTitleConfirm": "Patvirtinkite naują slaptažodį",
+    "passConfirmRequired": "Slaptažodžio patvirtinimas yra būtinas",
+    "passMustMatch": "Slaptažodžiai turi sutapti",
+    "passSubmit": "Pateikti"
+  },
+
+  "UserDetailsPage": {
+    "personalTitle": "Asmeninė informacija",
+    "personalName": "Vardas",
+    "personalSurname": "Pavardė",
+    "personalEmail": "El. paštas",
+    "personalBirthYear": "Gimimo metai",
+    "personalPhoneNumber": "Telefono numeris",
+    "personalFreelance": "Laisvai samdomas",
+    "personalInstitution": "Institucija",
+    "accountTitle": "Paskyros informacija",
+    "accountID": "Paskyros ID",
+    "accountCreationDate": "Sukūrimo data",
+    "accountLastModifiedDate": "Paskutinių keitimų data",
+    "accountEmailConfirmed": "Paskyros el paštas patvirtintas",
+    "accountIsLocked": "Paskyra užrakinta",
+    "accountRole": "Rolė",
+    "accountMaxPhotosContest": "Maksimalus nuotraukų pateikimų skaičius",
+    "accountMaxSinglesCategories": "Maksimalus pavienių pateikimų skaičius per kategoriją",
+    "accountMaxCollectionCategories": "Maksimalus serijų pateikimų skaičius per kategoriją",
+    "backButton": "Atgal",
+    "isTrue": "Taip",
+    "isFalse": "Ne",
+    "changePasswordButton": "Pakeisti slaptažodį"
+  },
+
+  "ContestsPage": {
+    "contestsLimitObject": "Konkursų",
+    "contestNameOption": "Pavadinimas",
+    "contestDescriptionOption": "Aprašymas",
+    "contestStartDateOption": "Pradžios data",
+    "contestEndDateOption": "Pabaigos data",
+    "contestTotalEntriesOption": "Pateikimų skaičius",
+    "contestSeachFieldName": "Pavadinimą",
+    "contestCreatedDate": "Sukūrimo data"
+  },
+
+  "ContestCard": {
+    "detailsButton": "Plačiau",
+    "endContest": "Baigti konkursą",
+    "startNewStage": "Naujas etapas",
+    "editContest": "Redaguoti konkursą",
+    "editdeleteContestConfirm": "Ar tikrai norite pakeisti/sukurti šį konkursą?",
+    "deleteContest": "Ištrinti konkursą"
+  },
+
+  "StartNewContestStage": {
+    "newStageConfirm": "Ar tikrai norite pradėti naująjį konkurso etapą?"
+  },
+
+  "DeleteContest": {
+    "DeleteContestConfirm": "Ar tikrai norite ištrinti konkursą?"
+  },
+
+  "ContestDetailsPage": {
+    "contest": "Konkursas",
+    "startDate": "Pradžia",
+    "endDate": "Pabaiga",
+    "description": "Aprašymas",
+    "categories": "Kategorijos",
+    "participate": "Dalyvauti konkurse",
+    "participationSuccess": "Dalyvavimo prašymas išsiųstas",
+    "participationError": "Įvyko klaida siunčiant dalyvavimo prašymą",
+    "userEntries": "Jūsų pateikimai",
+    "entries": "Visi pateikimai",
+    "contestEditTitle": "Redaguoti konkursą",
+    "contestEditSave": "Išsaugoti pakeitimus"
+  },
+
+  "CategoryItem": {
+    "juryViewEntries": "Peržiūrėti dalyvių pateiktis",
+    "entryLimit": "Bendras pateikčių limitas",
+    "defaultLimit": "Numatytas limitas vienam vartotojui",
+    "totalEntries": "pateiktys"
+  },
+
+  "UserSubmissionView": {
+    "yourEntries": "Jūsų pateiktys",
+    "addNewEntry": "Pridėti naują pateiktį",
+    "cancel": "Atšaukti"
+  },
+
+  "ContestEntry": {
+    "photos": "Nuotraukos",
+    "deletionConfirmation": "Ar tikrai norite pašalinti šią pateiktį? Šis veiksmas yra negrįžtamas",
+    "deletionSuccess": "Pateiktis sėkmingai ištrinta",
+    "editDetailsButton": "Pakeisti pateikties informaciją"
+  },
+
+  "UserManagementPage": {
+    "userLimitObject": "Vartotojų",
+    "userNameOption": "Vardas",
+    "userSurnameIption": "Pavardė",
+    "userEmailOption": "El. paštas",
+    "userRoleOption": "Rolė",
+    "userMaxTotalOption": "Maksimalus pateikimų skaičius",
+    "userMaxSingleOption": "Pateikimų pavienų pateikimų skaičius kategorijai",
+    "userMaxCollectionsOption": "Maksimalus serijų pateikimų skaičius kategorijai",
+    "userIsEnabledOption": "Patvirtinta(s)",
+    "userisNonLockedOption": "Blokuota(s)",
+    "userSeachFieldName": "pavardę",
+    "limits": "Limitai",
+    "addNewUserButton": "Pridėti naują vartotoją"
+  },
+
+  "DangerZone": {
+    "title": "Pavojinga zona",
+    "permissionsChangedSuccess": "Vartotojo leidimai pakeisti sėkmingai",
+    "deletedSuccess": "Vartotojas {{username}} sėkmingai ištrintas",
+    "newRoleSame": "Naujoji rolė yra tokia pati kaip ir senoji",
+    "changeRole": "Ketinate pakeisti šio vartotojo rolę į {{newRole}}. Ar jūs tuo tikri?",
+    "userBlock": "Ketinate {{action}}blokuoti šią paskyrą. Ar jūs tuo tikri?",
+    "unTranslation": "at",
+    "userDelete": "Ketinate ištrinti šio vartotojo paskyrą, šis veiksmas yra negrįžtamas, ar jūs tuo tikri? ",
+    "changeUserTitle": "Keisti rolę",
+    "admin": "Administratorius",
+    "moderator": "Moderatorius",
+    "jury": "Žiuri",
+    "user": "Vartotojas",
+    "roleUpdateTitle": "Atnaujinti rolę",
+    "accountActionsTitle": "Paskyros veiksmai",
+    "blockAccount": "Blokuoti",
+    "unblockAccount": "Atblokuoti",
+    "deleteAccountButton": "Ištrinti",
+    "maxPerContest": "Max pateikimų konkursui",
+    "maxSingles": "Max pateikimų pavienių nuotraukų kategorijai",
+    "maxCollections": "Max pateikimų nuotraukų serijų kategorijai",
+    "changeLimits": "Pakeisti limitus",
+    "limitNegativeError": "Limitu negali būti neigiamas skaičius"
+  },
+
+  "roles": {
+    "ADMIN": "Administratorius",
+    "USER": "Vartotojas",
+    "JURY": "Žiuri",
+    "MODERATOR": "Moderatorius"
+  },
+
+  "ChangeUsersPasswordForm": {
+    "oldPassword": "Darbartinis slaptažodis",
+    "newPassword": "Naujas slaptažodis",
+    "newPasswordConfirmation": "Pakartokite slaptažodį",
+    "confirmChangePasswordButton": "Patvirtinti pakeitimą",
+    "discardChangePasswordButton": "Atšaukti pakeitimą",
+    "changePasswordSuccess": "Slaptažodis sėkmingai pakeistas",
+    "changePasswordFailWrongCurrent": "Esamas slaptažodis įvestas neteisingai",
+    "changePasswordFailAsCurrent": "Naujas slaptažodis toks pats kaip esamas"
+  },
+
+  "categoryTypes": {
+    "SINGLE": "Pavienės",
+    "COLLECTION": "Serijos"
+  },
+
+  "CreateContest": {
+    "contestTitle": "Sukurti konkursą",
+    "contestName": "Pavadinimas",
+    "description": "Aprašymas",
+    "startDate": "Pradžios data",
+    "endDate": "Pabaigos data",
+    "totalSubmissions": "Maksimalus pateikimų skaičius",
+    "createNewCategory": "Sukurti naują kategoriją",
+    "close": "Uždaryti",
+    "categoryDescription": "Aprašymas",
+    "editCategory": "Redaguoti",
+    "deleteCategory": "Ištrinti kategoriją",
+    "removeCategory": "Pašalinti kategoriją",
+    "addCategory": "Pridėti",
+    "contestCreated": "Konkursas sukurtas!",
+    "createContestButton": "Sukurti konkursą",
+    "categoryDeleteConfirmation": "Ar tiktai norite ištrinti kategoriją?",
+    "categoryDeleteYes": "Taip",
+    "categoryDeleteNo": "Ne",
+    "maxTotalSubmissions": "Maksimalus pateikimų skaičius",
+    "maxSubmissionsPerUser": "Maksimalus pateikimų skaičius per vartotoją",
+    "contesThumbnail": "Konkurso nuotrauka",
+    "creation": "Sukurti konkursą",
+    "invalidDatesError": "Netinkamos datų reikšmės",
+    "contestDetailsUpdatedSuccess": "Konkurso informacija sėkmingai atnaujinta",
+    "contestDetailsUpdatedError": "Įvyko klaida atnaujinant konkurso informaciją",
+    "contestCategoriesUpdatedSuccess": "Konkurso kategorijų sąrašas sėkmingai atnaujintas",
+    "contestCategoriesUpdatedError": "Įvyko klaida atnaujinant konkurso kategorijas",
+    "contestCreatedSuccess": "Konkursas sukurtas sėkmingai",
+    "contestCreatedError": "Įvyko klaida kuriant konkursą",
+    "thumbnailError": "Galima pridėti tik vieną miniatiūrą",
+    "required": "Šis laukas yra privalomas"
+  },
+
+  "CreateCategory": {
+    "categoryScreen": "Sukurti kategoriją",
+    "categoryName": "Pavadinimas",
+    "categoryDescription": "Aprašymas",
+    "categoryTotalSubmissions": "Maksimalus pateikimų skaičius",
+    "categoryType": "Kategorijos tipas",
+    "categorySelectType": "Pasirinkite kategorijos tipą",
+    "categoryCreateButton": "Sukurti kategoriją",
+    "categoryCreateSuccess": "Kategorija sukurta sėkmingai",
+    "categoryCreateError": "Kuriant kategoriją įvyko klaida",
+    "required": "Šis laukas yra privalomas"
+  },
+
+  "CategorySelection": {
+    "categories": "Kategorijos",
+    "noCategoriesAdded": "Dar nėra pridėtų kategorijų!",
+    "categoryName": "Pavadinimas",
+    "categoryType": "Kategorijos tipas",
+    "categoryMaxSubmissions": "Maksimalus pateikimų skaičius",
+    "categoryMaxUserSubmissions": "Maksimalus pateikimainu skaičius per vartotoją",
+    "addCategoriesFromDataBase": "Pridėti kategorijas iš duomenų bazės",
+    "CreateNewCategory": "Sukurti ir pridėti kategoriją"
+  },
+
+  "CategoryList": {
+    "categoriesName": "pavadinimą",
+    "categoriesNameCapital": "Pavadinimą",
+    "categoriesMaxTotalSubmissions": "Maksimalus kategorijos pateikimų skaičius",
+    "categoriesMaxUserSubmissions": "Maksimalus pateikimų skaičius per vartotoją",
+    "categoriesType": "Kategorijos tipas",
+    "categoryName": "Pavadinimas",
+    "categoryTitle": "Kategorijų"
+  },
+
+  "EditCategoryModal": {
+    "editCategory": "Redaguoti kategoriją",
+    "categoryName": "Pavadinimas",
+    "categoryDescription": "Aprašymas",
+    "categoryMaxSubmissions": "Maksimalus pateikimų skaičius",
+    "categoryMaxUserSubmissions": "Maksimalus pateikimų skaičius per vartotoją",
+    "categoryType": "Kategorijos tipas",
+    "updateCategory": "Atnaujinti kategoriją",
+    "required": "Šis laukas yra privalomas",
+    "categoryUpdatedSuccess": "Kategorija sėkmingai atnaujinta",
+    "categoryUpdatedError": "Įvyko klaida atnaujinant kategoriją"
+  },
+
+  "PersonalInformation": {
+    "editButton": "Keisti asmeninę informaciją",
+    "cancelButton": "Atšaukti pakeitimus",
+    "saveButton": "Išsaugoti pakeitimus",
+    "isFreelanceTrue": "Taip",
+    "isFreelanceFalse": "Ne",
+    "changeSuccess": "Asmeninė informacija sėkmingai pakeista",
+    "changeError": "Keičiant asmeninę informaciją įvyko klaida",
+    "emailLogoutMessage": "Pakeitus el. paštą, reikės prisijungti su nauju el. paštu."
+  },
+
+  "ParticipationRequest": {
+    "fieldName": "Vardas",
+    "fieldSurname": "Pavardė",
+    "fieldEmail": "El. paštas",
+    "fieldBirthYear": "Gimimo metai",
+    "fieldPhoneNumber": "Telefono numeris",
+    "fieldContestName": "Konkursas",
+    "fieldContestStart": "Pradžia",
+    "fieldContestEnd": "Pabaiga",
+    "fieldAccept": "Patvirtinti",
+    "fieldDecline": "Atmesti",
+    "requestDateOption": "Užklausos data",
+    "contestNameOption": "Konkurso pavadinimas",
+    "contestsLimitObject": "Užklausos",
+    "requestStatusOption": "Užklausos būsena",
+    "fieldAcceptSuccess": "Užklausa patvirtinta",
+    "fieldDeclinedSuccess": "Užklausa atmesta"
+  },
+
+  "ParticipationStatus": {
+    "PENDING": "Laukiama dalyvavimo patvirtinimo",
+    "ACCEPTED": "Dalyvavimo prašymas patvirtintas",
+    "DECLINED": "Dalyvavimo prašymas atmestas"
+  },
+
+  "EditEntrySection": {
+    "cancel": "Atšaukti",
+    "submitEdit": "Atnaujinti pateiktį",
+    "editSuccess": "Pateiktis atnaujinta",
+    "editError": "Atnaujinant pateiktį įvyko klaida",
+    "newName": "Naujas pavadinimas",
+    "newDescription": "Naujas aprašymas"
+  },
+
+  "NotFoundPage": {
+    "notFoundInfoTitle": "Puslapis nerastas",
+    "notFoundInfoMessage": "Puslapis, kurio ieškote nebuvo rastas",
+    "error": "Klaida",
+    "backToHomepage": "Grižti į pradinį puslapį"
+  },
+
+  "SeriesEntry": {
+    "description": "Aprašymas",
+    "author": "Autorius",
+    "likes": "Įvertinimai"
+  },
+
+  "SinglePhotoCollection": {
+    "author": "Autorius",
+    "likes": "Įvertinimai"
+  },
+
+  "ContestPreview": {
+    "contestPreviewTitle": "Konkursų peržiūros",
+    "loadingTitle": "Kraunama...",
+    "totalSubmissionsTitle": "Iš viso pateikčių",
+    "startDate": "Pradžios data:",
+    "endDate": "Pabaigos data:"
+  },
+
+  "JurySubmissionView": {
+    "contestTitle": "Konkursas:",
+    "categoryTitle": "Kategorija:",
+    "noEntriesTitle": "Nėra įrašų",
+    "entries": "pateiktys"
+  },
+
+  "JuryViewPagination": {
+    "pageTitle": "Puslapis",
+    "showEntriesTitle": "Rodytį pateiktis",
+    "showAll": "Visos",
+    "showLiked": "Tik patikusios",
+    "showDisliked": "Tik nepatikusios"
+  },
+
+  "LandingPage": {
+    "mainTitle": "Lietuvos Spaudos Fotografija",
+    "contestsTitle": "Konkursai"
+  },
+
+  "CompetitionPreview": {
+    "recordsTitle": "Konkursų įrašai",
+    "loadingTitle": "Kraunama...",
+    "userTitle": "Vartotojas:",
+    "categoryTitle": "Kategorija:"
+  },
+
+  "ArchivePage": {
+    "contestName": "Konkurso pavadinimas",
+    "contestDescription": "Konkurso aprašymas",
+    "startDate": "Pradžios data",
+    "endDate": "Pabaigos data",
+    "contestNameSearch": "konkurso pavadinimą",
+    "contestsLimitObject": "Konkursai",
+    "contestNameOption": "Konkurso pavadinimas",
+    "contestDescriptionOption": "Konkurso aprašymas",
+    "contestStartDateOption": "Pradžios data",
+    "contestEndDateOption": "Pabaigos data",
+    "categories": "Kategorijos"
+  },
+
+  "EndContest": {
+    "participants": "Dar besirungiantys dalyviai, pasirinkite nugalėtojus",
+    "endContestTitle": "Konkurso pabaiga",
+    "endContestButton": "Baigti konkursą",
+    "endContestSucess": "Konkursas sėkmingai užbaigtas",
+    "confirmationQuestion": "Ar tikrai norite užbaigti konkursą?"
+  },
+
+  "ContestPastParticipants": {
+    "pastParticipantsTitle": "Dalyviai",
+    "winnerIndicator": "Nugalėtoja(s)"
+  },
+
+  "SinglesSection": {
+    "descriptionTitle": "Aprašymas"
+  }
+}

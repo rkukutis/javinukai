@@ -1,0 +1,5 @@
+GIT: commit žinutės (messages) turi būtu formatu: <type>[optional scope]: <description> ( https://www.conventionalcommits.org/en/v1.0.0/#summary)
+Pradedant dirbti prie naujo funcionalumo susikurkite savo šaką nuo development šakos. Merginti į master šaką yra DRAUDŽIAMA.
+Visi API endpoint'ai turi prasidėti su "api/v1/{resource}". Resource yra pvz.: vartotojai, nuotraukos, konkursai.
+API Error atsakai turėtų būti pagal RFC 7807 standartą (Spring'e tai yra ProblemDetail klasė)
+Sąrašas bus pildomas...

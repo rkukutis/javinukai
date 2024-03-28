@@ -1,0 +1,53 @@
+spring:
+  jackson:
+    mapper:
+      accept_case_insensitive_properties: true
+  h2:
+    console.enabled: true
+  datasource:
+    url: jdbc:h2:mem:database
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+logging:
+  level:
+    lt:
+      javinukai: INFO
+    org:
+      springframework:
+        security: TRACE
+        jpa: INFO
+app:
+  scheme: http
+  host: localhost:8080
+  client: localhost:5173
+  email:
+    sender-address: notrealuser23@gmail.com
+    smtp-server:
+      host: sandbox.smtp.mailtrap.io
+      port: 587
+      auth:
+        user: b592590922d018
+        password: 78ed625418f6ca
+  constants:
+    user-defaults:
+      max-photos:
+        total: 50
+        single: 30
+        collection: 6
+    security:
+      token:
+        length: 128
+        email-confirm-token:
+          valid-minutes: 10
+        password-reset-token:
+          valid-minutes: 10
+      jwt-secret-key: 56bb52a9882a6z7bfd065c980908a4e656fd52a9882a6b7bfa065c982907a4e6
+      jwt-valid-hours: 72
+      jwt-cookie-valid-hours: 72

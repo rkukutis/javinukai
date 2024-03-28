@@ -1,0 +1,589 @@
+{
+  "dropdownMenu": {
+    "accountSettings": "Personal information",
+    "logout": "Log out",
+    "manageUsers": "Manage users",
+    "createContest": "Create contest",
+    "participationRequests": "Approve requests",
+    "archive": "Archive"
+  },
+
+  "navbar": {
+    "name1": "Home",
+    "name2": "Contests",
+    "name3": "Create new contest",
+    "name4": "add text4"
+  },
+
+  "layout": {
+    "name": "Lithuanian Press Photography",
+    "login": "Log in",
+    "loggedOutSuccess": "Logged out successfully!",
+    "adminContact": "Administrator"
+  },
+
+  "homepage": {
+    "description": "Description",
+    "loginToParticipate": "Log in to participate",
+    "participate": "Participate",
+    "confirmParticipation": "Confirm participation",
+    "login": "Log in"
+  },
+
+  "modal": {
+    "closeModal": "Close"
+  },
+
+  "loginPage": {
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "emailValidFormat": "Email must be of a valid format",
+    "password": "Password",
+    "forgotPassword": "Forgotten password?",
+    "passwordRequired": "Password is required",
+    "register": "Register",
+    "login": "Log in",
+    "loginSuccess": "Logged in successfully"
+  },
+
+  "imageUpload": {
+    "imagesUploaded": "Images have been uploaded",
+    "imagesAdd": "You must add some images",
+    "photoUploadTitle": "Upload photo(s)",
+    "photoUpload": "Upload photo(s)",
+    "photoTitle": "Title",
+    "photoTitleRequired": "Title is required",
+    "photoDescription": "Description",
+    "photoDescriptionRequired": "Description is required",
+    "photoRequirements": "Photo requirements:",
+    "fileTypeRequirement": "Photo file format must JPEG",
+    "photoDimensions": "Long edge of photo must be longer than 2500px and shorter than 4000px",
+    "photoSize": "Each photo must be less than 10 MB in size",
+    "photoAllSize": "All photos combined must be less than 50 MB",
+    "photoAllAtOnce": "Photos should be added all at once",
+    "photoSelectorActive": "Drop here",
+    "photoSelector": "Select or drop photos here",
+    "photoUploading": "Uploading...",
+    "PhotoNumberError": "This category accepts only single photos",
+    "entryLimitError": "Entry not submitted. You have already reached your entry limit for this category",
+    "titleLength": "Title must not exceed 100 characters",
+    "descriptionLength": "Description must not exceed 1000 characters"
+  },
+
+  "uploadImages": {
+    "photoValidationError": "File {{photoName}} does not meet requirements",
+    "photoProcessingError": "An system error has occured while processing your photos",
+    "photoUploadLimitError": "Entry limit reached. You can not add any more entries",
+    "photoGeneralError:": "An error has occured while uploading your photos"
+  },
+
+  "PaginationSettings": {
+    "perPage": "per page",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "fieldTitle": "Sort by field",
+    "sortTitle": "Sort direction",
+    "sortDescending": "Descending",
+    "sortAscending": "Ascending",
+    "searchTitle": "Search by",
+    "searchButton": "Search",
+    "fieldIsEnabledYes": "Yes",
+    "placeholderField": "",
+    "fieldIsEnabledNo": "No"
+  },
+
+  "ConfirmEmailPage": {
+    "emailConfirmed": "Your email has been confirmed"
+  },
+
+  "ForgotPassPage": {
+    "title": "Forgot your passowrd?",
+    "description": "You will receive an email with a link and instructions on how to reset your password. Please keep in mind that your password reset link will be valid for only 10 minutes.",
+    "emailPlaceholder": "Please enter your email",
+    "emailRequired": "Email is required",
+    "emailValidFormat": "Email must be of a valid format",
+    "submitEmail": "Submit",
+    "resetSuccess": "Password reset email sent successfully"
+  },
+
+  "RegisterPage": {
+    "registrationSuccess": "Registered successfully. Please confirm your email",
+    "name": "Name",
+    "nameRequired": "Name is required",
+    "nameContains": "Name must contain only alphabetic characters",
+    "nameLength": "Name must not exceed 20 characters",
+
+    "surname": "Surname",
+    "surnameRequired": "Surname is required",
+    "surnameContains": "Surname must contain only alphabetic characters",
+    "surnameLength": "Surname must not exceed 20 characters",
+
+    "birthYear": "Birth year",
+    "birthYearRequired": "Birth year is required",
+    "birthYearValid": "Date must be valid. A valid example: '1984'",
+    "birthYearMax": "Birth year can not be later than",
+    "birthYearMin": "Birth year can not be earlier than 1900",
+
+    "phoneNumber": "Phone number",
+    "phoneNumberRequired": "Phone number is required",
+    "phoneNumberValid": "Phone number must be valid",
+    "phoneNumberLength": "Phone number must not exceed 16 characters",
+
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "emailValid": "Email must be of a valid format",
+    "emailLength": "Email must not exceed 200 characters",
+
+    "password": "Password",
+    "passwordRequired": "Password is required",
+    "passwordValid": "Password must be at least 8 symbols long",
+    "passwordConfirm": "Confirm Password",
+    "passwordConfirmRequired": "Password confirmation is required",
+    "passwordConfirmMustMatch": "Passwords must match",
+
+    "affiliationFreelance": "Freelance",
+    "affiliationInstitution": "Represented media",
+    "affiliationInstitutionName": "Name of representative institution",
+    "affiliationInstitutionRequired": "Institution name is required",
+    "affiliationInstitutionNameLength": "Institution name must not exceed 50 characters",
+    "registerSubmit": "Register"
+  },
+
+  "CreateUserPage": {
+    "creationSuccess": "Account created successfully",
+    "name": "Name",
+    "nameRequired": "Name is required",
+    "nameContains": "Name must contain only alphabetic characters",
+    "nameLength": "Name must not exceed 20 characters",
+
+    "userTitle": "Role",
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "jury": "Jury",
+    "user": "User",
+
+    "surname": "Surname",
+    "surnameRequired": "Surname is required",
+    "surnameContains": "Surname must contain only alphabetic characters",
+    "surnameLength": "Surname must not exceed 20 characters",
+
+    "birthYear": "Birth year",
+    "birthYearRequired": "Birth year is required",
+    "birthYearValid": "Date must be valid. A valid example: '1984'",
+    "birthYearMax": "Birth year can not be later than",
+    "birthYearMin": "Birth year can not be earlier than 1900",
+
+    "phoneNumber": "Phone number",
+    "phoneNumberRequired": "Phone number is required",
+    "phoneNumberValid": "Phone number must be valid",
+    "phoneNumberLength": "Phone number must not exceed 15 characters",
+
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "emailValid": "Email must be of a valid format",
+    "emailLength": "Email must not exceed 200 characters",
+
+    "password": "Password",
+    "passwordRequired": "Password is required",
+    "passwordValid": "Password must be at least 8 symbols long",
+    "passwordConfirm": "Confirm Password",
+    "passwordConfirmRequired": "Password confirmation is required",
+    "passwordConfirmMustMatch": "Passwords must match",
+
+    "affiliationFreelance": "Freelance",
+    "affiliationInstitution": "Represented media",
+    "affiliationInstitutionName": "Name of representative institution",
+    "affiliationInstitutionRequired": "Institution name is required",
+    "affiliationInstitutionNameLength": "Institution name must not exceed 50 characters",
+    "creationSubmit": "Add new user"
+  },
+
+  "services": {
+    "uploadImagesError": "Could not upload images",
+    "resetPasswordError": "An error has occured while trying to reset your password",
+    "changePasswordError": "An error has occured while trying to change your password",
+    "resetPasswordOldPasswordError": "New password can not be old password",
+    "resetPasswordResetLinkInvalid": "Password reset link is invalid or expired",
+    "forgotPasswordError": "Please check your email for the password reset link",
+    "loginUserError": "Incorrect credentials",
+    "logoutUserError": "Error occured while logging out",
+    "registerUserExistsError": "An user with this email already exists",
+    "registerUserError": "Registration failed. Please try again later"
+  },
+
+  "ResetPassPage": {
+    "passChangeSuccess": "Password has been successfully changed",
+    "passChangeError": "Error: please check that your password reset link is correct",
+    "passTitle": "New password",
+    "passRequired": "Password is required",
+    "passLength": "Password must be at least 8 symbols long",
+    "passTitleConfirm": "Confirm new password",
+    "passConfirmRequired": "Password confirmation is required",
+    "passMustMatch": "Passwords must match",
+    "passSubmit": "Submit"
+  },
+
+  "UserDetailsPage": {
+    "personalTitle": "Personal Details",
+    "personalName": "Name",
+    "personalSurname": "Surname",
+    "personalEmail": "Email",
+    "personalBirthYear": "Birth year",
+    "personalPhoneNumber": "Phone number",
+    "personalFreelance": "Freelance",
+    "personalInstitution": "Institution",
+    "accountTitle": "Account details",
+    "accountID": "Account ID",
+    "accountCreationDate": "Creation date",
+    "accountLastModifiedDate": "Last modified date",
+    "accountEmailConfirmed": "User email confirmed",
+    "accountIsLocked": "Account is locked",
+    "accountRole": "Role",
+    "accountMaxPhotosContest": "Max photos per contest",
+    "accountMaxSinglesCategories": "Max photos for Singles categories",
+    "accountMaxCollectionCategories": "Max photos for Collections categories",
+    "backButton": "Back",
+    "isTrue": "Yes",
+    "isFalse": "No",
+    "changePasswordButton": "Change password"
+  },
+
+  "ContestsPage": {
+    "contestsLimitObject": "Contests",
+    "contestNameOption": "Name",
+    "contestDescriptionOption": "Description",
+    "contestStartDateOption": "Start date",
+    "contestEndDateOption": "End date",
+    "contestTotalEntriesOption": "Entry number",
+    "contestSeachFieldName": "Name",
+    "contestCreatedDate": "Creation date"
+  },
+
+  "ContestCard": {
+    "detailsButton": "Details",
+    "endContest": "End contest",
+    "startNewStage": "Start new stage",
+    "editContest": "Edit contest",
+    "editdeleteContestConfirm": "Are you sure you want to change/create this contest?",
+    "deleteContest": "Delete contest"
+  },
+
+  "StartNewContestStage": {
+    "newStageConfirm": "Are you sure you want to start new competition stage?"
+  },
+
+  "DeleteContest": {
+    "DeleteContestConfirm": "Are you sure you want to delete competition?"
+  },
+
+  "ContestDetailsPage": {
+    "contest": "Contest",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "description": "Description",
+    "categories": "Categories",
+    "participate": "Participate",
+    "participationSuccess": "Participations request sent successfully",
+    "participationError": "An error has occured while sending a participation",
+    "userEntries": "Your entries",
+    "entries": "Total entries",
+    "contestEditTitle": "Edit contest",
+    "contestEditSave": "Save changes"
+  },
+
+  "CategoryItem": {
+    "juryViewEntries": "View contestant entries",
+    "entryLimit": "Total entry limit:",
+    "defaultLimit": "Default limit per user:",
+    "totalEntries": "entries"
+  },
+
+  "UserSubmissionView": {
+    "yourEntries": "Your entries",
+    "addNewEntry": "Add new entry",
+    "cancel": "Cancel"
+  },
+
+  "ContestEntry": {
+    "photos": "Photos",
+    "deletionConfirmation": "Are you sure you want to delete this entry? This action is irreversible",
+    "deletionSuccess": "Entry deleted successfuly",
+    "editDetailsButton": "Edit entry details"
+  },
+
+  "UserManagementPage": {
+    "userLimitObject": "Users",
+    "userNameOption": "Name",
+    "userSurnameIption": "Surname",
+    "userEmailOption": "Email",
+    "userRoleOption": "Role",
+    "userMaxTotalOption": "Max entries per contest",
+    "userMaxSingleOption": "Max singles per category",
+    "userMaxCollectionsOption": "Max collections per category",
+    "userIsEnabledOption": "Enabled",
+    "userisNonLockedOption": "Blocked",
+    "userSeachFieldName": "Surname",
+    "limits": "Limits",
+    "addNewUserButton": "Add new user"
+  },
+
+  "DangerZone": {
+    "title": "Danger zone",
+    "permissionsChangedSuccess": "User permissions changed",
+    "deletedSuccess": "User {{username}} deleted successfully",
+    "newRoleSame": "New role is the same as old one",
+    "changeRole": "You are about to change this user's role to {{newRole}}. Are you sure?",
+    "userBlock": "You are about to {{action}} block this account. Are you sure?",
+    "unTranslation": "un",
+    "userDelete": "You are about to delete this user's account. This action is irreversible. Are you sure?",
+    "changeUserTitle": "Change user role",
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "jury": "Jury",
+    "user": "User",
+    "roleUpdateTitle": "Update role",
+    "accountActionsTitle": "Account actions",
+    "blockAccount": "Block account",
+    "unblockAccount": "Unblock account",
+    "deleteAccountButton": "Delete account",
+    "maxPerContest": "Max entries per contest",
+    "maxSingles": "Max entries per singles category",
+    "maxCollections": "Max entries per series category",
+    "changeLimits": "Change limits",
+    "limitNegativeError": "Limit must be a positive number"
+  },
+
+  "roles": {
+    "ADMIN": "Admin",
+    "USER": "User",
+    "JURY": "Jury",
+    "MODERATOR": "Moderator"
+  },
+
+  "ChangeUsersPasswordForm": {
+    "oldPassword": "Current password",
+    "newPassword": "New password",
+    "newPasswordConfirmation": "Confirm new password",
+    "confirmChangePasswordButton": "Confirm change",
+    "discardChangePasswordButton": "Discard change",
+    "changePasswordSuccess": "Password was successfully changed",
+    "changePasswordFailWrongCurrent": "Current password is wrong",
+    "changePasswordFailAsCurrent": "New password is the same as current one",
+    "changePasswordFailDoNotMatch": "Password and password confimation do not match"
+  },
+
+  "categoryTypes": {
+    "SINGLE": "Single photos",
+    "COLLECTION": "Photo collections"
+  },
+
+  "CreateContest": {
+    "contestTitle": "Create contest",
+    "contestName": "Contest name",
+    "description": "Description",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "totalSubmissions": "Total submissions",
+    "createNewCategory": "Create new category",
+    "close": "Close",
+    "categoryDescription": "Description",
+    "editCategory": "Edit category",
+    "deleteCategory": "Delete category",
+    "removeCategory": "Remove",
+    "addCategory": "Add",
+    "contestCreated": "Contest created!",
+    "createContestButton": "Create contest",
+    "categoryDeleteConfirmation": "Are you sure you want to delete this category?",
+    "categoryDeleteYes": "Yes",
+    "categoryDeleteNo": "No",
+    "maxTotalSubmissions": "Max submissions",
+    "maxSubmissionsPerUser": "Max submissions per user",
+    "contesThumbnail": "Thumbnail",
+    "creation": "Create contest",
+    "invalidDatesError": "Invalid date values",
+    "contestDetailsUpdatedSuccess": "Contest details updated successfully",
+    "contestDetailsUpdatedError": "An error has occured updating contest details",
+    "contestCategoriesUpdatedSuccess": "Contest category list updated successfully",
+    "contestCategoriesUpdatedError": "An error has occured updating contest categories",
+    "contestCreatedSuccess": "Contest created successfully",
+    "contestCreatedError": "An error has occured while creating an contest",
+    "thumbnailError": "Only one thumbnail can be added",
+    "required": "Required"
+  },
+
+  "CreateCategory": {
+    "categoryScreen": "Create category",
+    "categoryName": "Name",
+    "categoryDescription": "Description",
+    "categoryTotalSubmissions": "Total submissions",
+    "categoryType": "Category type",
+    "categorySelectType": "Select category type",
+    "categoryCreateButton": "Create category",
+    "categoryCreateSuccess": "Category created successfully",
+    "categoryCreateError": "Error creating category",
+    "required": "Required"
+  },
+
+  "CategorySelection": {
+    "categories": "Categories",
+    "noCategoriesAdded": "No categories added yet!",
+    "categoryName": "Name",
+    "categoryType": "Category type",
+    "categoryMaxSubmissions": "Max submissions",
+    "categoryMaxUserSubmissions": "Max user submissions",
+    "addCategoriesFromDataBase": "Add categories from data",
+    "CreateNewCategory": "Create and add category"
+  },
+
+  "CategoryList": {
+    "categoriesName": "name",
+    "categoriesNameCapital": "Name",
+    "categoriesMaxTotalSubmissions": "Max submissions",
+    "categoriesMaxUserSubmissions": "Max user submissions",
+    "categoriesType": "Category type",
+    "categoryName": "Name",
+    "categoryTitle": "Categories"
+  },
+
+  "EditCategoryModal": {
+    "editCategory": "Edit category",
+    "categoryName": "Name",
+    "categoryDescription": "Description",
+    "categoryMaxSubmissions": "Max submissions",
+    "categoryMaxUserSubmissions": "Max user submissions",
+    "categoryType": "Category type",
+    "updateCategory": "Update category",
+    "required": "Required",
+    "categoryUpdatedSuccess": "Category updated successfully",
+    "categoryUpdatedError": "An error occured while updating category"
+  },
+
+  "PersonalInformation": {
+    "editButton": "Edit personal information",
+    "cancelButton": "Cancel changes",
+    "saveButton": "Save changes",
+    "isFreelanceTrue": "Yes",
+    "isFreelanceFalse": "No",
+    "changeSuccess": "Personal information changed successfully",
+    "changeError": "An error occurred while saving personal information",
+    "emailLogoutMessage": "Changing your email requires re-logging in with the new email"
+  },
+
+  "ParticipationRequest": {
+    "fieldName": "Name",
+    "fieldSurname": "Surname",
+    "fieldEmail": "Email",
+    "fieldBirthYear": "Birth year",
+    "fieldPhoneNumber": "Phone number",
+    "fieldContestName": "Contest name",
+    "fieldContestStart": "Contest start",
+    "fieldContestEnd": "Contest end",
+    "fieldAccept": "Accept",
+    "fieldDecline": "Decline",
+    "requestDateOption": "Request date",
+    "contestNameOption": "Contest name",
+    "contestsLimitObject": "Requests",
+    "requestStatusOption": "Request status",
+    "fieldAcceptSuccess": "Participation has been accepted",
+    "fieldDeclinedSuccess": "Participation has been declined"
+  },
+
+  "ParticipationStatus": {
+    "PENDING": "Participation request pending",
+    "ACCEPTED": "Participation request accepted",
+    "DECLINED": "Participation request rejected"
+  },
+
+  "EditEntrySection": {
+    "cancel": "Cancel",
+    "submitEdit": "Update entry",
+    "editSuccess": "Entry updated successfully",
+    "editError": "An error has occured while updating entry information",
+    "newName": "New name",
+    "newDescription": "New description"
+  },
+
+  "NotFoundPage": {
+    "notFoundInfoTitle": "Page not found",
+    "notFoundInfoMessage": "Page that you are seeking was not found",
+    "error": "Error",
+    "backToHomepage": "Return to homepage"
+  },
+
+  "SeriesEntry": {
+    "description": "Description",
+    "author": "Author",
+    "likes": "Likes"
+  },
+
+  "SinglePhotoCollection": {
+    "author": "Author",
+    "likes": "Likes"
+  },
+
+  "ContestPreview": {
+    "contestPreviewTitle": "Contest previews",
+    "loadingTitle": "Loading...",
+    "totalSubmissionsTitle": "Total submissions:",
+    "startDate": "Start date:",
+    "endDate": "End date:"
+  },
+
+  "JurySubmissionView": {
+    "contestTitle": "Contest:",
+    "categoryTitle": "Category:",
+    "noEntriesTitle": "No entries here:",
+    "entries": "entries"
+  },
+
+  "JuryViewPagination": {
+    "pageTitle": "Page",
+    "showEntriesTitle": "Show entries",
+    "showAll": "All",
+    "showLiked": "Only liked",
+    "showDisliked": "Only disliked"
+  },
+
+  "ArchivePage": {
+    "contestName": "Contest name",
+    "contestDescription": "Contest description",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "contestNameSearch": "contest name",
+    "contestsLimitObject": "Contests",
+    "contestNameOption": "Contest name",
+    "contestDescriptionOption": "Contest description",
+    "contestStartDateOption": "Start date",
+    "contestEndDateOption": "End date",
+    "categories": "Categories"
+  },
+
+  "EndContest": {
+    "participants": "Still competing participants, select winners",
+    "endContestTitle": "End contest",
+    "endContestButton": "End contest",
+    "endContestSucess": "Contest has been ended",
+    "confirmationQuestion": "Are you sure want to end the contest?"
+  },
+
+  "ContestPastParticipants": {
+    "pastParticipantsTitle": "Participants",
+    "winnerIndicator": "Contest winner"
+  },
+
+  "LandingPage": {
+    "mainTitle": "Lithuanian Press Photography",
+    "contestsTitle": "Contests"
+  },
+
+  "CompetitionPreview": {
+    "recordsTitle": "Competition records",
+    "loadingTitle": "Loading...",
+    "userTitle": "User:",
+    "categoryTitle": "Category:"
+  },
+
+  "SinglesSection": {
+    "descriptionTitle": "Description"
+  }
+}
