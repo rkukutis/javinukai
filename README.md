@@ -1,7 +1,7 @@
 # Lithuanian Press Photography Club Website Project
 ![Site contests page](site.png)
 ## Live version
-Live versions can accessed on https://javinukai.rhoopoe.com/ and https://lietuvos-spaudos-fotografija.rhoopoe.com/. The site in the first link was the development site and uses H2 as the database and NGINX as a static file webserver. The second site points to the final version of the site. This version uses PostgreSQL as the database, the frontend files are served by the Spring Boot app and the application itself is deployed on a Tomcat 10 server. On both sites all system parts are containerized, requests are passed through a Cloudflare proxy with geographic restrictions (Lithuania only).
+Live version can accessed on https://lietuvos-spaudos-fotografija.rhoopoe.com/. This version uses PostgreSQL as the database, the frontend files are served by the Spring Boot app and the application itself is deployed on a Tomcat 10 server. All system parts are containerized, requests are passed through a Cloudflare proxy with geographic restrictions (Lithuania only).
 
 ## Deployment
 The entire application is packaged as a convenient docker container. To deploy the site on a server you must have docker installed on the target machine. Deployment steps are as follows:
